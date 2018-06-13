@@ -1,14 +1,23 @@
+%load_ext autoreload
+%autoreload 2
 
+from deriva.core import HatracStore, ErmrestCatalog, ErmrestSnapshot, get_credential, DerivaPathError
+import deriva.core.ermrest_model as em
+import em.builtin_types as typ
+import csv
+import re
+
+
+from bdbag import bdbag_api as bdb
 
 def create_column_and_make_visible(catalog, table, col_def):
     # add the column on the server
-
     new_col = table.create_column(catalog, col_def)
 
-    table.visible_columns["entry"].append("New Col")
-    table.visible_columns["*"].append("New Col")
+    table.visible_columns["entry"].append(col_def['name'])
+    table.visible_columns["*"].append(col_def['name'])
     table.apply(catalog)
-    return
+    return new_col
 
 
 def delete_column(catalog,table,col_def):
@@ -86,10 +95,25 @@ def create_fkey_column_and_make_visible(catalog, table, col_def, domain_table, d
  return new_col, new_fkey
 
 
-pbcserver = 'pdbserver.isrd.isi.edu'
-credential = get_credential(pbcserver)
-
-catalog = ErmrestCatalog('https', synapseserver, 1, credentials=credential).latest_snapshot()
 model_root = catalog.getCatalogModel()
-table = model_root.table(schema_name, table_name)
-column_def = Column.define("New Col", builtin_types.text)
+
+experiment = model_root.table('isa', 'experiment')
+biosample = model_root.table('isa', 'biosample')
+dataset = model_root.table('isa', 'dataset')
+
+for i in ['histone_modification', 'strandedness', 'rnaseq_selection', 'molecule_type']
+delcolumn = experiment.column_definitions['histone_modification']
+delcolumn.delete(catalog, table = experiment)
+delcolumn = experiment.column_definitions['strandedness']
+delcolumn.delete(catalog, table = experiment)
+
+
+column_def = em.Column.define(
+    "capillary_number",
+    em.builtin_types.int2,
+    nullok=False,
+    comment="ID number of the capillary constaining the biosample.",
+    annotations={},
+    acls={},
+    acl_bindings={},
+)
