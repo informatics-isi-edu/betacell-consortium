@@ -7,7 +7,6 @@ import em.builtin_types as typ
 import csv
 import re
 
-
 from bdbag import bdbag_api as bdb
 
 def create_column_and_make_visible(catalog, table, col_def):
@@ -20,18 +19,13 @@ def create_column_and_make_visible(catalog, table, col_def):
     return new_col
 
 
-def delete_column(catalog,table,col_def):
-    # delete column from the table
-    # Remove column from visible columns list if it was there
-    return
-
 def create_fkey_column_and_make_visible(catalog, table, col_def, domain_table, domain_col):
  """Create a column which is a simple foreign key and make it visible.
 
     Parameters:
       catalog: ErmrestCatalog instance
       table: ermrest_model.Table instance to which we will add a column
-      col_def: as from ermrest_model.Column.define()
+      col_def: as from ermrest_model.Column.define)
       domain_table: ermrest_column.Table instance
       domain_col: ermrest_column.Column instance found in domain_table
 
@@ -94,7 +88,9 @@ def create_fkey_column_and_make_visible(catalog, table, col_def, domain_table, d
 
  return new_col, new_fkey
 
-
+server = 'pbcconsortium.isrd.isi.edu'
+credential = get_credential(server)
+catalog = ErmrestCatalog('https', server, 1, credentials=credential)
 model_root = catalog.getCatalogModel()
 
 experiment = model_root.table('isa', 'experiment')
@@ -108,12 +104,12 @@ delcolumn = experiment.column_definitions['strandedness']
 delcolumn.delete(catalog, table = experiment)
 
 
-column_def = em.Column.define(
-    "capillary_number",
-    em.builtin_types.int2,
-    nullok=False,
-    comment="ID number of the capillary constaining the biosample.",
-    annotations={},
-    acls={},
-    acl_bindings={},
+capillary_column_def = em.Column.define(
+    "capillary_number", em.builtin_types.int2, nullok=False,
+    comment="ID number of the capillary constaining the biosample."
+)
+
+bead_column_def = em.Column.define(
+    "capillary_number", em.builtin_types.int2, nullok=False,
+    comment="Position in the capillary where the sample is located."
 )
