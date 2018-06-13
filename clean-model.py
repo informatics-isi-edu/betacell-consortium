@@ -6,11 +6,6 @@ import deriva.core.ermrest_model as em
 import csv
 import re
 
-def delete_column(catalog,table,col_def):
-    # delete column from the table
-    # Remove column from visible columns list if it was there
-    return
-
 server = 'pbcconsortium.isrd.isi.edu'
 credential = get_credential(server)
 catalog = ErmrestCatalog('https', server, 1, credentials=credential)
@@ -61,3 +56,26 @@ delcolumn.delete(catalog, table = biosample)
 
 delcolumn = biosample.column_definitions['litter']
 delcolumn.delete(catalog, table = biosample)
+
+# Clean up dataset
+
+dataset.visible_columns["detailed"] = [
+    ['isa', 'dataset_RID_key'],
+    'accession',
+    'description',
+    'study_design',
+    ['isa', 'dataset_project_fkey'],
+    ['isa', 'dataset_status_fkey'],
+    'funding',
+    'release_date',
+    'show_in_jbrowse',
+    ['isa', 'publication_dataset_fkey'],
+    ['isa', 'dataset_experiment_type_dataset_id_fkey'],
+    ['isa', 'dataset_data_type_dataset_id_fkey'],
+    ['isa', 'dataset_phenotype_dataset_fkey'],
+    ['isa', 'dataset_organism_dataset_id_fkey'],
+    ['isa', 'dataset_anatomy_dataset_id_fkey'],
+    ['isa', 'dataset_gender_dataset_id_fkey'],
+    ['isa', 'dataset_instrument_dataset_id_fkey']]
+
+dataset.apply(catalog)

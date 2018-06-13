@@ -97,13 +97,6 @@ experiment = model_root.table('isa', 'experiment')
 biosample = model_root.table('isa', 'biosample')
 dataset = model_root.table('isa', 'dataset')
 
-for i in ['histone_modification', 'strandedness', 'rnaseq_selection', 'molecule_type']
-delcolumn = experiment.column_definitions['histone_modification']
-delcolumn.delete(catalog, table = experiment)
-delcolumn = experiment.column_definitions['strandedness']
-delcolumn.delete(catalog, table = experiment)
-
-
 capillary_column_def = em.Column.define(
     "capillary_number", em.builtin_types.int2, nullok=False,
     comment="ID number of the capillary constaining the biosample."
@@ -113,3 +106,7 @@ bead_column_def = em.Column.define(
     "capillary_number", em.builtin_types.int2, nullok=False,
     comment="Position in the capillary where the sample is located."
 )
+
+create_column_and_make_visible(catalog, biosample, capillary_column_def)
+create_column_and_make_visible(catalog, biosample, bead_column_column_def)
+
