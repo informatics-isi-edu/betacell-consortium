@@ -1,12 +1,10 @@
-pbcserver = 'pdbserver.isrd.isi.edu'
-credential = get_credential(pbcserver)
 
-catalog = ErmrestCatalog('https', synapseserver, 1, credentials=credential).latest_snapshot()
 
 def create_column_and_make_visible(catalog, table, col_def):
-    model_root = catalog.getCatalogModel()
-    table = model_root.table(schema_name, table_name)
-    table.create_column(catalog, Column.define("New Col", builtin_types.text)
+    # add the column on the server
+
+    new_col = table.create_column(catalog, col_def)
+
     table.visible_columns["entry"].append("New Col")
     table.visible_columns["*"].append("New Col")
     table.apply(catalog)
@@ -86,3 +84,12 @@ def create_fkey_column_and_make_visible(catalog, table, col_def, domain_table, d
    domain_table.apply(catalog)
 
  return new_col, new_fkey
+
+
+pbcserver = 'pdbserver.isrd.isi.edu'
+credential = get_credential(pbcserver)
+
+catalog = ErmrestCatalog('https', synapseserver, 1, credentials=credential).latest_snapshot()
+model_root = catalog.getCatalogModel()
+table = model_root.table(schema_name, table_name)
+column_def = Column.define("New Col", builtin_types.text)
