@@ -3,11 +3,7 @@
 
 from deriva.core import HatracStore, ErmrestCatalog, ErmrestSnapshot, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
-import em.builtin_types as typ
-import csv
 import re
-
-from bdbag import bdbag_api as bdb
 
 def create_column_and_make_visible(catalog, table, col_def):
     # add the column on the server
@@ -96,17 +92,66 @@ model_root = catalog.getCatalogModel()
 experiment = model_root.table('isa', 'experiment')
 biosample = model_root.table('isa', 'biosample')
 dataset = model_root.table('isa', 'dataset')
+protocol = model_root.table('isa','protocol')
+
+pb = catalog.getPathBuilder()
+isa = pb.isa
+pbexperiment = isa.experiment
+pbbiosample = isa.biosample
+pbdataset = isa.dataset
+pbprotocol = isa.protocol
+
+
 
 capillary_column_def = em.Column.define(
-    "capillary_number", em.builtin_types.int2, nullok=False,
+    "capillary_number", em.builtin_types.int2, nullok=True,
     comment="ID number of the capillary constaining the biosample."
+
 )
 
 bead_column_def = em.Column.define(
-    "capillary_number", em.builtin_types.int2, nullok=False,
+    "sample_position", em.builtin_types.int2, nullok=True,
     comment="Position in the capillary where the sample is located."
 )
 
 create_column_and_make_visible(catalog, biosample, capillary_column_def)
-create_column_and_make_visible(catalog, biosample, bead_column_column_def)
+create_column_and_make_visible(catalog, biosample, bead_column_def)
 
+# Protocol
+treatment = em.Column.define(
+    "treatment", em.builtin_types.text, nullok=True,
+    comment="Treatment applied to a cell line."
+)
+
+treatment_concentration = em.Column.define(
+    "treatment_concentration", em.builtin_types.float4, nullok=True,
+    comment="Concentration of treatment applied to a cell line in mM."
+)
+
+timepoint = em.Column.define(
+    "timepoint", em.builtin_types.int2, nullok=True,
+    comment="Measured in minutes."
+)
+
+#delcolumn = protocol.column_definitions['chromatin_modifier']
+#delcolumn.delete(catalog, table = protocol)
+
+protocol.create_column(catalog, treatment)
+protocol.create_column(catalog, treatment_concentration)
+protocol.create_column(catalog, timepoint)
+
+protocol.visible_columns['entry'] = ['RID', 'name', 'treatment', 'treatment_concentration', 'timepoint', 'protocol_url', 'description', 'file_url', 'filename']
+protocol.visible_columns['detailed'] = [
+    ['isa', 'protocol_pkey'],
+    'name',
+    'treatment'
+    'treatment_concentration',
+    'timepoint',
+    'protocol_url',
+    'description',
+    'file_url',
+    'filename',
+    'byte_count',
+    'submitted_on',
+    'md5']
+protocol.apply(catalog)
