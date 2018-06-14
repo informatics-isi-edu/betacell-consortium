@@ -57,6 +57,12 @@ delcolumn.delete(catalog, table = biosample)
 delcolumn = biosample.column_definitions['litter']
 delcolumn.delete(catalog, table = biosample)
 
+delcolumn = biosample.column_definitions['phenotype']
+delcolumn.delete(catalog, table = biosample)
+
+delcolumn = biosample.column_definitions['origin']
+delcolumn.delete(catalog, table = biosample)
+
 # Clean up dataset
 
 dataset.visible_columns["detailed"] = [

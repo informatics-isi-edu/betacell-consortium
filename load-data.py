@@ -114,17 +114,17 @@ for k,v in experiments.items():
 
 #load replicates
 for k,v in replicates.items():
-    print(k)
     for i,biosample in enumerate(v):
         rep = {'dataset': dataset_key, 'technical_replicate_number':1, 'bioreplicate_number': i+1}
         rep['experiment'] = experiment_dp.filter(experiment_dp.local_identifier == k).entities()[0]['RID']
         rep['biosample'] = biosample_dp.filter(biosample_dp.local_identifier == biosample).entities()[0]['RID']
-        existing_rep = replicate_dp.filter(replicate_dp.biosample == biosample).entities()
-    if len(existing_rep) == 1:
-        rep['RID'] = existing_rep[0]['RID']
-        print('Updating exsiting experiment', rep['RID'])
-        replicate_dp.update([rep])
-    else:
-        print('Inserting new replicate {}/{}'.format(rep['experiment'],rep['biosample']))
-        replicate_dp.insert([rep])
+        existing_rep = replicate_dp.filter((replicate_dp.biosample == rep['biosample']) &
+                                           (replicate_dp.experiment == rep['experiment'])).entities()
+        if len(existing_rep) >= 1:
+            rep['RID'] = existing_rep[0]['RID']
+            print('Updating exsiting experiment', rep['RID'])
+            replicate_dp.update([rep])
+        else:
+            print('Inserting new replicate {}/{}'.format(rep['experiment'],rep['biosample']))
+            replicate_dp.insert([rep])
 
