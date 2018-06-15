@@ -46,7 +46,7 @@ fkey_defs = [
     ),
     em.ForeignKey.define(
         ["device"],  # this is a list to allow for compound foreign keys
-        "vocab", "tomography_creation_device_terms", ['dbxref'],  # this is a list to allow for compound keys
+        "vocab", "image_creation_device_terms", ['dbxref'],  # this is a list to allow for compound keys
         constraint_names=[['isa', "xray_tomography_data_device_fkey"]],
         comment="Must be a valid reference to a device.",
         on_update='CASCADE', on_delete='RESTRICT',
@@ -72,7 +72,7 @@ fkey_defs = [
         annotations={},
     ),
     em.ForeignKey.define(
-        ["equiptment_model"],  # this is a list to allow for compound foreign keys
+        ["equipment_model"],  # this is a list to allow for compound foreign keys
         "vocab", "instrument_terms", ["dbxref"],  # this is a list to allow for compound keys
         constraint_names=[['isa', "xray_tomography_data_equiptment_model_fkey"]],
         comment="Must be a valid reference to a dataset.",
@@ -94,8 +94,8 @@ fkey_defs = [
 table_def = em.Table.define(
   "xray_tomography_data",
   column_defs,
-#  key_defs=key_defs,
-  fkey_defs=fkey_defs,
+  key_defs=key_defs,
+  fkey_defs=fkey_defs[0:5],
   comment="Table to hold X-Ray Tomography MRC files.",
   acls={},
   acl_bindings={},
@@ -174,4 +174,14 @@ credential = get_credential(server)
 catalog = ErmrestCatalog('https', server, 1, credentials=credential)
 model_root = catalog.getCatalogModel()
 schema = model_root.schemas['isa']
-new_table = schema.create_table(catalog, table_def)
+tomography_table = schema.create_table(catalog, table_def)
+
+for k,v in visible_columns.items():
+    tomography_table.visible_columns[k] = v
+
+for k,v in visible_foreign_keys.items():
+    tomography_table.visible_foreign_keys[k] = v
+
+tomography_table.apply(catalog)
+
+#schema.tables['xray_tomography_data'].delete(catalog, schema=schema)

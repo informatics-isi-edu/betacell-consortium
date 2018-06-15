@@ -157,6 +157,23 @@ protocol.visible_columns['detailed'] = [
     'md5']
 protocol.apply(catalog)
 
+replicate.visible_foreign_keys['detailed'] = [
+        ['isa', 'xray_tomography_data_replicate_fkey'],
+        ['isa', 'sequencing_data_replicate_fkey'],
+        ['isa', 'processed_data_replicate_fkey'],
+        ['isa', 'track_data_replicate_fkey'],
+        ['isa', 'imaging_data_replicate_fkey'],
+        ['isa', 'mesh_data_replicate_fkey']
+        ]
+replicate.visible_foreign_keys['entry'] = [
+        ['isa', 'xray_tomography_data_replicate_fkey'],
+        ['isa', 'processed_data_replicate_fkey'],
+        ['isa', 'track_data_replicate_fkey'],
+        ['isa', 'imaging_data_replicate_fkey'],
+        ['isa', 'mesh_data_replicate_fkey'],
+    ]
+replicate.apply(catalog)
+
 
 # Create the xray-tomography table
 

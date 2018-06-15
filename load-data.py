@@ -30,6 +30,8 @@ dataset_key ='1-882P'
 homo_sapiens_key = 'NCBITAXON:9606:'
 frozen_key = 'commons:167:'
 xray_tomography = 'commons:598:'
+pancreas = 'UBERON:0001264:'
+
 cell_line_keys = {
     'HEK293': 'commons:595:',
     'EndoC-BH1': 'commons:596:',
@@ -66,6 +68,7 @@ for i in data:
         'local_identifier': 'C{}-{}'.format(i['Capillary Number'], i['Bead Position']) ,
         'species': homo_sapiens_key,
         'specimen': frozen_key,
+        'anatomy' : pancreas,
         'strain': cell_line_keys[i['Cell Line']],
         'capillary_number': i['Capillary Number'],
         'sample_position': i['Bead Position'],
@@ -81,7 +84,7 @@ for i in biosample_entities:
         biosample_dp.update([i])
     else:
         print('Inserting exsiting biosample', i)
-        biosample.insert([i])
+        biosample_dp.insert([i])
 
 # load protocols
 for k,v in protocols.items():

@@ -12,8 +12,8 @@
     "pbcconsortium" : ["https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a"],
 
     "admins": ["isrd-systems", "pbcconsortium-modelers"],
-    "curators": ["isrd-staff", "pbcconsortium-writers"],
-    "writers": ["isrd-testers", "pbcconsortium-writers"],
+    "curators": ["isrd-staff", "pbcconsortium-writers", "pbcconsortium"],
+    "writers": ["isrd-testers", "pbcconsortium-writers","pbcconsortium"],
 
     "writers_and_curators": ["curators", "writers"],
     "users": ["writers_and_curators"]
