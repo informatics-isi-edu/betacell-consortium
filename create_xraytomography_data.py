@@ -3,19 +3,30 @@ import deriva.core.ermrest_model as em
 
 schema_name = 'isa'
 table_name = 'xray_tomography_data'
+
+url_annotations = {'tag:isrd.isi.edu,2017:asset': {'filename_column': 'filename',
+  'byte_count_column': 'byte_count',
+  'url_pattern': '/hatrac/commons/data/{{{_dataset}}}/{{{_replicate}}}/{{{filename}}}',
+  'md5': 'md5'}}
+
+filename_annotations = {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '[**{{filename}}**]({{{url}}})'},
+  'detailed': {'markdown_pattern': '[**{{filename}}**]({{{url}}})'}}}
+
+filetype_annotations = {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '{{{$fkeys.isa.xray_tomography_data_file_type_fkey.rowName}}}'}}}
+
+
 column_defs = [
-    em.Column.define('dataset', em.builtin_types.text, comment='None'),
+    em.Column.define('dataset', em.builtin_types.text, nullok=False, comment='None'),
     em.Column.define('anatomy', em.builtin_types.text, comment='None'),
     em.Column.define('device', em.builtin_types.text, comment='None'),
     em.Column.define('equipment_model', em.builtin_types.text, comment='None'),
     em.Column.define('description', em.builtin_types.markdown, comment='None'),
-    em.Column.define('url', em.builtin_types.text, comment='None' ),
-    em.Column.define('filename',em.builtin_types.text, comment='None'),
-    em.Column.define('file_type',em.builtin_types.text, comment='None'),
+    em.Column.define('url', em.builtin_types.text, annotations = url_annotations, comment='None' ),
+    em.Column.define('filename',em.builtin_types.text, annotations = filename_annotations, comment='None'),
+    em.Column.define('file_type',em.builtin_types.text, annotations = filetype_annotations, comment='None'),
     em.Column.define('byte_count', em.builtin_types.int8, comment='None'),
     em.Column.define('submitted_on', em.builtin_types.timestamptz, comment='None'),
     em.Column.define('md5', em.builtin_types.text, comment='None'),
-    em.Column.define('file_id',	em.builtin_types.int4, comment='None'),
     em.Column.define('replicate',em.builtin_types.text, comment='None')
 ]
 
@@ -74,7 +85,7 @@ fkey_defs = [
     em.ForeignKey.define(
         ["equipment_model"],  # this is a list to allow for compound foreign keys
         "vocab", "instrument_terms", ["dbxref"],  # this is a list to allow for compound keys
-        constraint_names=[['isa', "xray_tomography_data_equiptment_model_fkey"]],
+        constraint_names=[['isa', "xray_tomography_data_equipment_model_fkey"]],
         comment="Must be a valid reference to a dataset.",
         on_update='CASCADE', on_delete='RESTRICT',
         acls={}, acl_bindings={},
@@ -84,7 +95,7 @@ fkey_defs = [
         ["file_type"],  # this is a list to allow for compound foreign keys
         "vocab", "file_format_terms", ["dbxref"],  # this is a list to allow for compound keys
         constraint_names=[['isa', "xray_tomography_data_file_type_fkey"]],
-        comment="Must be a valid reference to a dataset.",
+        comment="Must be a valid reference to a file type.",
         on_update='CASCADE', on_delete='RESTRICT',
         acls={}, acl_bindings={},
         annotations={},
@@ -147,8 +158,8 @@ visible_columns = {
   ['isa', 'xray_tomography_data_equipment_model_fkey'],
   'description',
   'url',
-  'filename',
-  ['isa', 'xray_tomography_data_file_type_fkey'],
+  'filename'
+  ['isa','xray_tomography_data_file_type_fkey'],
   'byte_count',
   'md5',
   'submitted_on'],
@@ -164,7 +175,7 @@ visible_columns = {
  'compact': [['isa', 'xray_tomography_data_pkey'],
   'replicate_fkey',
   'url',
-  'file_type',
+  ['isa', 'xray_tomography_data_file_type_fkey'],
   'byte_count',
   'md5',
   'submitted_on']}

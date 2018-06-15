@@ -14,17 +14,6 @@ with open('NCXT_April data.csv', encoding='utf-8-sig') as csvfile:
     data = [row for row in reader]
 
 
-pbcserver = 'pbcconsortium.isrd.isi.edu'
-credential = get_credential(pbcserver)
-catalog = ErmrestCatalog('https', pbcserver, 1, credentials=credential)
-
-pb = catalog.getPathBuilder()
-isa_dp = pb.isa
-experiment_dp = isa_dp.experiment
-biosample_dp = isa_dp.biosample
-dataset_dp = isa_dp.dataset
-protocol_dp = isa_dp.protocol
-replicate_dp = isa_dp.replicate
 
 dataset_key ='1-882P'
 homo_sapiens_key = 'NCBITAXON:9606:'
@@ -74,7 +63,7 @@ for i in data:
         'sample_position': i['Bead Position'],
         'collection_date': '2018-04-01'
     })
-    replicates[experiment_name] = replicates.get(experiment_name, []) + [biosample_name]
+    replicates[experiment_name] = replicates.get(experiment_name, []) + [[biosample_name, i['Filename']]]
 
 for i in biosample_entities:
     existing_sample = biosample_dp.filter(biosample_dp.local_identifier == i['local_identifier']).entities()
@@ -116,8 +105,9 @@ for k,v in experiments.items():
 
 
 #load replicates
+file_map = []
 for k,v in replicates.items():
-    for i,biosample in enumerate(v):
+    for i,[biosample,filename] in enumerate(v):
         rep = {'dataset': dataset_key, 'technical_replicate_number':1, 'bioreplicate_number': i+1}
         rep['experiment'] = experiment_dp.filter(experiment_dp.local_identifier == k).entities()[0]['RID']
         rep['biosample'] = biosample_dp.filter(biosample_dp.local_identifier == biosample).entities()[0]['RID']
@@ -126,8 +116,10 @@ for k,v in replicates.items():
         if len(existing_rep) >= 1:
             rep['RID'] = existing_rep[0]['RID']
             print('Updating exsiting experiment', rep['RID'])
-            replicate_dp.update([rep])
+            newrid = replicate_dp.update([rep])
         else:
             print('Inserting new replicate {}/{}'.format(rep['experiment'],rep['biosample']))
-            replicate_dp.insert([rep])
+            newrid = replicate_dp.insert([rep])
+        file_map.append((rep['experiment'],rep['biosample'], newrid[0]['RID'], filename))
+
 
