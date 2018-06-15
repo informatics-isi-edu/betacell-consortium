@@ -1,0 +1,174 @@
+{
+  "groups": {
+    "empty": [],
+    "public": ["*"],
+
+    "isrd-systems": ["https://auth.globus.org/3938e0d0-ed35-11e5-8641-22000ab4b42b"],
+    "isrd-staff": ["https://auth.globus.org/176baec4-ed26-11e5-8e88-22000ab4b42b"],
+    "isrd-testers": ["https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d"],
+
+    "pbcconsortium-modelers" : ["https://auth.globus.org/a45e5ba2-709f-11e8-a40d-0e847f194132"],
+    "pbcconsortium-writers":  ["https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764"],
+    "pbcconsortium" : ["https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a"],
+
+    "admins": ["isrd-systems", "pbcconsortium-modelers"],
+    "curators": ["isrd-staff", "pbcconsortium-writers"],
+    "writers": ["isrd-testers", "pbcconsortium-writers"],
+
+    "writers_and_curators": ["curators", "writers"],
+    "users": ["writers_and_curators"]
+  },
+
+  "group_list_table" : {"schema" : "_acl_admin", "table" : "group_lists"},
+
+  "acl_definitions": {
+    "users_only": {"select": "users", "enumerate": "users"},
+    "catalog_policy": {"select": "public", "enumerate": "public", "owner": "admins"},
+    "vocabulary_curation_policy": {"insert": "writers_and_curators", "update": "curators", "delete": "curators"},
+    "restricted_visibility_policy": {"select": "writers_and_curators"},
+    "isa_curation_policy": {"insert": "writers_and_curators", "update": "curators", "delete": "curators"},
+    "hidden": {"select": "empty", "enumerate": "empty", "insert": "empty", "update": "empty", "delete": "empty"}
+  },
+
+  "acl_bindings": {
+    "released_status_guard": {
+      "types": ["select"],
+        "projection": [
+            {"outbound_col" : "dataset"},
+            {"or": [
+              {"filter": "status", "operator": "=", "operand": "commons:228:"}, 
+              {"filter": "status", "operator": "=", "operand": "commons:226:"}
+            ]},
+            "RID"
+        ],
+        "projection_type": "nonnull"
+    },
+
+    "curated_status_guard": {
+      "types": ["select"],
+        "projection": [
+            {"outbound_col" : "dataset"},
+            {"filter": "status", "operator": "=", "operand": "commons:226:"},
+            "RID"
+        ],
+        "projection_type": "nonnull"
+    },
+
+    "project_edit_guard": {
+      "scope_acl": "writers",
+      "types": ["update", "delete"],
+        "projection": [
+            {"outbound": ["isa", "project_groups_fkey"]},
+            "groups"
+        ],
+        "projection_type": "acl"
+    },
+
+    "project_suppl_edit_guard": {
+      "scope_acl": "writers",
+      "types": ["update", "delete"],
+        "projection": [
+            {"outbound_col": "project_id"},
+            {"outbound": ["isa", "project_groups_fkey"]},
+            "groups"
+        ],
+        "projection_type": "acl"
+    },
+
+    "dataset_edit_guard": {
+      "scope_acl": "writers",
+      "types": ["update", "delete"],
+        "projection": [
+            {"outbound_col": "project"},
+            {"outbound": ["isa", "project_groups_fkey"]},
+            "groups"
+        ],
+        "projection_type": "acl"
+    },
+
+    "dataset_tags_edit_guard": {
+      "scope_acl": "writers",
+      "types": ["update", "delete"],
+        "projection": [
+            {"outbound_col" : "dataset_id"},
+            {"outbound": ["isa", "dataset_project_fkey"]},
+            {"outbound": ["isa", "project_groups_fkey"]},
+            "groups"
+        ],
+        "projection_type": "acl"
+    },
+
+    "dataset_suppl_edit_guard": {
+      "scope_acl": "writers",
+      "types": ["update", "delete"],
+        "projection": [
+            {"outbound_col" : "dataset"},
+            {"outbound": ["isa", "dataset_project_fkey"]},
+            {"outbound": ["isa", "project_groups_fkey"]},
+            "groups"
+        ],
+        "projection_type": "acl"
+    }
+  },
+
+  "catalog_acl": {"acl" : "catalog_policy"},
+
+  "schema_acls": [
+    {"schema" : "public", "acl" : "hidden"},
+    {"schema" : "vocab", "acl" : "vocabulary_curation_policy"},
+    {"schema_pattern": "^isa$|^viz$|^data_commons$", "acl": "isa_curation_policy"}
+  ],
+
+  "table_acls": [
+    {
+      "schema": "vocab",
+      "table_pattern": "^genotype_terms$|^mutation_terms$|^strain_terms$",
+      "acl": "isa_curation_policy"
+    },
+    {
+      "schema": "isa",
+      "table": "project",
+      "acl_bindings": ["project_edit_guard"]
+    },
+    {
+      "schema": "isa",
+      "table_pattern": "^project_",
+      "acl_bindings": ["project_suppl_edit_guard"]
+    },
+    {
+      "schema": "isa",
+      "table": "dataset",
+      "acl_bindings": ["dataset_edit_guard"]
+    },
+    {
+      "schema": "isa",
+      "table_pattern": "^dataset_[^ips]|^dataset_somite_count$|^dataset_instrument$",
+      "acl_bindings": ["dataset_tags_edit_guard"]
+    },
+    {
+      "schema": "isa",
+      "table": "^dataset_phenotype$",
+      "acl_bindings": ["dataset_tags_edit_guard"]
+    },
+    {
+      "schema": "vocab",
+      "table_pattern": "^experiment_type_terms$|^data_type_terms$|^organism_terms$|^instrument_terms$|^stage_terms$",
+      "acl": "vocabulary_curation_policy"
+    },
+    { "schema_pattern": "^isa$|^viz$",
+      "table_pattern": "^experiment$|^biosample$|^replicate$|^enhancer$|^model$|^clinical_assay$",
+      "acl": "restricted_visibility_policy",
+      "acl_bindings": ["curated_status_guard", "dataset_suppl_edit_guard"]
+    },
+    { "schema": "isa",
+      "table_pattern": "^file$|^thumbnail$|.*_data$",
+      "acl": "restricted_visibility_policy",
+      "acl_bindings": ["released_status_guard", "dataset_suppl_edit_guard"]
+    }
+  ],
+
+  "column_acls": [
+    {"schema": "isa", "table": "dataset", "column": "status", "invalidate_bindings": ["dataset_edit_guard"]},
+    {"schema": "isa", "table": "project", "column_pattern": "^group", "acl": "users_only", "invalidate_bindings": ["project_edit_guard"]}
+  ]
+}

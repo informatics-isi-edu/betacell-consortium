@@ -93,6 +93,8 @@ experiment = model_root.table('isa', 'experiment')
 biosample = model_root.table('isa', 'biosample')
 dataset = model_root.table('isa', 'dataset')
 protocol = model_root.table('isa','protocol')
+replicate = model_root.table('isa','replicate')
+imaging_data = model_root.table('isa','imaging_data')
 
 pb = catalog.getPathBuilder()
 isa = pb.isa
@@ -100,7 +102,6 @@ pbexperiment = isa.experiment
 pbbiosample = isa.biosample
 pbdataset = isa.dataset
 pbprotocol = isa.protocol
-
 
 
 capillary_column_def = em.Column.define(
@@ -155,3 +156,7 @@ protocol.visible_columns['detailed'] = [
     'submitted_on',
     'md5']
 protocol.apply(catalog)
+
+
+# Create the xray-tomography table
+
