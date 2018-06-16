@@ -16,6 +16,10 @@ xray_tomography = 'commons:599:'
 pancreas = 'UBERON:0001264:'
 dataset_key ='1-882P'
 
+for i in file_map:
+    re.sub('_[0-9]?_pre_rec$','', file_map[0][3]) + '/' + file_map[0][3]
+
+
 def add_file_to_replicant(dataset_rid, fmap, description = ''):
     """
     Upload a file into a data collection and add that file into the set of files associated with a cohort analysis.
@@ -29,12 +33,15 @@ def add_file_to_replicant(dataset_rid, fmap, description = ''):
     catalog = ErmrestCatalog('https', pbcserver, 1, credentials=credential)
 
     (experiment_rid, biosample_rid, replicate_rid, filename) = fmap
-
-    print(filename)
-    filename = 'dummy.mrc'
-    path = '/hatrac/commons/data/{}/{}/{}'.format(dataset_rid, replicate_rid, os.path.basename(filename))
-    loc = store.put_obj(path, filename)
-    r = store.head(path)
+    dirname = re.sub('_[0-9]+_pre_rec$', '', filename)
+    filename = filename + '.mrc'
+    path = '{}/{}'.format(dirname,filename)
+    print('Uploading ', path)
+    objpath = '/hatrac/commons/data/{}/{}/{}?parents=true'.format(dataset_rid, replicate_rid, os.path.basename(filename))
+    print('to ', objpath)
+    loc = store.put_obj(objpath, path)
+    print(loc)
+    r = store.head(objpath)
     md5 = r.headers['content-md5']
     byte_count = r.headers['Content-Length']
     submit_time = r.headers['Date']
@@ -59,6 +66,9 @@ def add_file_to_replicant(dataset_rid, fmap, description = ''):
     isa = pb.isa
 
     tomography_data = isa.tables['xray_tomography_data']
-    newrid = tomography_data.insert([file])
+    try:
+        newrid = tomography_data.insert([file])
+    except:
+        print("could not insert", filename)
     return newrid
 

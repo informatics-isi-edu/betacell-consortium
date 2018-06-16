@@ -6,6 +6,26 @@ import deriva.core.ermrest_model as em
 import csv
 import re
 
+server = 'pbcconsortium.isrd.isi.edu'
+credential = get_credential(server)
+catalog = ErmrestCatalog('https', server, 1, credentials=credential)
+model_root = catalog.getCatalogModel()
+
+experiment = model_root.table('isa', 'experiment')
+biosample = model_root.table('isa', 'biosample')
+dataset = model_root.table('isa', 'dataset')
+protocol = model_root.table('isa','protocol')
+replicate = model_root.table('isa','replicate')
+imaging_data = model_root.table('isa','imaging_data')
+
+pb = catalog.getPathBuilder()
+isa = pb.isa
+experiment_dp = isa.experiment
+biosample_dp = isa.biosample
+dataset_dp = isa.dataset
+protocol_dp = isa.protocol
+replicate_dp = isa.replicate
+
 # Read in the CSV File....
 data = {}
 biosample_entities = []
@@ -107,7 +127,9 @@ for k,v in experiments.items():
 #load replicates
 file_map = []
 for k,v in replicates.items():
+    print(k)
     for i,[biosample,filename] in enumerate(v):
+        print(biosample, filename)
         rep = {'dataset': dataset_key, 'technical_replicate_number':1, 'bioreplicate_number': i+1}
         rep['experiment'] = experiment_dp.filter(experiment_dp.local_identifier == k).entities()[0]['RID']
         rep['biosample'] = biosample_dp.filter(biosample_dp.local_identifier == biosample).entities()[0]['RID']
