@@ -9,12 +9,9 @@ column_names = ['RID',
  'summary',
  'species',
  'specimen',
- 'strain',
- 'anatomy',
- 'gender',
+
  'collection_date',
  '_keywords',
-'cell_line'
  'RCB',
  'RMB',
  'RCT',
@@ -23,21 +20,35 @@ column_names = ['RID',
  'sample_position']
 
 
-
-cell_line_column_def = em.Column.define(
-    "cell_line", em.builtin_types.text, nullok=True,
-    comment="Cell line used for the biosample.",
-)
-
-specimen_column_def = em.Column.define(
+column_defs = [
+    em.Column.define(
+        "dataset", em.builtin_types.text, nullok=False,
+        comment="Dataset in which this specimen is located.",
+    ),
+    em.Column.define(
+        "local_identifier", em.builtin_types.text, nullok=True,
+    ),
+    em.Column.define(
+        "collection_date", em.builtin_types.date, nullok=True,
+    ),
+    em.Column.define(
     "specimen", em.builtin_types.text, nullok=True,
     comment="Biological material used for the biosample.",
-)
-
-specimen_type_column_def = em.Column.define(
+    ),
+    em.Column.define(
     'specimen_type', em.builtin_types.text, nullok=True,
     comment='Method by which specimen is prepared.'
 )
+    em.Column.define(
+        "capillary_number", em.builtin_types.int2, nullok=True,
+    ),
+    em.Column.define(
+        "sample_position", em.builtin_types.int2, nullok=True,
+    ),
+    em.Column.define(
+        "summary", em.builtin_types.text, nullok=True,
+    ),
+]
 
 cell_line_fk = em.ForeignKey.define(
     ["cell_line"],  # this is a list to allow for compound foreign keys

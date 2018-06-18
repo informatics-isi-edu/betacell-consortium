@@ -42,6 +42,7 @@ def dump_columns(table):
         {
             'name' : i.name,
             'type' : { 'typename': i.type.typename, 'is_array': i.type.is_array},
+            'nullok': i.nullok,
         'annotations' : i.annotations
         }
     for i in table.column_definitions
