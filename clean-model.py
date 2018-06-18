@@ -63,6 +63,12 @@ delcolumn.delete(catalog, table = biosample)
 delcolumn = biosample.column_definitions['origin']
 delcolumn.delete(catalog, table = biosample)
 
+delcolumn = biosample.column_definitions['strain']
+delcolumn.delete(catalog, table = biosample)
+
+# clean up sample
+
+
 # Clean up dataset
 
 dataset.visible_columns["detailed"] = [
