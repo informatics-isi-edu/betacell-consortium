@@ -1,4 +1,4 @@
-from deriva.core import HatracStore, ErmrestCatalog, ErmrestSnapshot, get_credential, DerivaPathError
+from deriva.core import HatracStore, ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
 import csv
 import re
