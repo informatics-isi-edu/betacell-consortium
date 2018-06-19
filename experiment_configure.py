@@ -44,7 +44,7 @@ visible_columns = {
                   'entity': True},
                  {'source': [{'inbound': ['isa', 'replicate_experiment_fkey']},
                              {'outbound': ['isa', 'replicate_biosample_fkey']},
-                             {'outbound': ['isa', 'biosample_specimen_hack_fkey']},
+                             {'outbound': ['isa', 'biosample_specimen_fkey']},
                              {'outbound' : ['isa', 'specimen_cell_line_fkey']},
                              'name'],
                   'markdown_name' : 'Cell Line',

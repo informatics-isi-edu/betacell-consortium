@@ -62,7 +62,7 @@ cell_line_fk = em.ForeignKey.define(
 specimen_fk = em.ForeignKey.define(
     ["specimen"],  # this is a list to allow for compound foreign keys
     "isa", "specimen", ["RID"],  # this is a list to allow for compound keys
-    constraint_names=[['isa', "biosample_specimen_hack_fkey"]]
+    constraint_names=[['isa', "biosample_specimen_fkey"]]
 )
 
 specimen_type_fk = em.ForeignKey.define(
