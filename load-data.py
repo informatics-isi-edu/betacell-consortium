@@ -22,7 +22,8 @@ biosample_dp = isa.biosample
 dataset_dp = isa.dataset
 protocol_dp = isa.protocol
 replicate_dp = isa.replicate
-
+xray_tomography_dp = isa.xray_tomography_data
+ima
 # Read in the CSV File....
 data = {}
 biosample_entities = []
@@ -44,6 +45,11 @@ cell_line_keys = {
     'INS-1E' : 'commons:597:'
 }
 
+specimen_keys = {
+    'HEK293': '1-8SFJ',
+    'EndoC-BH1': '1-8PR2',
+    'INS-1E' : '1-8SFP'
+}
 
 # Load biosamples
 biosample_entities = []
@@ -72,10 +78,8 @@ for i in data:
     biosample_entities.append({
         'dataset':  dataset_key,
         'local_identifier': 'C{}-{}'.format(i['Capillary Number'], i['Bead Position']) ,
-        'species': homo_sapiens_key,
-        'specimen': frozen_key,
-        'anatomy' : pancreas,
-        'strain': cell_line_keys[i['Cell Line']],
+        'specimen': specimen_keys[i['Cell Line']],
+        'specimen_type': frozen_key,
         'capillary_number': i['Capillary Number'],
         'sample_position': i['Bead Position'],
         'collection_date': '2018-04-01'
@@ -119,6 +123,31 @@ for k,v in experiments.items():
     else:
         print('Inserting new experiment', exp['local_identifier'])
         experiment_dp.insert([exp])
+
+
+
+# Create file map
+file_map = []
+cnt = 0
+for k,v in replicates.items():
+    print(k)
+    for i,[biosample,filename] in enumerate(v):
+        print(cnt, " ", biosample, filename)
+        cnt = cnt + 1
+        rep = {'dataset': dataset_key, 'technical_replicate_number':1, 'bioreplicate_number': i+1}
+        rep['experiment'] = experiment_dp.filter(experiment_dp.local_identifier == k).entities()[0]['RID']
+        rep['biosample'] = biosample_dp.filter(biosample_dp.local_identifier == biosample).entities()[0]['RID']
+        existing_rep = replicate_dp.filter((replicate_dp.biosample == rep['biosample']) &
+                                           (replicate_dp.experiment == rep['experiment'])).entities()
+        # if len(existing_rep) >= 1:
+        #     rep['RID'] = existing_rep[0]['RID']
+        #     print('Updating exsiting experiment', rep['RID'])
+        #     newrid = replicate_dp.update([rep])
+        # else:
+        #     print('Inserting new replicate {}/{}'.format(rep['experiment'],rep['biosample']))
+        #     newrid = replicate_dp.insert([rep])
+        file_map.append((rep['experiment'],rep['biosample'], existing_rep[0]['RID'], filename))
+
 
 
 #load replicates

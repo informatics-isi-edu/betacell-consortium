@@ -69,6 +69,51 @@ def add_file_to_replicant(dataset_rid, fmap, description = ''):
     try:
         newrid = tomography_data.insert([file])
     except:
-        print("could not insert", filename)
-    return newrid
+        newrid = tomography_data.update([file])
+    return
+
+def hack_file_to_replicant(dataset_rid, fmap, description = ''):
+    """
+    Upload a file into a data collection and add that file into the set of files associated with a cohort analysis.
+    :param file: local path to the file that should be uploaded and associated with the cohort
+    :param description: Text that is used to describe the file that is being uploaded
+    :param cohort: RID of the analysis cohort to which the file file should be assoicated.
+    :return: None.
+    """
+    credential = get_credential(pbcserver)
+
+    (experiment_rid, biosample_rid, replicate_rid, filename) = fmap
+    dirname = re.sub('_[0-9]+_pre_rec$', '', filename)
+    filename = filename + '.mrc'
+    path = '{}/{}'.format(dirname,filename)
+    print('Uploading ', path)
+    objpath = '/hatrac/commons/data/{}/{}/{}?parents=true'.format(dataset_rid, replicate_rid, os.path.basename(filename))
+    print('to ', objpath)
+ #   loc = store.put_obj(objpath, path)
+    (loc, md5, byte_count, submit_time) = filedict[filename]
+
+    file = {
+        'dataset' : dataset_rid,
+        'anatomy': pancreas,
+        'device' : 'commons:599:',
+        'equipment_model': 'commons:600:',
+        'description' :description,
+        'url' : loc,
+        'filename' : os.path.basename(filename),
+        'file_type' : 'commons:601:',
+        'byte_count': byte_count,
+        'submitted_on' : submit_time,
+        'md5' : md5,
+        'replicate' : replicate_rid
+    }
+
+    pb = catalog.getPathBuilder()
+    isa = pb.isa
+
+    tomography_data = isa.tables['xray_tomography_data']
+    try:
+        newrid = tomography_data.insert([file])
+    except:
+        newrid = tomography_data.update([file])
+    return
 

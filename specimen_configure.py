@@ -20,6 +20,7 @@ visible_columns = {
     ],
     'detailed': [
         ['isa', 'specimen_pkey'],
+        'local_identifier',
         ['isa', 'specimen_dataset_fkey'],
         ['isa', 'specimen_cell_line_fkey'],
         ['isa', 'specimen_species_fkey'],
@@ -29,9 +30,8 @@ visible_columns = {
     ],
     'compact' : [
         ['isa', 'specimen_pkey'],
+        'local_identifier',
         ['isa', 'specimen_cell_line_fkey'],
-        ['isa', '']
-        'local_identifier'
     ]
 }
 

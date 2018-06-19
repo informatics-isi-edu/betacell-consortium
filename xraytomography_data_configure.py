@@ -63,11 +63,9 @@ visible_columns = {
          'submitted_on'],
     'compact':
         [['isa', 'xray_tomography_data_pkey'],
-         'replicate_fkey',
+         ['isa', 'xray_tomography_data_replicate_fkey'],
          'url',
          ['isa', 'xray_tomography_data_file_type_fkey'],
-         'byte_count',
-         'md5',
          'submitted_on']}
 
 visible_foreign_keys = {
