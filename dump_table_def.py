@@ -1,12 +1,21 @@
+# This script will query a catalog and dump out the definetions for a table. These are then output into a new
+# script that can recreate the table.
+
+import argparse
 from deriva.core import HatracStore, ErmrestCatalog, ErmrestSnapshot, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
 import pprint
-import re
 
-# Simple helper routines to dump the current contents of a table.
-server = 'pbcconsortium.isrd.isi.edu'
-schema_name = 'viz'
-table_name = 'model'
+parser = argparse.ArgumentParser(description='Generate a table configuration from an existing table.')
+parser.add_argument('--server', default='pbcconsortium.isrd.isi.edu',
+                    help='Catalog server name')
+parser.add_argument('table', help='schema:table_name)')
+
+args = parser.parse_args()
+
+server = args.server
+schema_name = args.table.split(':')[0]
+table_name = args.table.split(':')[1]
 
 credential = get_credential(server)
 catalog = ErmrestCatalog('https', server, 1, credentials=credential)

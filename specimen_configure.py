@@ -9,6 +9,18 @@ schema_name = 'isa'
 table_name = 'specimen'
 
 visible_columns = {
+       'filter':
+        {'and': [
+            {'source': [{'outbound': ['isa', 'specimen_cell_line_fkey']}, 'name'],
+                  'open': True,
+                  'entity': True},
+            {'source': [{'outbound': ['isa', 'specimen_species_fkey']}, 'name'],
+             'open': True,
+             'entity': True},
+            {'source': [{'outbound': ['isa', 'specimen_anatomy_fkey']}, 'name'],
+             'open': True,
+             'entity': True},
+            ]},
     'entry': [
         ['isa', 'local_identifier'],
         ['isa', 'specimen_dataset_fkey'],

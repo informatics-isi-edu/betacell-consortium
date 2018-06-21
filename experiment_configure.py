@@ -39,7 +39,7 @@ visible_columns = {
                   'open': False,
                   'entity': True},
                  {'source': [{'outbound': ['isa', 'experiment_experiment_type_fkey']},
-                             'dbxref'],
+                             'name'],
                   'open': True,
                   'entity': True},
                  {'source': [{'inbound': ['isa', 'replicate_experiment_fkey']},

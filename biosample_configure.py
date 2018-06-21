@@ -23,7 +23,7 @@ visible_columns = {
                              {'outbound': ['isa', 'specimen_cell_line_fkey']},
                              'name'],
                   'markdown_name': 'Cell Line'},
-                 {'source': [{'outbound': ['isa', 'biosample_specime_fkey']},
+                 {'source': [{'outbound': ['isa', 'biosample_specimen_fkey']},
                              {'outbound': ['isa', 'specimen_species_fkey']},
                              'name'],
                   'markdown_name': 'Species'},

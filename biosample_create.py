@@ -67,7 +67,7 @@ specimen_fk = em.ForeignKey.define(
 
 specimen_type_fk = em.ForeignKey.define(
     ['specimen_type'],
-    "vocab", "specimen_terms", ["dbxref"],
+    "vocab", "specimen_type_terms", ["RID"],
     constraint_names=[['isa', "biosample_specimen_type_fkey"]],
     comment="Must be a valid reference to a specimen type.",
     acls={}, acl_bindings={},

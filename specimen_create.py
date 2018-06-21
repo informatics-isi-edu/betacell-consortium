@@ -45,7 +45,7 @@ fkey_defs = [
     ),
     em.ForeignKey.define(
         ["cell_line"],  # this is a list to allow for compound foreign keys
-        "vocab", "strain_terms", ["dbxref"],  # this is a list to allow for compound keys
+        "vocab", "cell_line_terms", ["RID"],  # this is a list to allow for compound keys
         constraint_names=[['isa', "specimen_cell_line_fkey"]],
         comment="Must be a valid reference to a cell line.",
         acls={}, acl_bindings={},
@@ -53,13 +53,13 @@ fkey_defs = [
     ),
     em.ForeignKey.define(
         ['species'],
-        'vocab', 'species_terms', ['dbxref'],
+        'vocab', 'species_terms', ['RID'],
         constraint_names=[['isa', 'specimen_species_fkey']],
         annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Species'}},
     ),
     em.ForeignKey.define(
         ['anatomy'],
-        'vocab', 'anatomy_terms', ['dbxref'],
+        'vocab', 'anatomy_terms', ['RID'],
         constraint_names=[['isa', 'specimen_anatomy_fkey']],
         annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Anatomy'}},
     )

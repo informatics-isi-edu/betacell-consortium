@@ -3,11 +3,17 @@ import deriva.core.ermrest_model as em
 import csv
 import re
 
+
+# Load basic data elements from CSV file for initial XRAY-Tomography Run.
+
+
+# Create connection to the PBC server
 server = 'pbcconsortium.isrd.isi.edu'
 credential = get_credential(server)
 catalog = ErmrestCatalog('https', server, 1, credentials=credential)
 model_root = catalog.getCatalogModel()
 
+# Get references to main tables for manipulating the model.
 experiment = model_root.table('isa', 'experiment')
 biosample = model_root.table('isa', 'biosample')
 dataset = model_root.table('isa', 'dataset')
@@ -16,9 +22,13 @@ replicate = model_root.table('isa','replicate')
 imaging_data = model_root.table('isa','imaging_data')
 model = model_root.table("viz", 'model')
 
+# Get references to the main tables for managing their contents using DataPath library
 pb = catalog.getPathBuilder()
+# Get main schema
 isa = pb.isa
 viz = pb.viz
+
+# Get tables....
 experiment_dp = isa.experiment
 biosample_dp = isa.biosample
 dataset_dp = isa.dataset
