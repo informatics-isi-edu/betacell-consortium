@@ -27,14 +27,7 @@ visible_columns = \
                'name',
                'treatment',
                 [['isa', 'protocol_treatment_protocol_fkey'],['isa', 'protocol_treatment_treatment']],
-               {'source': [{'inbound': ['isa', 'protocol_treatment_protocol_fkey']},
-                           {'outbound': ['isa', 'protocol_treatment_treatment_fkey']},
-                           'name'],
-                'markdown_name': 'Treatment a GoGO'},
-               {'entity': True,
-                'markdown_name': 'Protocol Name',
-                'open': False,
-                'source': 'name'},
+                {"source": [{"inbound": ["isa", "protocol_treatment_treatement_fkey"]}, "protocol"]},
                'treatment_concentration',
                'timepoint',
                'protocol_url',
@@ -64,7 +57,8 @@ visible_columns = \
 
 visible_foreign_keys = \
     {'detailed': [['isa', 'experiment_protocol_fkey'],
-                  [['isa', 'protocol_treatment_protocol_fkey'],['isa', 'protocol_treatment_treatment']]
+                  [['isa', 'protocol_treatment_protocol_fkey'],['isa', 'protocol_treatment_treatment']],
+                  [['isa', 'protocol_treatment_protocol_fkey']]
                   ],
      'entry': [['isa', 'experiment_protocol_fkey'],
                [['isa', 'protocol_treatment_protocol_fkey'],['isa', 'protocol_treatment_treatment']]
@@ -135,11 +129,6 @@ table_acl_bindings = \
 column_annotations = \
     {'RCB': {},
      'RCT': {},
-     'RID': {},
-     'RMB': {},
-     'RMT': {},
-     'assay_ids': {},
-     'byte_count': {},
      'description': {},
      'file_url': {'tag:isrd.isi.edu,2017:asset': {'byte_count_column': 'byte_count',
                                                   'filename_column': 'filename',
@@ -153,40 +142,6 @@ column_annotations = \
      'treatment': {},
      'treatment_concentration': {}}
 
-column_acls = \
-    {'RCB': {},
-     'RCT': {},
-     'RID': {},
-     'RMB': {},
-     'RMT': {},
-     'assay_ids': {},
-     'byte_count': {},
-     'description': {},
-     'file_url': {},
-     'filename': {},
-     'md5': {},
-     'name': {},
-     'protocol_url': {},
-     'timepoint': {},
-     'treatment': {},
-     'treatment_concentration': {}}
-column_acl_bindings = \
-    {'RCB': {},
-     'RCT': {},
-     'RID': {},
-     'RMB': {},
-     'RMT': {},
-     'assay_ids': {},
-     'byte_count': {},
-     'description': {},
-     'file_url': {},
-     'filename': {},
-     'md5': {},
-     'name': {},
-     'protocol_url': {},
-     'timepoint': {},
-     'treatment': {},
-     'treatment_concentration': {}}
 
 credential = get_credential(server)
 catalog = ErmrestCatalog('https', server, 1, credentials=credential)

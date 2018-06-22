@@ -1,8 +1,6 @@
 from deriva.core import ErmrestCatalog, get_credential
 import deriva.core.ermrest_model as em
 
-
-
 column_names = ['RID',
  'dataset',
  'local_identifier',
