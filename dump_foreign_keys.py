@@ -16,11 +16,12 @@ def dump_foreign_keys(table):
             'constraint_names': key.names,
         }
         for i in ['annotations', 'acls', 'acl_bindings', 'on_update', 'on_delete', 'comment']:
-            a = getattr(key,i)
+            a = getattr(key, i)
             if not (a == {} or a == None or a == 'NO ACTION'):
-                fk[i] = "'" + a + "'" if re.match('comment|on_update|on_delete',i)   else a
+                fk[i] = "'" + a + "'" if re.match('comment|on_update|on_delete', i) else a
         fks.append(fk)
     return fks
+
 
 def main():
     parser = argparse.ArgumentParser(description='Load foreign key defs for table {}:{}')
@@ -30,8 +31,6 @@ def main():
     parser.add_argument('table', help='schema:table_name)')
 
     args = parser.parse_args()
-
-    delete_fkeys = args.delete
 
     server = args.server
     schema_name = args.table.split(':')[0]
@@ -52,16 +51,16 @@ import deriva.core.ermrest_model as em""")
         {},
         '{}', '{}', {},
         constraint_names = {},""".format(i['foreign_key_columns'],
-                      i['pk_schema'],
-                       i['pk_table'],
-                       i['pk_columns'],
-                          i['constraint_names']))
+                                         i['pk_schema'],
+                                         i['pk_table'],
+                                         i['pk_columns'],
+                                         i['constraint_names']))
 
         for k in ['annotations', 'acls', 'acl_bindings', 'on_update', 'on_delete', 'comment']:
             if k in i:
                 print("        {} = {},".format(k, i[k]))
         print('    ),')
-   
+
     print(']')
     print("""
 def main():
@@ -93,5 +92,6 @@ def main():
 if __name__ == "__main__":
     main()""".format(schema_name, table_name))
 
+
 if __name__ == "__main__":
-    main()    
+    main()
