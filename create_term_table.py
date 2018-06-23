@@ -29,6 +29,9 @@ def create_vocabulary_table(catalog,term_table):
         em.Table.define_vocabulary(term_table,'PBCCONSORTIUM:{RID}',comment=term_comment)
 )
 
+{{name}} ({{{id}}})
+
+
 term_list = [
     {'id': 'NCBITAXON:9606',
      'uri': 'http://purl.bioontology.org/ontology/NCBITAXON/9606',
@@ -54,10 +57,6 @@ species_terms_dp.insert(species_list)
 
 experiment_type_terms_dp = vocab_dp.experiment_type_terms
 experiment_type_terms_dp.insert(experiment_type_list)
-
-
-
-
 
 credential = get_credential(server)
 

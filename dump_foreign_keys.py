@@ -22,19 +22,7 @@ def dump_foreign_keys(table):
         fks.append(fk)
     return fks
 
-
-def main():
-    parser = argparse.ArgumentParser(description='Load foreign key defs for table {}:{}')
-    parser.add_argument('--server', default='pbcconsortium.isrd.isi.edu',
-                        help='Catalog server name')
-    parser.add_argument('--delete', help='delete existing foreign keys before loading)')
-    parser.add_argument('table', help='schema:table_name)')
-
-    args = parser.parse_args()
-
-    server = args.server
-    schema_name = args.table.split(':')[0]
-    table_name = args.table.split(':')[1]
+def print_foreign_keys(server, schema_name, table_name, stream):
 
     credential = get_credential(server)
     catalog = ErmrestCatalog('https', server, 1, credentials=credential)
@@ -43,25 +31,25 @@ def main():
     table = schema.tables[table_name]
     print("""import argparse
 from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
-import deriva.core.ermrest_model as em""")
+import deriva.core.ermrest_model as em""", file=stream)
 
-    print('\nfkey_defs = [')
+    print('\nfkey_defs = [', file=stream)
     for i in dump_foreign_keys(table):
         print("""    em.ForeignKey.define(
-        {},
-        '{}', '{}', {},
-        constraint_names = {},""".format(i['foreign_key_columns'],
-                                         i['pk_schema'],
-                                         i['pk_table'],
-                                         i['pk_columns'],
-                                         i['constraint_names']))
+            {},
+            '{}', '{}', {},
+            constraint_names = {},""".format(i['foreign_key_columns'],
+                                             i['pk_schema'],
+                                             i['pk_table'],
+                                             i['pk_columns'],
+                                             i['constraint_names']), file=stream)
 
         for k in ['annotations', 'acls', 'acl_bindings', 'on_update', 'on_delete', 'comment']:
             if k in i:
-                print("        {} = {},".format(k, i[k]))
-        print('    ),')
+                print("        {} = {},".format(k, i[k]), file=stream)
+        print('    ),', file=stream)
 
-    print(']')
+    print(']', file=stream)
     print("""
 def main():
     parser = argparse.ArgumentParser(description='Load foreign key defs for table {0}:{1}')
@@ -80,18 +68,39 @@ def main():
     model_root = catalog.getCatalogModel()
     schema = model_root.schemas[schema_name]
     table = schema.tables[table_name]
-    
+
     if delete_fkeys:
         for k in table.foreign_keys:
             k.delete(catalog)
-            
+
     model_root = catalog.getCatalogModel()
     for i in fkey_defs:
         table.create_fkey(catalog,i)
 
 if __name__ == "__main__":
-    main()""".format(schema_name, table_name))
+    main()""".format(schema_name, table_name), file=stream)
 
+def main():
+    parser = argparse.ArgumentParser(description='Load foreign key defs for table {}:{}')
+    parser.add_argument('--server', default='pbcconsortium.isrd.isi.edu',
+                        help='Catalog server name')
+    parser.add_argument('--delete', help='delete existing foreign keys before loading)')
+    parser.add_argument('--outfile', default="stdout", help='output file name)')
+    parser.add_argument('table', help='schema:table_name)')
+
+    args = parser.parse_args()
+
+    server = args.server
+    schema_name = args.table.split(':')[0]
+    table_name = args.table.split(':')[1]
+    outfile = args.outfile
+
+    if outfile == 'stdout':
+        print_foreign_keys(server, schema_name, table_name, sys.stdout)
+    else:
+        with open(outfile, 'w') as f:
+            print_foreign_keys(server, schema_name, table_name, f)
+        f.close()
 
 if __name__ == "__main__":
     main()
