@@ -9,7 +9,7 @@ table_list = {
         'isa' :['biosample', 'dataset', 'experiment','protocol','protocol_treatment','replicate','specimen',
                                                         'xray_tomography_data', 'dataset_experiment_type', 'project', 'person'],
     'vocab' : [ 'treatment_terms','specimen_terms' ],
-    'viz' : ['model', 'model_mesh_data']
+    'viz' : ['model', 'model_mesh_data'],
     'common' : []
 }
 
@@ -25,22 +25,8 @@ for schema_name in ['vocab', 'isa', 'viz']:
         print('Dumping {},{}'.format(schema_name, i))
 
         for i in table_list[schema_name]:
-            filename = 'configs/{}/{}_configs.py'.format(schema_name, i)
+            filename = 'configs/{}/{}_def.py'.format(schema_name, i)
             os.makedirs(os.path.dirname(filename), exist_ok=True)
             with open(filename, 'w') as f:
-                dump_table_annotations.print_table_annotations(server, schema_name, i,f)
-            f.close()
-
-        for i in table_list[schema_name]:
-            filename = 'configs/{}/{}_create.py'.format(schema_name, i)
-            os.makedirs(os.path.dirname(filename), exist_ok=True)
-            with open(filename, 'w') as f:
-                dump_table_def.print_table_def(server, schema_name, i, f)
-            f.close()
-
-        for i in table_list[schema_name]:
-            filename = 'configs/{}/{}_fkeys.py'.format(schema_name, i)
-            os.makedirs(os.path.dirname(filename), exist_ok=True)
-            with open(filename, 'w') as f:
-                dump_foreign_keys.print_foreign_keys(server, schema_name, i,f)
+                dump_table_def.print_defs(server, schema_name, i,f)
             f.close()
