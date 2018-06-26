@@ -35,7 +35,7 @@ def print_annotations(table, stream):
         elif 'visible-foreign-keys' in k:
             print('    "{}" : visible_foreign_keys,'.format(k), file=stream)
         else:
-            print('    "{}" :'.format(k), file=stream)
+            print('    "{}," :'.format(k), file=stream)
             pprint.pprint(v, indent=8, stream=stream)
     print('}', file=stream)
 

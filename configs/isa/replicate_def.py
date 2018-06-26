@@ -98,7 +98,7 @@ visible_columns=\
 
 visible_foreign_keys=\
 {   'detailed': [   ['isa', 'xray_tomography_data_replicate_fkey'],
-                    {'source': [{'inbound': ['viz', 'model_replicate_fkey']}]},
+                    ['viz', 'model_replicate_fkey'],
                     ['isa', 'mesh_data_replicate_fkey'],
                     ['isa', 'processed_data_replicate_fkey'],
                     ['isa', 'imaging_data_replicate_fkey']],
@@ -140,7 +140,7 @@ table_annotations = {
     "table_display" :
 {       'compact': {       'row_order': [       {       'column': 'bioreplicate_number',
                                                         'descending': False}]},
-        'row_name': {'row_markdown_pattern': '{{local_identifier}}'}}
+        'row_name': {'row_markdown_pattern': '{{local_identifier}}'}},
     "tag:isrd.isi.edu,2016:visible-columns" : visible_columns,
 }
 
