@@ -7,7 +7,7 @@ def main():
     parser = argparse.ArgumentParser(description='Load foreign key defs for table {0}:{1}')
     parser.add_argument('--server', default='pbcconsortium.isrd.isi.edu',
                         help='Catalog server name')
-    parser.add_argument('--delete', help='delete existing foreign keys before loading)')
+    parser.add_argument('--deletefks', help='delete existing foreign keys before loading)')
     parser.add_argument('--defpath', default='.', help='path to table definitions)')
     parser.add_argument('table', help='Name table to be loaded.')
     parser.add_argument('mode', choices=['table', 'annotations', 'fkeys', 'acls'],
@@ -38,6 +38,7 @@ def main():
             mod.table_def.fkey_defs = []
         table = schema.create_table(catalog, mod.table_def)
     if mode == 'fkeys':
+            print('deleting foreign_keys')
             for k in table.foreign_keys:
                 k.delete(catalog)
             for i in mod.fkey_defs:

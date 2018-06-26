@@ -1,5 +1,3 @@
-import dump_table_annotations
-import dump_foreign_keys
 import dump_table_def
 import dump_schema
 import os
@@ -7,7 +5,7 @@ import os
 server = 'pbcconsortium.isrd.isi.edu'
 table_list = {
         'isa' :['biosample', 'dataset', 'experiment','protocol','protocol_treatment','replicate','specimen',
-                                                        'xray_tomography_data', 'dataset_experiment_type', 'project', 'person'],
+                                                        'xray_tomography_data', 'dataset_experiment_type', 'project', 'person', 'mesh_data'],
     'vocab' : [ 'treatment_terms','specimen_terms' ],
     'viz' : ['model', 'model_mesh_data'],
     'common' : []
