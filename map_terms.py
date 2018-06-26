@@ -3,13 +3,14 @@ credential = get_credential(server)
 catalog = ErmrestCatalog('https', server, 1, credentials=credential)
 model_root = catalog.getCatalogModel()
 
-table_name = 'protocol_treatment'
-key_column = 'specimen_type'
+table_name = 'specimen'
+key_column = 'cell_line'
 
 for i in model_root.schemas['isa'].tables[table_name].foreign_keys:
     i.delete(catalog)
 
-table = pb.isa.protocol_treatment
+
+table = pb.isa.biosamples
 term_table = pb.vocab.treatment_terms
 key_column = 'treatment'
 
