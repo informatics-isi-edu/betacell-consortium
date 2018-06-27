@@ -47,6 +47,13 @@ key_defs = [
 
 
 fkey_defs = [
+    em.ForeignKey.define(['dataset'],
+            'isa', 'dataset', ['RID'],
+            constraint_names=[('isa', 'mesh_data_dataset_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+        on_update='CASCADE',
+        on_delete='RESTRICT',
+    ),
     em.ForeignKey.define(['dataset', 'replicate'],
             'isa', 'replicate', ['dataset', 'RID'],
             constraint_names=[('isa', 'mesh_data_replicate_fkey')],
@@ -57,13 +64,6 @@ fkey_defs = [
     em.ForeignKey.define(['derived_from'],
             'isa', 'xray_tomography_data', ['RID'],
             constraint_names=[('isa', 'mesh_data_derived_from_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
-        on_update='CASCADE',
-        on_delete='RESTRICT',
-    ),
-    em.ForeignKey.define(['dataset'],
-            'isa', 'dataset', ['RID'],
-            constraint_names=[('isa', 'mesh_data_dataset_fkey')],
         acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='RESTRICT',

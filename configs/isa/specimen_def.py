@@ -22,41 +22,42 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('isa', 'specimen_RIDkey1')],
-    ),
     em.Key.define(['dataset', 'RID'],
                    constraint_names=[('isa', 'specimen_RID_key')],
        comment = 'RID and dataset must be distinct.',
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('isa', 'specimen_RIDkey1')],
     ),
 ]
 
 
 fkey_defs = [
+    em.ForeignKey.define(['dataset'],
+            'isa', 'dataset', ['RID'],
+            constraint_names=[('isa', 'specimen_dataset_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+    ),
     em.ForeignKey.define(['cell_line'],
             'isa', 'cell_line', ['RID'],
             constraint_names=[('isa', 'specimen_cell_line_fkey')],
         acls={'insert': ['*'], 'update': ['*']},
         comment='Must be a valid reference to a cell line.',
     ),
-    em.ForeignKey.define(['dataset'],
-            'isa', 'dataset', ['RID'],
-            constraint_names=[('isa', 'specimen_dataset_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
-    ),
 ]
 
 
 visible_columns=\
 {'compact': [['isa', 'specimen_pkey'], 'local_identifier',
-             ['isa', 'specimen_cell_line_fkey'],
              {'source': [{'outbound': ['isa', 'specimen_cell_line_fkey']},
                          {'outbound': ['isa',
                                        'cell_line_cell_line_terms_fkey']},
-                         'name']}],
+                         'name']},
+             'description'],
  'detailed': [['isa', 'specimen_pkey'], 'local_identifier',
               ['isa', 'specimen_dataset_fkey'],
-              {'source': [{'outbound': ['isa', 'specimen_cell_line_fkey']},
+              {'markdown_name': 'Cell Line',
+               'source': [{'outbound': ['isa', 'specimen_cell_line_fkey']},
                           {'outbound': ['isa',
                                         'cell_line_cell_line_terms_fkey']},
                           'name']},
@@ -65,6 +66,7 @@ visible_columns=\
            ['isa', 'specimen_cell_line_fkey'], 'description',
            'collection_date'],
  'filter': {'and': [{'entity': True,
+                     'markdown_name': 'Cell Line',
                      'open': True,
                      'source': [{'outbound': ['isa',
                                               'specimen_cell_line_fkey']},

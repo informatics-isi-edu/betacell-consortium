@@ -24,11 +24,11 @@ column_defs = [
 
 
 key_defs = [
+    em.Key.define(['model', 'mesh'],
+                   constraint_names=[('viz', 'model_mesh_data_model_mesh_key')],
+    ),
     em.Key.define(['RID'],
                    constraint_names=[('viz', 'model_mesh_data_pkey')],
-    ),
-    em.Key.define(['mesh', 'model'],
-                   constraint_names=[('viz', 'model_mesh_data_model_mesh_key')],
     ),
 ]
 

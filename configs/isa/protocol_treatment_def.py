@@ -21,7 +21,7 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['treatment', 'protocol'],
+    em.Key.define(['protocol', 'treatment'],
                    constraint_names=[('isa', 'protocol_treatment_RID_key')],
        comment = 'protocol and treatment must be distinct.',
     ),
@@ -32,17 +32,17 @@ key_defs = [
 
 
 fkey_defs = [
-    em.ForeignKey.define(['protocol'],
-            'isa', 'protocol', ['RID'],
-            constraint_names=[('isa', 'protocol_treatment_protocol_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
-        on_delete='CASCADE',
-    ),
     em.ForeignKey.define(['treatment'],
             'vocab', 'treatment_terms', ['id'],
             constraint_names=[('isa', 'protocol_treatment_treatment_fkey')],
         acls={'insert': ['*'], 'update': ['*']},
         comment='Must be a valid reference to a treatment.',
+    ),
+    em.ForeignKey.define(['protocol'],
+            'isa', 'protocol', ['RID'],
+            constraint_names=[('isa', 'protocol_treatment_protocol_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+        on_delete='CASCADE',
     ),
 ]
 

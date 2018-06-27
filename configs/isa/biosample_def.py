@@ -35,7 +35,7 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['dataset', 'local_identifier'],
+    em.Key.define(['local_identifier', 'dataset'],
                    constraint_names=[('isa', 'biosample_dataset_local_identifier_key')],
        annotations = {'tag:misd.isi.edu,2015:display': {}},
     ),
@@ -47,11 +47,6 @@ key_defs = [
 
 
 fkey_defs = [
-    em.ForeignKey.define(['specimen'],
-            'isa', 'specimen', ['RID'],
-            constraint_names=[('isa', 'biosample_specimen_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
-    ),
     em.ForeignKey.define(['specimen_type'],
             'vocab', 'specimen_type_terms', ['id'],
             constraint_names=[('isa', 'biosample_specimen_type_fkey')],
@@ -64,6 +59,11 @@ fkey_defs = [
         acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='RESTRICT',
+    ),
+    em.ForeignKey.define(['specimen'],
+            'isa', 'specimen', ['RID'],
+            constraint_names=[('isa', 'biosample_specimen_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
     ),
 ]
 
@@ -116,12 +116,13 @@ visible_columns=\
                      'markdown_name': 'Local Identifier',
                      'open': False,
                      'source': 'local_identifier'},
-                    {'entity': True, 'source': 'capillary_number'},
                     {'markdown_name': 'Cell Line',
                      'source': [{'outbound': ['isa',
                                               'biosample_specimen_fkey']},
                                 {'outbound': ['isa',
                                               'specimen_cell_line_fkey']},
+                                {'outbound': ['isa',
+                                              'cell_line_cell_line_terms_fkey']},
                                 'name']},
                     {'markdown_name': 'Species',
                      'source': [{'outbound': ['isa',
@@ -137,7 +138,8 @@ visible_columns=\
                      'source': [{'outbound': ['isa',
                                               'biosample_specimen_fkey']},
                                 {'outbound': ['isa', 'specimen_anatomy_fkey']},
-                                'name']}]}}
+                                'name']},
+                    {'entity': True, 'source': 'capillary_number'}]}}
 
 visible_foreign_keys=\
 {'*': ['cell_line', 'capillary_column', 'sample_position'],
@@ -193,15 +195,21 @@ table_display=\
 table_acls={}
 table_acl_bindings={}
 table_annotations = {
+    "tag:isrd.isi.edu,2016:table-alternatives":
+{}
+,
     "tag:isrd.isi.edu,2016:table-display":table_display,
     "tag:misd.isi.edu,2015:display":
 {}
 ,
     "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
-    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
-    "tag:isrd.isi.edu,2016:table-alternatives":
-{}
+    "table_display":
+{'row_name': {'row_markdown_pattern': '{{RID}} - '
+                                      '{{summary}}{{#local_identifier}} '
+                                      '[{{local_identifier}}] '
+                                      '{{/local_identifier}}'}}
 ,
+    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
 }
 column_annotations = \
 {'dataset': {'tag:isrd.isi.edu,2016:column-display': {},

@@ -53,13 +53,13 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['dataset', 'RID'],
-                   constraint_names=[('isa', 'xray_tomography_data_dataset_RID_key')],
-       comment = 'RID and dataset must be distinct.',
-    ),
     em.Key.define(['url'],
                    constraint_names=[('isa', 'xray_tomography_data_url_key')],
        comment = 'Unique URL must be provided.',
+    ),
+    em.Key.define(['dataset', 'RID'],
+                   constraint_names=[('isa', 'xray_tomography_data_dataset_RID_key')],
+       comment = 'RID and dataset must be distinct.',
     ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'xray_tomography_data_RIDkey1')],

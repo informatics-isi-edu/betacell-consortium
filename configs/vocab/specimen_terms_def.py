@@ -43,7 +43,7 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['cv', 'name', 'is_obsolete'],
+    em.Key.define(['cv', 'is_obsolete', 'name'],
                    constraint_names=[('vocab', 'specimen_terms_cv_name_is_obsolete_key')],
     ),
     em.Key.define(['RID'],
