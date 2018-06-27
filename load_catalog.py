@@ -29,7 +29,9 @@ def main():
     catalog = ErmrestCatalog('https', server, 1, credentials=credential)
     model_root = catalog.getCatalogModel()
     schema = model_root.schemas[mod.schema_name]
-    table = schema.tables[mod.table_name]
+
+    if mode != 'table':
+        table = schema.tables[mod.table_name]
 
     skip_fkeys = False
 
@@ -41,6 +43,9 @@ def main():
             print('deleting foreign_keys')
             for k in table.foreign_keys:
                 k.delete(catalog)
+            model_root = catalog.getCatalogModel()
+            schema = model_root.schemas[mod.schema_name]
+            table = schema.tables[mod.table_name]
             for i in mod.fkey_defs:
                 table.create_fkey(catalog, i)
 

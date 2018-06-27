@@ -74,7 +74,7 @@ def main():
     catalog = ErmrestCatalog('https', server, 1, credentials=credential)
     model_root = catalog.getCatalogModel()
 
-    schema = model_root.create_schema(schema_def)
+    schema = model_root.create_schema(catalog, schema_def)
 
 
 if __name__ == "__main__":

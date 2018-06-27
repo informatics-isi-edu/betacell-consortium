@@ -22,6 +22,7 @@ replicate = model_root.table('isa','replicate')
 imaging_data = model_root.table('isa','imaging_data')
 model = model_root.table("viz", 'model')
 
+
 # Get references to the main tables for managing their contents using DataPath library
 pb = catalog.getPathBuilder()
 # Get main schema
@@ -35,6 +36,7 @@ dataset_dp = isa.dataset
 protocol_dp = isa.protocol
 replicate_dp = isa.replicate
 xray_tomography_dp = isa.xray_tomography_data
+specimen_dp = isa.specimen
 model_dp = viz.model
 
 

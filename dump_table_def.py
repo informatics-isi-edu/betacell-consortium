@@ -20,9 +20,9 @@ def print_annotations(table, stream):
 
     for k, v in table_annotations.items():
         if v == {} or v == '':
-            print('{} = {}'.format(k, v), file=stream)
+            print('{}={}'.format(k, v), file=stream)
         else:
-            print('{} = \\'.format(k), file=stream)
+            print('{}=\\'.format(k), file=stream)
             pprint.pprint(v, indent=4, width=80, depth=None, compact=False, stream=stream)
             print('',file=stream)
 
@@ -35,7 +35,7 @@ def print_annotations(table, stream):
         elif 'visible-foreign-keys' in k:
             print('    "{}" : visible_foreign_keys,'.format(k), file=stream)
         else:
-            print('    "{}" :'.format(k), file=stream)
+            print('    "{}," :'.format(k), file=stream)
             pprint.pprint(v, indent=8, stream=stream)
     print('}', file=stream)
 
