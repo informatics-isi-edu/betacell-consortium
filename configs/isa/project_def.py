@@ -14,45 +14,45 @@ column_defs = [
     ),
     em.Column.define('url', em.builtin_types['text'],
         nullok = True,
-        annotations = {'tag:isrd.isi.edu,2016:column-display': {'*': {'markdown_pattern': '[{{{url}}}]({{{url}}})'}}},
-        comment = 'url for more information on this project on externalre site',
+        annotations={'tag:isrd.isi.edu,2016:column-display': {'*': {'markdown_pattern': '[{{{url}}}]({{{url}}})'}}},
+        comment='url for more information on this project on externalre site',
     ),
     em.Column.define('name', em.builtin_types['text'],
         nullok = True,
-        annotations = {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '{{{pis}}}: {{{name}}}'}}},
+        annotations={'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '{{{pis}}}: {{{name}}}'}}},
     ),
     em.Column.define('abstract', em.builtin_types['markdown'],
         nullok = True,
     ),
     em.Column.define('pis', em.builtin_types['text'],
         nullok = True,
-        annotations = {'tag:misd.isi.edu,2015:display': {'name': 'List of PI Last Names'}},
-        comment = 'List of Last Names of Principal Investigator separated by /',
+        annotations={'tag:misd.isi.edu,2015:display': {'name': 'List of PI Last Names'}},
+        comment='List of Last Names of Principal Investigator separated by /',
     ),
     em.Column.define('groups', em.builtin_types['text'],
         nullok = True,
-        acls = {'select': ['https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764', 'https://auth.globus.org/176baec4-ed26-11e5-8e88-22000ab4b42b', 'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a', 'https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d'], 'enumerate': ['https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764', 'https://auth.globus.org/176baec4-ed26-11e5-8e88-22000ab4b42b', 'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a', 'https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d']},
-        acl_bindings = {'project_edit_guard': False},
-        comment = 'Users must be a member of the referenced ACL group in order to edit project records.',
+        acls={'select': ['https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764', 'https://auth.globus.org/176baec4-ed26-11e5-8e88-22000ab4b42b', 'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a', 'https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d'], 'enumerate': ['https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764', 'https://auth.globus.org/176baec4-ed26-11e5-8e88-22000ab4b42b', 'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a', 'https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d']},
+        acl_bindings={'project_edit_guard': False},
+        comment='Users must be a member of the referenced ACL group in order to edit project records.',
     ),
     em.Column.define('group_membership_url', em.builtin_types['text'],
         nullok = True,
-        acls = {'select': ['https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764', 'https://auth.globus.org/176baec4-ed26-11e5-8e88-22000ab4b42b', 'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a', 'https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d'], 'enumerate': ['https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764', 'https://auth.globus.org/176baec4-ed26-11e5-8e88-22000ab4b42b', 'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a', 'https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d']},
-        acl_bindings = {'project_edit_guard': False},
-        comment = 'URL that project members will need in order to join the group',
+        acls={'select': ['https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764', 'https://auth.globus.org/176baec4-ed26-11e5-8e88-22000ab4b42b', 'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a', 'https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d'], 'enumerate': ['https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764', 'https://auth.globus.org/176baec4-ed26-11e5-8e88-22000ab4b42b', 'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a', 'https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d']},
+        acl_bindings={'project_edit_guard': False},
+        comment='URL that project members will need in order to join the group',
     ),
 ]
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('isa', 'project_RID_key')],
+    em.Key.define(['id'],
+                   constraint_names=[('isa', 'project_pkey')],
     ),
     em.Key.define(['name'],
                    constraint_names=[('isa', 'project_name_key')],
     ),
-    em.Key.define(['id'],
-                   constraint_names=[('isa', 'project_pkey')],
+    em.Key.define(['RID'],
+                   constraint_names=[('isa', 'project_RID_key')],
     ),
 ]
 
@@ -60,7 +60,7 @@ key_defs = [
 fkey_defs = [
     em.ForeignKey.define(['groups'],
             '_acl_admin', 'group_lists', ['name'],
-            constraint_names = [('isa', 'project_groups_fkey')],
+            constraint_names=[('isa', 'project_groups_fkey')],
     ),
 ]
 
@@ -117,9 +117,9 @@ table_acl_bindings=\
                               'types': ['update', 'delete']}}
 
 table_annotations = {
-    "tag:isrd.isi.edu,2016:table-display": table_display,
-    "tag:isrd.isi.edu,2016:visible-foreign-keys" : visible_foreign_keys,
-    "tag:isrd.isi.edu,2016:visible-columns" : visible_columns,
+    "tag:isrd.isi.edu,2016:table-display":table_display,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
+    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
 }
 column_annotations = \
 {   'name': {   'tag:isrd.isi.edu,2016:column-display': {   'compact': {   'markdown_pattern': '{{{pis}}}: '

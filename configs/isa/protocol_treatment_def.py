@@ -8,23 +8,23 @@ schema_name = 'isa'
 column_defs = [
     em.Column.define('protocol', em.builtin_types['text'],
         nullok = False,
-        comment = 'Protocol Foreign key.',
+        comment='Protocol Foreign key.',
     ),
     em.Column.define('treatment', em.builtin_types['text'],
         nullok = False,
-        comment = 'Treatment foreign key.',
+        comment='Treatment foreign key.',
     ),
     em.Column.define('treatment_concentration', em.builtin_types['float4'],
         nullok = True,
-        comment = 'Concentration of treatment applied to a cell line in mM.',
+        comment='Concentration of treatment applied to a cell line in mM.',
     ),
 ]
 
 
 key_defs = [
-    em.Key.define(['protocol', 'treatment'],
+    em.Key.define(['treatment', 'protocol'],
                    constraint_names=[('isa', 'protocol_treatment_RID_key')],
-        comment = protocol and treatment must be distinct.,
+        comment = 'protocol and treatment must be distinct.',
     ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'protocol_treatment_RIDkey1')],
@@ -33,17 +33,17 @@ key_defs = [
 
 
 fkey_defs = [
-    em.ForeignKey.define(['treatment'],
-            'vocab', 'treatment_terms', ['id'],
-            constraint_names = [('isa', 'protocol_treatment_treatment_fkey')],
-        acls = {'insert': ['*'], 'update': ['*']},
-        comment = 'Must be a valid reference to a treatment.',
-    ),
     em.ForeignKey.define(['protocol'],
             'isa', 'protocol', ['RID'],
-            constraint_names = [('isa', 'protocol_treatment_protocol_fkey')],
-        acls = {'insert': ['*'], 'update': ['*']},
-        on_delete = 'CASCADE',
+            constraint_names=[('isa', 'protocol_treatment_protocol_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+        on_delete='CASCADE',
+    ),
+    em.ForeignKey.define(['treatment'],
+            'vocab', 'treatment_terms', ['id'],
+            constraint_names=[('isa', 'protocol_treatment_treatment_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+        comment='Must be a valid reference to a treatment.',
     ),
 ]
 
@@ -74,9 +74,9 @@ table_display={}
 table_acls={}
 table_acl_bindings={}
 table_annotations = {
-    "tag:isrd.isi.edu,2016:visible-columns" : visible_columns,
-    "tag:isrd.isi.edu,2016:visible-foreign-keys" : visible_foreign_keys,
-    "tag:isrd.isi.edu,2016:table-display": table_display,
+    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
+    "tag:isrd.isi.edu,2016:table-display":table_display,
 }
 
 

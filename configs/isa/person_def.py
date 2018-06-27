@@ -34,11 +34,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('isa', 'person_RID_key')],
-    ),
     em.Key.define(['name'],
                    constraint_names=[('isa', 'person_pkey')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('isa', 'person_RID_key')],
     ),
 ]
 
@@ -59,9 +59,9 @@ table_display=\
 table_acls={}
 table_acl_bindings={}
 table_annotations = {
-    "tag:isrd.isi.edu,2016:table-display": table_display,
-    "tag:isrd.isi.edu,2016:visible-columns" : visible_columns,
-    "tag:isrd.isi.edu,2016:visible-foreign-keys" : visible_foreign_keys,
+    "tag:isrd.isi.edu,2016:table-display":table_display,
+    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
 }
 
 

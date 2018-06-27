@@ -28,8 +28,8 @@ key_defs = [
 fkey_defs = [
     em.ForeignKey.define(['dataset_id'],
             'isa', 'dataset', ['id'],
-            constraint_names = [('isa', 'dataset_experiment_type_dataset_id_fkey')],
-        annotations = {'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Datasets'}},
+            constraint_names=[('isa', 'dataset_experiment_type_dataset_id_fkey')],
+        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Datasets'}},
     ),
 ]
 
@@ -53,11 +53,12 @@ table_acl_bindings=\
                                    'types': ['update', 'delete']}}
 
 table_annotations = {
-    "tag:misd.isi.edu,2015:display" :
+    "tag:misd.isi.edu,2015:display":
 {'name': 'Experiment_type'}
-    "tag:isrd.isi.edu,2016:visible-columns" : visible_columns,
-    "tag:isrd.isi.edu,2016:visible-foreign-keys" : visible_foreign_keys,
-    "tag:isrd.isi.edu,2016:table-display": table_display,
+,
+    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
+    "tag:isrd.isi.edu,2016:table-display":table_display,
 }
 
 

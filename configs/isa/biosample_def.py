@@ -8,7 +8,7 @@ schema_name = 'isa'
 column_defs = [
     em.Column.define('dataset', em.builtin_types['text'],
         nullok = False,
-        annotations = {'tag:isrd.isi.edu,2017:asset': {}, 'tag:misd.isi.edu,2015:display': {}, 'tag:isrd.isi.edu,2016:column-display': {}},
+        annotations={'tag:isrd.isi.edu,2017:asset': {}, 'tag:misd.isi.edu,2015:display': {}, 'tag:isrd.isi.edu,2016:column-display': {}},
     ),
     em.Column.define('local_identifier', em.builtin_types['text'],
         nullok = True,
@@ -24,20 +24,20 @@ column_defs = [
     ),
     em.Column.define('capillary_number', em.builtin_types['int2'],
         nullok = True,
-        comment = 'ID number of the capillary constaining the biosample.',
+        comment='ID number of the capillary constaining the biosample.',
     ),
     em.Column.define('sample_position', em.builtin_types['int2'],
         nullok = True,
-        comment = 'Position in the capillary where the sample is located.',
+        comment='Position in the capillary where the sample is located.',
     ),
     em.Column.define('specimen', em.builtin_types['text'],
         nullok = True,
-        annotations = {'tag:isrd.isi.edu,2017:asset': {}, 'tag:misd.isi.edu,2015:display': {}, 'tag:isrd.isi.edu,2016:column-display': {}},
-        comment = 'Biological material used for the biosample.',
+        annotations={'tag:isrd.isi.edu,2017:asset': {}, 'tag:misd.isi.edu,2015:display': {}, 'tag:isrd.isi.edu,2016:column-display': {}},
+        comment='Biological material used for the biosample.',
     ),
     em.Column.define('specimen_type', em.builtin_types['text'],
         nullok = True,
-        comment = 'Method by which specimen is prepared.',
+        comment='Method by which specimen is prepared.',
     ),
 ]
 
@@ -57,21 +57,21 @@ key_defs = [
 fkey_defs = [
     em.ForeignKey.define(['dataset'],
             'isa', 'dataset', ['RID'],
-            constraint_names = [('isa', 'biosample_dataset_fkey')],
-        acls = {'insert': ['*'], 'update': ['*']},
-        on_update = 'CASCADE',
-        on_delete = 'RESTRICT',
+            constraint_names=[('isa', 'biosample_dataset_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+        on_update='CASCADE',
+        on_delete='RESTRICT',
     ),
     em.ForeignKey.define(['specimen_type'],
             'vocab', 'specimen_type_terms', ['id'],
-            constraint_names = [('isa', 'biosample_specimen_type_fkey')],
-        acls = {'insert': ['*'], 'update': ['*']},
-        comment = 'Must be a valid reference to a specimen type.',
+            constraint_names=[('isa', 'biosample_specimen_type_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+        comment='Must be a valid reference to a specimen type.',
     ),
     em.ForeignKey.define(['specimen'],
             'isa', 'specimen', ['RID'],
-            constraint_names = [('isa', 'biosample_specimen_fkey')],
-        acls = {'insert': ['*'], 'update': ['*']},
+            constraint_names=[('isa', 'biosample_specimen_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
     ),
 ]
 
@@ -240,13 +240,15 @@ table_display=\
 table_acls={}
 table_acl_bindings={}
 table_annotations = {
-    "tag:isrd.isi.edu,2016:table-display": table_display,
-    "tag:misd.isi.edu,2015:display" :
+    "tag:isrd.isi.edu,2016:table-display":table_display,
+    "tag:misd.isi.edu,2015:display":
 {}
-    "tag:isrd.isi.edu,2016:visible-foreign-keys" : visible_foreign_keys,
-    "tag:isrd.isi.edu,2016:visible-columns" : visible_columns,
-    "tag:isrd.isi.edu,2016:table-alternatives" :
+,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
+    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
+    "tag:isrd.isi.edu,2016:table-alternatives":
 {}
+,
 }
 column_annotations = \
 {   'dataset': {   'tag:isrd.isi.edu,2016:column-display': {},

@@ -4,6 +4,7 @@ import deriva.core.ermrest_model as em
 import pprint
 import sys
 
+
 def print_schema(server, schema_name, stream):
     credential = get_credential(server)
     catalog = ErmrestCatalog('https', server, 1, credentials=credential)
@@ -14,7 +15,7 @@ def print_schema(server, schema_name, stream):
 from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
 """, file=stream)
-    print('table_names = [',file=stream)
+    print('table_names = [', file=stream)
     for i in schema.tables:
         print('    {},'.format(i), file=stream)
     print(']', file=stream)
@@ -35,7 +36,6 @@ schema_def = em.Schema.define(
     )'''.format(schema.name,
                 "'" + schema.comment + "'" if schema.comment is not None else None), file=stream)
 
-
     print("""
 def main():
     parser = argparse.ArgumentParser(description='Load  defs for schema {0}')
@@ -55,7 +55,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()""".format(schema_name),file=stream)
+    main()""".format(schema_name), file=stream)
 
 
 def main():
@@ -70,7 +70,6 @@ def main():
     outfile = args.outfile
     server = args.server
     schema_name = args.schema
-
 
     if outfile == 'stdout':
         print_schema(server, schema_name, sys.stdout)

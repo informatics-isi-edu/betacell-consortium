@@ -8,7 +8,7 @@ schema_name = 'isa'
 column_defs = [
     em.Column.define('name', em.builtin_types['text'],
         nullok = False,
-        comment = 'Provide a name that uniquely identifies the protocol',
+        comment='Provide a name that uniquely identifies the protocol',
     ),
     em.Column.define('protocol_url', em.builtin_types['text'],
         nullok = True,
@@ -18,7 +18,7 @@ column_defs = [
     ),
     em.Column.define('file_url', em.builtin_types['text'],
         nullok = True,
-        annotations = {'tag:isrd.isi.edu,2017:asset': {'filename_column': 'filename', 'byte_count_column': 'byte_count', 'url_pattern': '/hatrac/commons/documents/protocol/{{{md5}}}', 'md5': 'md5'}},
+        annotations={'tag:isrd.isi.edu,2017:asset': {'filename_column': 'filename', 'byte_count_column': 'byte_count', 'url_pattern': '/hatrac/commons/documents/protocol/{{{md5}}}', 'md5': 'md5'}},
     ),
     em.Column.define('filename', em.builtin_types['text'],
         nullok = True,
@@ -34,20 +34,20 @@ column_defs = [
     ),
     em.Column.define('timepoint', em.builtin_types['int2'],
         nullok = True,
-        comment = 'Measured in minutes.',
+        comment='Measured in minutes.',
     ),
 ]
 
 
 key_defs = [
+    em.Key.define(['RID'],
+                   constraint_names=[('isa', 'protocol_pkey')],
+    ),
     em.Key.define(['description'],
                    constraint_names=[('isa', 'protocol_description_key')],
     ),
     em.Key.define(['name'],
                    constraint_names=[('isa', 'protocol_name_key')],
-    ),
-    em.Key.define(['RID'],
-                   constraint_names=[('isa', 'protocol_pkey')],
     ),
 ]
 
@@ -125,11 +125,12 @@ table_display={}
 table_acls={}
 table_acl_bindings={}
 table_annotations = {
-    "tag:misd.isi.edu,2015:display" :
+    "tag:misd.isi.edu,2015:display":
 {'name': 'Protocol'}
-    "tag:isrd.isi.edu,2016:visible-foreign-keys" : visible_foreign_keys,
-    "tag:isrd.isi.edu,2016:visible-columns" : visible_columns,
-    "tag:isrd.isi.edu,2016:table-display": table_display,
+,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
+    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
+    "tag:isrd.isi.edu,2016:table-display":table_display,
 }
 column_annotations = \
 {   'file_url': {   'tag:isrd.isi.edu,2017:asset': {   'byte_count_column': 'byte_count',

@@ -8,19 +8,19 @@ schema_name = 'isa'
 column_defs = [
     em.Column.define('dataset', em.builtin_types['text'],
         nullok = True,
-        comment = 'Cell line used for the speciman.',
+        comment='Cell line used for the speciman.',
     ),
     em.Column.define('description', em.builtin_types['text'],
         nullok = True,
-        comment = 'Description of the specimen.',
+        comment='Description of the specimen.',
     ),
     em.Column.define('collection_date', em.builtin_types['date'],
         nullok = True,
-        comment = 'Date the specimen was obtained',
+        comment='Date the specimen was obtained',
     ),
     em.Column.define('cell_line', em.builtin_types['text'],
         nullok = True,
-        comment = 'Cell line used for the speciman.',
+        comment='Cell line used for the speciman.',
     ),
 ]
 
@@ -31,7 +31,7 @@ key_defs = [
     ),
     em.Key.define(['dataset', 'RID'],
                    constraint_names=[('isa', 'specimen_RID_key')],
-        comment = RID and dataset must be distinct.,
+        comment = 'RID and dataset must be distinct.',
     ),
 ]
 
@@ -39,14 +39,14 @@ key_defs = [
 fkey_defs = [
     em.ForeignKey.define(['dataset'],
             'isa', 'dataset', ['RID'],
-            constraint_names = [('isa', 'specimen_dataset_fkey')],
-        acls = {'insert': ['*'], 'update': ['*']},
+            constraint_names=[('isa', 'specimen_dataset_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
     ),
     em.ForeignKey.define(['cell_line'],
             'isa', 'cell_line', ['RID'],
-            constraint_names = [('isa', 'specimen_cell_line_fkey')],
-        acls = {'insert': ['*'], 'update': ['*']},
-        comment = 'Must be a valid reference to a cell line.',
+            constraint_names=[('isa', 'specimen_cell_line_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+        comment='Must be a valid reference to a cell line.',
     ),
 ]
 
@@ -107,11 +107,12 @@ table_display={}
 table_acls={}
 table_acl_bindings={}
 table_annotations = {
-    "tag:isrd.isi.edu,2016:visible-foreign-keys" : visible_foreign_keys,
-    "table_display" :
+    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
+    "table_display":
 {}
-    "tag:isrd.isi.edu,2016:visible-columns" : visible_columns,
-    "tag:isrd.isi.edu,2016:table-display": table_display,
+,
+    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
+    "tag:isrd.isi.edu,2016:table-display":table_display,
 }
 
 

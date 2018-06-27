@@ -14,19 +14,19 @@ column_defs = [
     ),
     em.Column.define('biosample_summary', em.builtin_types['text'],
         nullok = True,
-        annotations = {'tag:isrd.isi.edu,2016:generated': None},
-        comment = 'System-generated column with summary of all related biosamples',
+        annotations={'tag:isrd.isi.edu,2016:generated': None},
+        comment='System-generated column with summary of all related biosamples',
     ),
     em.Column.define('experiment_type', em.builtin_types['text'],
         nullok = False,
-        annotations = {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '{{{$fkeys.isa.experiment_experiment_type_fkey.rowName}}}'}}},
+        annotations={'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '{{{$fkeys.isa.experiment_experiment_type_fkey.rowName}}}'}}},
     ),
     em.Column.define('control_assay', em.builtin_types['text'],
         nullok = True,
     ),
     em.Column.define('protocol', em.builtin_types['text'],
         nullok = True,
-        annotations = {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '{{{$fkeys.isa.experiment_protocol_fkey.rowName}}}'}}},
+        annotations={'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '{{{$fkeys.isa.experiment_protocol_fkey.rowName}}}'}}},
     ),
 ]
 
@@ -45,22 +45,22 @@ key_defs = [
 
 
 fkey_defs = [
-    em.ForeignKey.define(['protocol'],
-            'isa', 'protocol', ['RID'],
-            constraint_names = [('isa', 'experiment_protocol_fkey')],
-        on_update = 'CASCADE',
-        on_delete = 'RESTRICT',
-    ),
     em.ForeignKey.define(['dataset'],
             'isa', 'dataset', ['RID'],
-            constraint_names = [('isa', 'experiment_dataset_fkey')],
-        on_update = 'CASCADE',
-        on_delete = 'RESTRICT',
+            constraint_names=[('isa', 'experiment_dataset_fkey')],
+        on_update='CASCADE',
+        on_delete='RESTRICT',
+    ),
+    em.ForeignKey.define(['protocol'],
+            'isa', 'protocol', ['RID'],
+            constraint_names=[('isa', 'experiment_protocol_fkey')],
+        on_update='CASCADE',
+        on_delete='RESTRICT',
     ),
     em.ForeignKey.define(['experiment_type'],
             'vocab', 'experiment_type_terms', ['RID'],
-            constraint_names = [('isa', 'experiment_experiment_type_fkey')],
-        acls = {'insert': ['*'], 'update': ['*']},
+            constraint_names=[('isa', 'experiment_experiment_type_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
     ),
 ]
 
@@ -92,6 +92,20 @@ visible_columns=\
                                                                    'experiment_protocol_fkey']},
                                                'RID']},
                              {   'entity': True,
+                                 'markdown_name': 'Cell Line',
+                                 'open': True,
+                                 'source': [   {   'inbound': [   'isa',
+                                                                  'replicate_experiment_fkey']},
+                                               {   'outbound': [   'isa',
+                                                                   'replicate_biosample_fkey']},
+                                               {   'outbound': [   'isa',
+                                                                   'biosample_specimen_fkey']},
+                                               {   'outbound': [   'isa',
+                                                                   'specimen_cell_line_fkey']},
+                                               {   'outbound': [   'isa',
+                                                                   'cell_line_cell_line_terms_fkey']},
+                                               'name']},
+                             {   'entity': True,
                                  'markdown_name': 'Treatmemt',
                                  'open': True,
                                  'source': [   {   'outbound': [   'isa',
@@ -121,18 +135,6 @@ visible_columns=\
                                  'open': True,
                                  'source': [   {   'outbound': [   'isa',
                                                                    'experiment_experiment_type_fkey']},
-                                               'name']},
-                             {   'entity': True,
-                                 'markdown_name': 'Cell Line',
-                                 'open': True,
-                                 'source': [   {   'inbound': [   'isa',
-                                                                  'replicate_experiment_fkey']},
-                                               {   'outbound': [   'isa',
-                                                                   'replicate_biosample_fkey']},
-                                               {   'outbound': [   'isa',
-                                                                   'biosample_specimen_fkey']},
-                                               {   'outbound': [   'isa',
-                                                                   'specimen_cell_line_fkey']},
                                                'name']}]}}
 
 visible_foreign_keys=\
@@ -222,15 +224,16 @@ table_acl_bindings=\
                                     'types': ['update', 'delete']}}
 
 table_annotations = {
-    "tag:isrd.isi.edu,2016:table-display": table_display,
-    "tag:isrd.isi.edu,2016:visible-foreign-keys" : visible_foreign_keys,
-    "table_display" :
+    "tag:isrd.isi.edu,2016:table-display":table_display,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
+    "table_display":
 {       'row_name': {       'row_markdown_pattern': '{{RID}}{{#local_identifier}} '
                                                     '- {{local_identifier}} '
                                                     '{{/local_identifier}}{{#biosample_summary}} '
                                                     '- '
                                                     '{{biosample_summary}}{{/biosample_summary}}'}}
-    "tag:isrd.isi.edu,2016:visible-columns" : visible_columns,
+,
+    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
 }
 column_annotations = \
 {   'biosample_summary': {'tag:isrd.isi.edu,2016:generated': None},

@@ -7,7 +7,8 @@ import pprint
 import re
 import sys
 
-server ='pbcconsortium.isrd.isi.edu'
+server = 'pbcconsortium.isrd.isi.edu'
+
 
 def print_annotations(table, stream):
     table_annotations = {
@@ -24,19 +25,20 @@ def print_annotations(table, stream):
         else:
             print('{}=\\'.format(k), file=stream)
             pprint.pprint(v, indent=4, width=80, depth=None, compact=False, stream=stream)
-            print('',file=stream)
+            print('', file=stream)
 
     print('table_annotations = {', file=stream)
-    for k,v in table.annotations.items():
+    for k, v in table.annotations.items():
         if 'table-display' in k:
-            print('    "{}": table_display,'.format(k), file=stream)
+            print('    "{}":table_display,'.format(k), file=stream)
         elif 'visible-columns' in k:
-            print('    "{}" : visible_columns,'.format(k), file=stream)
+            print('    "{}":visible_columns,'.format(k), file=stream)
         elif 'visible-foreign-keys' in k:
-            print('    "{}" : visible_foreign_keys,'.format(k), file=stream)
+            print('    "{}":visible_foreign_keys,'.format(k), file=stream)
         else:
-            print('    "{}," :'.format(k), file=stream)
+            print('    "{}":'.format(k), file=stream)
             pprint.pprint(v, indent=8, stream=stream)
+            print(',', file=stream)
     print('}', file=stream)
 
     column_annotations = {}
@@ -52,15 +54,15 @@ def print_annotations(table, stream):
     if column_annotations != {}:
         print('column_annotations = \\', file=stream)
         pprint.pprint(column_annotations, indent=4, width=80, depth=None, compact=False, stream=stream)
-        print('',file=stream)
+        print('', file=stream)
     if column_acls != {}:
         print('column_acls = \\', file=stream)
         pprint.pprint(column_acls, indent=4, width=80, depth=None, compact=False, stream=stream)
-        print('',file=stream)
+        print('', file=stream)
     if column_acl_bindings != {}:
         print('column_acl_bindings = \\', file=stream)
         pprint.pprint(column_acl_bindings, indent=1, width=80, depth=None, compact=False, stream=stream)
-        print('',file=stream)
+        print('', file=stream)
     return
 
 
@@ -69,17 +71,17 @@ def print_foreign_key_defs(table, stream):
     for fkey in table.foreign_keys:
         print("""    em.ForeignKey.define({},
             '{}', '{}', {},
-            constraint_names = {},""".format([c['column_name'] for c in fkey.foreign_key_columns],
-                                             fkey.referenced_columns[0]['schema_name'],
-                                             fkey.referenced_columns[0]['table_name'],
-                                             [c['column_name'] for c in fkey.referenced_columns],
-                                             fkey.names), file=stream)
+            constraint_names={},""".format([c['column_name'] for c in fkey.foreign_key_columns],
+                                           fkey.referenced_columns[0]['schema_name'],
+                                           fkey.referenced_columns[0]['table_name'],
+                                           [c['column_name'] for c in fkey.referenced_columns],
+                                           fkey.names), file=stream)
 
         for i in ['annotations', 'acls', 'acl_bindings', 'on_update', 'on_delete', 'comment']:
             a = getattr(fkey, i)
             if not (a == {} or a is None or a == 'NO ACTION' or a == ''):
                 v = "'" + a + "'" if re.match('comment|on_update|on_delete', i) else a
-                print("        {} = {},".format(i, v), file=stream)
+                print("        {}={},".format(i, v), file=stream)
         print('    ),', file=stream)
 
     print(']', file=stream)
@@ -93,7 +95,7 @@ def print_key_defs(table, stream):
         for i in ['annotations',  'comment']:
             a = getattr(key, i)
             if not (a == {} or a is None or a == ''):
-                v = "'" + a + "'" if key.comment == 'comment' else a
+                v = "'" + a + "'" if i == 'comment' else a
                 print("        {} = {},".format(i, v), file=stream)
         print('    ),', file=stream)
     print(']', file=stream)
@@ -110,13 +112,13 @@ def print_column_defs(table, stream):
             continue
         print('''    em.Column.define('{}', em.builtin_types['{}'],
         nullok = {},'''.format(col.name,
-                        col.type.typename + '[]' if 'is_array' is True else col.type.typename,
-                        col.nullok,), file=stream)
+                               col.type.typename + '[]' if 'is_array' is True else col.type.typename,
+                               col.nullok,), file=stream)
         for i in ['annotations', 'acls', 'acl_bindings', 'comment']:
             a = getattr(col, i)
             if not (a == {} or a is None):
                 v = "'" + a + "'" if i == 'comment' else a
-                print("        {} = {},".format(i, v), file=stream)
+                print("        {}={},".format(i, v), file=stream)
         print('    ),', file=stream)
     print(']', file=stream)
     return provide_system

@@ -11,7 +11,7 @@ column_defs = [
     ),
     em.Column.define('accession', em.builtin_types['text'],
         nullok = False,
-        annotations = {'tag:isrd.isi.edu,2016:generated': None},
+        annotations={'tag:isrd.isi.edu,2016:generated': None},
     ),
     em.Column.define('title', em.builtin_types['text'],
         nullok = False,
@@ -42,12 +42,12 @@ column_defs = [
     ),
     em.Column.define('status', em.builtin_types['text'],
         nullok = True,
-        annotations = {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '{{{ $fkeys.isa.dataset_status_fkey.rowName }}}'}}},
-        acl_bindings = {'dataset_edit_guard': False},
+        annotations={'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '{{{ $fkeys.isa.dataset_status_fkey.rowName }}}'}}},
+        acl_bindings={'dataset_edit_guard': False},
     ),
     em.Column.define('show_in_jbrowse', em.builtin_types['boolean'],
         nullok = True,
-        annotations = {'tag:misd.isi.edu,2015:display': {'name': 'Genome Browser'}, 'tag:isrd.isi.edu,2016:column-display': {'detailed': {'markdown_pattern': '{{#_show_in_jbrowse}}Use the embedded browser here or [view in a new window](/jbrowse/latest/?dataset={{{_RID}}}){target=_blank}.\n :::iframe [](/jbrowse/latest/?dataset={{{_RID}}}){width=800 height=600 .iframe} \n:::{{/_show_in_jbrowse}}'}}},
+        annotations={'tag:misd.isi.edu,2015:display': {'name': 'Genome Browser'}, 'tag:isrd.isi.edu,2016:column-display': {'detailed': {'markdown_pattern': '{{#_show_in_jbrowse}}Use the embedded browser here or [view in a new window](/jbrowse/latest/?dataset={{{_RID}}}){target=_blank}.\n :::iframe [](/jbrowse/latest/?dataset={{{_RID}}}){width=800 height=600 .iframe} \n:::{{/_show_in_jbrowse}}'}}},
     ),
     em.Column.define('_keywords', em.builtin_types['text'],
         nullok = True,
@@ -71,14 +71,14 @@ key_defs = [
 fkey_defs = [
     em.ForeignKey.define(['project'],
             'isa', 'project', ['id'],
-            constraint_names = [('isa', 'dataset_project_fkey')],
-        on_update = 'CASCADE',
-        on_delete = 'RESTRICT',
+            constraint_names=[('isa', 'dataset_project_fkey')],
+        on_update='CASCADE',
+        on_delete='RESTRICT',
     ),
     em.ForeignKey.define(['status'],
             'vocab', 'dataset_status_terms', ['dbxref'],
-            constraint_names = [('isa', 'dataset_status_fkey')],
-        annotations = {'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Status'}},
+            constraint_names=[('isa', 'dataset_status_fkey')],
+        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Status'}},
     ),
 ]
 
@@ -215,9 +215,9 @@ table_acl_bindings=\
                               'types': ['update', 'delete']}}
 
 table_annotations = {
-    "tag:isrd.isi.edu,2016:table-display": table_display,
-    "tag:isrd.isi.edu,2016:visible-foreign-keys" : visible_foreign_keys,
-    "tag:isrd.isi.edu,2016:visible-columns" : visible_columns,
+    "tag:isrd.isi.edu,2016:table-display":table_display,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
+    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
 }
 column_annotations = \
 {   'accession': {'tag:isrd.isi.edu,2016:generated': None},

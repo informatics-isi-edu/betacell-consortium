@@ -21,15 +21,13 @@ def set_visible_columns(catalog,term_table):
     model_root = catalog.getCatalogModel()
     for k,v in term_visible_columns.items():
         model_root.schemas['vocab'].tables[term_table].visible_columns[k] = v
-     model_root.schemas['vocab'].tables[term_table].apply(catalog)
+    model_root.schemas['vocab'].tables[term_table].apply(catalog)
 
 def create_vocabulary_table(catalog,term_table):
     model_root = catalog.getCatalogModel()
     new_vocab_table = model_root.schemas['vocab'].create_table(catalog,
         em.Table.define_vocabulary(term_table,'PBCCONSORTIUM:{RID}',comment=term_comment)
 )
-
-{{name}} ({{{id}}})
 
 
 term_list = [
