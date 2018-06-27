@@ -7,28 +7,23 @@ schema_name = 'isa'
 
 column_defs = [
     em.Column.define('name', em.builtin_types['text'],
-        nullok = False,
+        nullok=False,
     ),
     em.Column.define('first_name', em.builtin_types['text'],
-        nullok = False,
+        nullok=False,
     ),
     em.Column.define('middle_name', em.builtin_types['text'],
-        nullok = True,
     ),
     em.Column.define('last_name', em.builtin_types['text'],
-        nullok = False,
+        nullok=False,
     ),
     em.Column.define('email', em.builtin_types['text'],
-        nullok = True,
     ),
     em.Column.define('degrees', em.builtin_types['json'],
-        nullok = True,
     ),
     em.Column.define('affiliation', em.builtin_types['text'],
-        nullok = True,
     ),
     em.Column.define('website', em.builtin_types['text'],
-        nullok = True,
     ),
 ]
 
@@ -48,13 +43,13 @@ fkey_defs = [
 
 
 visible_columns=\
-{   'compact': ['name', 'email', 'affiliation'],
-    'detailed': ['name', 'email', 'affiliation']}
+{'compact': ['name', 'email', 'affiliation'],
+ 'detailed': ['name', 'email', 'affiliation']}
 
 visible_foreign_keys={}
 table_display=\
-{   '*': {'row_order': [{'column': 'last_name', 'descending': False}]},
-    'row_name': {'row_markdown_pattern': '{{{first_name}}} {{{last_name}}}'}}
+{'*': {'row_order': [{'column': 'last_name', 'descending': False}]},
+ 'row_name': {'row_markdown_pattern': '{{{first_name}}} {{{last_name}}}'}}
 
 table_acls={}
 table_acl_bindings={}

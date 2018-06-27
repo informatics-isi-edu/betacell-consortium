@@ -103,7 +103,7 @@ table_annotations = {
 
 
 table_def = em.Table.define('cell_line',
-    column_defs=column_defs,
+                            column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
     annotations=table_annotations,

@@ -7,37 +7,36 @@ schema_name = 'vocab'
 
 column_defs = [
     em.Column.define('id', em.builtin_types['ermrest_curie'],
-        nullok = False,
+        nullok=False,
         comment='The preferred Compact URI (CURIE) for this term.',
     ),
     em.Column.define('uri', em.builtin_types['ermrest_uri'],
-        nullok = False,
+        nullok=False,
         comment='The preferred URI for this term.',
     ),
     em.Column.define('name', em.builtin_types['text'],
-        nullok = False,
+        nullok=False,
         comment='The preferred human-readable name for this term.',
     ),
     em.Column.define('description', em.builtin_types['markdown'],
-        nullok = False,
+        nullok=False,
         comment='A longer human-readable description of this term.',
     ),
     em.Column.define('synonyms', em.builtin_types['text[]'],
-        nullok = True,
         comment='Alternate human-readable names for this term.',
     ),
 ]
 
 
 key_defs = [
+    em.Key.define(['uri'],
+                   constraint_names=[('vocab', 'treatment_terms_urikey1')],
+    ),
     em.Key.define(['id'],
                    constraint_names=[('vocab', 'treatment_terms_idkey1')],
     ),
     em.Key.define(['RID'],
                    constraint_names=[('vocab', 'treatment_terms_RIDkey1')],
-    ),
-    em.Key.define(['uri'],
-                   constraint_names=[('vocab', 'treatment_terms_urikey1')],
     ),
 ]
 
@@ -47,12 +46,12 @@ fkey_defs = [
 
 
 visible_columns=\
-{   'compact': ['name', 'id', 'synonyms', 'description'],
-    'detailed': ['name', 'id', 'synonyms', 'uri', 'description'],
-    'entry': ['name', 'id', 'synonyms', 'uri', 'description'],
-    'filter': {   'and': [   {'open': True, 'source': 'name'},
-                             {'open': True, 'source': 'id'},
-                             {'open': True, 'source': 'synonyms'}]}}
+{'compact': ['name', 'id', 'synonyms', 'description'],
+ 'detailed': ['name', 'id', 'synonyms', 'uri', 'description'],
+ 'entry': ['name', 'id', 'synonyms', 'uri', 'description'],
+ 'filter': {'and': [{'open': True, 'source': 'name'},
+                    {'open': True, 'source': 'id'},
+                    {'open': True, 'source': 'synonyms'}]}}
 
 visible_foreign_keys={}
 table_display={}

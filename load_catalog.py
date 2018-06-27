@@ -7,10 +7,10 @@ def main():
     parser = argparse.ArgumentParser(description='Load foreign key defs for table {0}:{1}')
     parser.add_argument('--server', default='pbcconsortium.isrd.isi.edu',
                         help='Catalog server name')
-    parser.add_argument('--deletefks', help='delete existing foreign keys before loading)')
+    parser.add_argument('--replace', default=False, help='replace existing values with new ones )')
     parser.add_argument('--defpath', default='.', help='path to table definitions)')
     parser.add_argument('table', help='Name table to be loaded.')
-    parser.add_argument('mode', choices=['table', 'annotations', 'fkeys', 'acls'],
+    parser.add_argument('mode', choices=['table', 'columns', 'annotations', 'fkeys', 'acls'],
                         help='Operation to perform')
 
     args = parser.parse_args()
@@ -33,22 +33,39 @@ def main():
     if mode != 'table':
         table = schema.tables[mod.table_name]
 
+    replace = False
     skip_fkeys = False
 
     if mode == 'table':
         if skip_fkeys:
             mod.table_def.fkey_defs = []
         table = schema.create_table(catalog, mod.table_def)
-    if mode == 'fkeys':
-            print('deleting foreign_keys')
-            for k in table.foreign_keys:
+    if mode == 'columns':
+        if replace:
+            print('deleting columns')
+            for k in table.column_definitions:
                 k.delete(catalog)
             model_root = catalog.getCatalogModel()
             schema = model_root.schemas[mod.schema_name]
             table = schema.tables[mod.table_name]
+        cnames = [i.name for i in table.column_definitions]
+        for i in mod.column_defs:
+            if i.name not in cnames:
+                print('Creating column {}'.format(i.name))
+                table.create_column(catalog, i)
+    if mode == 'fkeys':
+            if replace:
+                print('deleting foreign_keys')
+                for k in table.foreign_keys:
+                    k.delete(catalog)
+                model_root = catalog.getCatalogModel()
+                schema = model_root.schemas[mod.schema_name]
+                table = schema.tables[mod.table_name]
+            fknames = [i.name for i in table.foreign_keys]
             for i in mod.fkey_defs:
-                table.create_fkey(catalog, i)
-
+                if i.name not in fknames:
+                    print('Creating foreign key {}'.format(i.name))
+                    table.create_fkey(catalog, i)
     if mode == 'annotations':
         if len(mod.visible_columns) > 0:
             for k, v in mod.visible_columns.items():
@@ -61,13 +78,11 @@ def main():
         table.apply(catalog)
 
     if mode == 'acls':
-        if len(mod.acls > 0):
-            for k, v in mod.acls.items():
-                table.acls[k] = v
+        for k, v in mod.table_acls.items():
+            table.acls[k] = v
 
-        if len(mod.acl_bindings > 0):
-            for k, v in mod.acl_bindings.items():
-                table.acl_bindings[k] = v
+        for k, v in mod.acl_bindings.items():
+            table.acl_bindings[k] = v
         table.acl_bindings['table_display'] = mod.table_display
         table.apply(catalog)
 

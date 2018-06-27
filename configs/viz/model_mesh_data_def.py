@@ -7,32 +7,28 @@ schema_name = 'viz'
 
 column_defs = [
     em.Column.define('model', em.builtin_types['text'],
-        nullok = False,
+        nullok=False,
     ),
     em.Column.define('mesh', em.builtin_types['text'],
-        nullok = False,
+        nullok=False,
     ),
     em.Column.define('color_r', em.builtin_types['int4'],
-        nullok = True,
     ),
     em.Column.define('color_g', em.builtin_types['int4'],
-        nullok = True,
     ),
     em.Column.define('color_b', em.builtin_types['int4'],
-        nullok = True,
     ),
     em.Column.define('opacity', em.builtin_types['float8'],
-        nullok = True,
     ),
 ]
 
 
 key_defs = [
-    em.Key.define(['model', 'mesh'],
-                   constraint_names=[('viz', 'model_mesh_data_model_mesh_key')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('viz', 'model_mesh_data_pkey')],
+    ),
+    em.Key.define(['mesh', 'model'],
+                   constraint_names=[('viz', 'model_mesh_data_model_mesh_key')],
     ),
 ]
 

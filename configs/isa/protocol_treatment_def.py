@@ -7,15 +7,14 @@ schema_name = 'isa'
 
 column_defs = [
     em.Column.define('protocol', em.builtin_types['text'],
-        nullok = False,
+        nullok=False,
         comment='Protocol Foreign key.',
     ),
     em.Column.define('treatment', em.builtin_types['text'],
-        nullok = False,
+        nullok=False,
         comment='Treatment foreign key.',
     ),
     em.Column.define('treatment_concentration', em.builtin_types['float4'],
-        nullok = True,
         comment='Concentration of treatment applied to a cell line in mM.',
     ),
 ]
@@ -24,7 +23,7 @@ column_defs = [
 key_defs = [
     em.Key.define(['treatment', 'protocol'],
                    constraint_names=[('isa', 'protocol_treatment_RID_key')],
-        comment = 'protocol and treatment must be distinct.',
+       comment = 'protocol and treatment must be distinct.',
     ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'protocol_treatment_RIDkey1')],
@@ -49,25 +48,20 @@ fkey_defs = [
 
 
 visible_columns=\
-{   'compact': [   'RID',
-                   ['isa', 'protocol_treatment_protocol_fkey'],
-                   ['isa', 'protocol_treatment_treatment_fkey'],
-                   'treatment_concentration'],
-    'detailed': [   'RID',
-                    'RMT',
-                    ['isa', 'protocol_treatment_protocol_fkey'],
-                    ['isa', 'protocol_treatment_treatment_fkey'],
-                    'treatment_concentration'],
-    'entry': [   'RID',
-                 ['isa', 'protocol_treatment_protocol_fkey'],
-                 ['isa', 'protocol_treatment_treatment_fkey'],
-                 'treatment_concentration'],
-    'filter': {   'and': [   {   'open': True,
-                                 'source': [   {   'outbound': [   'isa',
-                                                                   'protocol_treatment_treatment_fkey']},
-                                               'name']},
-                             {   'open': True,
-                                 'source': ['treatment_concentration']}]}}
+{'compact': ['RID', ['isa', 'protocol_treatment_protocol_fkey'],
+             ['isa', 'protocol_treatment_treatment_fkey'],
+             'treatment_concentration'],
+ 'detailed': ['RID', 'RMT', ['isa', 'protocol_treatment_protocol_fkey'],
+              ['isa', 'protocol_treatment_treatment_fkey'],
+              'treatment_concentration'],
+ 'entry': ['RID', ['isa', 'protocol_treatment_protocol_fkey'],
+           ['isa', 'protocol_treatment_treatment_fkey'],
+           'treatment_concentration'],
+ 'filter': {'and': [{'open': True,
+                     'source': [{'outbound': ['isa',
+                                              'protocol_treatment_treatment_fkey']},
+                                'name']},
+                    {'open': True, 'source': ['treatment_concentration']}]}}
 
 visible_foreign_keys={}
 table_display={}
