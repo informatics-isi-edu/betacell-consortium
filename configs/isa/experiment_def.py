@@ -28,28 +28,28 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['dataset', 'local_identifier'],
+    em.Key.define(['local_identifier', 'dataset'],
                    constraint_names=[('isa', 'experiment_dataset_local_identifier_key')],
-    ),
-    em.Key.define(['dataset', 'RID'],
-                   constraint_names=[('isa', 'experiment_RID_dataset_key')],
     ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'experiment_pkey')],
+    ),
+    em.Key.define(['dataset', 'RID'],
+                   constraint_names=[('isa', 'experiment_RID_dataset_key')],
     ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['dataset'],
-            'isa', 'dataset', ['RID'],
-            constraint_names=[('isa', 'experiment_dataset_fkey')],
-        on_update='CASCADE',
-        on_delete='RESTRICT',
-    ),
     em.ForeignKey.define(['protocol'],
             'isa', 'protocol', ['RID'],
             constraint_names=[('isa', 'experiment_protocol_fkey')],
+        on_update='CASCADE',
+        on_delete='RESTRICT',
+    ),
+    em.ForeignKey.define(['dataset'],
+            'isa', 'dataset', ['RID'],
+            constraint_names=[('isa', 'experiment_dataset_fkey')],
         on_update='CASCADE',
         on_delete='RESTRICT',
     ),

@@ -32,14 +32,14 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('isa', 'protocol_pkey')],
-    ),
     em.Key.define(['description'],
                    constraint_names=[('isa', 'protocol_description_key')],
     ),
     em.Key.define(['name'],
                    constraint_names=[('isa', 'protocol_name_key')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('isa', 'protocol_pkey')],
     ),
 ]
 

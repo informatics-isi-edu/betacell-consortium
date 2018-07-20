@@ -46,11 +46,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['accession'],
-                   constraint_names=[('isa', 'accession_unique')],
-    ),
     em.Key.define(['id'],
                    constraint_names=[('isa', 'dataset_pkey')],
+    ),
+    em.Key.define(['accession'],
+                   constraint_names=[('isa', 'accession_unique')],
     ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'dataset_RID_key')],
@@ -59,16 +59,16 @@ key_defs = [
 
 
 fkey_defs = [
+    em.ForeignKey.define(['status'],
+            'vocab', 'dataset_status_terms', ['dbxref'],
+            constraint_names=[('isa', 'dataset_status_fkey')],
+        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Status'}},
+    ),
     em.ForeignKey.define(['project'],
             'isa', 'project', ['id'],
             constraint_names=[('isa', 'dataset_project_fkey')],
         on_update='CASCADE',
         on_delete='RESTRICT',
-    ),
-    em.ForeignKey.define(['status'],
-            'vocab', 'dataset_status_terms', ['dbxref'],
-            constraint_names=[('isa', 'dataset_status_fkey')],
-        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Status'}},
     ),
 ]
 

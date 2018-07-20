@@ -1,8 +1,15 @@
 import dump_table_def
 import dump_schema
 import os
+from deriva.core import ErmrestCatalog, get_credential
 
 server = 'pbcconsortium.isrd.isi.edu'
+
+
+credential = get_credential(server)
+catalog = ErmrestCatalog('https', server, 1, credentials=credential)
+model_root = catalog.getCatalogModel()
+
 table_list = {
         'isa' :['biosample', 'dataset', 'experiment','protocol','protocol_treatment','replicate','specimen',
                                                         'xray_tomography_data', 'dataset_experiment_type', 'project', 'person', 'mesh_data'],
@@ -11,20 +18,17 @@ table_list = {
     'common' : []
 }
 
-for schema_name in ['vocab', 'isa', 'viz']:
-
+for schema_name, schema in model_root.schemas.items():
     filename = 'configs/{}.schema.py'.format(schema_name)
     os.makedirs(os.path.dirname(filename), exist_ok=True)
     with open(filename, 'w') as f:
         dump_schema.print_schema(server, schema_name, f)
     f.close()
 
-    for i in table_list[schema_name]:
+    for i in schema.tables:
         print('Dumping {},{}'.format(schema_name, i))
-
-        for i in table_list[schema_name]:
-            filename = 'configs/{}/{}_def.py'.format(schema_name, i)
-            os.makedirs(os.path.dirname(filename), exist_ok=True)
-            with open(filename, 'w') as f:
-                dump_table_def.print_defs(server, schema_name, i,f)
-            f.close()
+        filename = 'configs/{}/{}_def.py'.format(schema_name, i)
+        os.makedirs(os.path.dirname(filename), exist_ok=True)
+        with open(filename, 'w') as f:
+            dump_table_def.print_defs(server, schema_name, i,f)
+        f.close()
