@@ -56,13 +56,13 @@ key_defs = [
 
 
 fkey_defs = [
-    em.ForeignKey.define(['dbxref'],
-            'data_commons', 'cvterm', ['dbxref'],
-            constraint_names=[('vocab', 'molecule_type_terms_dbxref_fkey')],
-    ),
     em.ForeignKey.define(['cv'],
             'data_commons', 'cv', ['name'],
             constraint_names=[('vocab', 'molecule_type_terms_cv_fkey')],
+    ),
+    em.ForeignKey.define(['dbxref'],
+            'data_commons', 'cvterm', ['dbxref'],
+            constraint_names=[('vocab', 'molecule_type_terms_dbxref_fkey')],
     ),
 ]
 

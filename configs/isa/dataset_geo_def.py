@@ -21,11 +21,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('isa', 'dataset_geo_RID_key')],
-    ),
     em.Key.define(['dataset_id'],
                    constraint_names=[('isa', 'dataset_geo_pkey')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('isa', 'dataset_geo_RID_key')],
     ),
 ]
 

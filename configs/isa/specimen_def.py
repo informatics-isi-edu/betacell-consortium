@@ -33,16 +33,16 @@ key_defs = [
 
 
 fkey_defs = [
+    em.ForeignKey.define(['dataset'],
+            'isa', 'dataset', ['RID'],
+            constraint_names=[('isa', 'specimen_dataset_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+    ),
     em.ForeignKey.define(['cell_line'],
             'isa', 'cell_line', ['RID'],
             constraint_names=[('isa', 'specimen_cell_line_fkey')],
         acls={'insert': ['*'], 'update': ['*']},
         comment='Must be a valid reference to a cell line.',
-    ),
-    em.ForeignKey.define(['dataset'],
-            'isa', 'dataset', ['RID'],
-            constraint_names=[('isa', 'specimen_dataset_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
     ),
 ]
 

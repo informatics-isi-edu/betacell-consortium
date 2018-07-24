@@ -75,34 +75,25 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('isa', 'clinical_assay_RID_key')],
-    ),
     em.Key.define(['id'],
                    constraint_names=[('isa', 'clinical_assay_pkey')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('isa', 'clinical_assay_RID_key')],
     ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['gene'],
-            'vocab', 'gene_terms', ['dbxref'],
-            constraint_names=[('isa', 'clinical_assay_gene_fkey')],
-        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Gene'}},
-    ),
     em.ForeignKey.define(['genotype'],
             'vocab', 'genotype_terms', ['dbxref'],
             constraint_names=[('isa', 'clinical_assay_genotype_fkey')],
         annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Genotype'}},
     ),
-    em.ForeignKey.define(['specimen'],
-            'vocab', 'specimen_terms', ['dbxref'],
-            constraint_names=[('isa', 'clinical_assay_specimen_fkey')],
-        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Specimen'}},
-    ),
-    em.ForeignKey.define(['dataset'],
-            'isa', 'dataset', ['id'],
-            constraint_names=[('isa', 'clinical_assay_dataset_fkey')],
+    em.ForeignKey.define(['gene'],
+            'vocab', 'gene_terms', ['dbxref'],
+            constraint_names=[('isa', 'clinical_assay_gene_fkey')],
+        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Gene'}},
     ),
     em.ForeignKey.define(['phenotype'],
             'vocab', 'phenotype_terms', ['dbxref'],
@@ -114,6 +105,15 @@ fkey_defs = [
             constraint_names=[('isa', 'clinical_assay_alignment_id_fkey')],
         on_update='CASCADE',
         on_delete='RESTRICT',
+    ),
+    em.ForeignKey.define(['specimen'],
+            'vocab', 'specimen_terms', ['dbxref'],
+            constraint_names=[('isa', 'clinical_assay_specimen_fkey')],
+        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Specimen'}},
+    ),
+    em.ForeignKey.define(['dataset'],
+            'isa', 'dataset', ['id'],
+            constraint_names=[('isa', 'clinical_assay_dataset_fkey')],
     ),
 ]
 

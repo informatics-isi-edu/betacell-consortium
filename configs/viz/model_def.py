@@ -39,27 +39,27 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['id'],
-                   constraint_names=[('viz', 'model_pkey')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('viz', 'model_RID_key')],
+    ),
+    em.Key.define(['id'],
+                   constraint_names=[('viz', 'model_pkey')],
     ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['volume'],
-            'isa', 'imaging_data', ['RID'],
-            constraint_names=[('viz', 'model_volume_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
-    ),
     em.ForeignKey.define(['replicate'],
             'isa', 'replicate', ['RID'],
             constraint_names=[('viz', 'model_replicate_fkey')],
         acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='SET NULL',
+    ),
+    em.ForeignKey.define(['volume'],
+            'isa', 'imaging_data', ['RID'],
+            constraint_names=[('viz', 'model_volume_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
     ),
 ]
 

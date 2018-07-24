@@ -26,17 +26,17 @@ key_defs = [
 
 
 fkey_defs = [
-    em.ForeignKey.define(['data_type'],
-            'vocab', 'data_type_terms', ['dbxref'],
-            constraint_names=[('isa', 'dataset_data_type_data_type_fkey')],
-        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Data Type'}},
-    ),
     em.ForeignKey.define(['dataset_id'],
             'isa', 'dataset', ['id'],
             constraint_names=[('isa', 'dataset_data_type_dataset_id_fkey')],
         annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Datasets'}},
         on_update='CASCADE',
         on_delete='CASCADE',
+    ),
+    em.ForeignKey.define(['data_type'],
+            'vocab', 'data_type_terms', ['dbxref'],
+            constraint_names=[('isa', 'dataset_data_type_data_type_fkey')],
+        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Data Type'}},
     ),
 ]
 

@@ -16,7 +16,7 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['somite_count', 'dataset_id'],
+    em.Key.define(['dataset_id', 'somite_count'],
                    constraint_names=[('isa', 'dataset_somite_count_pkey')],
     ),
     em.Key.define(['RID'],

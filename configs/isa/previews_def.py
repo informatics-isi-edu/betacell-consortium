@@ -31,11 +31,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('isa', 'previews_RID_key')],
-    ),
     em.Key.define(['dataset_id', 'preview_uri'],
                    constraint_names=[('isa', 'previews_dataset_id_preview_uri_key')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('isa', 'previews_RID_key')],
     ),
 ]
 

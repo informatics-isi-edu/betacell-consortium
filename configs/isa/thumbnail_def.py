@@ -38,11 +38,11 @@ key_defs = [
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'thumbnail_RID_key')],
     ),
-    em.Key.define(['url'],
-                   constraint_names=[('isa', 'thumbnail_url_key')],
-    ),
     em.Key.define(['id'],
                    constraint_names=[('isa', 'thumbnail_pkey')],
+    ),
+    em.Key.define(['url'],
+                   constraint_names=[('isa', 'thumbnail_url_key')],
     ),
 ]
 

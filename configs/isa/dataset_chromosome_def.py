@@ -22,7 +22,7 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['chromosome', 'end_position', 'dataset_id', 'start_position'],
+    em.Key.define(['dataset_id', 'end_position', 'chromosome', 'start_position'],
                    constraint_names=[('isa', 'dataset_chromosome_pkey')],
     ),
     em.Key.define(['RID'],

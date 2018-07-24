@@ -27,11 +27,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['id'],
-                   constraint_names=[('isa', 'library_pkey')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'library_RID_key')],
+    ),
+    em.Key.define(['id'],
+                   constraint_names=[('isa', 'library_pkey')],
     ),
 ]
 

@@ -21,7 +21,7 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['synonym', 'dbxref'],
+    em.Key.define(['dbxref', 'synonym'],
                    constraint_names=[('data_commons', 'cvtermsynonym_dbxref_synonym_key')],
     ),
     em.Key.define(['RID'],

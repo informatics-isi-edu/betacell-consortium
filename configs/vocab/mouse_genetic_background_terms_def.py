@@ -56,13 +56,13 @@ key_defs = [
 
 
 fkey_defs = [
-    em.ForeignKey.define(['cv'],
-            'data_commons', 'cv', ['name'],
-            constraint_names=[('vocab', 'mouse_genetic_background_terms_cv_fkey')],
-    ),
     em.ForeignKey.define(['dbxref'],
             'data_commons', 'cvterm', ['dbxref'],
             constraint_names=[('vocab', 'mouse_genetic_background_terms_dbxref_fkey')],
+    ),
+    em.ForeignKey.define(['cv'],
+            'data_commons', 'cv', ['name'],
+            constraint_names=[('vocab', 'mouse_genetic_background_terms_cv_fkey')],
     ),
 ]
 

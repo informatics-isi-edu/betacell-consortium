@@ -31,14 +31,14 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['term_schema', 'term_table'],
+    em.Key.define(['term_table', 'term_schema'],
                    constraint_names=[('data_commons', 'domain_registry_term_schema_term_table_key')],
-    ),
-    em.Key.define(['id'],
-                   constraint_names=[('data_commons', 'domain_registry_pkey')],
     ),
     em.Key.define(['RID'],
                    constraint_names=[('data_commons', 'domain_registry_RID_key')],
+    ),
+    em.Key.define(['id'],
+                   constraint_names=[('data_commons', 'domain_registry_pkey')],
     ),
 ]
 

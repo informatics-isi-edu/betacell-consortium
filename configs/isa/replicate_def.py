@@ -25,25 +25,26 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['technical_replicate_number', 'experiment', 'dataset', 'biosample'],
+    em.Key.define(['experiment', 'dataset', 'technical_replicate_number', 'biosample'],
                    constraint_names=[('isa', 'replicate_dataset_experiment_biosample_technical_replicate__key')],
-    ),
-    em.Key.define(['RID'],
-                   constraint_names=[('isa', 'replicate_pkey')],
     ),
     em.Key.define(['dataset', 'RID'],
                    constraint_names=[('isa', 'replicate_RID_dataset_key')],
     ),
-    em.Key.define(['biosample', 'technical_replicate_number', 'experiment', 'dataset', 'bioreplicate_number'],
+    em.Key.define(['RID'],
+                   constraint_names=[('isa', 'replicate_pkey')],
+    ),
+    em.Key.define(['experiment', 'dataset', 'biosample', 'technical_replicate_number', 'bioreplicate_number'],
                    constraint_names=[('isa', 'replicate_dataset_experiment_biosample_bioreplicate_number__key')],
     ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['dataset'],
-            'isa', 'dataset', ['RID'],
-            constraint_names=[('isa', 'replicate_dataset_fkey')],
+    em.ForeignKey.define(['biosample'],
+            'isa', 'biosample', ['RID'],
+            constraint_names=[('isa', 'replicate_biosample_fkey')],
+        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'domain_filter_pattern': 'dataset={{{_dataset}}}'}},
         on_update='CASCADE',
         on_delete='RESTRICT',
     ),
@@ -53,10 +54,9 @@ fkey_defs = [
         on_update='CASCADE',
         on_delete='RESTRICT',
     ),
-    em.ForeignKey.define(['biosample'],
-            'isa', 'biosample', ['RID'],
-            constraint_names=[('isa', 'replicate_biosample_fkey')],
-        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'domain_filter_pattern': 'dataset={{{_dataset}}}'}},
+    em.ForeignKey.define(['dataset'],
+            'isa', 'dataset', ['RID'],
+            constraint_names=[('isa', 'replicate_dataset_fkey')],
         on_update='CASCADE',
         on_delete='RESTRICT',
     ),

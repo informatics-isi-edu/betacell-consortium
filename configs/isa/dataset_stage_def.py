@@ -16,7 +16,7 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['dataset_id', 'stage'],
+    em.Key.define(['stage', 'dataset_id'],
                    constraint_names=[('isa', 'dataset_stage_pkey')],
     ),
     em.Key.define(['RID'],
@@ -26,19 +26,19 @@ key_defs = [
 
 
 fkey_defs = [
-    em.ForeignKey.define(['stage'],
-            'vocab', 'stage_terms', ['dbxref'],
-            constraint_names=[('isa', 'dataset_stage_stage_fkey')],
-        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Stage'}},
-        on_update='CASCADE',
-        on_delete='RESTRICT',
-    ),
     em.ForeignKey.define(['dataset_id'],
             'isa', 'dataset', ['id'],
             constraint_names=[('isa', 'dataset_stage_dataset_id_fkey')],
         annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Datasets'}},
         on_update='CASCADE',
         on_delete='CASCADE',
+    ),
+    em.ForeignKey.define(['stage'],
+            'vocab', 'stage_terms', ['dbxref'],
+            constraint_names=[('isa', 'dataset_stage_stage_fkey')],
+        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Stage'}},
+        on_update='CASCADE',
+        on_delete='RESTRICT',
     ),
 ]
 

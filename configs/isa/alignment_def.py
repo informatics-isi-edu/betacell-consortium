@@ -35,11 +35,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['id'],
-                   constraint_names=[('isa', 'alignment_pkey')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'alignment_RID_key')],
+    ),
+    em.Key.define(['id'],
+                   constraint_names=[('isa', 'alignment_pkey')],
     ),
 ]
 

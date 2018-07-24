@@ -16,11 +16,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['dataset', 'phenotype'],
-                   constraint_names=[('isa', 'dataset_phenotype_dataset_phenotype_key')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'dataset_phenotype_RID_key')],
+    ),
+    em.Key.define(['dataset', 'phenotype'],
+                   constraint_names=[('isa', 'dataset_phenotype_dataset_phenotype_key')],
     ),
 ]
 
