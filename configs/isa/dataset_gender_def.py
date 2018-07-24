@@ -16,7 +16,7 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['dataset_id', 'gender'],
+    em.Key.define(['gender', 'dataset_id'],
                    constraint_names=[('isa', 'dataset_gender_pkey')],
     ),
     em.Key.define(['RID'],
@@ -26,19 +26,19 @@ key_defs = [
 
 
 fkey_defs = [
-    em.ForeignKey.define(['gender'],
-            'vocab', 'gender_terms', ['dbxref'],
-            constraint_names=[('isa', 'dataset_gender_gender_fkey')],
-        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Sex'}},
-        on_update='CASCADE',
-        on_delete='RESTRICT',
-    ),
     em.ForeignKey.define(['dataset_id'],
             'isa', 'dataset', ['id'],
             constraint_names=[('isa', 'dataset_gender_dataset_id_fkey')],
         annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Datasets'}},
         on_update='CASCADE',
         on_delete='CASCADE',
+    ),
+    em.ForeignKey.define(['gender'],
+            'vocab', 'gender_terms', ['dbxref'],
+            constraint_names=[('isa', 'dataset_gender_gender_fkey')],
+        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Sex'}},
+        on_update='CASCADE',
+        on_delete='RESTRICT',
     ),
 ]
 

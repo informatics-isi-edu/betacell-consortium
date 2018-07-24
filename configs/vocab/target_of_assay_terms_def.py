@@ -43,11 +43,11 @@ column_defs = [
 
 
 key_defs = [
+    em.Key.define(['cv', 'name', 'is_obsolete'],
+                   constraint_names=[('vocab', 'target_of_assay_terms_cv_name_is_obsolete_key')],
+    ),
     em.Key.define(['dbxref'],
                    constraint_names=[('vocab', 'target_of_assay_terms_pkey')],
-    ),
-    em.Key.define(['cv', 'is_obsolete', 'name'],
-                   constraint_names=[('vocab', 'target_of_assay_terms_cv_name_is_obsolete_key')],
     ),
     em.Key.define(['RID'],
                    constraint_names=[('vocab', 'target_of_assay_terms_RID_key')],

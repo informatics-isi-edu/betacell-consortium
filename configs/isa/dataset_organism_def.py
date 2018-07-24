@@ -16,7 +16,7 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['organism', 'dataset_id'],
+    em.Key.define(['dataset_id', 'organism'],
                    constraint_names=[('isa', 'dataset_organism_pkey')],
     ),
     em.Key.define(['RID'],

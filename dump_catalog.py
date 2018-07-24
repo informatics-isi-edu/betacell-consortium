@@ -5,11 +5,13 @@ import pprint
 import sys
 
 
-def print_schema(server, schema_name, stream):
+# acls
+#annotations
+
+def print_catalog(server, catalog_id, stream):
     credential = get_credential(server)
-    catalog = ErmrestCatalog('https', server, 1, credentials=credential)
+    catalog = ErmrestCatalog('https', server, catalog_id, credentials=credential)
     model_root = catalog.getCatalogModel()
-    schema = model_root.schemas[schema_name]
 
     print("""import argparse
 from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
@@ -26,6 +28,9 @@ import deriva.core.ermrest_model as em
     if schema.acls != {}:
         print('acls = \\', file=stream)
         pprint.pprint(schema.acls, indent=4, width=80, depth=None, compact=False, stream=stream)
+    if schema.acl_bindings != {}:
+        print('acl_bindings = \\', file=stream)
+        pprint.pprint(schema.acl_bindings, indent=4, width=80, depth=None, compact=False, stream=stream)
 
     print('''
 schema_def = em.Schema.define(
@@ -60,23 +65,23 @@ if __name__ == "__main__":
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Dump definition for schema {}:{}')
+    parser = argparse.ArgumentParser(description='Dump definition for catalog {}:{}')
     parser.add_argument('--server', default='pbcconsortium.isrd.isi.edu',
                         help='Catalog server name')
-    parser.add_argument('schema', help='schema)')
+    parser.add_argument('catalog_id', default=0, help='catalog)')
     parser.add_argument('--outfile', default="stdout", help='output file name)')
     args = parser.parse_args()
 
     server = args.server
     outfile = args.outfile
     server = args.server
-    schema_name = args.schema
+    catalog_id = args.catalog_id
 
     if outfile == 'stdout':
-        print_schema(server, schema_name, sys.stdout)
+        print_schema(server, catalog_id, sys.stdout)
     else:
         with open(outfile, 'w') as f:
-            print_schema(server, schema_name, f)
+            print_schema(server, catalog_id, f)
         f.close()
 
 if __name__ == "__main__":

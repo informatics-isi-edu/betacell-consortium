@@ -2,7 +2,7 @@ import argparse
 from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
 
-table_name = 'treatment_terms'
+table_name = 'compound_terms'
 schema_name = 'vocab'
 
 column_defs = [
@@ -29,14 +29,14 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('vocab', 'treatment_terms_RIDkey1')],
-    ),
     em.Key.define(['uri'],
-                   constraint_names=[('vocab', 'treatment_terms_urikey1')],
+                   constraint_names=[('vocab', 'compound_terms_urikey1')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('vocab', 'compound_terms_RIDkey1')],
     ),
     em.Key.define(['id'],
-                   constraint_names=[('vocab', 'treatment_terms_idkey1')],
+                   constraint_names=[('vocab', 'compound_terms_idkey1')],
     ),
 ]
 
@@ -58,19 +58,19 @@ table_display={}
 table_acls={}
 table_acl_bindings={}
 table_annotations = {
-    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
-    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
     "tag:isrd.isi.edu,2016:table-display":table_display,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
+    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
 }
 
 
-table_def = em.Table.define('treatment_terms',
+table_def = em.Table.define('compound_terms',
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
     annotations=table_annotations,
     acls=table_acls,
     acl_bindings=table_acl_bindings,
-    comment='Terms for treatments',
+    comment='Terms for compounds used to create protocols',
     provide_system = True
 )

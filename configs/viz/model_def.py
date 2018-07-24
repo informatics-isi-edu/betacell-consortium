@@ -35,31 +35,33 @@ column_defs = [
     ),
     em.Column.define('replicate', em.builtin_types['ermrest_rid'],
     ),
+    em.Column.define('biosample', em.builtin_types['text'],
+    ),
 ]
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('viz', 'model_RID_key')],
-    ),
     em.Key.define(['id'],
                    constraint_names=[('viz', 'model_pkey')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('viz', 'model_RID_key')],
     ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['replicate'],
-            'isa', 'replicate', ['RID'],
-            constraint_names=[('viz', 'model_replicate_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
-        on_update='CASCADE',
-        on_delete='SET NULL',
-    ),
     em.ForeignKey.define(['volume'],
             'isa', 'imaging_data', ['RID'],
             constraint_names=[('viz', 'model_volume_fkey')],
         acls={'insert': ['*'], 'update': ['*']},
+    ),
+    em.ForeignKey.define(['biosample'],
+            'isa', 'biosample', ['RID'],
+            constraint_names=[('viz', 'model_biosample_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+        on_update='CASCADE',
+        on_delete='SET NULL',
     ),
 ]
 

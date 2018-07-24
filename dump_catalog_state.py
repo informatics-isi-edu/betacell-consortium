@@ -10,14 +10,6 @@ credential = get_credential(server)
 catalog = ErmrestCatalog('https', server, 1, credentials=credential)
 model_root = catalog.getCatalogModel()
 
-table_list = {
-        'isa' :['biosample', 'dataset', 'experiment','protocol','protocol_treatment','replicate','specimen',
-                                                        'xray_tomography_data', 'dataset_experiment_type', 'project', 'person', 'mesh_data'],
-    'vocab' : [ 'treatment_terms','specimen_terms' ],
-    'viz' : ['model', 'model_mesh_data'],
-    'common' : []
-}
-
 for schema_name, schema in model_root.schemas.items():
     filename = 'configs/{}.schema.py'.format(schema_name)
     os.makedirs(os.path.dirname(filename), exist_ok=True)

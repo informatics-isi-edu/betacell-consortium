@@ -56,13 +56,13 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID', 'dataset'],
-                   constraint_names=[('isa', 'xray_tomography_data_dataset_RID_key')],
-       comment = 'RID and dataset must be distinct.',
-    ),
     em.Key.define(['url'],
                    constraint_names=[('isa', 'xray_tomography_data_url_key')],
        comment = 'Unique URL must be provided.',
+    ),
+    em.Key.define(['dataset', 'RID'],
+                   constraint_names=[('isa', 'xray_tomography_data_dataset_RID_key')],
+       comment = 'RID and dataset must be distinct.',
     ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'xray_tomography_data_RIDkey1')],
@@ -71,17 +71,14 @@ key_defs = [
 
 
 fkey_defs = [
+    em.ForeignKey.define(['biosample'],
+            'isa', 'biosample', ['RID'],
+            constraint_names=[('isa', 'xray_tomography_data_biosample_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+    ),
     em.ForeignKey.define(['equipment_model'],
             'vocab', 'instrument_terms', ['dbxref'],
             constraint_names=[('isa', 'xray_tomography_data_equipment_model_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
-        on_update='CASCADE',
-        on_delete='RESTRICT',
-        comment='Must be a valid reference to a dataset.',
-    ),
-    em.ForeignKey.define(['dataset'],
-            'isa', 'dataset', ['RID'],
-            constraint_names=[('isa', 'xray_tomography_dataset_fkey')],
         acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='RESTRICT',
@@ -103,10 +100,13 @@ fkey_defs = [
         on_delete='RESTRICT',
         comment='Must be a valid reference to a dataset.',
     ),
-    em.ForeignKey.define(['biosample'],
-            'isa', 'biosample', ['RID'],
-            constraint_names=[('isa', 'xray_tomography_data_biosample_fkey')],
+    em.ForeignKey.define(['dataset'],
+            'isa', 'dataset', ['RID'],
+            constraint_names=[('isa', 'xray_tomography_dataset_fkey')],
         acls={'insert': ['*'], 'update': ['*']},
+        on_update='CASCADE',
+        on_delete='RESTRICT',
+        comment='Must be a valid reference to a dataset.',
     ),
 ]
 

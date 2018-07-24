@@ -24,6 +24,7 @@ schema_def = em.Schema.define(
         'common',
         comment=None,
         acls=acls,
+        acl_bindings=acl_bindings
         annotations=annotations,
     )
 

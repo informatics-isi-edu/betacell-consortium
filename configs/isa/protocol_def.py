@@ -32,11 +32,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['description'],
-                   constraint_names=[('isa', 'protocol_description_key')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'protocol_pkey')],
+    ),
+    em.Key.define(['description'],
+                   constraint_names=[('isa', 'protocol_description_key')],
     ),
     em.Key.define(['name'],
                    constraint_names=[('isa', 'protocol_name_key')],
@@ -49,44 +49,49 @@ fkey_defs = [
 
 
 visible_columns=\
-{'compact': [['isa', 'protocol_pkey'], 'name',
-             {'aggregate': 'array',
+{'compact': [{'aggregate': 'array',
+              'comment': 'Compound used to treat the cell line for the '
+                         'experiment',
               'entity': True,
-              'markdown_name': 'Treatment',
+              'markdown_name': 'Compound',
               'source': [{'inbound': ['isa',
-                                      'protocol_treatment_protocol_fkey']},
+                                      'protocol_compound_protocol_fkey']},
                          {'outbound': ['isa',
-                                       'protocol_treatment_treatment_fkey']},
+                                       'protocol_compound_compound_fkey']},
                          'RID']},
              {'aggregate': 'array',
+              'comment': 'Concentration of compound applied to cell line in nM',
               'entity': True,
               'markdown_name': 'Concentration',
               'source': [{'inbound': ['isa',
-                                      'protocol_treatment_protocol_fkey']},
-                         'treatment_concentration']},
-             {'aggregate': 'array', 'entity': True, 'source': ['timepoint']},
+                                      'protocol_compound_protocol_fkey']},
+                         'compound_concentration']},
+             {'aggregate': 'array',
+              'comment': 'Measured in minutes',
+              'entity': True,
+              'source': ['timepoint']},
              'description'],
  'detailed': [['isa', 'protocol_pkey'], 'name', 'timepoint', 'description'],
- 'entry': ['RID', 'name', 'treatment', 'treatment_concentration', 'timepoint',
+ 'entry': ['RID', 'compound', 'compound_concentration', 'timepoint',
            'protocol_url', 'description', 'file_url', 'filename'],
- 'filter': {'and': [{'entity': True,
-                     'markdown_name': 'Protocol Name',
-                     'open': False,
-                     'source': 'name'},
-                    {'entity': True,
-                     'markdown_name': 'Treatment',
+ 'filter': {'and': [{'comment': 'Compound used to treat the cell line for the '
+                                'experiment',
+                     'entity': True,
+                     'markdown_name': 'Compound',
                      'open': False,
                      'source': [{'inbound': ['isa',
-                                             'protocol_treatment_protocol_fkey']},
+                                             'protocol_compound_protocol_fkey']},
                                 {'outbound': ['isa',
-                                              'protocol_treatment_treatment_fkey']},
+                                              'protocol_compound_compound_fkey']},
                                 'RID']},
-                    {'entity': True,
-                     'markdown_name': 'Treatment Concentration',
+                    {'comment': 'Concentration of compound applied to cell '
+                                'line in nM',
+                     'entity': True,
+                     'markdown_name': 'Compound Concentration',
                      'open': False,
                      'source': [{'inbound': ['isa',
-                                             'protocol_treatment_protocol_fkey']},
-                                'treatment_concentration'],
+                                             'protocol_compound_protocol_fkey']},
+                                'compound_concentration'],
                      'ux_mode': 'choices'},
                     {'entity': True,
                      'markdown_name': 'Timepoint',
@@ -99,7 +104,7 @@ visible_columns=\
                      'source': 'description'}]}}
 
 visible_foreign_keys=\
-{'detailed': [['isa', 'protocol_treatment_protocol_fkey'],
+{'detailed': [['isa', 'protocol_compound_protocol_fkey'],
               ['isa', 'experiment_protocol_fkey']],
  'entry': [['isa', 'experiment_protocol_fkey']]}
 
@@ -111,6 +116,9 @@ table_annotations = {
 {'name': 'Protocol'}
 ,
     "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
+    "table_display":
+{}
+,
     "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
     "tag:isrd.isi.edu,2016:table-display":table_display,
 }

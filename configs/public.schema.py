@@ -12,6 +12,7 @@ schema_def = em.Schema.define(
         'public',
         comment='standard public schema',
         acls=acls,
+        acl_bindings=acl_bindings
         annotations=annotations,
     )
 

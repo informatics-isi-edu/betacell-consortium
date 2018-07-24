@@ -31,6 +31,7 @@ schema_def = em.Schema.define(
         'data_commons',
         comment=None,
         acls=acls,
+        acl_bindings=acl_bindings
         annotations=annotations,
     )
 

@@ -21,11 +21,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['alternate_dbxref', 'cvterm'],
-                   constraint_names=[('data_commons', 'cvterm_dbxref_cvterm_alternate_dbxref_key')],
-    ),
     em.Key.define(['cvterm_dbxref_id'],
                    constraint_names=[('data_commons', 'cvterm_dbxref_pkey')],
+    ),
+    em.Key.define(['cvterm', 'alternate_dbxref'],
+                   constraint_names=[('data_commons', 'cvterm_dbxref_cvterm_alternate_dbxref_key')],
     ),
     em.Key.define(['RID'],
                    constraint_names=[('data_commons', 'cvterm_dbxref_RID_key')],
@@ -34,13 +34,13 @@ key_defs = [
 
 
 fkey_defs = [
-    em.ForeignKey.define(['cvterm'],
-            'data_commons', 'cvterm', ['dbxref'],
-            constraint_names=[('data_commons', 'cvterm_dbxref_cvterm_fkey')],
-    ),
     em.ForeignKey.define(['alternate_dbxref'],
             'data_commons', 'dbxref', ['name'],
             constraint_names=[('data_commons', 'cvterm_dbxref_alternate_dbxref_fkey')],
+    ),
+    em.ForeignKey.define(['cvterm'],
+            'data_commons', 'cvterm', ['dbxref'],
+            constraint_names=[('data_commons', 'cvterm_dbxref_cvterm_fkey')],
     ),
 ]
 

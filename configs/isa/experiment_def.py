@@ -28,7 +28,7 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['local_identifier', 'dataset'],
+    em.Key.define(['dataset', 'local_identifier'],
                    constraint_names=[('isa', 'experiment_dataset_local_identifier_key')],
     ),
     em.Key.define(['RID'],
@@ -41,11 +41,10 @@ key_defs = [
 
 
 fkey_defs = [
-    em.ForeignKey.define(['dataset'],
-            'isa', 'dataset', ['RID'],
-            constraint_names=[('isa', 'experiment_dataset_fkey')],
-        on_update='CASCADE',
-        on_delete='RESTRICT',
+    em.ForeignKey.define(['experiment_type'],
+            'vocab', 'experiment_type_terms', ['RID'],
+            constraint_names=[('isa', 'experiment_experiment_type_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
     ),
     em.ForeignKey.define(['protocol'],
             'isa', 'protocol', ['RID'],
@@ -53,10 +52,11 @@ fkey_defs = [
         on_update='CASCADE',
         on_delete='RESTRICT',
     ),
-    em.ForeignKey.define(['experiment_type'],
-            'vocab', 'experiment_type_terms', ['RID'],
-            constraint_names=[('isa', 'experiment_experiment_type_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
+    em.ForeignKey.define(['dataset'],
+            'isa', 'dataset', ['RID'],
+            constraint_names=[('isa', 'experiment_dataset_fkey')],
+        on_update='CASCADE',
+        on_delete='RESTRICT',
     ),
 ]
 

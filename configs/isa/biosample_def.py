@@ -38,18 +38,28 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['dataset', 'local_identifier'],
-                   constraint_names=[('isa', 'biosample_dataset_local_identifier_key')],
-       annotations = {'tag:misd.isi.edu,2015:display': {}},
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'biosample_pkey')],
+       annotations = {'tag:misd.isi.edu,2015:display': {}},
+    ),
+    em.Key.define(['local_identifier', 'dataset'],
+                   constraint_names=[('isa', 'biosample_dataset_local_identifier_key')],
        annotations = {'tag:misd.isi.edu,2015:display': {}},
     ),
 ]
 
 
 fkey_defs = [
+    em.ForeignKey.define(['experiment'],
+            'isa', 'experiment', ['RID'],
+            constraint_names=[('isa', 'biosample_experiment_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+    ),
+    em.ForeignKey.define(['specimen'],
+            'isa', 'specimen', ['RID'],
+            constraint_names=[('isa', 'biosample_specimen_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+    ),
     em.ForeignKey.define(['dataset'],
             'isa', 'dataset', ['RID'],
             constraint_names=[('isa', 'biosample_dataset_fkey')],
@@ -62,16 +72,6 @@ fkey_defs = [
             constraint_names=[('isa', 'biosample_specimen_type_fkey')],
         acls={'insert': ['*'], 'update': ['*']},
         comment='Must be a valid reference to a specimen type.',
-    ),
-    em.ForeignKey.define(['experiment'],
-            'isa', 'experiment', ['RID'],
-            constraint_names=[('isa', 'biosample_experiment_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
-    ),
-    em.ForeignKey.define(['specimen'],
-            'isa', 'specimen', ['RID'],
-            constraint_names=[('isa', 'biosample_specimen_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
     ),
 ]
 

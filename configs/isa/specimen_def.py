@@ -22,12 +22,12 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('isa', 'specimen_RIDkey1')],
-    ),
     em.Key.define(['dataset', 'RID'],
                    constraint_names=[('isa', 'specimen_RID_key')],
        comment = 'RID and dataset must be distinct.',
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('isa', 'specimen_RIDkey1')],
     ),
 ]
 

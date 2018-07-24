@@ -27,6 +27,7 @@ schema_def = em.Schema.define(
         'viz',
         comment=None,
         acls=acls,
+        acl_bindings=acl_bindings
         annotations=annotations,
     )
 

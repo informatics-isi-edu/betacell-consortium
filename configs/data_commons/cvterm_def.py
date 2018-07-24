@@ -38,26 +38,26 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('data_commons', 'cvterm_RID_key')],
-    ),
-    em.Key.define(['cv', 'name', 'is_obsolete'],
+    em.Key.define(['name', 'cv', 'is_obsolete'],
                    constraint_names=[('data_commons', 'cvterm_cv_name_is_obsolete_key')],
     ),
     em.Key.define(['dbxref'],
                    constraint_names=[('data_commons', 'cvterm_pkey')],
     ),
+    em.Key.define(['RID'],
+                   constraint_names=[('data_commons', 'cvterm_RID_key')],
+    ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['cv'],
-            'data_commons', 'cv', ['name'],
-            constraint_names=[('data_commons', 'cvterm_cv_fkey')],
-    ),
     em.ForeignKey.define(['dbxref'],
             'data_commons', 'dbxref', ['name'],
             constraint_names=[('data_commons', 'cvterm_dbxref_fkey')],
+    ),
+    em.ForeignKey.define(['cv'],
+            'data_commons', 'cv', ['name'],
+            constraint_names=[('data_commons', 'cvterm_cv_fkey')],
     ),
 ]
 

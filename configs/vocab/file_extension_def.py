@@ -18,14 +18,14 @@ column_defs = [
 
 
 key_defs = [
+    em.Key.define(['RID'],
+                   constraint_names=[('vocab', 'file_extension_rid_key')],
+    ),
     em.Key.define(['id'],
                    constraint_names=[('vocab', 'file_extension_pkey')],
     ),
     em.Key.define(['term'],
                    constraint_names=[('vocab', 'file_extension_term_key')],
-    ),
-    em.Key.define(['RID'],
-                   constraint_names=[('vocab', 'file_extension_rid_key')],
     ),
 ]
 

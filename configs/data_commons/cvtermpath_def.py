@@ -30,11 +30,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['type_dbxref', 'subject_dbxref', 'object_dbxref'],
-                   constraint_names=[('data_commons', 'cvtermpath_type_dbxref_subject_dbxref_object_dbxref_key')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('data_commons', 'cvtermpath_RID_key')],
+    ),
+    em.Key.define(['subject_dbxref', 'type_dbxref', 'object_dbxref'],
+                   constraint_names=[('data_commons', 'cvtermpath_type_dbxref_subject_dbxref_object_dbxref_key')],
     ),
     em.Key.define(['cvtermpath_id'],
                    constraint_names=[('data_commons', 'cvtermpath_pkey')],
@@ -48,18 +48,18 @@ fkey_defs = [
             constraint_names=[('data_commons', 'cvtermpath_object_dbxref_fkey')],
         annotations={'tag:isrd.isi.edu,2016:foreign-key': {'from_name': 'Relationship paths with this term as object', 'to_name': 'Object'}},
     ),
-    em.ForeignKey.define(['subject_dbxref'],
+    em.ForeignKey.define(['type_dbxref'],
             'data_commons', 'cvterm', ['dbxref'],
-            constraint_names=[('data_commons', 'cvtermpath_subject_dbxref_fkey')],
-        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'from_name': 'Relationship paths with this term as subject', 'to_name': 'Subject'}},
+            constraint_names=[('data_commons', 'cvtermpath_type_dbxref_fkey')],
     ),
     em.ForeignKey.define(['cv'],
             'data_commons', 'cv', ['name'],
             constraint_names=[('data_commons', 'cvtermpath_cv_fkey')],
     ),
-    em.ForeignKey.define(['type_dbxref'],
+    em.ForeignKey.define(['subject_dbxref'],
             'data_commons', 'cvterm', ['dbxref'],
-            constraint_names=[('data_commons', 'cvtermpath_type_dbxref_fkey')],
+            constraint_names=[('data_commons', 'cvtermpath_subject_dbxref_fkey')],
+        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'from_name': 'Relationship paths with this term as subject', 'to_name': 'Subject'}},
     ),
 ]
 

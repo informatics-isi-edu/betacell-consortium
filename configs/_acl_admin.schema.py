@@ -10,6 +10,7 @@ schema_def = em.Schema.define(
         '_acl_admin',
         comment=None,
         acls=acls,
+        acl_bindings=acl_bindings
         annotations=annotations,
     )
 

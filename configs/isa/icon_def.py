@@ -28,14 +28,14 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('isa', 'icon_RID_key')],
-    ),
     em.Key.define(['url'],
                    constraint_names=[('isa', 'icon_url_key')],
     ),
     em.Key.define(['id'],
                    constraint_names=[('isa', 'icon_pkey')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('isa', 'icon_RID_key')],
     ),
 ]
 

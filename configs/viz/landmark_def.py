@@ -40,14 +40,14 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['mesh', 'point_y', 'point_x', 'point_z'],
+    em.Key.define(['point_y', 'mesh', 'point_x', 'point_z'],
                    constraint_names=[('viz', 'landmark_mesh_point_x_point_y_point_z_key')],
-    ),
-    em.Key.define(['RID'],
-                   constraint_names=[('viz', 'landmark_RID_key')],
     ),
     em.Key.define(['id'],
                    constraint_names=[('viz', 'landmark_pkey')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('viz', 'landmark_RID_key')],
     ),
 ]
 

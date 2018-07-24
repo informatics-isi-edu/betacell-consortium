@@ -26,17 +26,17 @@ key_defs = [
 
 
 fkey_defs = [
-    em.ForeignKey.define(['person'],
-            'isa', 'person', ['RID'],
-            constraint_names=[('isa', 'project_member_person_fkey')],
-        on_update='CASCADE',
-        on_delete='RESTRICT',
-    ),
     em.ForeignKey.define(['project_id'],
             'isa', 'project', ['id'],
             constraint_names=[('isa', 'project_member_project_id_fkey')],
         on_update='CASCADE',
         on_delete='CASCADE',
+    ),
+    em.ForeignKey.define(['person'],
+            'isa', 'person', ['RID'],
+            constraint_names=[('isa', 'project_member_person_fkey')],
+        on_update='CASCADE',
+        on_delete='RESTRICT',
     ),
 ]
 

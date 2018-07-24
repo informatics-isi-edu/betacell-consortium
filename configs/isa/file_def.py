@@ -33,17 +33,17 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['legacy_file_id'],
-                   constraint_names=[('isa', 'file_legacy_file_id_key')],
-    ),
-    em.Key.define(['RID'],
-                   constraint_names=[('isa', 'file_RID_key')],
-    ),
     em.Key.define(['id'],
                    constraint_names=[('isa', 'file_pkey')],
     ),
     em.Key.define(['url'],
                    constraint_names=[('isa', 'file_url_key')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('isa', 'file_RID_key')],
+    ),
+    em.Key.define(['legacy_file_id'],
+                   constraint_names=[('isa', 'file_legacy_file_id_key')],
     ),
 ]
 

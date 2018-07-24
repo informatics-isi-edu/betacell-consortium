@@ -3,39 +3,29 @@ from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
 
 table_names = [
-    chromatin_modifier_terms,
     anatomy_terms,
     image_creation_device_terms,
-    mutation_terms,
     file_extension,
     gender_terms,
     cell_line_terms,
-    instrument_terms,
     target_of_assay_terms,
     phenotype_terms,
     human_age_terms,
-    file_format_terms,
+    stage_terms,
     origin_terms,
     dataset_status_terms,
     data_type_terms,
-    rnaseq_selection_terms,
     specimen_terms,
-    genotype_terms,
-    histone_modification_terms,
-    paired_end_or_single_read_terms,
-    strandedness_terms,
-    strain_terms,
+    instrument_terms,
     mapping_assembly_terms,
     experiment_type_terms,
-    stage_terms,
+    file_format_terms,
     enhancer_terms,
     gene_terms,
     specimen_type_terms,
     species_terms,
     molecule_type_terms,
-    treatment_terms,
-    transcription_factor_terms,
-    mouse_genetic_background_terms,
+    compound_terms,
     output_type_terms,
 ]
 annotations = \
@@ -57,6 +47,7 @@ schema_def = em.Schema.define(
         'vocab',
         comment=None,
         acls=acls,
+        acl_bindings=acl_bindings
         annotations=annotations,
     )
 

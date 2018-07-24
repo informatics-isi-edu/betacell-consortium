@@ -25,6 +25,9 @@ column_defs = [
 
 
 key_defs = [
+    em.Key.define(['experiment', 'biosample', 'dataset', 'technical_replicate_number', 'bioreplicate_number'],
+                   constraint_names=[('isa', 'replicate_dataset_experiment_biosample_bioreplicate_number__key')],
+    ),
     em.Key.define(['experiment', 'dataset', 'technical_replicate_number', 'biosample'],
                    constraint_names=[('isa', 'replicate_dataset_experiment_biosample_technical_replicate__key')],
     ),
@@ -33,9 +36,6 @@ key_defs = [
     ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'replicate_pkey')],
-    ),
-    em.Key.define(['experiment', 'dataset', 'biosample', 'technical_replicate_number', 'bioreplicate_number'],
-                   constraint_names=[('isa', 'replicate_dataset_experiment_biosample_bioreplicate_number__key')],
     ),
 ]
 

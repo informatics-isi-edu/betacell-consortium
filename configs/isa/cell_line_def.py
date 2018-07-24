@@ -29,6 +29,11 @@ key_defs = [
 
 
 fkey_defs = [
+    em.ForeignKey.define(['species'],
+            'vocab', 'species_terms', ['id'],
+            constraint_names=[('isa', 'cell_line_species_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+    ),
     em.ForeignKey.define(['cell_line_id'],
             'vocab', 'cell_line_terms', ['id'],
             constraint_names=[('isa', 'cell_line_cell_line_terms_fkey')],
@@ -38,11 +43,6 @@ fkey_defs = [
     em.ForeignKey.define(['anatomy'],
             'vocab', 'anatomy_terms', ['id'],
             constraint_names=[('isa', 'cell_line_anatomy_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
-    ),
-    em.ForeignKey.define(['species'],
-            'vocab', 'species_terms', ['id'],
-            constraint_names=[('isa', 'cell_line_species_fkey')],
         acls={'insert': ['*'], 'update': ['*']},
     ),
 ]
