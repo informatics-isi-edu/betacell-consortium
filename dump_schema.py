@@ -17,7 +17,7 @@ import deriva.core.ermrest_model as em
 """, file=stream)
     print('table_names = [', file=stream)
     for i in schema.tables:
-        print('    {},'.format(i), file=stream)
+        print("    '{}',".format(i), file=stream)
     print(']', file=stream)
 
     if schema.annotations != {}:
@@ -32,7 +32,7 @@ schema_def = em.Schema.define(
         '{}',
         comment={},
         acls=acls,
-        acl_bindings=acl_bindings
+        acl_bindings=acl_bindings,
         annotations=annotations,
     )'''.format(schema.name,
                 "'" + schema.comment + "'" if schema.comment is not None else None), file=stream)

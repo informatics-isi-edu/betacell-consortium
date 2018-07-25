@@ -61,9 +61,9 @@ def main():
                 model_root = catalog.getCatalogModel()
                 schema = model_root.schemas[mod.schema_name]
                 table = schema.tables[mod.table_name]
-            fknames = [i.name for i in table.foreign_keys]
+            fknames = [i.names for i in table.foreign_keys]
             for i in mod.fkey_defs:
-                if i.name not in fknames:
+                if i['names'] not in fknames:
                     print('Creating foreign key {}'.format(i.name))
                     table.create_fkey(catalog, i)
     if mode == 'annotations':
