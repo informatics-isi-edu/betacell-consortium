@@ -16,27 +16,27 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['project_id', 'person'],
-                   constraint_names=[('isa', 'project_member_pkey')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'project_member_RID_key')],
+    ),
+    em.Key.define(['project_id', 'person'],
+                   constraint_names=[('isa', 'project_member_pkey')],
     ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['project_id'],
-            'isa', 'project', ['id'],
-            constraint_names=[('isa', 'project_member_project_id_fkey')],
-        on_update='CASCADE',
-        on_delete='CASCADE',
-    ),
     em.ForeignKey.define(['person'],
             'isa', 'person', ['RID'],
             constraint_names=[('isa', 'project_member_person_fkey')],
         on_update='CASCADE',
         on_delete='RESTRICT',
+    ),
+    em.ForeignKey.define(['project_id'],
+            'isa', 'project', ['id'],
+            constraint_names=[('isa', 'project_member_project_id_fkey')],
+        on_update='CASCADE',
+        on_delete='CASCADE',
     ),
 ]
 

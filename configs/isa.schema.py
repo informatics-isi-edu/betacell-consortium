@@ -5,7 +5,7 @@ import deriva.core.ermrest_model as em
 table_names = [
     protocol,
     dataset_gene,
-    library,
+    dataset_gender,
     dataset,
     sample,
     dataset_instrument,
@@ -28,7 +28,7 @@ table_names = [
     dataset_experiment_type,
     specimen,
     previews,
-    dataset_gender,
+    library,
     dataset_anatomy,
     icon,
     pipeline,

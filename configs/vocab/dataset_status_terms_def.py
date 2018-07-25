@@ -43,26 +43,26 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['name', 'cv', 'is_obsolete'],
+    em.Key.define(['cv', 'name', 'is_obsolete'],
                    constraint_names=[('vocab', 'dataset_status_terms_cv_name_is_obsolete_key')],
-    ),
-    em.Key.define(['RID'],
-                   constraint_names=[('vocab', 'dataset_status_terms_RID_key')],
     ),
     em.Key.define(['dbxref'],
                    constraint_names=[('vocab', 'dataset_status_terms_pkey')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('vocab', 'dataset_status_terms_RID_key')],
     ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['cv'],
-            'data_commons', 'cv', ['name'],
-            constraint_names=[('vocab', 'dataset_status_terms_cv_fkey')],
-    ),
     em.ForeignKey.define(['dbxref'],
             'data_commons', 'cvterm', ['dbxref'],
             constraint_names=[('vocab', 'dataset_status_terms_dbxref_fkey')],
+    ),
+    em.ForeignKey.define(['cv'],
+            'data_commons', 'cv', ['name'],
+            constraint_names=[('vocab', 'dataset_status_terms_cv_fkey')],
     ),
 ]
 

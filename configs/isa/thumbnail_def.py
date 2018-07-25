@@ -48,15 +48,15 @@ key_defs = [
 
 
 fkey_defs = [
-    em.ForeignKey.define(['dataset'],
-            'isa', 'dataset', ['RID'],
-            constraint_names=[('isa', 'thumbnail_dataset_fkey')],
-        on_update='CASCADE',
-        on_delete='RESTRICT',
-    ),
     em.ForeignKey.define(['thumbnail_of'],
             'isa', 'imaging_data', ['RID'],
             constraint_names=[('isa', 'thumbnail_thumbnail_of_fkey')],
+        on_update='CASCADE',
+        on_delete='RESTRICT',
+    ),
+    em.ForeignKey.define(['dataset'],
+            'isa', 'dataset', ['RID'],
+            constraint_names=[('isa', 'thumbnail_dataset_fkey')],
         on_update='CASCADE',
         on_delete='RESTRICT',
     ),

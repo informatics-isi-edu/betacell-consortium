@@ -2,11 +2,11 @@ import argparse
 from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
 
-table_name = 'pipeline'
+table_name = 'process'
 schema_name = 'isa'
 
 column_defs = [
-    em.Column.define('pipeline_url', em.builtin_types['text'],
+    em.Column.define('process_url', em.builtin_types['text'],
     ),
     em.Column.define('description', em.builtin_types['markdown'],
     ),
@@ -23,10 +23,10 @@ column_defs = [
 
 key_defs = [
     em.Key.define(['description'],
-                   constraint_names=[('isa', 'pipeline_description_key')],
+                   constraint_names=[('isa', 'process_description_key')],
     ),
     em.Key.define(['RID'],
-                   constraint_names=[('isa', 'pipeline_pkey')],
+                   constraint_names=[('isa', 'process_pkey')],
     ),
 ]
 
@@ -47,7 +47,7 @@ table_annotations = {
 }
 
 
-table_def = em.Table.define('pipeline',
+table_def = em.Table.define('process',
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,

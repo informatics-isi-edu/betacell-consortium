@@ -23,11 +23,11 @@ key_defs = [
     em.Key.define(['id'],
                    constraint_names=[('isa', 'publication_pkey')],
     ),
+    em.Key.define(['dataset', 'pmid'],
+                   constraint_names=[('isa', 'publication_dataset_pmid_key')],
+    ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'publication_RID_key')],
-    ),
-    em.Key.define(['pmid', 'dataset'],
-                   constraint_names=[('isa', 'publication_dataset_pmid_key')],
     ),
 ]
 

@@ -21,7 +21,7 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['compound', 'protocol'],
+    em.Key.define(['protocol', 'compound'],
                    constraint_names=[('isa', 'protocol_compound_RID_key')],
        comment = 'protocol and compound must be distinct.',
     ),
@@ -32,17 +32,17 @@ key_defs = [
 
 
 fkey_defs = [
-    em.ForeignKey.define(['protocol'],
-            'isa', 'protocol', ['RID'],
-            constraint_names=[('isa', 'protocol_compound_protocol_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
-        on_delete='CASCADE',
-    ),
     em.ForeignKey.define(['compound'],
             'vocab', 'compound_terms', ['id'],
             constraint_names=[('isa', 'protocol_compound_compound_fkey')],
         acls={'insert': ['*'], 'update': ['*']},
         comment='Must be a valid reference to a compound.',
+    ),
+    em.ForeignKey.define(['protocol'],
+            'isa', 'protocol', ['RID'],
+            constraint_names=[('isa', 'protocol_compound_protocol_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+        on_delete='CASCADE',
     ),
 ]
 

@@ -46,11 +46,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID', 'dataset'],
-                   constraint_names=[('isa', 'imaging_data_dataset_RID_key')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'imaging_data_pkey')],
+    ),
+    em.Key.define(['dataset', 'RID'],
+                   constraint_names=[('isa', 'imaging_data_dataset_RID_key')],
     ),
     em.Key.define(['url'],
                    constraint_names=[('isa', 'imaging_data_url_key')],
@@ -59,11 +59,10 @@ key_defs = [
 
 
 fkey_defs = [
-    em.ForeignKey.define(['dataset'],
-            'isa', 'dataset', ['RID'],
-            constraint_names=[('isa', 'imaging_data_dataset_fkey')],
-        on_update='CASCADE',
-        on_delete='RESTRICT',
+    em.ForeignKey.define(['equipment_model'],
+            'vocab', 'instrument_terms', ['dbxref'],
+            constraint_names=[('isa', 'imaging_data_equipment_model_fkey')],
+        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Equipment Model'}},
     ),
     em.ForeignKey.define(['file_type'],
             'vocab', 'file_format_terms', ['dbxref'],
@@ -81,10 +80,11 @@ fkey_defs = [
         on_update='CASCADE',
         on_delete='RESTRICT',
     ),
-    em.ForeignKey.define(['equipment_model'],
-            'vocab', 'instrument_terms', ['dbxref'],
-            constraint_names=[('isa', 'imaging_data_equipment_model_fkey')],
-        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Equipment Model'}},
+    em.ForeignKey.define(['dataset'],
+            'isa', 'dataset', ['RID'],
+            constraint_names=[('isa', 'imaging_data_dataset_fkey')],
+        on_update='CASCADE',
+        on_delete='RESTRICT',
     ),
 ]
 

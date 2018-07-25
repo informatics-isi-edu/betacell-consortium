@@ -24,11 +24,11 @@ column_defs = [
 
 
 key_defs = [
+    em.Key.define(['version', 'db', 'accession'],
+                   constraint_names=[('data_commons', 'dbxref_db_accession_version_key')],
+    ),
     em.Key.define(['RID'],
                    constraint_names=[('data_commons', 'dbxref_RID_key')],
-    ),
-    em.Key.define(['accession', 'db', 'version'],
-                   constraint_names=[('data_commons', 'dbxref_db_accession_version_key')],
     ),
     em.Key.define(['name'],
                    constraint_names=[('data_commons', 'dbxref_pkey')],

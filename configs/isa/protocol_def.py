@@ -32,14 +32,14 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('isa', 'protocol_pkey')],
-    ),
     em.Key.define(['description'],
                    constraint_names=[('isa', 'protocol_description_key')],
     ),
     em.Key.define(['name'],
                    constraint_names=[('isa', 'protocol_name_key')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('isa', 'protocol_pkey')],
     ),
 ]
 
@@ -74,7 +74,8 @@ visible_columns=\
  'detailed': [['isa', 'protocol_pkey'], 'name', 'timepoint', 'description'],
  'entry': ['RID', 'compound', 'compound_concentration', 'timepoint',
            'protocol_url', 'description', 'file_url', 'filename'],
- 'filter': {'and': [{'comment': 'Compound used to treat the cell line for the '
+ 'filter': {'and': [
+                    {'comment': 'Compound used to treat the cell line for the '
                                 'experiment',
                      'entity': True,
                      'markdown_name': 'Compound',

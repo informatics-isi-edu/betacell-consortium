@@ -40,25 +40,19 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['point_y', 'mesh', 'point_x', 'point_z'],
+    em.Key.define(['RID'],
+                   constraint_names=[('viz', 'landmark_RID_key')],
+    ),
+    em.Key.define(['point_x', 'mesh', 'point_y', 'point_z'],
                    constraint_names=[('viz', 'landmark_mesh_point_x_point_y_point_z_key')],
     ),
     em.Key.define(['id'],
                    constraint_names=[('viz', 'landmark_pkey')],
     ),
-    em.Key.define(['RID'],
-                   constraint_names=[('viz', 'landmark_RID_key')],
-    ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['mesh'],
-            'isa', 'mesh_data', ['RID'],
-            constraint_names=[('viz', 'landmark_mesh_data_fkey')],
-        on_update='CASCADE',
-        on_delete='CASCADE',
-    ),
 ]
 
 

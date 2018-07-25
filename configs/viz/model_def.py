@@ -51,17 +51,17 @@ key_defs = [
 
 
 fkey_defs = [
-    em.ForeignKey.define(['volume'],
-            'isa', 'imaging_data', ['RID'],
-            constraint_names=[('viz', 'model_volume_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
-    ),
     em.ForeignKey.define(['biosample'],
             'isa', 'biosample', ['RID'],
             constraint_names=[('viz', 'model_biosample_fkey')],
         acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='SET NULL',
+    ),
+    em.ForeignKey.define(['volume'],
+            'isa', 'imaging_data', ['RID'],
+            constraint_names=[('viz', 'model_volume_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
     ),
 ]
 

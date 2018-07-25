@@ -19,11 +19,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['cvterm_dbxref'],
-                   constraint_names=[('data_commons', 'relationship_types_pkey')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('data_commons', 'relationship_types_RID_key')],
+    ),
+    em.Key.define(['cvterm_dbxref'],
+                   constraint_names=[('data_commons', 'relationship_types_pkey')],
     ),
 ]
 

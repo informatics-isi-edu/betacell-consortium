@@ -49,11 +49,11 @@ key_defs = [
     em.Key.define(['id'],
                    constraint_names=[('isa', 'dataset_pkey')],
     ),
-    em.Key.define(['RID'],
-                   constraint_names=[('isa', 'dataset_RID_key')],
-    ),
     em.Key.define(['accession'],
                    constraint_names=[('isa', 'accession_unique')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('isa', 'dataset_RID_key')],
     ),
 ]
 

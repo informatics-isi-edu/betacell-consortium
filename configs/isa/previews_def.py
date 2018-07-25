@@ -41,16 +41,16 @@ key_defs = [
 
 
 fkey_defs = [
+    em.ForeignKey.define(['file_type'],
+            'vocab', 'file_format_terms', ['dbxref'],
+            constraint_names=[('isa', 'previews_file_type_fkey')],
+        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'File Type'}},
+    ),
     em.ForeignKey.define(['dataset_id'],
             'isa', 'dataset', ['RID'],
             constraint_names=[('isa', 'previews_dataset_id_fkey')],
         on_update='CASCADE',
         on_delete='RESTRICT',
-    ),
-    em.ForeignKey.define(['file_type'],
-            'vocab', 'file_format_terms', ['dbxref'],
-            constraint_names=[('isa', 'previews_file_type_fkey')],
-        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'File Type'}},
     ),
 ]
 
