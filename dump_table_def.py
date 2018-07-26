@@ -30,11 +30,11 @@ def print_annotations(table, stream):
     print('table_annotations = {', file=stream)
     for k, v in table.annotations.items():
         if 'table-display' in k:
-            print('    "{}":table_display,'.format(k), file=stream)
+            print('    "{}": table_display,'.format(k), file=stream)
         elif 'visible-columns' in k:
-            print('    "{}":visible_columns,'.format(k), file=stream)
+            print('    "{}": visible_columns,'.format(k), file=stream)
         elif 'visible-foreign-keys' in k:
-            print('    "{}":visible_foreign_keys,'.format(k), file=stream)
+            print('    "{}": visible_foreign_keys,'.format(k), file=stream)
         else:
             print('    "{}":'.format(k), file=stream)
             pprint.pprint(v, compact=True, stream=stream)
@@ -46,7 +46,7 @@ def print_annotations(table, stream):
     column_acl_bindings = {}
     column_comment = {}
     for i in table.column_definitions:
-        if i.comment != {}:
+        if not (i.comment == '' or i.comment == None):
             column_comment[i.name] = i.comment
         if i.annotations != {}:
             column_annotations[i.name] = i.annotations

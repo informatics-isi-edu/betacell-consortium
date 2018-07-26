@@ -67,14 +67,6 @@ def main():
                     print('Creating foreign key {}'.format(i['names']))
                     table.create_fkey(catalog, i)
     if mode == 'annotations':
-        if len(mod.visible_columns) > 0:
-            for k, v in mod.visible_columns.items():
-                table.visible_columns[k] = v
-
-        if len(mod.visible_foreign_keys) > 0:
-            for k, v in mod.visible_foreign_keys.items():
-                table.visible_foreign_keys[k] = v
-
         if len(mod.table_annotations) > 0:
             for k,v in mod.table_annotations.items():
                 table.annotations[k] = v
