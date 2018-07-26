@@ -7,7 +7,7 @@ def main():
     parser = argparse.ArgumentParser(description='Load foreign key defs for table {0}:{1}')
     parser.add_argument('--server', default='pbcconsortium.isrd.isi.edu',
                         help='Catalog server name')
-    parser.add_argument('--replace', default=False, help='replace existing values with new ones )')
+    parser.add_argument('--replace', action='store_true', help='replace existing values with new ones )')
     parser.add_argument('--defpath', default='.', help='path to table definitions)')
     parser.add_argument('table', help='Name table to be loaded.')
     parser.add_argument('mode', choices=['table', 'columns', 'annotations', 'fkeys', 'acls'],
@@ -18,6 +18,7 @@ def main():
     mode = args.mode
     table = args.table
     defpath = args.defpath
+    replace = args.replace
 
     print('Importing ', table)
 
@@ -33,7 +34,6 @@ def main():
     if mode != 'table':
         table = schema.tables[mod.table_name]
 
-    replace = False
     skip_fkeys = False
 
     if mode == 'table':
@@ -64,7 +64,7 @@ def main():
             fknames = [i.names for i in table.foreign_keys]
             for i in mod.fkey_defs:
                 if i['names'] not in fknames:
-                    print('Creating foreign key {}'.format(i.name))
+                    print('Creating foreign key {}'.format(i['names']))
                     table.create_fkey(catalog, i)
     if mode == 'annotations':
         if len(mod.visible_columns) > 0:
@@ -75,6 +75,13 @@ def main():
             for k, v in mod.visible_foreign_keys.items():
                 table.visible_foreign_keys[k] = v
         table.annotations['table_display'] = mod.table_display
+
+        if len(mod.column_annotations) > 0:
+            for c in table.column_definitions:
+                if c.name in mod.column_annotations:
+                    for k, v in mod.column_annotations[c.name].items():
+                        c.annotations[k] = v
+
         table.apply(catalog)
 
     if mode == 'acls':
