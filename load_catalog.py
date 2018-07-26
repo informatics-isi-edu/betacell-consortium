@@ -74,7 +74,10 @@ def main():
         if len(mod.visible_foreign_keys) > 0:
             for k, v in mod.visible_foreign_keys.items():
                 table.visible_foreign_keys[k] = v
-        table.annotations['table_display'] = mod.table_display
+
+        if len(mod.table_annotations) > 0:
+            for k,v in mod.table_annotations.items():
+                table.annotations[k] = v
 
         if len(mod.column_annotations) > 0:
             for c in table.column_definitions:

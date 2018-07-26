@@ -3,7 +3,7 @@ from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
 
 table_names = [
-    ermrest_client,
+    'ermrest_client',
 ]
 acls = \
 {'delete': [], 'enumerate': [], 'insert': [], 'select': [], 'update': []}
@@ -12,7 +12,7 @@ schema_def = em.Schema.define(
         'public',
         comment='standard public schema',
         acls=acls,
-        acl_bindings=acl_bindings
+        acl_bindings=acl_bindings,
         annotations=annotations,
     )
 

@@ -3,14 +3,14 @@ from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
 
 table_names = [
-    group_lists,
+    'group_lists',
 ]
 
 schema_def = em.Schema.define(
         '_acl_admin',
         comment=None,
         acls=acls,
-        acl_bindings=acl_bindings
+        acl_bindings=acl_bindings,
         annotations=annotations,
     )
 

@@ -28,7 +28,7 @@ key_defs = [
     em.Key.define(['RID'],
                    constraint_names=[('data_commons', 'cvtermprop_RID_key')],
     ),
-    em.Key.define(['type_dbxref', 'rank', 'cvterm_dbxref', 'value'],
+    em.Key.define(['rank', 'cvterm_dbxref', 'type_dbxref', 'value'],
                    constraint_names=[('data_commons', 'cvtermprop_cvterm_dbxref_type_dbxref_value_rank_key')],
     ),
     em.Key.define(['cvtermprop_id'],
@@ -38,13 +38,13 @@ key_defs = [
 
 
 fkey_defs = [
-    em.ForeignKey.define(['cvterm_dbxref'],
-            'data_commons', 'cvterm', ['dbxref'],
-            constraint_names=[('data_commons', 'cvtermprop_cvterm_dbxref_fkey')],
-    ),
     em.ForeignKey.define(['type_dbxref'],
             'data_commons', 'cvterm', ['dbxref'],
             constraint_names=[('data_commons', 'cvtermprop_type_dbxref_fkey')],
+    ),
+    em.ForeignKey.define(['cvterm_dbxref'],
+            'data_commons', 'cvterm', ['dbxref'],
+            constraint_names=[('data_commons', 'cvtermprop_cvterm_dbxref_fkey')],
     ),
 ]
 

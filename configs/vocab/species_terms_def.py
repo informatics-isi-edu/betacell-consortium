@@ -29,14 +29,14 @@ column_defs = [
 
 
 key_defs = [
+    em.Key.define(['uri'],
+                   constraint_names=[('vocab', 'species_terms_urikey1')],
+    ),
     em.Key.define(['RID'],
                    constraint_names=[('vocab', 'species_terms_RIDkey1')],
     ),
     em.Key.define(['id'],
                    constraint_names=[('vocab', 'species_terms_idkey1')],
-    ),
-    em.Key.define(['uri'],
-                   constraint_names=[('vocab', 'species_terms_urikey1')],
     ),
 ]
 

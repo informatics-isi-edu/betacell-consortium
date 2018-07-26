@@ -25,31 +25,31 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['experiment', 'biosample', 'bioreplicate_number', 'dataset', 'technical_replicate_number'],
-                   constraint_names=[('isa', 'replicate_dataset_experiment_biosample_bioreplicate_number__key')],
+    em.Key.define(['dataset', 'technical_replicate_number', 'experiment', 'biosample'],
+                   constraint_names=[('isa', 'replicate_dataset_experiment_biosample_technical_replicate__key')],
     ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'replicate_pkey')],
     ),
-    em.Key.define(['experiment', 'dataset', 'technical_replicate_number', 'biosample'],
-                   constraint_names=[('isa', 'replicate_dataset_experiment_biosample_technical_replicate__key')],
-    ),
     em.Key.define(['dataset', 'RID'],
                    constraint_names=[('isa', 'replicate_RID_dataset_key')],
+    ),
+    em.Key.define(['biosample', 'technical_replicate_number', 'dataset', 'experiment', 'bioreplicate_number'],
+                   constraint_names=[('isa', 'replicate_dataset_experiment_biosample_bioreplicate_number__key')],
     ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['experiment', 'dataset'],
-            'isa', 'experiment', ['RID', 'dataset'],
-            constraint_names=[('isa', 'replicate_experiment_fkey')],
-        on_update='CASCADE',
-        on_delete='RESTRICT',
-    ),
     em.ForeignKey.define(['dataset'],
             'isa', 'dataset', ['RID'],
             constraint_names=[('isa', 'replicate_dataset_fkey')],
+        on_update='CASCADE',
+        on_delete='RESTRICT',
+    ),
+    em.ForeignKey.define(['dataset', 'experiment'],
+            'isa', 'experiment', ['dataset', 'RID'],
+            constraint_names=[('isa', 'replicate_experiment_fkey')],
         on_update='CASCADE',
         on_delete='RESTRICT',
     ),

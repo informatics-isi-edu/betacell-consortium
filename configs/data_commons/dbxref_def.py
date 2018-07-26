@@ -24,7 +24,7 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['version', 'db', 'accession'],
+    em.Key.define(['db', 'version', 'accession'],
                    constraint_names=[('data_commons', 'dbxref_db_accession_version_key')],
     ),
     em.Key.define(['RID'],

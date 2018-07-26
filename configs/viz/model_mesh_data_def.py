@@ -34,15 +34,15 @@ key_defs = [
 
 
 fkey_defs = [
-    em.ForeignKey.define(['mesh'],
-            'isa', 'mesh_data', ['RID'],
-            constraint_names=[('viz', 'model_mesh_data_mesh_fkey')],
-        on_update='CASCADE',
-        on_delete='RESTRICT',
-    ),
     em.ForeignKey.define(['model'],
             'viz', 'model', ['RID'],
             constraint_names=[('viz', 'model_mesh_data_model_fkey')],
+        on_update='CASCADE',
+        on_delete='RESTRICT',
+    ),
+    em.ForeignKey.define(['mesh'],
+            'isa', 'mesh_data', ['RID'],
+            constraint_names=[('viz', 'model_mesh_data_mesh_fkey')],
         on_update='CASCADE',
         on_delete='RESTRICT',
     ),

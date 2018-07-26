@@ -6,107 +6,62 @@ table_name = 'data_type_terms'
 schema_name = 'vocab'
 
 column_defs = [
-    em.Column.define('dbxref', em.builtin_types['text'],
+    em.Column.define('id', em.builtin_types['ermrest_curie'],
         nullok=False,
-        annotations={'tag:misd.isi.edu,2015:display': {'name': 'Code'}, 'tag:isrd.isi.edu,2016:column-display': {'*': {'markdown_pattern': '[{{dbxref}}](/chaise/record/#1/data_commons:cvterm/dbxref={{#encode}}{{dbxref}}{{/encode}})'}}},
+        comment='The preferred Compact URI (CURIE) for this term.',
     ),
-    em.Column.define('dbxref_unversioned', em.builtin_types['text'],
+    em.Column.define('uri', em.builtin_types['ermrest_uri'],
         nullok=False,
-        annotations={'tag:isrd.isi.edu,2016:generated': None},
-    ),
-    em.Column.define('cv', em.builtin_types['text'],
-        nullok=False,
-        annotations={'tag:misd.isi.edu,2015:display': {'name': 'Controlled Vocabulary'}, 'tag:isrd.isi.edu,2016:generated': None},
+        comment='The preferred URI for this term.',
     ),
     em.Column.define('name', em.builtin_types['text'],
         nullok=False,
-        annotations={'tag:isrd.isi.edu,2016:generated': None},
+        comment='The preferred human-readable name for this term.',
     ),
-    em.Column.define('definition', em.builtin_types['text'],
-        annotations={'tag:isrd.isi.edu,2016:generated': None},
-    ),
-    em.Column.define('is_obsolete', em.builtin_types['boolean'],
+    em.Column.define('description', em.builtin_types['markdown'],
         nullok=False,
-        annotations={'tag:isrd.isi.edu,2016:generated': None},
-    ),
-    em.Column.define('is_relationshiptype', em.builtin_types['boolean'],
-        nullok=False,
-        annotations={'tag:isrd.isi.edu,2016:generated': None},
+        comment='A longer human-readable description of this term.',
     ),
     em.Column.define('synonyms', em.builtin_types['text[]'],
-        annotations={'tag:isrd.isi.edu,2016:generated': None},
-    ),
-    em.Column.define('alternate_dbxrefs', em.builtin_types['text[]'],
-        annotations={'tag:misd.isi.edu,2015:display': {'name': 'Alternate Codes'}, 'tag:isrd.isi.edu,2016:generated': None},
+        comment='Alternate human-readable names for this term.',
     ),
 ]
 
 
 key_defs = [
-    em.Key.define(['dbxref'],
-                   constraint_names=[('vocab', 'data_type_terms_pkey')],
-    ),
-    em.Key.define(['cv', 'is_obsolete', 'name'],
-                   constraint_names=[('vocab', 'data_type_terms_cv_name_is_obsolete_key')],
-    ),
     em.Key.define(['RID'],
-                   constraint_names=[('vocab', 'data_type_terms_RID_key')],
+                   constraint_names=[('vocab', 'data_type_terms_RIDkey1')],
+    ),
+    em.Key.define(['id'],
+                   constraint_names=[('vocab', 'data_type_terms_idkey1')],
+    ),
+    em.Key.define(['uri'],
+                   constraint_names=[('vocab', 'data_type_terms_urikey1')],
     ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['cv'],
-            'data_commons', 'cv', ['name'],
-            constraint_names=[('vocab', 'data_type_terms_cv_fkey')],
-    ),
-    em.ForeignKey.define(['dbxref'],
-            'data_commons', 'cvterm', ['dbxref'],
-            constraint_names=[('vocab', 'data_type_terms_dbxref_fkey')],
-    ),
 ]
 
 
 visible_columns=\
-{'*': ['name', 'dbxref', 'definition', ['vocab', 'data_type_terms_cv_fkey'],
-       'is_obsolete', 'is_relationshiptype', 'synonyms', 'alternate_dbxrefs'],
- 'entry': [['vocab', 'data_type_terms_dbxref_fkey']],
- 'filter': {'and': [{'source': 'name'}, {'source': 'dbxref'},
-                    {'source': 'definition'}, {'source': 'cv'},
-                    {'source': 'is_obsolete'},
-                    {'source': 'is_relationshiptype'}]}}
+{'compact': ['name', 'id', 'synonyms', 'description'],
+ 'detailed': ['name', 'id', 'synonyms', 'uri', 'description'],
+ 'entry': ['name', 'id', 'synonyms', 'uri', 'description'],
+ 'filter': {'and': [{'open': True, 'source': 'name'},
+                    {'open': True, 'source': 'id'},
+                    {'open': True, 'source': 'synonyms'}]}}
 
-visible_foreign_keys=\
-{'*': [{'source': [{'inbound': ['isa', 'dataset_data_type_data_type_fkey']},
-                   {'outbound': ['isa', 'dataset_data_type_dataset_id_fkey']},
-                   'id']}]}
-
-table_display=\
-{'*': {'row_order': [{'column': 'name'}]},
- 'row_name': {'row_markdown_pattern': '{{name}}'}}
-
+visible_foreign_keys={}
+table_display={}
 table_acls={}
 table_acl_bindings={}
 table_annotations = {
-    "tag:isrd.isi.edu,2016:table-display":table_display,
-    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
     "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
+    "tag:isrd.isi.edu,2016:table-display":table_display,
 }
-column_annotations = \
-{'alternate_dbxrefs': {'tag:isrd.isi.edu,2016:generated': None,
-                       'tag:misd.isi.edu,2015:display': {'name': 'Alternate '
-                                                                 'Codes'}},
- 'cv': {'tag:isrd.isi.edu,2016:generated': None,
-        'tag:misd.isi.edu,2015:display': {'name': 'Controlled Vocabulary'}},
- 'dbxref': {'tag:isrd.isi.edu,2016:column-display': {'*': {'markdown_pattern': '[{{dbxref}}](/chaise/record/#1/data_commons:cvterm/dbxref={{#encode}}{{dbxref}}{{/encode}})'}},
-            'tag:misd.isi.edu,2015:display': {'name': 'Code'}},
- 'dbxref_unversioned': {'tag:isrd.isi.edu,2016:generated': None},
- 'definition': {'tag:isrd.isi.edu,2016:generated': None},
- 'is_obsolete': {'tag:isrd.isi.edu,2016:generated': None},
- 'is_relationshiptype': {'tag:isrd.isi.edu,2016:generated': None},
- 'name': {'tag:isrd.isi.edu,2016:generated': None},
- 'synonyms': {'tag:isrd.isi.edu,2016:generated': None}}
-
 
 
 table_def = em.Table.define('data_type_terms',
@@ -116,6 +71,6 @@ table_def = em.Table.define('data_type_terms',
     annotations=table_annotations,
     acls=table_acls,
     acl_bindings=table_acl_bindings,
-    comment='None',
+    comment='Terms that describe the type of data in a file',
     provide_system = True
 )

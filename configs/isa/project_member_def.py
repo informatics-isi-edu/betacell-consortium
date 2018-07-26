@@ -16,11 +16,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('isa', 'project_member_RID_key')],
-    ),
     em.Key.define(['project_id', 'person'],
                    constraint_names=[('isa', 'project_member_pkey')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('isa', 'project_member_RID_key')],
     ),
 ]
 

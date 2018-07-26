@@ -3,7 +3,7 @@ from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
 
 table_names = [
-    person,
+    'person',
 ]
 annotations = \
 {   'tag:misd.isi.edu,2015:display': {   'name_style': {   'title_case': True,
@@ -24,7 +24,7 @@ schema_def = em.Schema.define(
         'common',
         comment=None,
         acls=acls,
-        acl_bindings=acl_bindings
+        acl_bindings=acl_bindings,
         annotations=annotations,
     )
 

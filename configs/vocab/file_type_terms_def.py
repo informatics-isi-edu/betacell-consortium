@@ -2,7 +2,7 @@ import argparse
 from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
 
-table_name = 'file_format_terms'
+table_name = 'file_type_terms'
 schema_name = 'vocab'
 
 column_defs = [
@@ -29,14 +29,14 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('vocab', 'file_format_terms_RIDkey1')],
-    ),
     em.Key.define(['uri'],
-                   constraint_names=[('vocab', 'file_format_terms_urikey1')],
+                   constraint_names=[('vocab', 'file_type_terms_urikey1')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('vocab', 'file_type_terms_RIDkey1')],
     ),
     em.Key.define(['id'],
-                   constraint_names=[('vocab', 'file_format_terms_idkey1')],
+                   constraint_names=[('vocab', 'file_type_terms_idkey1')],
     ),
 ]
 
@@ -64,13 +64,13 @@ table_annotations = {
 }
 
 
-table_def = em.Table.define('file_format_terms',
+table_def = em.Table.define('file_type_terms',
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
     annotations=table_annotations,
     acls=table_acls,
     acl_bindings=table_acl_bindings,
-    comment='Terms that describe the format of a data file',
+    comment='Terms that describe the type of a data file',
     provide_system = True
 )

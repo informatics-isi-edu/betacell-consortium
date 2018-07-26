@@ -16,7 +16,7 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['dataset_id', 'human_age'],
+    em.Key.define(['human_age', 'dataset_id'],
                    constraint_names=[('isa', 'dataset_human_age_pkey')],
     ),
     em.Key.define(['RID'],

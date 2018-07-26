@@ -41,20 +41,20 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('isa', 'sample_RID_key')],
-    ),
     em.Key.define(['id'],
                    constraint_names=[('isa', 'sample_pkey')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('isa', 'sample_RID_key')],
     ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['dataset'],
-            'isa', 'dataset', ['id'],
-            constraint_names=[('isa', 'sample_dataset_fkey')],
-        annotations={'tag:isrd.isi.edu,2016:foreign-key': {}},
+    em.ForeignKey.define(['phenotype'],
+            'vocab', 'phenotype_terms', ['dbxref'],
+            constraint_names=[('isa', 'sample_phenotype_fkey')],
+        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Phenotype'}},
     ),
     em.ForeignKey.define(['replicate_group'],
             'isa', 'sample_replicate_group', ['RID'],
@@ -62,10 +62,10 @@ fkey_defs = [
         on_update='CASCADE',
         on_delete='RESTRICT',
     ),
-    em.ForeignKey.define(['phenotype'],
-            'vocab', 'phenotype_terms', ['dbxref'],
-            constraint_names=[('isa', 'sample_phenotype_fkey')],
-        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Phenotype'}},
+    em.ForeignKey.define(['dataset'],
+            'isa', 'dataset', ['id'],
+            constraint_names=[('isa', 'sample_dataset_fkey')],
+        annotations={'tag:isrd.isi.edu,2016:foreign-key': {}},
     ),
     em.ForeignKey.define(['specimen'],
             'vocab', 'specimen_terms', ['dbxref'],
