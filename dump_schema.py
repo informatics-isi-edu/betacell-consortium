@@ -32,7 +32,6 @@ schema_def = em.Schema.define(
         '{}',
         comment={},
         acls=acls,
-        acl_bindings=acl_bindings,
         annotations=annotations,
     )'''.format(schema.name,
                 "'" + schema.comment + "'" if schema.comment is not None else None), file=stream)

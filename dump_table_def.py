@@ -3,39 +3,55 @@
 
 import argparse
 from deriva.core import ErmrestCatalog, get_credential
+import deriva.core.ermrest_model as em
+import deriva.core.ermrest_model as ec
+
 import pprint
 import re
 import sys
 
-server = 'pbcconsortium.isrd.isi.edu'
-
+tag_map = {
+    'generated':          'tag:isrd.isi.edu,2016:generated',
+    'immutable':          'tag:isrd.isi.edu,2016:immutable',
+    'display':            'tag:misd.isi.edu,2015:display',
+    'visible_columns':    'tag:isrd.isi.edu,2016:visible-columns',
+    'visible_foreign_keys': 'tag:isrd.isi.edu,2016:visible-foreign-keys',
+    'foreign_key':        'tag:isrd.isi.edu,2016:foreign-key',
+    'table_display':      'tag:isrd.isi.edu,2016:table-display',
+    'table_alternatives': 'tag:isrd.isi.edu,2016:table-alternatives',
+    'column_display':     'tag:isrd.isi.edu,2016:column-display',
+    'asset':              'tag:isrd.isi.edu,2017:asset',
+    'export':             'tag:isrd.isi.edu,2016:export',
+}
 
 def print_annotations(table, stream):
+
+    tag_rmap = {v: k for k, v in tag_map.items()}
     table_annotations = {
-        'visible_columns': table.visible_columns,
-        'visible_foreign_keys': table.visible_foreign_keys,
-        'table_display': table.table_display,
+        tag_map['visible_columns']: table.visible_columns,
+        tag_map['visible_foreign_keys']: table.visible_foreign_keys,
+        tag_map['table_display']: table.table_display,
+        tag_map['export']: table.annotations[tag_map['export']],
         'table_acls': table.acls,
         'table_acl_bindings': table.acl_bindings
     }
 
+    # Print out variable definitions for annotations that we are going to pull out seperately.
     for k, v in table_annotations.items():
         if v == {} or v == '':
-            print('{}={}'.format(k, v), file=stream)
+            print('{}={}'.format(tag_rmap.get(k,k), v), file=stream)
         else:
-            print('{}=\\'.format(k), file=stream)
+            print('{}=\\'.format(tag_rmap.get(k,k)), file=stream)
             pprint.pprint(v, width=80, depth=None, compact=True, stream=stream)
             print('', file=stream)
 
     print('table_annotations = {', file=stream)
     for k, v in table.annotations.items():
-        if 'table-display' in k:
-            print('    "{}": table_display,'.format(k), file=stream)
-        elif 'visible-columns' in k:
-            print('    "{}": visible_columns,'.format(k), file=stream)
-        elif 'visible-foreign-keys' in k:
-            print('    "{}": visible_foreign_keys,'.format(k), file=stream)
+        if k in table_annotations:
+            print('    "{}": {},'.format(k, tag_rmap[k]), file=stream)
         else:
+            if k not in tag_map:
+                print('WARNING: Unknown tag: {}'.format(k))
             print('    "{}":'.format(k), file=stream)
             pprint.pprint(v, compact=True, stream=stream)
             print(',', file=stream)
@@ -49,6 +65,7 @@ def print_annotations(table, stream):
         if not (i.comment == '' or i.comment == None):
             column_comment[i.name] = i.comment
         if i.annotations != {}:
+            print(i.annotations)
             column_annotations[i.name] = i.annotations
         if i.acls != {}:
             column_acls[i.name] = i.acls
