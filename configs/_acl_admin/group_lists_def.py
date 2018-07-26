@@ -17,11 +17,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['name'],
-                   constraint_names=[('_acl_admin', 'group_lists_name_u')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('_acl_admin', 'group_lists_RID_key')],
+    ),
+    em.Key.define(['name'],
+                   constraint_names=[('_acl_admin', 'group_lists_name_u')],
     ),
 ]
 
@@ -43,6 +43,17 @@ None
     "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
     "tag:isrd.isi.edu,2016:table-display":table_display,
 }
+column_comment = \
+{'RCB': 'System-generated row created by user provenance.',
+ 'RCT': 'System-generated row creation timestamp.',
+ 'RID': None,
+ 'RMB': 'System-generated row modified by user provenance.',
+ 'RMT': 'System-generated row modification timestamp',
+ 'groups': 'List of groups. This table is maintained by the rbk_acls program '
+           'and should not be updated by hand.',
+ 'name': 'Name of grouplist, used in foreign keys. This table is maintained by '
+         'the rbk_acls program and should not be updated by hand.'}
+
 
 
 table_def = em.Table.define('group_lists',

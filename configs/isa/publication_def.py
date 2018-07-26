@@ -20,11 +20,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['dataset', 'pmid'],
-                   constraint_names=[('isa', 'publication_dataset_pmid_key')],
-    ),
     em.Key.define(['id'],
                    constraint_names=[('isa', 'publication_pkey')],
+    ),
+    em.Key.define(['dataset', 'pmid'],
+                   constraint_names=[('isa', 'publication_dataset_pmid_key')],
     ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'publication_RID_key')],
@@ -58,6 +58,16 @@ table_annotations = {
     "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
     "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
 }
+column_comment = \
+{'RCB': 'System-generated row created by user provenance.',
+ 'RCT': 'System-generated row creation timestamp.',
+ 'RID': 'System-generated unique row ID.',
+ 'RMB': 'System-generated row modified by user provenance.',
+ 'RMT': 'System-generated row modification timestamp',
+ 'dataset': None,
+ 'id': None,
+ 'pmid': None}
+
 column_annotations = \
 {'pmid': {'tag:isrd.isi.edu,2016:column-display': {'*': {'markdown_pattern': '[{{{_pmid}}}](http://www.ncbi.nlm.nih.gov/pubmed/{{{_pmid}}})'}},
           'tag:misd.isi.edu,2015:display': {'name': 'PMID'}}}

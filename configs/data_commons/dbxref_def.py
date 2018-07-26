@@ -24,14 +24,14 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['db', 'version', 'accession'],
-                   constraint_names=[('data_commons', 'dbxref_db_accession_version_key')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('data_commons', 'dbxref_RID_key')],
     ),
     em.Key.define(['name'],
                    constraint_names=[('data_commons', 'dbxref_pkey')],
+    ),
+    em.Key.define(['db', 'accession', 'version'],
+                   constraint_names=[('data_commons', 'dbxref_db_accession_version_key')],
     ),
 ]
 
@@ -54,6 +54,18 @@ table_annotations = {
     "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
     "tag:isrd.isi.edu,2016:table-display":table_display,
 }
+column_comment = \
+{'RCB': None,
+ 'RCT': None,
+ 'RID': None,
+ 'RMB': None,
+ 'RMT': None,
+ 'accession': None,
+ 'db': None,
+ 'description': None,
+ 'name': None,
+ 'version': None}
+
 
 
 table_def = em.Table.define('dbxref',

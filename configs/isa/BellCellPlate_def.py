@@ -36,6 +36,16 @@ table_annotations = {
     "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
     "tag:isrd.isi.edu,2016:table-display":table_display,
 }
+column_comment = \
+{'Detail': None,
+ 'ID': None,
+ 'Plate': None,
+ 'RCB': None,
+ 'RCT': None,
+ 'RID': None,
+ 'RMB': None,
+ 'RMT': None}
+
 
 
 table_def = em.Table.define('BellCellPlate',

@@ -31,14 +31,14 @@ column_defs = [
 
 
 key_defs = [
+    em.Key.define(['term_table', 'term_schema'],
+                   constraint_names=[('data_commons', 'domain_registry_term_schema_term_table_key')],
+    ),
     em.Key.define(['RID'],
                    constraint_names=[('data_commons', 'domain_registry_RID_key')],
     ),
     em.Key.define(['id'],
                    constraint_names=[('data_commons', 'domain_registry_pkey')],
-    ),
-    em.Key.define(['term_schema', 'term_table'],
-                   constraint_names=[('data_commons', 'domain_registry_term_schema_term_table_key')],
     ),
 ]
 
@@ -57,6 +57,20 @@ table_annotations = {
     "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
     "tag:isrd.isi.edu,2016:table-display":table_display,
 }
+column_comment = \
+{'RCB': None,
+ 'RCT': None,
+ 'RID': None,
+ 'RMB': None,
+ 'RMT': None,
+ 'id': None,
+ 'path_schema': None,
+ 'path_table': None,
+ 'rel_type_schema': None,
+ 'rel_type_table': None,
+ 'term_schema': None,
+ 'term_table': None}
+
 
 
 table_def = em.Table.define('domain_registry',

@@ -28,11 +28,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('isa', 'icon_RID_key')],
-    ),
     em.Key.define(['id'],
                    constraint_names=[('isa', 'icon_pkey')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('isa', 'icon_RID_key')],
     ),
     em.Key.define(['url'],
                    constraint_names=[('isa', 'icon_url_key')],
@@ -63,6 +63,20 @@ table_annotations = {
     "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
     "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
 }
+column_comment = \
+{'RCB': 'System-generated row created by user provenance.',
+ 'RCT': 'System-generated row creation timestamp.',
+ 'RID': 'System-generated unique row ID.',
+ 'RMB': 'System-generated row modified by user provenance.',
+ 'RMT': 'System-generated row modification timestamp',
+ 'byte_count': None,
+ 'caption': None,
+ 'filename': None,
+ 'id': None,
+ 'md5': None,
+ 'submitted_on': None,
+ 'url': None}
+
 column_annotations = \
 {'url': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '[![{{{filename}}}]({{{url}}}){height=330}]({{{url}}}){target=_blank}'},
                                                   'detailed': {'markdown_pattern': '[![{{{filename}}}]({{{url}}}){height=330}]({{{url}}}){target=_blank}'}},

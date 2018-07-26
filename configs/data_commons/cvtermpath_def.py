@@ -30,23 +30,23 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['object_dbxref', 'type_dbxref', 'subject_dbxref'],
+    em.Key.define(['cvtermpath_id'],
+                   constraint_names=[('data_commons', 'cvtermpath_pkey')],
+    ),
+    em.Key.define(['subject_dbxref', 'type_dbxref', 'object_dbxref'],
                    constraint_names=[('data_commons', 'cvtermpath_type_dbxref_subject_dbxref_object_dbxref_key')],
     ),
     em.Key.define(['RID'],
                    constraint_names=[('data_commons', 'cvtermpath_RID_key')],
     ),
-    em.Key.define(['cvtermpath_id'],
-                   constraint_names=[('data_commons', 'cvtermpath_pkey')],
-    ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['subject_dbxref'],
+    em.ForeignKey.define(['object_dbxref'],
             'data_commons', 'cvterm', ['dbxref'],
-            constraint_names=[('data_commons', 'cvtermpath_subject_dbxref_fkey')],
-        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'from_name': 'Relationship paths with this term as subject', 'to_name': 'Subject'}},
+            constraint_names=[('data_commons', 'cvtermpath_object_dbxref_fkey')],
+        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'from_name': 'Relationship paths with this term as object', 'to_name': 'Object'}},
     ),
     em.ForeignKey.define(['type_dbxref'],
             'data_commons', 'cvterm', ['dbxref'],
@@ -56,10 +56,10 @@ fkey_defs = [
             'data_commons', 'cv', ['name'],
             constraint_names=[('data_commons', 'cvtermpath_cv_fkey')],
     ),
-    em.ForeignKey.define(['object_dbxref'],
+    em.ForeignKey.define(['subject_dbxref'],
             'data_commons', 'cvterm', ['dbxref'],
-            constraint_names=[('data_commons', 'cvtermpath_object_dbxref_fkey')],
-        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'from_name': 'Relationship paths with this term as object', 'to_name': 'Object'}},
+            constraint_names=[('data_commons', 'cvtermpath_subject_dbxref_fkey')],
+        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'from_name': 'Relationship paths with this term as subject', 'to_name': 'Subject'}},
     ),
 ]
 
@@ -78,6 +78,19 @@ table_annotations = {
     "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
     "tag:isrd.isi.edu,2016:table-display":table_display,
 }
+column_comment = \
+{'RCB': None,
+ 'RCT': None,
+ 'RID': None,
+ 'RMB': None,
+ 'RMT': None,
+ 'cv': None,
+ 'cvtermpath_id': None,
+ 'object_dbxref': None,
+ 'pathdistance': None,
+ 'subject_dbxref': None,
+ 'type_dbxref': None}
+
 column_annotations = \
 {'object_dbxref': {'tag:misd.isi.edu,2015:display': {'name': 'Object'}},
  'type_dbxref': {'tag:misd.isi.edu,2015:display': {'name': 'Type'}}}

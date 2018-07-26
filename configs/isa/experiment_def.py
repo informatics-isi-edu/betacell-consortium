@@ -28,19 +28,24 @@ column_defs = [
 
 
 key_defs = [
+    em.Key.define(['dataset', 'local_identifier'],
+                   constraint_names=[('isa', 'experiment_dataset_local_identifier_key')],
+    ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'experiment_pkey')],
     ),
     em.Key.define(['dataset', 'RID'],
                    constraint_names=[('isa', 'experiment_RID_dataset_key')],
     ),
-    em.Key.define(['local_identifier', 'dataset'],
-                   constraint_names=[('isa', 'experiment_dataset_local_identifier_key')],
-    ),
 ]
 
 
 fkey_defs = [
+    em.ForeignKey.define(['experiment_type'],
+            'vocab', 'experiment_type_terms', ['RID'],
+            constraint_names=[('isa', 'experiment_experiment_type_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+    ),
     em.ForeignKey.define(['protocol'],
             'isa', 'protocol', ['RID'],
             constraint_names=[('isa', 'experiment_protocol_fkey')],
@@ -52,11 +57,6 @@ fkey_defs = [
             constraint_names=[('isa', 'experiment_dataset_fkey')],
         on_update='CASCADE',
         on_delete='RESTRICT',
-    ),
-    em.ForeignKey.define(['experiment_type'],
-            'vocab', 'experiment_type_terms', ['RID'],
-            constraint_names=[('isa', 'experiment_experiment_type_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
     ),
 ]
 
@@ -243,6 +243,20 @@ table_annotations = {
 ,
     "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
 }
+column_comment = \
+{'RCB': 'System-generated row created by user provenance.',
+ 'RCT': 'System-generated row creation timestamp.',
+ 'RID': 'System-generated unique row ID.',
+ 'RMB': 'System-generated row modified by user provenance.',
+ 'RMT': 'System-generated row modification timestamp',
+ 'biosample_summary': 'System-generated column with summary of all related '
+                      'biosamples',
+ 'control_assay': None,
+ 'dataset': None,
+ 'experiment_type': None,
+ 'local_identifier': None,
+ 'protocol': None}
+
 column_annotations = \
 {'biosample_summary': {'tag:isrd.isi.edu,2016:generated': None},
  'experiment_type': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '{{{$fkeys.isa.experiment_experiment_type_fkey.rowName}}}'}}},

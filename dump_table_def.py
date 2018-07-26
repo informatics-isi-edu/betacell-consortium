@@ -44,13 +44,20 @@ def print_annotations(table, stream):
     column_annotations = {}
     column_acls = {}
     column_acl_bindings = {}
+    column_comment = {}
     for i in table.column_definitions:
+        if i.comment != {}:
+            column_comment[i.name] = i.comment
         if i.annotations != {}:
             column_annotations[i.name] = i.annotations
         if i.acls != {}:
             column_acls[i.name] = i.acls
         if i.acl_bindings != {}:
             column_acl_bindings[i.name] = i.acl_bindings
+    if column_comment != {}:
+        print('column_comment = \\', file=stream)
+        pprint.pprint(column_comment, width=80, depth=None, compact=False, stream=stream)
+        print('', file=stream)
     if column_annotations != {}:
         print('column_annotations = \\', file=stream)
         pprint.pprint(column_annotations, width=80, depth=None, compact=False, stream=stream)

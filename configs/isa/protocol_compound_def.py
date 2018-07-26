@@ -21,7 +21,7 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['compound', 'protocol'],
+    em.Key.define(['protocol', 'compound'],
                    constraint_names=[('isa', 'protocol_compound_RID_key')],
        comment = 'protocol and compound must be distinct.',
     ),
@@ -32,17 +32,17 @@ key_defs = [
 
 
 fkey_defs = [
-    em.ForeignKey.define(['protocol'],
-            'isa', 'protocol', ['RID'],
-            constraint_names=[('isa', 'protocol_compound_protocol_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
-        on_delete='CASCADE',
-    ),
     em.ForeignKey.define(['compound'],
             'vocab', 'compound_terms', ['id'],
             constraint_names=[('isa', 'protocol_compound_compound_fkey')],
         acls={'insert': ['*'], 'update': ['*']},
         comment='Must be a valid reference to a compound.',
+    ),
+    em.ForeignKey.define(['protocol'],
+            'isa', 'protocol', ['RID'],
+            constraint_names=[('isa', 'protocol_compound_protocol_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+        on_delete='CASCADE',
     ),
 ]
 
@@ -72,6 +72,17 @@ table_annotations = {
     "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
     "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
 }
+column_comment = \
+{'RCB': None,
+ 'RCT': None,
+ 'RID': None,
+ 'RMB': None,
+ 'RMT': None,
+ 'compound': 'Compound foreign key.',
+ 'compound_concentration': 'Concentration of compound applied to a cell line '
+                           'in mM.',
+ 'protocol': 'Protocol Foreign key.'}
+
 
 
 table_def = em.Table.define('protocol_compound',

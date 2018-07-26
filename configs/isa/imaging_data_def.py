@@ -46,11 +46,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['dataset', 'RID'],
-                   constraint_names=[('isa', 'imaging_data_dataset_RID_key')],
-    ),
     em.Key.define(['url'],
                    constraint_names=[('isa', 'imaging_data_url_key')],
+    ),
+    em.Key.define(['dataset', 'RID'],
+                   constraint_names=[('isa', 'imaging_data_dataset_RID_key')],
     ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'imaging_data_pkey')],
@@ -59,8 +59,19 @@ key_defs = [
 
 
 fkey_defs = [
-    em.ForeignKey.define(['dataset', 'replicate'],
-            'isa', 'replicate', ['dataset', 'RID'],
+    em.ForeignKey.define(['equipment_model'],
+            'vocab', 'instrument_terms', ['dbxref'],
+            constraint_names=[('isa', 'imaging_data_equipment_model_fkey')],
+        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Equipment Model'}},
+    ),
+    em.ForeignKey.define(['dataset'],
+            'isa', 'dataset', ['RID'],
+            constraint_names=[('isa', 'imaging_data_dataset_fkey')],
+        on_update='CASCADE',
+        on_delete='RESTRICT',
+    ),
+    em.ForeignKey.define(['replicate', 'dataset'],
+            'isa', 'replicate', ['RID', 'dataset'],
             constraint_names=[('isa', 'imaging_data_replicate_fkey')],
         on_update='CASCADE',
         on_delete='RESTRICT',
@@ -69,17 +80,6 @@ fkey_defs = [
             'vocab', 'image_creation_device_terms', ['dbxref'],
             constraint_names=[('isa', 'imaging_data_device_fkey')],
         annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Device'}},
-    ),
-    em.ForeignKey.define(['dataset'],
-            'isa', 'dataset', ['RID'],
-            constraint_names=[('isa', 'imaging_data_dataset_fkey')],
-        on_update='CASCADE',
-        on_delete='RESTRICT',
-    ),
-    em.ForeignKey.define(['equipment_model'],
-            'vocab', 'instrument_terms', ['dbxref'],
-            constraint_names=[('isa', 'imaging_data_equipment_model_fkey')],
-        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Equipment Model'}},
     ),
 ]
 
@@ -183,6 +183,26 @@ table_annotations = {
  'compact/brief': ['isa', 'imaging_compact']}
 ,
 }
+column_comment = \
+{'RCB': 'System-generated row created by user provenance.',
+ 'RCT': 'System-generated row creation timestamp.',
+ 'RID': 'System-generated unique row ID.',
+ 'RMB': 'System-generated row modified by user provenance.',
+ 'RMT': 'System-generated row modification timestamp',
+ 'anatomy': None,
+ 'byte_count': None,
+ 'dataset': None,
+ 'description': None,
+ 'device': None,
+ 'equipment_model': None,
+ 'file_id': None,
+ 'file_type': None,
+ 'filename': None,
+ 'md5': None,
+ 'replicate': None,
+ 'submitted_on': None,
+ 'url': None}
+
 column_annotations = \
 {'file_type': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '{{{$fkeys.isa.imaging_data_file_type_fkey.rowName}}}'}}},
  'filename': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '[**{{filename}}**]({{{url}}})'},

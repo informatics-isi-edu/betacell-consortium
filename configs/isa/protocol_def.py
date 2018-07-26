@@ -32,14 +32,14 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('isa', 'protocol_pkey')],
-    ),
     em.Key.define(['description'],
                    constraint_names=[('isa', 'protocol_description_key')],
     ),
     em.Key.define(['name'],
                    constraint_names=[('isa', 'protocol_name_key')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('isa', 'protocol_pkey')],
     ),
 ]
 
@@ -122,6 +122,22 @@ table_annotations = {
     "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
     "tag:isrd.isi.edu,2016:table-display":table_display,
 }
+column_comment = \
+{'RCB': 'System-generated row created by user provenance.',
+ 'RCT': 'System-generated row creation timestamp.',
+ 'RID': 'System-generated unique row ID.',
+ 'RMB': 'System-generated row modified by user provenance.',
+ 'RMT': 'System-generated row modification timestamp',
+ 'assay_ids': None,
+ 'byte_count': None,
+ 'description': None,
+ 'file_url': None,
+ 'filename': None,
+ 'md5': None,
+ 'name': 'Provide a name that uniquely identifies the protocol',
+ 'protocol_url': None,
+ 'timepoint': 'Measured in minutes.'}
+
 column_annotations = \
 {'file_url': {'tag:isrd.isi.edu,2017:asset': {'byte_count_column': 'byte_count',
                                               'filename_column': 'filename',

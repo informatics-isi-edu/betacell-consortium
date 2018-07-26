@@ -46,6 +46,21 @@ table_annotations = {
     "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
     "tag:isrd.isi.edu,2016:table-display":table_display,
 }
+column_comment = \
+{'RCB': None,
+ 'RCT': None,
+ 'RID': None,
+ 'RMB': None,
+ 'RMT': None,
+ 'bboxcolor': None,
+ 'bgcolor': None,
+ 'description': None,
+ 'id': None,
+ 'label': None,
+ 'landmark': None,
+ 'mesh': None,
+ 'volume': None}
+
 
 
 table_def = em.Table.define('model_json',

@@ -41,36 +41,36 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['id'],
-                   constraint_names=[('isa', 'sample_pkey')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'sample_RID_key')],
+    ),
+    em.Key.define(['id'],
+                   constraint_names=[('isa', 'sample_pkey')],
     ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['phenotype'],
-            'vocab', 'phenotype_terms', ['dbxref'],
-            constraint_names=[('isa', 'sample_phenotype_fkey')],
-        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Phenotype'}},
-    ),
     em.ForeignKey.define(['replicate_group'],
             'isa', 'sample_replicate_group', ['RID'],
             constraint_names=[('isa', 'sample_replicate_group_fkey')],
         on_update='CASCADE',
         on_delete='RESTRICT',
     ),
+    em.ForeignKey.define(['specimen'],
+            'vocab', 'specimen_terms', ['dbxref'],
+            constraint_names=[('isa', 'sample_specimen_fkey')],
+        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Specimen'}},
+    ),
     em.ForeignKey.define(['dataset'],
             'isa', 'dataset', ['id'],
             constraint_names=[('isa', 'sample_dataset_fkey')],
         annotations={'tag:isrd.isi.edu,2016:foreign-key': {}},
     ),
-    em.ForeignKey.define(['specimen'],
-            'vocab', 'specimen_terms', ['dbxref'],
-            constraint_names=[('isa', 'sample_specimen_fkey')],
-        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Specimen'}},
+    em.ForeignKey.define(['phenotype'],
+            'vocab', 'phenotype_terms', ['dbxref'],
+            constraint_names=[('isa', 'sample_phenotype_fkey')],
+        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Phenotype'}},
     ),
 ]
 
@@ -145,6 +145,27 @@ table_annotations = {
     "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
     "tag:isrd.isi.edu,2016:table-display":table_display,
 }
+column_comment = \
+{'RCB': 'System-generated row created by user provenance.',
+ 'RCT': 'System-generated row creation timestamp.',
+ 'RID': 'System-generated unique row ID.',
+ 'RMB': 'System-generated row modified by user provenance.',
+ 'RMT': 'System-generated row modification timestamp',
+ '_keywords': None,
+ 'anatomy': None,
+ 'cell_line': 'Cell line used for the sample.',
+ 'collection_date': None,
+ 'dataset': None,
+ 'gender': None,
+ 'id': None,
+ 'local_identifier': None,
+ 'origin': None,
+ 'phenotype': None,
+ 'replicate': None,
+ 'replicate_group': None,
+ 'species': None,
+ 'specimen': None}
+
 
 
 table_def = em.Table.define('sample',

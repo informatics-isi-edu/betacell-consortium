@@ -16,7 +16,7 @@ column_defs = [
     ),
     em.Column.define('name', em.builtin_types['text'],
         nullok=False,
-        comment='The preferred human-readable name for this term.',
+        comment='The prefered name for a cell line',
     ),
     em.Column.define('description', em.builtin_types['markdown'],
         nullok=False,
@@ -29,14 +29,14 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['uri'],
-                   constraint_names=[('vocab', 'cell_line_terms_urikey1')],
+    em.Key.define(['id'],
+                   constraint_names=[('vocab', 'cell_line_terms_idkey1')],
     ),
     em.Key.define(['RID'],
                    constraint_names=[('vocab', 'cell_line_terms_RIDkey1')],
     ),
-    em.Key.define(['id'],
-                   constraint_names=[('vocab', 'cell_line_terms_idkey1')],
+    em.Key.define(['uri'],
+                   constraint_names=[('vocab', 'cell_line_terms_urikey1')],
     ),
 ]
 
@@ -62,6 +62,18 @@ table_annotations = {
     "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
     "tag:isrd.isi.edu,2016:table-display":table_display,
 }
+column_comment = \
+{'RCB': None,
+ 'RCT': None,
+ 'RID': None,
+ 'RMB': None,
+ 'RMT': None,
+ 'description': 'A longer human-readable description of this term.',
+ 'id': 'The preferred Compact URI (CURIE) for this term.',
+ 'name': 'The prefered name for a cell line',
+ 'synonyms': 'Alternate human-readable names for this term.',
+ 'uri': 'The preferred URI for this term.'}
+
 
 
 table_def = em.Table.define('cell_line_terms',

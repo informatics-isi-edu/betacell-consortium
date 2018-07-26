@@ -22,7 +22,7 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['dataset', 'RID'],
+    em.Key.define(['RID', 'dataset'],
                    constraint_names=[('isa', 'specimen_RID_key')],
        comment = 'RID and dataset must be distinct.',
     ),
@@ -33,16 +33,16 @@ key_defs = [
 
 
 fkey_defs = [
+    em.ForeignKey.define(['dataset'],
+            'isa', 'dataset', ['RID'],
+            constraint_names=[('isa', 'specimen_dataset_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+    ),
     em.ForeignKey.define(['cell_line'],
             'isa', 'cell_line', ['RID'],
             constraint_names=[('isa', 'specimen_cell_line_fkey')],
         acls={'insert': ['*'], 'update': ['*']},
         comment='Must be a valid reference to a cell line.',
-    ),
-    em.ForeignKey.define(['dataset'],
-            'isa', 'dataset', ['RID'],
-            constraint_names=[('isa', 'specimen_dataset_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
     ),
 ]
 
@@ -103,6 +103,17 @@ table_annotations = {
     "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
     "tag:isrd.isi.edu,2016:table-display":table_display,
 }
+column_comment = \
+{'RCB': None,
+ 'RCT': None,
+ 'RID': None,
+ 'RMB': None,
+ 'RMT': None,
+ 'cell_line': 'Cell line used for the speciman.',
+ 'collection_date': 'Date the specimen was obtained',
+ 'dataset': 'Cell line used for the speciman.',
+ 'description': 'Description of the specimen.'}
+
 
 
 table_def = em.Table.define('specimen',

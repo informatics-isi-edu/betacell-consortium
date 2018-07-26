@@ -33,14 +33,14 @@ column_defs = [
 
 
 key_defs = [
+    em.Key.define(['id'],
+                   constraint_names=[('isa', 'file_pkey')],
+    ),
     em.Key.define(['legacy_file_id'],
                    constraint_names=[('isa', 'file_legacy_file_id_key')],
     ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'file_RID_key')],
-    ),
-    em.Key.define(['id'],
-                   constraint_names=[('isa', 'file_pkey')],
     ),
     em.Key.define(['url'],
                    constraint_names=[('isa', 'file_url_key')],
@@ -113,6 +113,22 @@ table_annotations = {
 ,
     "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
 }
+column_comment = \
+{'RCB': 'System-generated row created by user provenance.',
+ 'RCT': 'System-generated row creation timestamp.',
+ 'RID': 'System-generated unique row ID.',
+ 'RMB': 'System-generated row modified by user provenance.',
+ 'RMT': 'System-generated row modification timestamp',
+ 'byte_count': None,
+ 'dataset': None,
+ 'description': None,
+ 'filename': None,
+ 'id': None,
+ 'legacy_file_id': None,
+ 'md5': None,
+ 'submitted_on': None,
+ 'url': None}
+
 column_annotations = \
 {'filename': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '[**{{filename}}**]({{{url}}})'},
                                                        'detailed': {'markdown_pattern': '[**{{filename}}**]({{{url}}})'}}},

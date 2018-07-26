@@ -27,11 +27,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['id'],
-                   constraint_names=[('isa', 'library_pkey')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'library_RID_key')],
+    ),
+    em.Key.define(['id'],
+                   constraint_names=[('isa', 'library_pkey')],
     ),
 ]
 
@@ -60,6 +60,21 @@ table_annotations = {
     "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
     "tag:isrd.isi.edu,2016:table-display":table_display,
 }
+column_comment = \
+{'RCB': 'System-generated row created by user provenance.',
+ 'RCT': 'System-generated row creation timestamp.',
+ 'RID': 'System-generated unique row ID.',
+ 'RMB': 'System-generated row modified by user provenance.',
+ 'RMT': 'System-generated row modification timestamp',
+ 'id': None,
+ 'library_adapters': None,
+ 'library_type': None,
+ 'library_yield': None,
+ 'name': None,
+ 'pcr_cycles': None,
+ 'platform': None,
+ 'size_selection': None}
+
 
 
 table_def = em.Table.define('library',

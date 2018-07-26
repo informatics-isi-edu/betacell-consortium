@@ -59,16 +59,16 @@ key_defs = [
 
 
 fkey_defs = [
-    em.ForeignKey.define(['status'],
-            'vocab', 'dataset_status_terms', ['dbxref'],
-            constraint_names=[('isa', 'dataset_status_fkey')],
-        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Status'}},
-    ),
     em.ForeignKey.define(['project'],
             'isa', 'project', ['id'],
             constraint_names=[('isa', 'dataset_project_fkey')],
         on_update='CASCADE',
         on_delete='RESTRICT',
+    ),
+    em.ForeignKey.define(['status'],
+            'vocab', 'dataset_status_terms', ['dbxref'],
+            constraint_names=[('isa', 'dataset_status_fkey')],
+        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Status'}},
     ),
 ]
 
@@ -181,6 +181,27 @@ table_annotations = {
     "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
     "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
 }
+column_comment = \
+{'RCB': 'System-generated row created by user provenance.',
+ 'RCT': 'System-generated row creation timestamp.',
+ 'RID': 'System-generated unique row ID.',
+ 'RMB': 'System-generated row modified by user provenance.',
+ 'RMT': 'System-generated row modification timestamp',
+ '_keywords': None,
+ 'accession': None,
+ 'description': None,
+ 'funding': None,
+ 'human_anatomic': None,
+ 'id': None,
+ 'mouse_genetic': None,
+ 'project': None,
+ 'release_date': None,
+ 'show_in_jbrowse': None,
+ 'status': None,
+ 'study_design': None,
+ 'summary': None,
+ 'title': None}
+
 column_annotations = \
 {'accession': {'tag:isrd.isi.edu,2016:generated': None},
  'show_in_jbrowse': {'tag:isrd.isi.edu,2016:column-display': {'detailed': {'markdown_pattern': '{{#_show_in_jbrowse}}Use '

@@ -29,11 +29,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['name'],
-                   constraint_names=[('isa', 'person_pkey')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'person_RID_key')],
+    ),
+    em.Key.define(['name'],
+                   constraint_names=[('isa', 'person_pkey')],
     ),
 ]
 
@@ -58,6 +58,21 @@ table_annotations = {
     "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
     "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
 }
+column_comment = \
+{'RCB': 'System-generated row created by user provenance.',
+ 'RCT': 'System-generated row creation timestamp.',
+ 'RID': 'System-generated unique row ID.',
+ 'RMB': 'System-generated row modified by user provenance.',
+ 'RMT': 'System-generated row modification timestamp',
+ 'affiliation': None,
+ 'degrees': None,
+ 'email': None,
+ 'first_name': None,
+ 'last_name': None,
+ 'middle_name': None,
+ 'name': None,
+ 'website': None}
+
 
 
 table_def = em.Table.define('person',

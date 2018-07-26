@@ -41,27 +41,27 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('viz', 'model_RID_key')],
-    ),
     em.Key.define(['id'],
                    constraint_names=[('viz', 'model_pkey')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('viz', 'model_RID_key')],
     ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['volume'],
-            'isa', 'imaging_data', ['RID'],
-            constraint_names=[('viz', 'model_volume_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
-    ),
     em.ForeignKey.define(['biosample'],
             'isa', 'biosample', ['RID'],
             constraint_names=[('viz', 'model_biosample_fkey')],
         acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='SET NULL',
+    ),
+    em.ForeignKey.define(['volume'],
+            'isa', 'imaging_data', ['RID'],
+            constraint_names=[('viz', 'model_volume_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
     ),
 ]
 
@@ -225,6 +225,27 @@ table_annotations = {
 ,
     "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
 }
+column_comment = \
+{'RCB': 'System-generated row created by user provenance.',
+ 'RCT': 'System-generated row creation timestamp.',
+ 'RID': 'System-generated unique row ID.',
+ 'RMB': 'System-generated row modified by user provenance.',
+ 'RMT': 'System-generated row modification timestamp',
+ 'bg_color_b': None,
+ 'bg_color_g': None,
+ 'bg_color_r': None,
+ 'biosample': None,
+ 'bounding_box_color_b': None,
+ 'bounding_box_color_g': None,
+ 'bounding_box_color_r': None,
+ 'description': None,
+ 'id': None,
+ 'label': None,
+ 'replicate': None,
+ 'rotate': None,
+ 'show_bounding_box': None,
+ 'volume': None}
+
 column_annotations = \
 {'id': {'tag:isrd.isi.edu,2016:column-display': {},
         'tag:isrd.isi.edu,2017:asset': {},

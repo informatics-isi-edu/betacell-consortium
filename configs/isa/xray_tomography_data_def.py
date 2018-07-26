@@ -23,7 +23,7 @@ column_defs = [
         comment='None',
     ),
     em.Column.define('url', em.builtin_types['text'],
-        annotations={'tag:isrd.isi.edu,2017:asset': {'filename_column': 'filename', 'byte_count_column': 'byte_count', 'url_pattern': '/hatrac/commons/data/{{{_dataset}}}/{{{_replicate}}}/{{{filename}}}', 'md5': 'md5'}},
+        annotations={'tag:isrd.isi.edu,2017:asset': {'filename_column': 'filename', 'byte_count_column': 'byte_count', 'url_pattern': '/hatrac/commons/data/{{{_dataset}}}/{{{_biosample}}}/{{{filename}}}', 'md5': 'md5'}},
         comment='None',
     ),
     em.Column.define('filename', em.builtin_types['text'],
@@ -56,6 +56,10 @@ column_defs = [
 
 
 key_defs = [
+    em.Key.define(['RID', 'dataset'],
+                   constraint_names=[('isa', 'xray_tomography_data_dataset_RID_key')],
+       comment = 'RID and dataset must be distinct.',
+    ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'xray_tomography_data_RIDkey1')],
     ),
@@ -63,17 +67,13 @@ key_defs = [
                    constraint_names=[('isa', 'xray_tomography_data_url_key')],
        comment = 'Unique URL must be provided.',
     ),
-    em.Key.define(['dataset', 'RID'],
-                   constraint_names=[('isa', 'xray_tomography_data_dataset_RID_key')],
-       comment = 'RID and dataset must be distinct.',
-    ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['dataset'],
-            'isa', 'dataset', ['RID'],
-            constraint_names=[('isa', 'xray_tomography_dataset_fkey')],
+    em.ForeignKey.define(['replicate', 'dataset'],
+            'isa', 'replicate', ['RID', 'dataset'],
+            constraint_names=[('isa', 'xray_tomography_data_replicate_fkey')],
         acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='RESTRICT',
@@ -86,6 +86,14 @@ fkey_defs = [
         on_update='CASCADE',
         on_delete='RESTRICT',
         comment='Must be a valid reference to a device.',
+    ),
+    em.ForeignKey.define(['dataset'],
+            'isa', 'dataset', ['RID'],
+            constraint_names=[('isa', 'xray_tomography_dataset_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+        on_update='CASCADE',
+        on_delete='RESTRICT',
+        comment='Must be a valid reference to a dataset.',
     ),
     em.ForeignKey.define(['biosample'],
             'isa', 'biosample', ['RID'],
@@ -113,7 +121,7 @@ visible_columns=\
               ['isa', 'xray_tomography_data_device_fkey'], 'filename',
               ['isa', 'xray_tomography_data_file_type_fkey'], 'byte_count',
               'md5', 'submitted_on'],
- 'entry': ['RID', ['isa', 'xray_tomography_data_biosample_fkey'],
+ 'entry': ['RID', ['isa', 'xray_tomography_data_replicate_fkey'],
            ['isa', 'xray_tomography_data_anatomy_fkey'],
            ['isa', 'xray_tomography_data_device_fkey'],
            ['isa', 'xray_tomography_data_equipment_model_fkey'], 'description',
@@ -214,11 +222,34 @@ table_display=\
 table_acls={}
 table_acl_bindings={}
 table_annotations = {
-    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
-    "table_display": table_display,
-    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
     "tag:isrd.isi.edu,2016:table-display":table_display,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
+    "table_display":
+{'row_name': {'row_markdown_pattern': '{{{filename}}}'}}
+,
+    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
 }
+column_comment = \
+{'RCB': None,
+ 'RCT': None,
+ 'RID': None,
+ 'RMB': None,
+ 'RMT': None,
+ 'anatomy': 'None',
+ 'biosample': 'Biosample from which this X Ray Tomography data was obtained',
+ 'byte_count': 'None',
+ 'dataset': 'None',
+ 'description': 'None',
+ 'device': 'None',
+ 'equipment_model': 'None',
+ 'file_id': 'None',
+ 'file_type': 'None',
+ 'filename': 'None',
+ 'md5': 'None',
+ 'replicate': 'None',
+ 'submitted_on': 'None',
+ 'url': 'None'}
+
 column_annotations = \
 {'file_type': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '{{{$fkeys.isa.xray_tomography_data_file_type_fkey.rowName}}}'}}},
  'filename': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '[**{{filename}}**]({{{url}}})'},

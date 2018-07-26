@@ -59,6 +59,17 @@ table_annotations = {
     "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
     "tag:isrd.isi.edu,2016:table-display":table_display,
 }
+column_comment = \
+{'RCB': 'System-generated row created by user provenance.',
+ 'RCT': 'System-generated row creation timestamp.',
+ 'RID': 'System-generated unique row ID.',
+ 'RMB': 'System-generated row modified by user provenance.',
+ 'RMT': 'System-generated row modification timestamp',
+ 'description': None,
+ 'id': None,
+ 'link_text': None,
+ 'url': 'asset/reference'}
+
 column_annotations = \
 {'description': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '[{{description}}]({{url}})'}}},
  'url': {'tag:isrd.isi.edu,2016:column-display': {'detailed': {'markdown_pattern': '[{{url}}]({{url}})'}}}}

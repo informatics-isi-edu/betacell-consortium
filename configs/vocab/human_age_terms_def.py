@@ -46,7 +46,7 @@ key_defs = [
     em.Key.define(['dbxref'],
                    constraint_names=[('vocab', 'human_age_terms_pkey')],
     ),
-    em.Key.define(['name', 'cv', 'is_obsolete'],
+    em.Key.define(['is_obsolete', 'cv', 'name'],
                    constraint_names=[('vocab', 'human_age_terms_cv_name_is_obsolete_key')],
     ),
     em.Key.define(['RID'],
@@ -92,6 +92,22 @@ table_annotations = {
     "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
     "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
 }
+column_comment = \
+{'RCB': None,
+ 'RCT': None,
+ 'RID': None,
+ 'RMB': None,
+ 'RMT': None,
+ 'alternate_dbxrefs': None,
+ 'cv': None,
+ 'dbxref': None,
+ 'dbxref_unversioned': None,
+ 'definition': None,
+ 'is_obsolete': None,
+ 'is_relationshiptype': None,
+ 'name': None,
+ 'synonyms': None}
+
 column_annotations = \
 {'alternate_dbxrefs': {'tag:isrd.isi.edu,2016:generated': None,
                        'tag:misd.isi.edu,2015:display': {'name': 'Alternate '

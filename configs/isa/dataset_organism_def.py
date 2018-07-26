@@ -16,7 +16,7 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['dataset_id', 'organism'],
+    em.Key.define(['organism', 'dataset_id'],
                    constraint_names=[('isa', 'dataset_organism_pkey')],
     ),
     em.Key.define(['RID'],
@@ -62,6 +62,15 @@ table_annotations = {
     "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
     "tag:isrd.isi.edu,2016:table-display":table_display,
 }
+column_comment = \
+{'RCB': 'System-generated row created by user provenance.',
+ 'RCT': 'System-generated row creation timestamp.',
+ 'RID': 'System-generated unique row ID.',
+ 'RMB': 'System-generated row modified by user provenance.',
+ 'RMT': 'System-generated row modification timestamp',
+ 'dataset_id': None,
+ 'organism': None}
+
 
 
 table_def = em.Table.define('dataset_organism',

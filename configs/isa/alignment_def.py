@@ -67,6 +67,25 @@ table_annotations = {
     "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
     "tag:isrd.isi.edu,2016:table-display":table_display,
 }
+column_comment = \
+{'RCB': 'System-generated row created by user provenance.',
+ 'RCT': 'System-generated row creation timestamp.',
+ 'RID': 'System-generated unique row ID.',
+ 'RMB': 'System-generated row modified by user provenance.',
+ 'RMT': 'System-generated row modification timestamp',
+ 'aligner': None,
+ 'aligner_flags': None,
+ 'aligner_version': None,
+ 'duplicate_removal': None,
+ 'id': None,
+ 'name': None,
+ 'prealign_seq_removal': None,
+ 'reference_genome': None,
+ 'sequence_trimming': None,
+ 'transcriptome_model': None,
+ 'trimmed_seqs': None,
+ 'trimming_method': None}
+
 
 
 table_def = em.Table.define('alignment',

@@ -40,14 +40,14 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['point_x', 'point_y', 'mesh', 'point_z'],
+    em.Key.define(['RID'],
+                   constraint_names=[('viz', 'landmark_RID_key')],
+    ),
+    em.Key.define(['point_y', 'mesh', 'point_x', 'point_z'],
                    constraint_names=[('viz', 'landmark_mesh_point_x_point_y_point_z_key')],
     ),
     em.Key.define(['id'],
                    constraint_names=[('viz', 'landmark_pkey')],
-    ),
-    em.Key.define(['RID'],
-                   constraint_names=[('viz', 'landmark_RID_key')],
     ),
 ]
 
@@ -66,6 +66,25 @@ table_annotations = {
     "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
     "tag:isrd.isi.edu,2016:table-display":table_display,
 }
+column_comment = \
+{'RCB': 'System-generated row created by user provenance.',
+ 'RCT': 'System-generated row creation timestamp.',
+ 'RID': 'System-generated unique row ID.',
+ 'RMB': 'System-generated row modified by user provenance.',
+ 'RMT': 'System-generated row modification timestamp',
+ 'anatomy': None,
+ 'color_b': None,
+ 'color_g': None,
+ 'color_r': None,
+ 'description': None,
+ 'id': None,
+ 'label': None,
+ 'mesh': None,
+ 'point_x': None,
+ 'point_y': None,
+ 'point_z': None,
+ 'radius': None}
+
 
 
 table_def = em.Table.define('landmark',

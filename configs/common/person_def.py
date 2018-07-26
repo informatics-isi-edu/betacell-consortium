@@ -58,6 +58,21 @@ table_annotations = {
     "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
     "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
 }
+column_comment = \
+{'RCB': None,
+ 'RCT': None,
+ 'RID': None,
+ 'RMB': None,
+ 'RMT': None,
+ 'affiliation': None,
+ 'degrees': None,
+ 'email': None,
+ 'first_name': None,
+ 'last_name': None,
+ 'middle_name': None,
+ 'name': None,
+ 'website': None}
+
 
 
 table_def = em.Table.define('person',

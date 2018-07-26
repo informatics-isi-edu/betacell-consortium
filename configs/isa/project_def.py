@@ -41,11 +41,11 @@ key_defs = [
     em.Key.define(['id'],
                    constraint_names=[('isa', 'project_pkey')],
     ),
-    em.Key.define(['name'],
-                   constraint_names=[('isa', 'project_name_key')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'project_RID_key')],
+    ),
+    em.Key.define(['name'],
+                   constraint_names=[('isa', 'project_name_key')],
     ),
 ]
 
@@ -103,6 +103,23 @@ table_annotations = {
     "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
     "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
 }
+column_comment = \
+{'RCB': 'System-generated row created by user provenance.',
+ 'RCT': 'System-generated row creation timestamp.',
+ 'RID': 'System-generated unique row ID.',
+ 'RMB': 'System-generated row modified by user provenance.',
+ 'RMT': 'System-generated row modification timestamp',
+ 'abstract': None,
+ 'funding': None,
+ 'group_membership_url': 'URL that project members will need in order to join '
+                         'the group',
+ 'groups': 'Users must be a member of the referenced ACL group in order to '
+           'edit project records.',
+ 'id': None,
+ 'name': None,
+ 'pis': 'List of Last Names of Principal Investigator separated by /',
+ 'url': 'url for more information on this project on externalre site'}
+
 column_annotations = \
 {'name': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '{{{pis}}}: '
                                                                                    '{{{name}}}'}}},

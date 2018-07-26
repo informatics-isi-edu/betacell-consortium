@@ -25,14 +25,14 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('data_commons', 'cvtermprop_RID_key')],
-    ),
-    em.Key.define(['rank', 'cvterm_dbxref', 'type_dbxref', 'value'],
+    em.Key.define(['cvterm_dbxref', 'rank', 'type_dbxref', 'value'],
                    constraint_names=[('data_commons', 'cvtermprop_cvterm_dbxref_type_dbxref_value_rank_key')],
     ),
     em.Key.define(['cvtermprop_id'],
                    constraint_names=[('data_commons', 'cvtermprop_pkey')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('data_commons', 'cvtermprop_RID_key')],
     ),
 ]
 
@@ -59,6 +59,18 @@ table_annotations = {
     "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
     "tag:isrd.isi.edu,2016:table-display":table_display,
 }
+column_comment = \
+{'RCB': None,
+ 'RCT': None,
+ 'RID': None,
+ 'RMB': None,
+ 'RMT': None,
+ 'cvterm_dbxref': None,
+ 'cvtermprop_id': None,
+ 'rank': None,
+ 'type_dbxref': None,
+ 'value': None}
+
 
 
 table_def = em.Table.define('cvtermprop',

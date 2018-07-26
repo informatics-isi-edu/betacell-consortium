@@ -96,6 +96,17 @@ table_annotations = {
 ,
     "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
 }
+column_comment = \
+{'RCB': None,
+ 'RCT': None,
+ 'RID': None,
+ 'RMB': None,
+ 'RMT': None,
+ 'anatomy': 'Anatomical region speciment was obtained from.',
+ 'cell_line_id': 'ID of cell line being used.',
+ 'description': 'Description of the specimen.',
+ 'species': 'Species of the specimen'}
+
 
 
 table_def = em.Table.define('cell_line',

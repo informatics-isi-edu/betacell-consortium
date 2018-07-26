@@ -22,11 +22,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('public', 'ermrest_client_pkey')],
-    ),
     em.Key.define(['id'],
                    constraint_names=[('public', 'ermrest_client_id_key')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('public', 'ermrest_client_pkey')],
     ),
 ]
 
@@ -47,6 +47,18 @@ table_annotations = {
     "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
     "tag:isrd.isi.edu,2016:table-display":table_display,
 }
+column_comment = \
+{'RCB': None,
+ 'RCT': None,
+ 'RID': None,
+ 'RMB': None,
+ 'RMT': None,
+ 'client_obj': None,
+ 'display_name': None,
+ 'email': None,
+ 'full_name': None,
+ 'id': None}
+
 
 
 table_def = em.Table.define('ermrest_client',

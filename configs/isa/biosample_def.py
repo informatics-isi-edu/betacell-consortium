@@ -38,6 +38,9 @@ column_defs = [
 
 
 key_defs = [
+    em.Key.define(['dataset', 'RID'],
+                   constraint_names=[('isa', 'biosample_RID_dataset_key')],
+    ),
     em.Key.define(['local_identifier', 'dataset'],
                    constraint_names=[('isa', 'biosample_dataset_local_identifier_key')],
        annotations = {'tag:misd.isi.edu,2015:display': {}},
@@ -46,18 +49,14 @@ key_defs = [
                    constraint_names=[('isa', 'biosample_pkey')],
        annotations = {'tag:misd.isi.edu,2015:display': {}},
     ),
-    em.Key.define(['dataset', 'RID'],
-                   constraint_names=[('isa', 'biosample_RID_dataset_key')],
-    ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['specimen_type'],
-            'vocab', 'specimen_type_terms', ['id'],
-            constraint_names=[('isa', 'biosample_specimen_type_fkey')],
+    em.ForeignKey.define(['experiment'],
+            'isa', 'experiment', ['RID'],
+            constraint_names=[('isa', 'biosample_experiment_fkey')],
         acls={'insert': ['*'], 'update': ['*']},
-        comment='Must be a valid reference to a specimen type.',
     ),
     em.ForeignKey.define(['dataset'],
             'isa', 'dataset', ['RID'],
@@ -66,14 +65,15 @@ fkey_defs = [
         on_update='CASCADE',
         on_delete='RESTRICT',
     ),
+    em.ForeignKey.define(['specimen_type'],
+            'vocab', 'specimen_type_terms', ['id'],
+            constraint_names=[('isa', 'biosample_specimen_type_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+        comment='Must be a valid reference to a specimen type.',
+    ),
     em.ForeignKey.define(['specimen'],
             'isa', 'specimen', ['RID'],
             constraint_names=[('isa', 'biosample_specimen_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
-    ),
-    em.ForeignKey.define(['experiment'],
-            'isa', 'experiment', ['RID'],
-            constraint_names=[('isa', 'biosample_experiment_fkey')],
         acls={'insert': ['*'], 'update': ['*']},
     ),
 ]
@@ -182,6 +182,9 @@ visible_columns=\
                     {'source': [{'inbound': ['isa',
                                              'mesh_data_biosample_fkey']},
                                 'url']},
+                    {'source': [{'inbound': ['isa',
+                                             'processed_tomography_data_biosample_fkey']},
+                                'url']},
                     {'entity': True, 'source': 'capillary_number'}]}}
 
 visible_foreign_keys=\
@@ -261,6 +264,23 @@ table_annotations = {
 ,
     "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
 }
+column_comment = \
+{'RCB': 'System-generated row created by user provenance.',
+ 'RCT': 'System-generated row creation timestamp.',
+ 'RID': 'System-generated unique row ID.',
+ 'RMB': 'System-generated row modified by user provenance.',
+ 'RMT': 'System-generated row modification timestamp',
+ '_keywords': None,
+ 'capillary_number': 'ID number of the capillary constaining the biosample.',
+ 'collection_date': None,
+ 'dataset': None,
+ 'experiment': 'Experiment in which this biosample is used',
+ 'local_identifier': None,
+ 'sample_position': 'Position in the capillary where the sample is located.',
+ 'specimen': 'Biological material used for the biosample.',
+ 'specimen_type': 'Method by which specimen is prepared.',
+ 'summary': None}
+
 column_annotations = \
 {'dataset': {'tag:isrd.isi.edu,2016:column-display': {},
              'tag:isrd.isi.edu,2017:asset': {},

@@ -16,27 +16,27 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['project_id', 'person'],
-                   constraint_names=[('isa', 'project_member_pkey')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'project_member_RID_key')],
+    ),
+    em.Key.define(['project_id', 'person'],
+                   constraint_names=[('isa', 'project_member_pkey')],
     ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['person'],
-            'isa', 'person', ['RID'],
-            constraint_names=[('isa', 'project_member_person_fkey')],
-        on_update='CASCADE',
-        on_delete='RESTRICT',
-    ),
     em.ForeignKey.define(['project_id'],
             'isa', 'project', ['id'],
             constraint_names=[('isa', 'project_member_project_id_fkey')],
         on_update='CASCADE',
         on_delete='CASCADE',
+    ),
+    em.ForeignKey.define(['person'],
+            'isa', 'person', ['RID'],
+            constraint_names=[('isa', 'project_member_person_fkey')],
+        on_update='CASCADE',
+        on_delete='RESTRICT',
     ),
 ]
 
@@ -62,6 +62,15 @@ table_annotations = {
     "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
     "tag:isrd.isi.edu,2016:table-display":table_display,
 }
+column_comment = \
+{'RCB': 'System-generated row created by user provenance.',
+ 'RCT': 'System-generated row creation timestamp.',
+ 'RID': 'System-generated unique row ID.',
+ 'RMB': 'System-generated row modified by user provenance.',
+ 'RMT': 'System-generated row modification timestamp',
+ 'person': None,
+ 'project_id': None}
+
 
 
 table_def = em.Table.define('project_member',

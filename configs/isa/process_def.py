@@ -22,11 +22,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['description'],
-                   constraint_names=[('isa', 'process_description_key')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'process_pkey')],
+    ),
+    em.Key.define(['description'],
+                   constraint_names=[('isa', 'process_description_key')],
     ),
 ]
 
@@ -45,6 +45,19 @@ table_annotations = {
     "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
     "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
 }
+column_comment = \
+{'RCB': None,
+ 'RCT': None,
+ 'RID': None,
+ 'RMB': None,
+ 'RMT': None,
+ 'byte_count': None,
+ 'description': None,
+ 'file_url': None,
+ 'filename': None,
+ 'md5': None,
+ 'process_url': None}
+
 
 
 table_def = em.Table.define('process',
