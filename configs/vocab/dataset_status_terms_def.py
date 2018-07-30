@@ -46,11 +46,11 @@ key_defs = [
     em.Key.define(['name', 'cv', 'is_obsolete'],
                    constraint_names=[('vocab', 'dataset_status_terms_cv_name_is_obsolete_key')],
     ),
-    em.Key.define(['RID'],
-                   constraint_names=[('vocab', 'dataset_status_terms_RID_key')],
-    ),
     em.Key.define(['dbxref'],
                    constraint_names=[('vocab', 'dataset_status_terms_pkey')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('vocab', 'dataset_status_terms_RID_key')],
     ),
 ]
 

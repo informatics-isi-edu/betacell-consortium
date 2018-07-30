@@ -25,22 +25,29 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['experiment', 'technical_replicate_number', 'dataset', 'biosample'],
+    em.Key.define(['experiment', 'dataset', 'technical_replicate_number', 'biosample'],
                    constraint_names=[('isa', 'replicate_dataset_experiment_biosample_technical_replicate__key')],
     ),
-    em.Key.define(['RID', 'dataset'],
+    em.Key.define(['dataset', 'RID'],
                    constraint_names=[('isa', 'replicate_RID_dataset_key')],
-    ),
-    em.Key.define(['experiment', 'dataset', 'technical_replicate_number', 'biosample', 'bioreplicate_number'],
-                   constraint_names=[('isa', 'replicate_dataset_experiment_biosample_bioreplicate_number__key')],
     ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'replicate_pkey')],
+    ),
+    em.Key.define(['dataset', 'experiment', 'biosample', 'bioreplicate_number', 'technical_replicate_number'],
+                   constraint_names=[('isa', 'replicate_dataset_experiment_biosample_bioreplicate_number__key')],
     ),
 ]
 
 
 fkey_defs = [
+    em.ForeignKey.define(['biosample'],
+            'isa', 'biosample', ['RID'],
+            constraint_names=[('isa', 'replicate_biosample_fkey')],
+        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'domain_filter_pattern': 'dataset={{{_dataset}}}'}},
+        on_update='CASCADE',
+        on_delete='RESTRICT',
+    ),
     em.ForeignKey.define(['experiment', 'dataset'],
             'isa', 'experiment', ['RID', 'dataset'],
             constraint_names=[('isa', 'replicate_experiment_fkey')],
@@ -50,13 +57,6 @@ fkey_defs = [
     em.ForeignKey.define(['dataset'],
             'isa', 'dataset', ['RID'],
             constraint_names=[('isa', 'replicate_dataset_fkey')],
-        on_update='CASCADE',
-        on_delete='RESTRICT',
-    ),
-    em.ForeignKey.define(['biosample'],
-            'isa', 'biosample', ['RID'],
-            constraint_names=[('isa', 'replicate_biosample_fkey')],
-        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'domain_filter_pattern': 'dataset={{{_dataset}}}'}},
         on_update='CASCADE',
         on_delete='RESTRICT',
     ),
@@ -131,11 +131,7 @@ table_acl_bindings = \
 table_annotations = {
     "tag:isrd.isi.edu,2016:table-display": table_display,
     "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
-    "table_display":
-{'compact': {'row_order': [{'column': 'bioreplicate_number',
-                            'descending': False}]},
- 'row_name': {'row_markdown_pattern': '{{local_identifier}}'}}
-,
+    "table_display": table_display,
     "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
 }
 column_comment = \

@@ -25,7 +25,7 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['dataset', 'RID'],
+    em.Key.define(['RID', 'dataset'],
                    constraint_names=[('isa', 'specimen_RID_key')],
        comment = 'RID and dataset must be distinct.',
     ),
@@ -113,9 +113,7 @@ table_acl_bindings = {}
 table_annotations = {
     "tag:isrd.isi.edu,2016:table-display": table_display,
     "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
-    "table_display":
-{}
-,
+    "table_display": table_display,
     "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
 }
 column_comment = \

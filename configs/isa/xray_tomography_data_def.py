@@ -56,32 +56,45 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['url'],
-                   constraint_names=[('isa', 'xray_tomography_data_url_key')],
-       comment = 'Unique URL must be provided.',
+    em.Key.define(['RID'],
+                   constraint_names=[('isa', 'xray_tomography_data_RIDkey1')],
     ),
     em.Key.define(['dataset', 'RID'],
                    constraint_names=[('isa', 'xray_tomography_data_dataset_RID_key')],
        comment = 'RID and dataset must be distinct.',
     ),
-    em.Key.define(['RID'],
-                   constraint_names=[('isa', 'xray_tomography_data_RIDkey1')],
+    em.Key.define(['url'],
+                   constraint_names=[('isa', 'xray_tomography_data_url_key')],
+       comment = 'Unique URL must be provided.',
     ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['equipment_model'],
-            'vocab', 'instrument_terms', ['dbxref'],
-            constraint_names=[('isa', 'xray_tomography_data_equipment_model_fkey')],
+    em.ForeignKey.define(['biosample'],
+            'isa', 'biosample', ['RID'],
+            constraint_names=[('isa', 'xray_tomography_data_biosample_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+    ),
+    em.ForeignKey.define(['dataset', 'replicate'],
+            'isa', 'replicate', ['dataset', 'RID'],
+            constraint_names=[('isa', 'xray_tomography_data_replicate_fkey')],
         acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='RESTRICT',
         comment='Must be a valid reference to a dataset.',
     ),
-    em.ForeignKey.define(['dataset', 'replicate'],
-            'isa', 'replicate', ['dataset', 'RID'],
-            constraint_names=[('isa', 'xray_tomography_data_replicate_fkey')],
+    em.ForeignKey.define(['device'],
+            'vocab', 'image_creation_device_terms', ['dbxref'],
+            constraint_names=[('isa', 'xray_tomography_data_device_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+        on_update='CASCADE',
+        on_delete='RESTRICT',
+        comment='Must be a valid reference to a device.',
+    ),
+    em.ForeignKey.define(['equipment_model'],
+            'vocab', 'instrument_terms', ['dbxref'],
+            constraint_names=[('isa', 'xray_tomography_data_equipment_model_fkey')],
         acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='RESTRICT',
@@ -94,19 +107,6 @@ fkey_defs = [
         on_update='CASCADE',
         on_delete='RESTRICT',
         comment='Must be a valid reference to a dataset.',
-    ),
-    em.ForeignKey.define(['biosample'],
-            'isa', 'biosample', ['RID'],
-            constraint_names=[('isa', 'xray_tomography_data_biosample_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
-    ),
-    em.ForeignKey.define(['device'],
-            'vocab', 'image_creation_device_terms', ['dbxref'],
-            constraint_names=[('isa', 'xray_tomography_data_device_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
-        on_update='CASCADE',
-        on_delete='RESTRICT',
-        comment='Must be a valid reference to a device.',
     ),
 ]
 
@@ -224,9 +224,7 @@ table_acl_bindings = {}
 table_annotations = {
     "tag:isrd.isi.edu,2016:table-display": table_display,
     "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
-    "table_display":
-{'row_name': {'row_markdown_pattern': '{{{filename}}}'}}
-,
+    "table_display": table_display,
     "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
 }
 column_comment = \

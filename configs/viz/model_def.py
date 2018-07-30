@@ -198,8 +198,7 @@ table_display = \
 
 table_acls = {}
 table_acl_bindings = {}
-table_annotations = {
-    "tag:isrd.isi.edu,2016:export":
+export = \
 {'templates': [{'format_name': 'BDBag',
                 'format_type': 'BAG',
                 'name': 'default',
@@ -211,18 +210,15 @@ table_annotations = {
                              'source': {'api': 'attribute',
                                         'path': 'isa:mesh_data/url',
                                         'table': 'viz:model_mesh_data'}}]}]}
-,
+
+table_annotations = {
+    "tag:isrd.isi.edu,2016:export": export,
     "tag:isrd.isi.edu,2016:table-display": table_display,
     "tag:misd.isi.edu,2015:display":
 {'name': '3D Surface Models'}
 ,
     "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
-    "table_display":
-{'compact': {'row_markdown_pattern': ':::iframe '
-                                     '[{{{label}}}](/mesh-viewer/view.html?model=/ermrest/catalog/1/entity/viz:model_json/RID={{{_RID}}}){width=1024 '
-                                     'height=768 .iframe} \n'
-                                     ':::'}}
-,
+    "table_display": table_display,
     "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
 }
 column_comment = \

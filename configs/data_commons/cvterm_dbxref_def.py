@@ -21,14 +21,14 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['cvterm_dbxref_id'],
-                   constraint_names=[('data_commons', 'cvterm_dbxref_pkey')],
+    em.Key.define(['RID'],
+                   constraint_names=[('data_commons', 'cvterm_dbxref_RID_key')],
     ),
     em.Key.define(['cvterm', 'alternate_dbxref'],
                    constraint_names=[('data_commons', 'cvterm_dbxref_cvterm_alternate_dbxref_key')],
     ),
-    em.Key.define(['RID'],
-                   constraint_names=[('data_commons', 'cvterm_dbxref_RID_key')],
+    em.Key.define(['cvterm_dbxref_id'],
+                   constraint_names=[('data_commons', 'cvterm_dbxref_pkey')],
     ),
 ]
 

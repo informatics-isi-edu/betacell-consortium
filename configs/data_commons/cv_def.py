@@ -15,11 +15,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['name'],
-                   constraint_names=[('data_commons', 'cv_pkey')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('data_commons', 'cv_RID_key')],
+    ),
+    em.Key.define(['name'],
+                   constraint_names=[('data_commons', 'cv_pkey')],
     ),
 ]
 

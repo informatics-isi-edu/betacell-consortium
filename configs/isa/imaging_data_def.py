@@ -46,22 +46,22 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['url'],
-                   constraint_names=[('isa', 'imaging_data_url_key')],
+    em.Key.define(['RID'],
+                   constraint_names=[('isa', 'imaging_data_pkey')],
     ),
     em.Key.define(['dataset', 'RID'],
                    constraint_names=[('isa', 'imaging_data_dataset_RID_key')],
     ),
-    em.Key.define(['RID'],
-                   constraint_names=[('isa', 'imaging_data_pkey')],
+    em.Key.define(['url'],
+                   constraint_names=[('isa', 'imaging_data_url_key')],
     ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['dataset'],
-            'isa', 'dataset', ['RID'],
-            constraint_names=[('isa', 'imaging_data_dataset_fkey')],
+    em.ForeignKey.define(['replicate', 'dataset'],
+            'isa', 'replicate', ['RID', 'dataset'],
+            constraint_names=[('isa', 'imaging_data_replicate_fkey')],
         on_update='CASCADE',
         on_delete='RESTRICT',
     ),
@@ -70,9 +70,9 @@ fkey_defs = [
             constraint_names=[('isa', 'imaging_data_device_fkey')],
         annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Device'}},
     ),
-    em.ForeignKey.define(['replicate', 'dataset'],
-            'isa', 'replicate', ['RID', 'dataset'],
-            constraint_names=[('isa', 'imaging_data_replicate_fkey')],
+    em.ForeignKey.define(['dataset'],
+            'isa', 'dataset', ['RID'],
+            constraint_names=[('isa', 'imaging_data_dataset_fkey')],
         on_update='CASCADE',
         on_delete='RESTRICT',
     ),

@@ -29,30 +29,32 @@ def print_annotations(table, stream):
     tag_rmap = {v: k for k, v in tag_map.items()}
 
     table_annotations = {
-        tag_map['visible_columns']: table.visible_columns,
-        tag_map['visible_foreign_keys']: table.visible_foreign_keys,
-        tag_map['table_display']: table.table_display,
+        'visible_columns': table.visible_columns,
+        'visible_foreign_keys': table.visible_foreign_keys,
+        'table_display': table.table_display,
         'table_acls': table.acls,
         'table_acl_bindings': table.acl_bindings
     }
     if tag_map['export'] in table.annotations:
-        tag_map['export']: table.annotations[tag_map['export']]
+        table_annotations['export'] =  table.annotations[tag_map['export']]
 
     # Print out variable definitions for annotations that we are going to pull out seperately.
     for k, v in table_annotations.items():
         if v == {} or v == '':
-            print('{} = {}'.format(tag_rmap.get(k,k), v), file=stream)
+            print('{} = {}'.format(k, v), file=stream)
         else:
-            print('{} = \\'.format(tag_rmap.get(k,k)), file=stream)
+            print('{} = \\'.format(k), file=stream)
             pprint.pprint(v, width=80, depth=None, compact=True, stream=stream)
             print('', file=stream)
 
     print('table_annotations = {', file=stream)
     for k, v in table.annotations.items():
-        if k in table_annotations:
-            print('    "{}": {},'.format(k, tag_rmap[k]), file=stream)
+        tag_name = tag_rmap.get(k,k)
+        if tag_name in table_annotations:
+            # Put tag value in a variable to make editing file easier.....
+            print('    "{}": {},'.format(k,tag_name), file=stream)
         else:
-            if k not in tag_map:
+            if tag_name not in tag_map:
                 print('WARNING: Unknown tag: {}'.format(k))
             print('    "{}":'.format(k), file=stream)
             pprint.pprint(v, compact=True, stream=stream)

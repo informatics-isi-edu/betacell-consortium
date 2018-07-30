@@ -16,7 +16,7 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['instrument', 'dataset_id'],
+    em.Key.define(['dataset_id', 'instrument'],
                    constraint_names=[('isa', 'dataset_instrument_pkey')],
     ),
     em.Key.define(['RID'],
@@ -26,17 +26,17 @@ key_defs = [
 
 
 fkey_defs = [
+    em.ForeignKey.define(['instrument'],
+            'vocab', 'instrument_terms', ['dbxref'],
+            constraint_names=[('isa', 'dataset_instrument_instrument_fkey')],
+        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Instrument'}},
+    ),
     em.ForeignKey.define(['dataset_id'],
             'isa', 'dataset', ['id'],
             constraint_names=[('isa', 'dataset_instrument_dataset_id_fkey')],
         annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Datasets'}},
         on_update='CASCADE',
         on_delete='CASCADE',
-    ),
-    em.ForeignKey.define(['instrument'],
-            'vocab', 'instrument_terms', ['dbxref'],
-            constraint_names=[('isa', 'dataset_instrument_instrument_fkey')],
-        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Instrument'}},
     ),
 ]
 

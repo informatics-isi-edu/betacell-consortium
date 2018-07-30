@@ -16,24 +16,24 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['dataset_id', 'human_age'],
-                   constraint_names=[('isa', 'dataset_human_age_pkey')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'dataset_human_age_RID_key')],
+    ),
+    em.Key.define(['dataset_id', 'human_age'],
+                   constraint_names=[('isa', 'dataset_human_age_pkey')],
     ),
 ]
 
 
 fkey_defs = [
+    em.ForeignKey.define(['dataset_id'],
+            'isa', 'dataset', ['id'],
+            constraint_names=[('isa', 'dataset_human_age_dataset_id_fkey')],
+    ),
     em.ForeignKey.define(['human_age'],
             'vocab', 'human_age_terms', ['dbxref'],
             constraint_names=[('isa', 'dataset_human_age_human_age_fkey')],
         annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Human Age'}},
-    ),
-    em.ForeignKey.define(['dataset_id'],
-            'isa', 'dataset', ['id'],
-            constraint_names=[('isa', 'dataset_human_age_dataset_id_fkey')],
     ),
 ]
 

@@ -91,9 +91,7 @@ table_acl_bindings = {}
 table_annotations = {
     "tag:isrd.isi.edu,2016:table-display": table_display,
     "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
-    "table_display":
-{}
-,
+    "table_display": table_display,
     "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
 }
 column_comment = \

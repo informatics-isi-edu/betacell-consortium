@@ -5,7 +5,6 @@ import deriva.core.ermrest_model as em
 table_names = [
     'protocol',
     'process',
-    'dataset_gene',
     'dataset_gender',
     'dataset',
     'dataset_instrument',
@@ -13,7 +12,6 @@ table_names = [
     'file',
     'project_publication',
     'cell_line',
-    'alignment',
     'project_investigator',
     'publication',
     'imaging_data',
@@ -29,7 +27,6 @@ table_names = [
     'dataset_anatomy',
     'icon',
     'pipeline',
-    'dataset_human_age',
     'external_reference',
     'BellCellStatus',
     'project',

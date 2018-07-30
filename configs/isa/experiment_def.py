@@ -31,20 +31,21 @@ key_defs = [
     em.Key.define(['local_identifier', 'dataset'],
                    constraint_names=[('isa', 'experiment_dataset_local_identifier_key')],
     ),
-    em.Key.define(['RID', 'dataset'],
-                   constraint_names=[('isa', 'experiment_RID_dataset_key')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'experiment_pkey')],
+    ),
+    em.Key.define(['dataset', 'RID'],
+                   constraint_names=[('isa', 'experiment_RID_dataset_key')],
     ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['experiment_type'],
-            'vocab', 'experiment_type_terms', ['RID'],
-            constraint_names=[('isa', 'experiment_experiment_type_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
+    em.ForeignKey.define(['protocol'],
+            'isa', 'protocol', ['RID'],
+            constraint_names=[('isa', 'experiment_protocol_fkey')],
+        on_update='CASCADE',
+        on_delete='RESTRICT',
     ),
     em.ForeignKey.define(['dataset'],
             'isa', 'dataset', ['RID'],
@@ -52,11 +53,10 @@ fkey_defs = [
         on_update='CASCADE',
         on_delete='RESTRICT',
     ),
-    em.ForeignKey.define(['protocol'],
-            'isa', 'protocol', ['RID'],
-            constraint_names=[('isa', 'experiment_protocol_fkey')],
-        on_update='CASCADE',
-        on_delete='RESTRICT',
+    em.ForeignKey.define(['experiment_type'],
+            'vocab', 'experiment_type_terms', ['RID'],
+            constraint_names=[('isa', 'experiment_experiment_type_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
     ),
 ]
 
@@ -234,13 +234,7 @@ table_acl_bindings = \
 table_annotations = {
     "tag:isrd.isi.edu,2016:table-display": table_display,
     "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
-    "table_display":
-{'row_name': {'row_markdown_pattern': '{{RID}}{{#local_identifier}} - '
-                                      '{{local_identifier}} '
-                                      '{{/local_identifier}}{{#biosample_summary}} '
-                                      '- '
-                                      '{{biosample_summary}}{{/biosample_summary}}'}}
-,
+    "table_display": table_display,
     "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
 }
 column_comment = \

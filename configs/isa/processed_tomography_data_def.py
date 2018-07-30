@@ -41,16 +41,26 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['url'],
-                   constraint_names=[('isa', 'processed_tomography_data_url_key')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'processed_tomography_data_pkey')],
+    ),
+    em.Key.define(['url'],
+                   constraint_names=[('isa', 'processed_tomography_data_url_key')],
     ),
 ]
 
 
 fkey_defs = [
+    em.ForeignKey.define(['process'],
+            'isa', 'process', ['RID'],
+            constraint_names=[('isa', 'processed_tomography_data_process_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+    ),
+    em.ForeignKey.define(['file_type'],
+            'vocab', 'file_type_terms', ['id'],
+            constraint_names=[('isa', 'processed_tomography_data_file_type_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+    ),
     em.ForeignKey.define(['biosample', 'dataset'],
             'isa', 'biosample', ['RID', 'dataset'],
             constraint_names=[('isa', 'processed_tomography_data_biosample_fkey')],
@@ -64,16 +74,6 @@ fkey_defs = [
         acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='RESTRICT',
-    ),
-    em.ForeignKey.define(['file_type'],
-            'vocab', 'file_type_terms', ['id'],
-            constraint_names=[('isa', 'processed_tomography_data_file_type_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
-    ),
-    em.ForeignKey.define(['process'],
-            'isa', 'process', ['RID'],
-            constraint_names=[('isa', 'processed_tomography_data_process_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
     ),
 ]
 
@@ -142,9 +142,7 @@ table_acl_bindings = {}
 table_annotations = {
     "tag:isrd.isi.edu,2016:table-display": table_display,
     "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
-    "table_display":
-{'row_name': {'row_markdown_pattern': '{{{filename}}}'}}
-,
+    "table_display": table_display,
     "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
 }
 column_annotations = \

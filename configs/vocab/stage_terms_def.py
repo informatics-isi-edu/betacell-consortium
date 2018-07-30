@@ -45,26 +45,26 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['dbxref'],
-                   constraint_names=[('vocab', 'stage_terms_pkey')],
-    ),
-    em.Key.define(['cv', 'is_obsolete', 'name'],
+    em.Key.define(['name', 'cv', 'is_obsolete'],
                    constraint_names=[('vocab', 'stage_terms_cv_name_is_obsolete_key')],
     ),
     em.Key.define(['RID'],
                    constraint_names=[('vocab', 'stage_terms_RID_key')],
     ),
+    em.Key.define(['dbxref'],
+                   constraint_names=[('vocab', 'stage_terms_pkey')],
+    ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['dbxref'],
-            'data_commons', 'cvterm', ['dbxref'],
-            constraint_names=[('vocab', 'stage_terms_dbxref_fkey')],
-    ),
     em.ForeignKey.define(['cv'],
             'data_commons', 'cv', ['name'],
             constraint_names=[('vocab', 'stage_terms_cv_fkey')],
+    ),
+    em.ForeignKey.define(['dbxref'],
+            'data_commons', 'cvterm', ['dbxref'],
+            constraint_names=[('vocab', 'stage_terms_dbxref_fkey')],
     ),
 ]
 

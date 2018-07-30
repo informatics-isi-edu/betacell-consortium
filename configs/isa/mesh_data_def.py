@@ -49,20 +49,6 @@ key_defs = [
 
 
 fkey_defs = [
-    em.ForeignKey.define(['dataset'],
-            'isa', 'dataset', ['RID'],
-            constraint_names=[('isa', 'mesh_data_dataset_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
-        on_update='CASCADE',
-        on_delete='RESTRICT',
-    ),
-    em.ForeignKey.define(['biosample'],
-            'isa', 'biosample', ['RID'],
-            constraint_names=[('isa', 'mesh_data_biosample_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
-        on_update='CASCADE',
-        on_delete='RESTRICT',
-    ),
     em.ForeignKey.define(['dataset', 'replicate'],
             'isa', 'replicate', ['dataset', 'RID'],
             constraint_names=[('isa', 'mesh_data_replicate_fkey')],
@@ -73,6 +59,20 @@ fkey_defs = [
     em.ForeignKey.define(['derived_from'],
             'isa', 'xray_tomography_data', ['RID'],
             constraint_names=[('isa', 'mesh_data_derived_from_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+        on_update='CASCADE',
+        on_delete='RESTRICT',
+    ),
+    em.ForeignKey.define(['dataset'],
+            'isa', 'dataset', ['RID'],
+            constraint_names=[('isa', 'mesh_data_dataset_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+        on_update='CASCADE',
+        on_delete='RESTRICT',
+    ),
+    em.ForeignKey.define(['biosample'],
+            'isa', 'biosample', ['RID'],
+            constraint_names=[('isa', 'mesh_data_biosample_fkey')],
         acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='RESTRICT',
@@ -123,9 +123,7 @@ table_acls = {}
 table_acl_bindings = {}
 table_annotations = {
     "tag:isrd.isi.edu,2016:table-display": table_display,
-    "table_display":
-{'row_name': {'row_markdown_pattern': '{{{filename}}}'}}
-,
+    "table_display": table_display,
     "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
     "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
 }

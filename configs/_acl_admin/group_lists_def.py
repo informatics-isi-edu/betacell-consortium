@@ -17,11 +17,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('_acl_admin', 'group_lists_RID_key')],
-    ),
     em.Key.define(['name'],
                    constraint_names=[('_acl_admin', 'group_lists_name_u')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('_acl_admin', 'group_lists_RID_key')],
     ),
 ]
 

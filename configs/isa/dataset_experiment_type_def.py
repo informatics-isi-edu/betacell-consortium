@@ -16,11 +16,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('isa', 'dataset_experiment_type_RID_key')],
-    ),
     em.Key.define(['dataset_id', 'experiment_type'],
                    constraint_names=[('isa', 'dataset_experiment_type_pkey')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('isa', 'dataset_experiment_type_RID_key')],
     ),
 ]
 

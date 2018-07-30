@@ -21,12 +21,12 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('isa', 'protocol_compound_RIDkey1')],
-    ),
-    em.Key.define(['protocol', 'compound'],
+    em.Key.define(['compound', 'protocol'],
                    constraint_names=[('isa', 'protocol_compound_RID_key')],
        comment = 'protocol and compound must be distinct.',
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('isa', 'protocol_compound_RIDkey1')],
     ),
 ]
 

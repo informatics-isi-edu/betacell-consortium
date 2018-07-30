@@ -59,14 +59,14 @@ fkey_defs = [
         acls={'insert': ['*'], 'update': ['*']},
         comment='Must be a valid reference to a specimen type.',
     ),
-    em.ForeignKey.define(['experiment'],
-            'isa', 'experiment', ['RID'],
-            constraint_names=[('isa', 'biosample_experiment_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
-    ),
     em.ForeignKey.define(['specimen'],
             'isa', 'specimen', ['RID'],
             constraint_names=[('isa', 'biosample_specimen_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+    ),
+    em.ForeignKey.define(['experiment'],
+            'isa', 'experiment', ['RID'],
+            constraint_names=[('isa', 'biosample_experiment_fkey')],
         acls={'insert': ['*'], 'update': ['*']},
     ),
     em.ForeignKey.define(['dataset'],
@@ -250,8 +250,7 @@ table_display = \
 
 table_acls = {}
 table_acl_bindings = {}
-table_annotations = {
-    "tag:isrd.isi.edu,2016:export":
+export = \
 {'templates': [{'format_name': 'BDBag',
                 'format_type': 'BAG',
                 'name': 'default',
@@ -273,7 +272,9 @@ table_annotations = {
                              'source': {'api': 'attribute',
                                         'path': 'url',
                                         'table': 'isa:mesh_data'}}]}]}
-,
+
+table_annotations = {
+    "tag:isrd.isi.edu,2016:export": export,
     "tag:isrd.isi.edu,2016:table-alternatives":
 {}
 ,
@@ -282,12 +283,7 @@ table_annotations = {
 {}
 ,
     "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
-    "table_display":
-{'row_name': {'row_markdown_pattern': '{{RID}} - '
-                                      '{{summary}}{{#local_identifier}} '
-                                      '[{{local_identifier}}] '
-                                      '{{/local_identifier}}'}}
-,
+    "table_display": table_display,
     "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
 }
 column_comment = \

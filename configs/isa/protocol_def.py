@@ -116,9 +116,7 @@ table_annotations = {
 {'name': 'Protocol'}
 ,
     "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
-    "table_display":
-{}
-,
+    "table_display": table_display,
     "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
     "tag:isrd.isi.edu,2016:table-display": table_display,
 }
