@@ -13,32 +13,37 @@ SELECT  ?protein ?mnemonic ?name ?shortname
 where {
 ?protein a up_core:Protein . 
 ?protein up_core:mnemonic ?mnemonic . 
-{
  ?protein up_core:recommendedName ?id2 . 
  ?id2 up_core:fullName ?name .
-# OPTIONAL { ?id2 up_core:shortName ?shortname  }
+ OPTIONAL { ?id2 up_core:shortName ?shortname  }
  }
-UNION 
-{ ?protein up_core:submittedName ?id3 . 
-?id3 up_core:fullName ?name  .
-#OPTIONAL {?id3 up_core:shortName ?shortname }
-}
-}
 """)
+ 
+id_list = list(qres)
 
 
 qres = g.query("""
 PREFIX  up_core:<http://purl.uniprot.org/core/>
 PREFIX uniprot:<http://purl.uniprot,org/uniprot>
-SELECT  ?protein ?name ?shortname ?mnemonic
+SELECT  ?protein ?mnemonic ?name ?shortname
 where {
-    ?protein up_core:recommendedName ?id2  .
-    ?protein a up_core:Protein .
-    ?protein up_core:mnemonic ?mnemonic .
-    ?id2 up_core:fullName ?name .
-    ?id2 up_core:shortName ?shortname
-}
+?protein a up_core:Protein . 
+?protein up_core:mnemonic ?mnemonic . 
+ ?protein up_core:submittedName ?id2 . 
+ ?id2 up_core:fullName ?name .
+ OPTIONAL { ?id2 up_core:shortName ?shortname  }
+ }
 """)
+
+id_list.extend(list(qres))
+
+uniprot_entries = {}
+for i in id_list:
+    id =  'UNIPROT:'  + os.path.basename(i['protein'])
+    entry = uniprot_entries[id]
+    entry['url'] = entry.get('url', i['protein'].toPython(), i['protein'].toPython()))
+
+    uniprot_entri
 
 for row in qres:
     print(row['protein'].toPython(), row['name'].toPython(), row['shortname'].toPython(), row['mnemonic'].toPython())
