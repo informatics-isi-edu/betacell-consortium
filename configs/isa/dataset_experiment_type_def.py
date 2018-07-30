@@ -16,11 +16,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['dataset_id', 'experiment_type'],
-                   constraint_names=[('isa', 'dataset_experiment_type_pkey')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'dataset_experiment_type_RID_key')],
+    ),
+    em.Key.define(['dataset_id', 'experiment_type'],
+                   constraint_names=[('isa', 'dataset_experiment_type_pkey')],
     ),
 ]
 
@@ -34,11 +34,11 @@ fkey_defs = [
 ]
 
 
-visible_columns={}
-visible_foreign_keys={}
-table_display={}
-table_acls={}
-table_acl_bindings=\
+visible_columns = {}
+visible_foreign_keys = {}
+table_display = {}
+table_acls = {}
+table_acl_bindings = \
 {'dataset_tags_edit_guard': {'projection': [{'outbound': ['isa',
                                                           'dataset_experiment_type_dataset_id_fkey']},
                                             {'outbound': ['isa',
@@ -56,18 +56,16 @@ table_annotations = {
     "tag:misd.isi.edu,2015:display":
 {'name': 'Experiment_type'}
 ,
-    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
-    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
-    "tag:isrd.isi.edu,2016:table-display":table_display,
+    "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
+    "tag:isrd.isi.edu,2016:table-display": table_display,
 }
 column_comment = \
 {'RCB': 'System-generated row created by user provenance.',
  'RCT': 'System-generated row creation timestamp.',
  'RID': 'System-generated unique row ID.',
  'RMB': 'System-generated row modified by user provenance.',
- 'RMT': 'System-generated row modification timestamp',
- 'dataset_id': None,
- 'experiment_type': None}
+ 'RMT': 'System-generated row modification timestamp'}
 
 
 

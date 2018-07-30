@@ -41,32 +41,22 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('isa', 'processed_tomography_data_pkey')],
-    ),
     em.Key.define(['url'],
                    constraint_names=[('isa', 'processed_tomography_data_url_key')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('isa', 'processed_tomography_data_pkey')],
     ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['dataset', 'biosample'],
-            'isa', 'biosample', ['dataset', 'RID'],
+    em.ForeignKey.define(['biosample', 'dataset'],
+            'isa', 'biosample', ['RID', 'dataset'],
             constraint_names=[('isa', 'processed_tomography_data_biosample_fkey')],
         acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='RESTRICT',
-    ),
-    em.ForeignKey.define(['process'],
-            'isa', 'process', ['RID'],
-            constraint_names=[('isa', 'processed_tomography_data_process_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
-    ),
-    em.ForeignKey.define(['file_type'],
-            'vocab', 'file_type_terms', ['id'],
-            constraint_names=[('isa', 'processed_tomography_data_file_type_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
     ),
     em.ForeignKey.define(['dataset'],
             'isa', 'dataset', ['RID'],
@@ -75,10 +65,20 @@ fkey_defs = [
         on_update='CASCADE',
         on_delete='RESTRICT',
     ),
+    em.ForeignKey.define(['file_type'],
+            'vocab', 'file_type_terms', ['id'],
+            constraint_names=[('isa', 'processed_tomography_data_file_type_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+    ),
+    em.ForeignKey.define(['process'],
+            'isa', 'process', ['RID'],
+            constraint_names=[('isa', 'processed_tomography_data_process_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+    ),
 ]
 
 
-visible_columns=\
+visible_columns = \
 {'compact': [['isa', 'processed_tomography_data_pkey'], 'replicate', 'url',
              'file_type', 'mapping_assembly', 'pipeline', 'byte_count', 'md5',
              'submitted_on'],
@@ -133,37 +133,20 @@ visible_columns=\
                      'open': False,
                      'source': 'submitted_on'}]}}
 
-visible_foreign_keys={}
-table_display=\
+visible_foreign_keys = {}
+table_display = \
 {'row_name': {'row_markdown_pattern': '{{{filename}}}'}}
 
-table_acls={}
-table_acl_bindings={}
+table_acls = {}
+table_acl_bindings = {}
 table_annotations = {
-    "tag:isrd.isi.edu,2016:table-display":table_display,
-    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
+    "tag:isrd.isi.edu,2016:table-display": table_display,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
     "table_display":
 {'row_name': {'row_markdown_pattern': '{{{filename}}}'}}
 ,
-    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
+    "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
 }
-column_comment = \
-{'RCB': None,
- 'RCT': None,
- 'RID': None,
- 'RMB': None,
- 'RMT': None,
- 'biosample': None,
- 'byte_count': None,
- 'data_type': None,
- 'dataset': None,
- 'file_type': None,
- 'filename': None,
- 'md5': None,
- 'process': None,
- 'submitted_on': None,
- 'url': None}
-
 column_annotations = \
 {'file_type': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '{{{$fkeys.isa.processed_tomography_data_file_type_fkey.rowName}}}'}}},
  'filename': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '[**{{filename}}**]({{{url}}})'},

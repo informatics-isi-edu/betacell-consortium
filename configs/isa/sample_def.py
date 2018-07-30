@@ -41,41 +41,41 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('isa', 'sample_RID_key')],
-    ),
     em.Key.define(['id'],
                    constraint_names=[('isa', 'sample_pkey')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('isa', 'sample_RID_key')],
     ),
 ]
 
 
 fkey_defs = [
+    em.ForeignKey.define(['dataset'],
+            'isa', 'dataset', ['id'],
+            constraint_names=[('isa', 'sample_dataset_fkey')],
+        annotations={'tag:isrd.isi.edu,2016:foreign-key': {}},
+    ),
     em.ForeignKey.define(['replicate_group'],
             'isa', 'sample_replicate_group', ['RID'],
             constraint_names=[('isa', 'sample_replicate_group_fkey')],
         on_update='CASCADE',
         on_delete='RESTRICT',
     ),
-    em.ForeignKey.define(['specimen'],
-            'vocab', 'specimen_terms', ['dbxref'],
-            constraint_names=[('isa', 'sample_specimen_fkey')],
-        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Specimen'}},
-    ),
-    em.ForeignKey.define(['dataset'],
-            'isa', 'dataset', ['id'],
-            constraint_names=[('isa', 'sample_dataset_fkey')],
-        annotations={'tag:isrd.isi.edu,2016:foreign-key': {}},
-    ),
     em.ForeignKey.define(['phenotype'],
             'vocab', 'phenotype_terms', ['dbxref'],
             constraint_names=[('isa', 'sample_phenotype_fkey')],
         annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Phenotype'}},
     ),
+    em.ForeignKey.define(['specimen'],
+            'vocab', 'specimen_terms', ['dbxref'],
+            constraint_names=[('isa', 'sample_specimen_fkey')],
+        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Specimen'}},
+    ),
 ]
 
 
-visible_columns=\
+visible_columns = \
 {'compact': [['isa', 'sample_pkey'], 'local_identifier',
              ['isa', 'sample_species_fkey'], ['isa', 'sample_genotype_fkey'],
              ['isa', 'sample_strain_fkey'], ['isa', 'sample_stage_fkey'],
@@ -133,17 +133,17 @@ visible_columns=\
                      'open': False,
                      'source': 'local_identifier'}]}}
 
-visible_foreign_keys=\
+visible_foreign_keys = \
 {'detailed': [['isa', 'assay_sample_fkey'], ['isa', 'imaging_sample_fkey'],
               ['isa', 'enhancer_sample_fkey']]}
 
-table_display={}
-table_acls={}
-table_acl_bindings={}
+table_display = {}
+table_acls = {}
+table_acl_bindings = {}
 table_annotations = {
-    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
-    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
-    "tag:isrd.isi.edu,2016:table-display":table_display,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
+    "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
+    "tag:isrd.isi.edu,2016:table-display": table_display,
 }
 column_comment = \
 {'RCB': 'System-generated row created by user provenance.',
@@ -151,20 +151,7 @@ column_comment = \
  'RID': 'System-generated unique row ID.',
  'RMB': 'System-generated row modified by user provenance.',
  'RMT': 'System-generated row modification timestamp',
- '_keywords': None,
- 'anatomy': None,
- 'cell_line': 'Cell line used for the sample.',
- 'collection_date': None,
- 'dataset': None,
- 'gender': None,
- 'id': None,
- 'local_identifier': None,
- 'origin': None,
- 'phenotype': None,
- 'replicate': None,
- 'replicate_group': None,
- 'species': None,
- 'specimen': None}
+ 'cell_line': 'Cell line used for the sample.'}
 
 
 

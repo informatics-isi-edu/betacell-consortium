@@ -45,7 +45,7 @@ fkey_defs = [
 ]
 
 
-visible_columns=\
+visible_columns = \
 {'compact': ['name', 'id', 'synonyms', 'description'],
  'detailed': ['name', 'id', 'synonyms', 'uri', 'description'],
  'entry': ['name', 'id', 'synonyms', 'uri', 'description'],
@@ -53,22 +53,17 @@ visible_columns=\
                     {'open': True, 'source': 'id'},
                     {'open': True, 'source': 'synonyms'}]}}
 
-visible_foreign_keys={}
-table_display={}
-table_acls={}
-table_acl_bindings={}
+visible_foreign_keys = {}
+table_display = {}
+table_acls = {}
+table_acl_bindings = {}
 table_annotations = {
-    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
-    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
-    "tag:isrd.isi.edu,2016:table-display":table_display,
+    "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
+    "tag:isrd.isi.edu,2016:table-display": table_display,
 }
 column_comment = \
-{'RCB': None,
- 'RCT': None,
- 'RID': None,
- 'RMB': None,
- 'RMT': None,
- 'description': 'A longer human-readable description of this term.',
+{'description': 'A longer human-readable description of this term.',
  'id': 'The preferred Compact URI (CURIE) for this term.',
  'name': 'The prefered name for a cell line',
  'synonyms': 'Alternate human-readable names for this term.',

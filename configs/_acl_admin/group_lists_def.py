@@ -30,23 +30,22 @@ fkey_defs = [
 ]
 
 
-visible_columns={}
-visible_foreign_keys={}
-table_display={}
-table_acls={}
-table_acl_bindings={}
+visible_columns = {}
+visible_foreign_keys = {}
+table_display = {}
+table_acls = {}
+table_acl_bindings = {}
 table_annotations = {
     "tag:isrd.isi.edu,2016:generated":
 None
 ,
-    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
-    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
-    "tag:isrd.isi.edu,2016:table-display":table_display,
+    "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
+    "tag:isrd.isi.edu,2016:table-display": table_display,
 }
 column_comment = \
 {'RCB': 'System-generated row created by user provenance.',
  'RCT': 'System-generated row creation timestamp.',
- 'RID': None,
  'RMB': 'System-generated row modified by user provenance.',
  'RMT': 'System-generated row modification timestamp',
  'groups': 'List of groups. This table is maintained by the rbk_acls program '

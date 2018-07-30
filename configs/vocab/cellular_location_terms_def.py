@@ -2,7 +2,7 @@ import argparse
 from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
 
-table_name = 'species_terms'
+table_name = 'cellular_location_terms'
 schema_name = 'vocab'
 
 column_defs = [
@@ -30,13 +30,13 @@ column_defs = [
 
 key_defs = [
     em.Key.define(['id'],
-                   constraint_names=[('vocab', 'species_terms_idkey1')],
-    ),
-    em.Key.define(['RID'],
-                   constraint_names=[('vocab', 'species_terms_RIDkey1')],
+                   constraint_names=[('vocab', 'cellular_location_terms_idkey1')],
     ),
     em.Key.define(['uri'],
-                   constraint_names=[('vocab', 'species_terms_urikey1')],
+                   constraint_names=[('vocab', 'cellular_location_terms_urikey1')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('vocab', 'cellular_location_terms_RIDkey1')],
     ),
 ]
 
@@ -71,13 +71,13 @@ column_comment = \
 
 
 
-table_def = em.Table.define('species_terms',
+table_def = em.Table.define('cellular_location_terms',
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
     annotations=table_annotations,
     acls=table_acls,
     acl_bindings=table_acl_bindings,
-    comment='Terms for species',
+    comment='Table of terms from UNIPROT identifying cellular location',
     provide_system = True
 )

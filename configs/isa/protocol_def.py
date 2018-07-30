@@ -35,11 +35,11 @@ key_defs = [
     em.Key.define(['description'],
                    constraint_names=[('isa', 'protocol_description_key')],
     ),
-    em.Key.define(['name'],
-                   constraint_names=[('isa', 'protocol_name_key')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'protocol_pkey')],
+    ),
+    em.Key.define(['name'],
+                   constraint_names=[('isa', 'protocol_name_key')],
     ),
 ]
 
@@ -48,7 +48,7 @@ fkey_defs = [
 ]
 
 
-visible_columns=\
+visible_columns = \
 {'compact': [{'aggregate': 'array',
               'comment': 'Compound used to treat the cell line for the '
                          'experiment',
@@ -103,24 +103,24 @@ visible_columns=\
                      'open': False,
                      'source': 'description'}]}}
 
-visible_foreign_keys=\
+visible_foreign_keys = \
 {'detailed': [['isa', 'protocol_compound_protocol_fkey'],
               ['isa', 'experiment_protocol_fkey']],
  'entry': [['isa', 'experiment_protocol_fkey']]}
 
-table_display={}
-table_acls={}
-table_acl_bindings={}
+table_display = {}
+table_acls = {}
+table_acl_bindings = {}
 table_annotations = {
     "tag:misd.isi.edu,2015:display":
 {'name': 'Protocol'}
 ,
-    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
     "table_display":
 {}
 ,
-    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
-    "tag:isrd.isi.edu,2016:table-display":table_display,
+    "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
+    "tag:isrd.isi.edu,2016:table-display": table_display,
 }
 column_comment = \
 {'RCB': 'System-generated row created by user provenance.',
@@ -128,14 +128,7 @@ column_comment = \
  'RID': 'System-generated unique row ID.',
  'RMB': 'System-generated row modified by user provenance.',
  'RMT': 'System-generated row modification timestamp',
- 'assay_ids': None,
- 'byte_count': None,
- 'description': None,
- 'file_url': None,
- 'filename': None,
- 'md5': None,
  'name': 'Provide a name that uniquely identifies the protocol',
- 'protocol_url': None,
  'timepoint': 'Measured in minutes.'}
 
 column_annotations = \

@@ -20,14 +20,14 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['id'],
-                   constraint_names=[('isa', 'publication_pkey')],
-    ),
-    em.Key.define(['dataset', 'pmid'],
+    em.Key.define(['pmid', 'dataset'],
                    constraint_names=[('isa', 'publication_dataset_pmid_key')],
     ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'publication_RID_key')],
+    ),
+    em.Key.define(['id'],
+                   constraint_names=[('isa', 'publication_pkey')],
     ),
 ]
 
@@ -42,31 +42,28 @@ fkey_defs = [
 ]
 
 
-visible_columns=\
+visible_columns = \
 {'*': [['isa', 'publication_dataset_fkey'], 'pmid']}
 
-visible_foreign_keys={}
-table_display=\
+visible_foreign_keys = {}
+table_display = \
 {'compact': {'row_markdown_pattern': '[Link to PubMed '
                                      '(PMID:{{{_pmid}}})](http://www.ncbi.nlm.nih.gov/pubmed/{{{_pmid}}})'},
  'row_name': {'row_markdown_pattern': 'PMID:{{{_pmid}}}'}}
 
-table_acls={}
-table_acl_bindings={}
+table_acls = {}
+table_acl_bindings = {}
 table_annotations = {
-    "tag:isrd.isi.edu,2016:table-display":table_display,
-    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
-    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
+    "tag:isrd.isi.edu,2016:table-display": table_display,
+    "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
 }
 column_comment = \
 {'RCB': 'System-generated row created by user provenance.',
  'RCT': 'System-generated row creation timestamp.',
  'RID': 'System-generated unique row ID.',
  'RMB': 'System-generated row modified by user provenance.',
- 'RMT': 'System-generated row modification timestamp',
- 'dataset': None,
- 'id': None,
- 'pmid': None}
+ 'RMT': 'System-generated row modification timestamp'}
 
 column_annotations = \
 {'pmid': {'tag:isrd.isi.edu,2016:column-display': {'*': {'markdown_pattern': '[{{{_pmid}}}](http://www.ncbi.nlm.nih.gov/pubmed/{{{_pmid}}})'}},

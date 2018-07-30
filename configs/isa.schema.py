@@ -8,7 +8,6 @@ table_names = [
     'dataset_gene',
     'dataset_gender',
     'dataset',
-    'sample',
     'dataset_instrument',
     'mesh_data',
     'file',
@@ -32,7 +31,6 @@ table_names = [
     'pipeline',
     'dataset_human_age',
     'external_reference',
-    'sample_replicate_group',
     'BellCellStatus',
     'project',
     'person',
@@ -59,7 +57,6 @@ schema_def = em.Schema.define(
         'isa',
         comment=None,
         acls=acls,
-        acl_bindings=acl_bindings,
         annotations=annotations,
     )
 

@@ -35,20 +35,20 @@ fkey_defs = [
         acls={'insert': ['*'], 'update': ['*']},
         comment='Must be a valid reference to a cell line.',
     ),
-    em.ForeignKey.define(['anatomy'],
-            'vocab', 'anatomy_terms', ['id'],
-            constraint_names=[('isa', 'cell_line_anatomy_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
-    ),
     em.ForeignKey.define(['species'],
             'vocab', 'species_terms', ['id'],
             constraint_names=[('isa', 'cell_line_species_fkey')],
         acls={'insert': ['*'], 'update': ['*']},
     ),
+    em.ForeignKey.define(['anatomy'],
+            'vocab', 'anatomy_terms', ['id'],
+            constraint_names=[('isa', 'cell_line_anatomy_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+    ),
 ]
 
 
-visible_columns=\
+visible_columns = \
 {'compact': [['isa', 'cell_line_pkey'], 'local_identifier',
              ['isa', 'cell_line_cell_line_terms_fkey']],
  'detailed': [['isa', 'specimen_pkey'], 'local_identifier',
@@ -75,7 +75,7 @@ visible_columns=\
                      'source': [{'outbound': ['isa', 'cell_line_anatomy_fkey']},
                                 'name']}]}}
 
-visible_foreign_keys=\
+visible_foreign_keys = \
 {'detailed': [['isa', 'xray_tomography_data_replicate_fkey'],
               ['isa', 'mesh_data_replicate_fkey'],
               ['isa', 'processed_data_replicate_fkey'],
@@ -85,24 +85,19 @@ visible_foreign_keys=\
            ['isa', 'processed_data_replicate_fkey'],
            ['isa', 'imaging_data_replicate_fkey']]}
 
-table_display={}
-table_acls={}
-table_acl_bindings={}
+table_display = {}
+table_acls = {}
+table_acl_bindings = {}
 table_annotations = {
-    "tag:isrd.isi.edu,2016:table-display":table_display,
-    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
+    "tag:isrd.isi.edu,2016:table-display": table_display,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
     "table_display":
 {}
 ,
-    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
+    "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
 }
 column_comment = \
-{'RCB': None,
- 'RCT': None,
- 'RID': None,
- 'RMB': None,
- 'RMT': None,
- 'anatomy': 'Anatomical region speciment was obtained from.',
+{'anatomy': 'Anatomical region speciment was obtained from.',
  'cell_line_id': 'ID of cell line being used.',
  'description': 'Description of the specimen.',
  'species': 'Species of the specimen'}

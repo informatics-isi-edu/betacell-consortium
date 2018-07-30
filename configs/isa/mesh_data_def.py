@@ -39,11 +39,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('isa', 'mesh_data_pkey')],
-    ),
     em.Key.define(['url'],
                    constraint_names=[('isa', 'mesh_data_url_key')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('isa', 'mesh_data_pkey')],
     ),
 ]
 
@@ -56,16 +56,16 @@ fkey_defs = [
         on_update='CASCADE',
         on_delete='RESTRICT',
     ),
-    em.ForeignKey.define(['dataset', 'replicate'],
-            'isa', 'replicate', ['dataset', 'RID'],
-            constraint_names=[('isa', 'mesh_data_replicate_fkey')],
+    em.ForeignKey.define(['biosample'],
+            'isa', 'biosample', ['RID'],
+            constraint_names=[('isa', 'mesh_data_biosample_fkey')],
         acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='RESTRICT',
     ),
-    em.ForeignKey.define(['biosample'],
-            'isa', 'biosample', ['RID'],
-            constraint_names=[('isa', 'mesh_data_biosample_fkey')],
+    em.ForeignKey.define(['dataset', 'replicate'],
+            'isa', 'replicate', ['dataset', 'RID'],
+            constraint_names=[('isa', 'mesh_data_replicate_fkey')],
         acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='RESTRICT',
@@ -80,7 +80,7 @@ fkey_defs = [
 ]
 
 
-visible_columns=\
+visible_columns = \
 {'compact': [['isa', 'mesh_data_pkey'], 'biosample',
              ['isa', 'mesh_data_derived_from_fkey'], 'url', 'byte_count',
              'md5'],
@@ -115,37 +115,26 @@ visible_columns=\
                                               'mesh_data_derived_from_fkey']},
                                 'RID']}]}}
 
-visible_foreign_keys={}
-table_display=\
+visible_foreign_keys = {}
+table_display = \
 {'row_name': {'row_markdown_pattern': '{{{filename}}}'}}
 
-table_acls={}
-table_acl_bindings={}
+table_acls = {}
+table_acl_bindings = {}
 table_annotations = {
-    "tag:isrd.isi.edu,2016:table-display":table_display,
+    "tag:isrd.isi.edu,2016:table-display": table_display,
     "table_display":
 {'row_name': {'row_markdown_pattern': '{{{filename}}}'}}
 ,
-    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
-    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
+    "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
 }
 column_comment = \
 {'RCB': 'System-generated row created by user provenance.',
  'RCT': 'System-generated row creation timestamp.',
  'RID': 'System-generated unique row ID.',
  'RMB': 'System-generated row modified by user provenance.',
- 'RMT': 'System-generated row modification timestamp',
- 'anatomy': None,
- 'biosample': None,
- 'byte_count': None,
- 'dataset': None,
- 'derived_from': None,
- 'description': None,
- 'filename': None,
- 'label': None,
- 'md5': None,
- 'replicate': None,
- 'url': None}
+ 'RMT': 'System-generated row modification timestamp'}
 
 column_annotations = \
 {'filename': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '[**{{filename}}**]({{{url}}})'},

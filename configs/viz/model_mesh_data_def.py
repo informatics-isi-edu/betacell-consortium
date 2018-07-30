@@ -24,7 +24,7 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['mesh', 'model'],
+    em.Key.define(['model', 'mesh'],
                    constraint_names=[('viz', 'model_mesh_data_model_mesh_key')],
     ),
     em.Key.define(['RID'],
@@ -34,43 +34,37 @@ key_defs = [
 
 
 fkey_defs = [
-    em.ForeignKey.define(['model'],
-            'viz', 'model', ['RID'],
-            constraint_names=[('viz', 'model_mesh_data_model_fkey')],
-        on_update='CASCADE',
-        on_delete='RESTRICT',
-    ),
     em.ForeignKey.define(['mesh'],
             'isa', 'mesh_data', ['RID'],
             constraint_names=[('viz', 'model_mesh_data_mesh_fkey')],
         on_update='CASCADE',
         on_delete='RESTRICT',
     ),
+    em.ForeignKey.define(['model'],
+            'viz', 'model', ['RID'],
+            constraint_names=[('viz', 'model_mesh_data_model_fkey')],
+        on_update='CASCADE',
+        on_delete='RESTRICT',
+    ),
 ]
 
 
-visible_columns={}
-visible_foreign_keys={}
-table_display={}
-table_acls={}
-table_acl_bindings={}
+visible_columns = {}
+visible_foreign_keys = {}
+table_display = {}
+table_acls = {}
+table_acl_bindings = {}
 table_annotations = {
-    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
-    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
-    "tag:isrd.isi.edu,2016:table-display":table_display,
+    "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
+    "tag:isrd.isi.edu,2016:table-display": table_display,
 }
 column_comment = \
 {'RCB': 'System-generated row created by user provenance.',
  'RCT': 'System-generated row creation timestamp.',
  'RID': 'System-generated unique row ID.',
  'RMB': 'System-generated row modified by user provenance.',
- 'RMT': 'System-generated row modification timestamp',
- 'color_b': None,
- 'color_g': None,
- 'color_r': None,
- 'mesh': None,
- 'model': None,
- 'opacity': None}
+ 'RMT': 'System-generated row modification timestamp'}
 
 
 

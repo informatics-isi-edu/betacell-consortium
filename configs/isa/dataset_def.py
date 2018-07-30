@@ -49,11 +49,11 @@ key_defs = [
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'dataset_RID_key')],
     ),
-    em.Key.define(['accession'],
-                   constraint_names=[('isa', 'accession_unique')],
-    ),
     em.Key.define(['id'],
                    constraint_names=[('isa', 'dataset_pkey')],
+    ),
+    em.Key.define(['accession'],
+                   constraint_names=[('isa', 'accession_unique')],
     ),
 ]
 
@@ -73,7 +73,7 @@ fkey_defs = [
 ]
 
 
-visible_columns=\
+visible_columns = \
 {'compact': [['isa', 'dataset_RID_key'], ['isa', 'accession_unique'], 'title',
              ['isa', 'dataset_project_fkey'], 'status', 'release_date'],
  'detailed': [['isa', 'dataset_RID_key'], 'accession', 'description',
@@ -152,19 +152,19 @@ visible_columns=\
                      'source': [{'outbound': ['isa', 'dataset_status_fkey']},
                                 'name']}]}}
 
-visible_foreign_keys=\
+visible_foreign_keys = \
 {'*': [['isa', 'thumbnail_dataset_fkey'], ['viz', 'model_dataset_fkey'],
        ['isa', 'previews_dataset_id_fkey'], ['isa', 'experiment_dataset_fkey'],
        ['isa', 'biosample_dataset_fkey'], ['isa', 'enhancer_dataset_fkey'],
        ['isa', 'clinical_assay_dataset_fkey'], ['isa', 'file_dataset_fkey'],
        ['isa', 'external_reference_id_fkey']]}
 
-table_display=\
+table_display = \
 {'*': {'row_order': [{'column': 'accession', 'descending': True}]},
  'row_name': {'row_markdown_pattern': '{{title}}'}}
 
-table_acls={}
-table_acl_bindings=\
+table_acls = {}
+table_acl_bindings = \
 {'dataset_edit_guard': {'projection': [{'outbound': ['isa',
                                                      'dataset_project_fkey']},
                                        {'outbound': ['isa',
@@ -177,30 +177,16 @@ table_acl_bindings=\
                         'types': ['update', 'delete']}}
 
 table_annotations = {
-    "tag:isrd.isi.edu,2016:table-display":table_display,
-    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
-    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
+    "tag:isrd.isi.edu,2016:table-display": table_display,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
+    "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
 }
 column_comment = \
 {'RCB': 'System-generated row created by user provenance.',
  'RCT': 'System-generated row creation timestamp.',
  'RID': 'System-generated unique row ID.',
  'RMB': 'System-generated row modified by user provenance.',
- 'RMT': 'System-generated row modification timestamp',
- '_keywords': None,
- 'accession': None,
- 'description': None,
- 'funding': None,
- 'human_anatomic': None,
- 'id': None,
- 'mouse_genetic': None,
- 'project': None,
- 'release_date': None,
- 'show_in_jbrowse': None,
- 'status': None,
- 'study_design': None,
- 'summary': None,
- 'title': None}
+ 'RMT': 'System-generated row modification timestamp'}
 
 column_annotations = \
 {'accession': {'tag:isrd.isi.edu,2016:generated': None},

@@ -18,11 +18,14 @@ column_defs = [
     em.Column.define('cell_line', em.builtin_types['text'],
         comment='Cell line used for the speciman.',
     ),
+    em.Column.define('cellular_location', em.builtin_types['text'],
+        comment='Cellular location of the specimen',
+    ),
 ]
 
 
 key_defs = [
-    em.Key.define(['RID', 'dataset'],
+    em.Key.define(['dataset', 'RID'],
                    constraint_names=[('isa', 'specimen_RID_key')],
        comment = 'RID and dataset must be distinct.',
     ),
@@ -38,6 +41,11 @@ fkey_defs = [
             constraint_names=[('isa', 'specimen_dataset_fkey')],
         acls={'insert': ['*'], 'update': ['*']},
     ),
+    em.ForeignKey.define(['cellular_location'],
+            'vocab', 'cellular_location_terms', ['id'],
+            constraint_names=[('isa', 'specimen_cellular_location_terms_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+    ),
     em.ForeignKey.define(['cell_line'],
             'isa', 'cell_line', ['RID'],
             constraint_names=[('isa', 'specimen_cell_line_fkey')],
@@ -47,14 +55,20 @@ fkey_defs = [
 ]
 
 
-visible_columns=\
+visible_columns = \
 {'compact': [['isa', 'specimen_pkey'], 'local_identifier',
+             {'source': [{'outbound': ['isa',
+                                       'specimen_cellular_location_terms_fkey']},
+                         'name']},
              {'source': [{'outbound': ['isa', 'specimen_cell_line_fkey']},
                          {'outbound': ['isa',
                                        'cell_line_cell_line_terms_fkey']},
                          'name']},
              'description'],
  'detailed': [['isa', 'specimen_pkey'], 'local_identifier',
+              {'source': [{'outbound': ['isa',
+                                        'specimen_cellular_location_terms_fkey']},
+                          'name']},
               ['isa', 'specimen_dataset_fkey'],
               {'markdown_name': 'Cell Line',
                'source': [{'outbound': ['isa', 'specimen_cell_line_fkey']},
@@ -63,7 +77,8 @@ visible_columns=\
                           'name']},
               'description', 'collection_date'],
  'entry': [['isa', 'local_identifier'], ['isa', 'specimen_dataset_fkey'],
-           ['isa', 'specimen_cell_line_fkey'], 'description',
+           ['isa', 'specimen_cell_line_fkey'],
+           ['isa', 'specimen_cellular_location_terms_fkey'], 'description',
            'collection_date'],
  'filter': {'and': [{'entity': True,
                      'markdown_name': 'Cell Line',
@@ -82,7 +97,7 @@ visible_columns=\
                      'source': [{'outbound': ['isa', 'specimen_anatomy_fkey']},
                                 'name']}]}}
 
-visible_foreign_keys=\
+visible_foreign_keys = \
 {'detailed': [['isa', 'xray_tomography_data_replicate_fkey'],
               ['isa', 'mesh_data_replicate_fkey'],
               ['isa', 'processed_data_replicate_fkey'],
@@ -92,24 +107,20 @@ visible_foreign_keys=\
            ['isa', 'processed_data_replicate_fkey'],
            ['isa', 'imaging_data_replicate_fkey']]}
 
-table_display={}
-table_acls={}
-table_acl_bindings={}
+table_display = {}
+table_acls = {}
+table_acl_bindings = {}
 table_annotations = {
-    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
+    "tag:isrd.isi.edu,2016:table-display": table_display,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
     "table_display":
 {}
 ,
-    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
-    "tag:isrd.isi.edu,2016:table-display":table_display,
+    "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
 }
 column_comment = \
-{'RCB': None,
- 'RCT': None,
- 'RID': None,
- 'RMB': None,
- 'RMT': None,
- 'cell_line': 'Cell line used for the speciman.',
+{'cell_line': 'Cell line used for the speciman.',
+ 'cellular_location': 'Cellular location of the specimen',
  'collection_date': 'Date the specimen was obtained',
  'dataset': 'Cell line used for the speciman.',
  'description': 'Description of the specimen.'}

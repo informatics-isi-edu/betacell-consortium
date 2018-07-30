@@ -29,11 +29,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['id'],
-                   constraint_names=[('vocab', 'specimen_type_terms_idkey1')],
-    ),
     em.Key.define(['uri'],
                    constraint_names=[('vocab', 'specimen_type_terms_urikey1')],
+    ),
+    em.Key.define(['id'],
+                   constraint_names=[('vocab', 'specimen_type_terms_idkey1')],
     ),
     em.Key.define(['RID'],
                    constraint_names=[('vocab', 'specimen_type_terms_RIDkey1')],
@@ -45,7 +45,7 @@ fkey_defs = [
 ]
 
 
-visible_columns=\
+visible_columns = \
 {'compact': ['name', 'id', 'synonyms', 'description'],
  'detailed': ['name', 'id', 'synonyms', 'uri', 'description'],
  'entry': ['name', 'id', 'synonyms', 'uri', 'description'],
@@ -53,22 +53,17 @@ visible_columns=\
                     {'open': True, 'source': 'id'},
                     {'open': True, 'source': 'synonyms'}]}}
 
-visible_foreign_keys={}
-table_display={}
-table_acls={}
-table_acl_bindings={}
+visible_foreign_keys = {}
+table_display = {}
+table_acls = {}
+table_acl_bindings = {}
 table_annotations = {
-    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
-    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
-    "tag:isrd.isi.edu,2016:table-display":table_display,
+    "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
+    "tag:isrd.isi.edu,2016:table-display": table_display,
 }
 column_comment = \
-{'RCB': None,
- 'RCT': None,
- 'RID': None,
- 'RMB': None,
- 'RMT': None,
- 'description': 'A longer human-readable description of this term.',
+{'description': 'A longer human-readable description of this term.',
  'id': 'The preferred Compact URI (CURIE) for this term.',
  'name': 'The preferred human-readable name for this term.',
  'synonyms': 'Alternate human-readable names for this term.',

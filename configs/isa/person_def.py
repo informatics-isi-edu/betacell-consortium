@@ -42,36 +42,28 @@ fkey_defs = [
 ]
 
 
-visible_columns=\
+visible_columns = \
 {'compact': ['name', 'email', 'affiliation'],
  'detailed': ['name', 'email', 'affiliation']}
 
-visible_foreign_keys={}
-table_display=\
+visible_foreign_keys = {}
+table_display = \
 {'*': {'row_order': [{'column': 'last_name', 'descending': False}]},
  'row_name': {'row_markdown_pattern': '{{{first_name}}} {{{last_name}}}'}}
 
-table_acls={}
-table_acl_bindings={}
+table_acls = {}
+table_acl_bindings = {}
 table_annotations = {
-    "tag:isrd.isi.edu,2016:table-display":table_display,
-    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
-    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
+    "tag:isrd.isi.edu,2016:table-display": table_display,
+    "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
 }
 column_comment = \
 {'RCB': 'System-generated row created by user provenance.',
  'RCT': 'System-generated row creation timestamp.',
  'RID': 'System-generated unique row ID.',
  'RMB': 'System-generated row modified by user provenance.',
- 'RMT': 'System-generated row modification timestamp',
- 'affiliation': None,
- 'degrees': None,
- 'email': None,
- 'first_name': None,
- 'last_name': None,
- 'middle_name': None,
- 'name': None,
- 'website': None}
+ 'RMT': 'System-generated row modification timestamp'}
 
 
 

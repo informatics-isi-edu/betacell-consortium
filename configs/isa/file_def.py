@@ -33,17 +33,17 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['id'],
-                   constraint_names=[('isa', 'file_pkey')],
-    ),
-    em.Key.define(['legacy_file_id'],
-                   constraint_names=[('isa', 'file_legacy_file_id_key')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'file_RID_key')],
     ),
     em.Key.define(['url'],
                    constraint_names=[('isa', 'file_url_key')],
+    ),
+    em.Key.define(['legacy_file_id'],
+                   constraint_names=[('isa', 'file_legacy_file_id_key')],
+    ),
+    em.Key.define(['id'],
+                   constraint_names=[('isa', 'file_pkey')],
     ),
 ]
 
@@ -58,7 +58,7 @@ fkey_defs = [
 ]
 
 
-visible_columns=\
+visible_columns = \
 {'compact': [['isa', 'file_RID_key'], 'url', 'byte_count', 'md5',
              'description'],
  'detailed': ['filename', 'byte_count', 'md5', ['isa', 'file_thumbnail_fkey'],
@@ -71,12 +71,12 @@ visible_columns=\
                      'source': [{'outbound': ['isa', 'file_dataset_fkey']},
                                 'accession']}]}}
 
-visible_foreign_keys={}
-table_display=\
+visible_foreign_keys = {}
+table_display = \
 {'row_name': {'row_markdown_pattern': '{{{filename}}}'}}
 
-table_acls={}
-table_acl_bindings=\
+table_acls = {}
+table_acl_bindings = \
 {'dataset_suppl_edit_guard': {'projection': [{'outbound': ['isa',
                                                            'file_dataset_fkey']},
                                              {'outbound': ['isa',
@@ -103,31 +103,22 @@ table_acl_bindings=\
                            'types': ['select']}}
 
 table_annotations = {
-    "tag:isrd.isi.edu,2016:table-display":table_display,
+    "tag:isrd.isi.edu,2016:table-display": table_display,
     "tag:misd.isi.edu,2015:display":
 {'name': 'Supplementary Files'}
 ,
-    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
+    "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
     "tag:isrd.isi.edu,2016:table-alternatives":
 {'compact': ['isa', 'file_compact'], 'compact/brief': ['isa', 'file_compact']}
 ,
-    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
 }
 column_comment = \
 {'RCB': 'System-generated row created by user provenance.',
  'RCT': 'System-generated row creation timestamp.',
  'RID': 'System-generated unique row ID.',
  'RMB': 'System-generated row modified by user provenance.',
- 'RMT': 'System-generated row modification timestamp',
- 'byte_count': None,
- 'dataset': None,
- 'description': None,
- 'filename': None,
- 'id': None,
- 'legacy_file_id': None,
- 'md5': None,
- 'submitted_on': None,
- 'url': None}
+ 'RMT': 'System-generated row modification timestamp'}
 
 column_annotations = \
 {'filename': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '[**{{filename}}**]({{{url}}})'},

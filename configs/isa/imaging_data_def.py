@@ -59,20 +59,9 @@ key_defs = [
 
 
 fkey_defs = [
-    em.ForeignKey.define(['equipment_model'],
-            'vocab', 'instrument_terms', ['dbxref'],
-            constraint_names=[('isa', 'imaging_data_equipment_model_fkey')],
-        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Equipment Model'}},
-    ),
     em.ForeignKey.define(['dataset'],
             'isa', 'dataset', ['RID'],
             constraint_names=[('isa', 'imaging_data_dataset_fkey')],
-        on_update='CASCADE',
-        on_delete='RESTRICT',
-    ),
-    em.ForeignKey.define(['replicate', 'dataset'],
-            'isa', 'replicate', ['RID', 'dataset'],
-            constraint_names=[('isa', 'imaging_data_replicate_fkey')],
         on_update='CASCADE',
         on_delete='RESTRICT',
     ),
@@ -81,10 +70,21 @@ fkey_defs = [
             constraint_names=[('isa', 'imaging_data_device_fkey')],
         annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Device'}},
     ),
+    em.ForeignKey.define(['replicate', 'dataset'],
+            'isa', 'replicate', ['RID', 'dataset'],
+            constraint_names=[('isa', 'imaging_data_replicate_fkey')],
+        on_update='CASCADE',
+        on_delete='RESTRICT',
+    ),
+    em.ForeignKey.define(['equipment_model'],
+            'vocab', 'instrument_terms', ['dbxref'],
+            constraint_names=[('isa', 'imaging_data_equipment_model_fkey')],
+        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Equipment Model'}},
+    ),
 ]
 
 
-visible_columns=\
+visible_columns = \
 {'compact': [['isa', 'imaging_data_pkey'], 'replicate_fkey', 'url', 'file_type',
              'byte_count', 'md5', 'submitted_on'],
  'detailed': [['isa', 'imaging_data_pkey'],
@@ -138,17 +138,17 @@ visible_columns=\
                      'open': False,
                      'source': 'submitted_on'}]}}
 
-visible_foreign_keys=\
+visible_foreign_keys = \
 {'detailed': [['isa', 'thumbnail_thumbnail_of_fkey'],
               ['isa', 'mesh_data_derived_from_fkey']],
  'entry': [['isa', 'thumbnail_thumbnail_of_fkey'],
            ['isa', 'mesh_data_derived_from_fkey']]}
 
-table_display=\
+table_display = \
 {'row_name': {'row_markdown_pattern': '{{{filename}}}'}}
 
-table_acls={}
-table_acl_bindings=\
+table_acls = {}
+table_acl_bindings = \
 {'dataset_suppl_edit_guard': {'projection': [{'outbound': ['isa',
                                                            'imaging_data_dataset_fkey']},
                                              {'outbound': ['isa',
@@ -175,9 +175,9 @@ table_acl_bindings=\
                            'types': ['select']}}
 
 table_annotations = {
-    "tag:isrd.isi.edu,2016:table-display":table_display,
-    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
-    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
+    "tag:isrd.isi.edu,2016:table-display": table_display,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
+    "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
     "tag:isrd.isi.edu,2016:table-alternatives":
 {'compact': ['isa', 'imaging_compact'],
  'compact/brief': ['isa', 'imaging_compact']}
@@ -188,20 +188,7 @@ column_comment = \
  'RCT': 'System-generated row creation timestamp.',
  'RID': 'System-generated unique row ID.',
  'RMB': 'System-generated row modified by user provenance.',
- 'RMT': 'System-generated row modification timestamp',
- 'anatomy': None,
- 'byte_count': None,
- 'dataset': None,
- 'description': None,
- 'device': None,
- 'equipment_model': None,
- 'file_id': None,
- 'file_type': None,
- 'filename': None,
- 'md5': None,
- 'replicate': None,
- 'submitted_on': None,
- 'url': None}
+ 'RMT': 'System-generated row modification timestamp'}
 
 column_annotations = \
 {'file_type': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '{{{$fkeys.isa.imaging_data_file_type_fkey.rowName}}}'}}},

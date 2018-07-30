@@ -27,21 +27,23 @@ tag_map = {
 def print_annotations(table, stream):
 
     tag_rmap = {v: k for k, v in tag_map.items()}
+
     table_annotations = {
         tag_map['visible_columns']: table.visible_columns,
         tag_map['visible_foreign_keys']: table.visible_foreign_keys,
         tag_map['table_display']: table.table_display,
-        tag_map['export']: table.annotations[tag_map['export']],
         'table_acls': table.acls,
         'table_acl_bindings': table.acl_bindings
     }
+    if tag_map['export'] in table.annotations:
+        tag_map['export']: table.annotations[tag_map['export']]
 
     # Print out variable definitions for annotations that we are going to pull out seperately.
     for k, v in table_annotations.items():
         if v == {} or v == '':
-            print('{}={}'.format(tag_rmap.get(k,k), v), file=stream)
+            print('{} = {}'.format(tag_rmap.get(k,k), v), file=stream)
         else:
-            print('{}=\\'.format(tag_rmap.get(k,k)), file=stream)
+            print('{} = \\'.format(tag_rmap.get(k,k)), file=stream)
             pprint.pprint(v, width=80, depth=None, compact=True, stream=stream)
             print('', file=stream)
 
@@ -65,7 +67,6 @@ def print_annotations(table, stream):
         if not (i.comment == '' or i.comment == None):
             column_comment[i.name] = i.comment
         if i.annotations != {}:
-            print(i.annotations)
             column_annotations[i.name] = i.annotations
         if i.acls != {}:
             column_acls[i.name] = i.acls

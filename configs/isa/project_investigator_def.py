@@ -16,7 +16,7 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['project_id', 'person'],
+    em.Key.define(['person', 'project_id'],
                    constraint_names=[('isa', 'project_investigator_pkey')],
     ),
     em.Key.define(['RID'],
@@ -26,26 +26,26 @@ key_defs = [
 
 
 fkey_defs = [
-    em.ForeignKey.define(['person'],
-            'isa', 'person', ['RID'],
-            constraint_names=[('isa', 'project_investigator_person_fkey')],
-        on_update='CASCADE',
-        on_delete='RESTRICT',
-    ),
     em.ForeignKey.define(['project_id'],
             'isa', 'project', ['id'],
             constraint_names=[('isa', 'project_investigator_project_id_fkey')],
         on_update='CASCADE',
         on_delete='CASCADE',
     ),
+    em.ForeignKey.define(['person'],
+            'isa', 'person', ['RID'],
+            constraint_names=[('isa', 'project_investigator_person_fkey')],
+        on_update='CASCADE',
+        on_delete='RESTRICT',
+    ),
 ]
 
 
-visible_columns={}
-visible_foreign_keys={}
-table_display={}
-table_acls={}
-table_acl_bindings=\
+visible_columns = {}
+visible_foreign_keys = {}
+table_display = {}
+table_acls = {}
+table_acl_bindings = \
 {'project_suppl_edit_guard': {'projection': [{'outbound': ['isa',
                                                            'project_investigator_project_id_fkey']},
                                              {'outbound': ['isa',
@@ -58,18 +58,16 @@ table_acl_bindings=\
                               'types': ['update', 'delete']}}
 
 table_annotations = {
-    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
-    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
-    "tag:isrd.isi.edu,2016:table-display":table_display,
+    "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
+    "tag:isrd.isi.edu,2016:table-display": table_display,
 }
 column_comment = \
 {'RCB': 'System-generated row created by user provenance.',
  'RCT': 'System-generated row creation timestamp.',
  'RID': 'System-generated unique row ID.',
  'RMB': 'System-generated row modified by user provenance.',
- 'RMT': 'System-generated row modification timestamp',
- 'person': None,
- 'project_id': None}
+ 'RMT': 'System-generated row modification timestamp'}
 
 
 

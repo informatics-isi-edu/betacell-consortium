@@ -10,7 +10,7 @@ def main():
     parser.add_argument('--replace', action='store_true', help='replace existing values with new ones )')
     parser.add_argument('--defpath', default='.', help='path to table definitions)')
     parser.add_argument('table', help='Name table to be loaded.')
-    parser.add_argument('mode', choices=['table', 'columns', 'annotations', 'fkeys', 'acls'],
+    parser.add_argument('mode', choices=['table', 'columns', 'annotations', 'comment', 'fkeys', 'acls'],
                         help='Operation to perform')
 
     args = parser.parse_args()
@@ -78,6 +78,12 @@ def main():
                         c.annotations[k] = v
 
         table.apply(catalog)
+
+    if mode == 'comment':
+        table._comment = mod.table_comment
+        for c in table.column_definitions:
+            if c.name in mod.column_comment:
+                c._comment = mod.column_comment[c.name]
 
     if mode == 'acls':
         for k, v in mod.table_acls.items():

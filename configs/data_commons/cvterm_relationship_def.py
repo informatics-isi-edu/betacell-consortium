@@ -25,11 +25,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('data_commons', 'cvterm_relationship_RID_key')],
-    ),
     em.Key.define(['type_dbxref', 'subject_dbxref', 'object_dbxref'],
                    constraint_names=[('data_commons', 'cvterm_relationship_type_dbxref_subject_dbxref_object_dbxre_key')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('data_commons', 'cvterm_relationship_RID_key')],
     ),
     em.Key.define(['cvterm_relationship_id'],
                    constraint_names=[('data_commons', 'cvterm_relationship_pkey')],
@@ -42,13 +42,13 @@ fkey_defs = [
             'data_commons', 'cvterm', ['dbxref'],
             constraint_names=[('data_commons', 'cvterm_relationship_object_dbxref_fkey')],
     ),
-    em.ForeignKey.define(['subject_dbxref'],
-            'data_commons', 'cvterm', ['dbxref'],
-            constraint_names=[('data_commons', 'cvterm_relationship_subject_dbxref_fkey')],
-    ),
     em.ForeignKey.define(['cv'],
             'data_commons', 'cv', ['name'],
             constraint_names=[('data_commons', 'cvterm_relationship_cv_fkey')],
+    ),
+    em.ForeignKey.define(['subject_dbxref'],
+            'data_commons', 'cvterm', ['dbxref'],
+            constraint_names=[('data_commons', 'cvterm_relationship_subject_dbxref_fkey')],
     ),
     em.ForeignKey.define(['type_dbxref'],
             'data_commons', 'cvterm', ['dbxref'],
@@ -57,28 +57,16 @@ fkey_defs = [
 ]
 
 
-visible_columns={}
-visible_foreign_keys={}
-table_display={}
-table_acls={}
-table_acl_bindings={}
+visible_columns = {}
+visible_foreign_keys = {}
+table_display = {}
+table_acls = {}
+table_acl_bindings = {}
 table_annotations = {
-    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
-    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
-    "tag:isrd.isi.edu,2016:table-display":table_display,
+    "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
+    "tag:isrd.isi.edu,2016:table-display": table_display,
 }
-column_comment = \
-{'RCB': None,
- 'RCT': None,
- 'RID': None,
- 'RMB': None,
- 'RMT': None,
- 'cv': None,
- 'cvterm_relationship_id': None,
- 'object_dbxref': None,
- 'subject_dbxref': None,
- 'type_dbxref': None}
-
 
 
 table_def = em.Table.define('cvterm_relationship',

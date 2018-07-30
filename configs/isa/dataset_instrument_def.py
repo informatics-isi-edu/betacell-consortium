@@ -16,7 +16,7 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['dataset_id', 'instrument'],
+    em.Key.define(['instrument', 'dataset_id'],
                    constraint_names=[('isa', 'dataset_instrument_pkey')],
     ),
     em.Key.define(['RID'],
@@ -26,11 +26,6 @@ key_defs = [
 
 
 fkey_defs = [
-    em.ForeignKey.define(['instrument'],
-            'vocab', 'instrument_terms', ['dbxref'],
-            constraint_names=[('isa', 'dataset_instrument_instrument_fkey')],
-        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Instrument'}},
-    ),
     em.ForeignKey.define(['dataset_id'],
             'isa', 'dataset', ['id'],
             constraint_names=[('isa', 'dataset_instrument_dataset_id_fkey')],
@@ -38,14 +33,19 @@ fkey_defs = [
         on_update='CASCADE',
         on_delete='CASCADE',
     ),
+    em.ForeignKey.define(['instrument'],
+            'vocab', 'instrument_terms', ['dbxref'],
+            constraint_names=[('isa', 'dataset_instrument_instrument_fkey')],
+        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Instrument'}},
+    ),
 ]
 
 
-visible_columns={}
-visible_foreign_keys={}
-table_display={}
-table_acls={}
-table_acl_bindings=\
+visible_columns = {}
+visible_foreign_keys = {}
+table_display = {}
+table_acls = {}
+table_acl_bindings = \
 {'dataset_tags_edit_guard': {'projection': [{'outbound': ['isa',
                                                           'dataset_instrument_dataset_id_fkey']},
                                             {'outbound': ['isa',
@@ -63,18 +63,16 @@ table_annotations = {
     "tag:misd.isi.edu,2015:display":
 {'name': 'Instrument'}
 ,
-    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
-    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
-    "tag:isrd.isi.edu,2016:table-display":table_display,
+    "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
+    "tag:isrd.isi.edu,2016:table-display": table_display,
 }
 column_comment = \
 {'RCB': 'System-generated row created by user provenance.',
  'RCT': 'System-generated row creation timestamp.',
  'RID': 'System-generated unique row ID.',
  'RMB': 'System-generated row modified by user provenance.',
- 'RMT': 'System-generated row modification timestamp',
- 'dataset_id': None,
- 'instrument': None}
+ 'RMT': 'System-generated row modification timestamp'}
 
 
 

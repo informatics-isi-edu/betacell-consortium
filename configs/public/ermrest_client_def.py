@@ -35,30 +35,18 @@ fkey_defs = [
 ]
 
 
-visible_columns={}
-visible_foreign_keys={}
-table_display={}
-table_acls=\
+visible_columns = {}
+visible_foreign_keys = {}
+table_display = {}
+table_acls = \
 {'delete': [], 'enumerate': [], 'insert': [], 'select': [], 'update': []}
 
-table_acl_bindings={}
+table_acl_bindings = {}
 table_annotations = {
-    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
-    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
-    "tag:isrd.isi.edu,2016:table-display":table_display,
+    "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
+    "tag:isrd.isi.edu,2016:table-display": table_display,
 }
-column_comment = \
-{'RCB': None,
- 'RCT': None,
- 'RID': None,
- 'RMB': None,
- 'RMT': None,
- 'client_obj': None,
- 'display_name': None,
- 'email': None,
- 'full_name': None,
- 'id': None}
-
 
 
 table_def = em.Table.define('ermrest_client',

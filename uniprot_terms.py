@@ -5,23 +5,43 @@ g = rdflib.Graph()
 result = g.parse("uniprot.rdf")
 
 
+
 qres = g.query("""
-PREFIX  uniprot:<http://purl.uniprot.org/core/>
-SELECT   DISTINCT ?id ?name ?description ?synonym
+PREFIX  up_core:<http://purl.uniprot.org/core/>
+PREFIX uniprot:<http://purl.uniprot,org/uniprot>
+SELECT  ?protein ?mnemonic ?name ?shortname
 where {
-    ?id uniprot:structured ?name .
-    ?id a <http://purl.uniprot.org/core/Protein> .
-    OPTIONAL {?id uniprot:annotation ?anno .
-    ?fanno a <http://purl.uniprot.org/core/Function_Annotation> .
-    ?fanno rdfs:comment ?description .}
-    OPTIONAL {?id uniprot:annotation ?panno .
-    ?panno a <http://purl.uniprot.org/core/Peptide_Annotation> .
-    ?panno rdfs:comment ?synonym .}
+?protein a up_core:Protein . 
+?protein up_core:mnemonic ?mnemonic . 
+{
+ ?protein up_core:recommendedName ?id2 . 
+ ?id2 up_core:fullName ?name .
+# OPTIONAL { ?id2 up_core:shortName ?shortname  }
+ }
+UNION 
+{ ?protein up_core:submittedName ?id3 . 
+?id3 up_core:fullName ?name  .
+#OPTIONAL {?id3 up_core:shortName ?shortname }
+}
+}
+""")
+
+
+qres = g.query("""
+PREFIX  up_core:<http://purl.uniprot.org/core/>
+PREFIX uniprot:<http://purl.uniprot,org/uniprot>
+SELECT  ?protein ?name ?shortname ?mnemonic
+where {
+    ?protein up_core:recommendedName ?id2  .
+    ?protein a up_core:Protein .
+    ?protein up_core:mnemonic ?mnemonic .
+    ?id2 up_core:fullName ?name .
+    ?id2 up_core:shortName ?shortname
 }
 """)
 
 for row in qres:
-    print(row['id'].toPython(), row['name'].toPython(), row['synonym'], row['description'])
+    print(row['protein'].toPython(), row['name'].toPython(), row['shortname'].toPython(), row['mnemonic'].toPython())
 
 
 #    print (row['id'].toPython(), row['name'].toPython(), row['synonym'].toPython(), row['description'].toPython())

@@ -43,14 +43,14 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['dbxref'],
-                   constraint_names=[('vocab', 'human_age_terms_pkey')],
-    ),
-    em.Key.define(['is_obsolete', 'cv', 'name'],
+    em.Key.define(['name', 'cv', 'is_obsolete'],
                    constraint_names=[('vocab', 'human_age_terms_cv_name_is_obsolete_key')],
     ),
     em.Key.define(['RID'],
                    constraint_names=[('vocab', 'human_age_terms_RID_key')],
+    ),
+    em.Key.define(['dbxref'],
+                   constraint_names=[('vocab', 'human_age_terms_pkey')],
     ),
 ]
 
@@ -67,7 +67,7 @@ fkey_defs = [
 ]
 
 
-visible_columns=\
+visible_columns = \
 {'*': ['name', 'dbxref', 'definition', ['vocab', 'human_age_terms_cv_fkey'],
        'is_obsolete', 'is_relationshiptype', 'synonyms', 'alternate_dbxrefs'],
  'entry': [['vocab', 'human_age_terms_dbxref_fkey']],
@@ -76,38 +76,22 @@ visible_columns=\
                     {'source': 'is_obsolete'},
                     {'source': 'is_relationshiptype'}]}}
 
-visible_foreign_keys=\
+visible_foreign_keys = \
 {'*': [{'source': [{'inbound': ['isa', 'dataset_human_age_human_age_fkey']},
                    {'outbound': ['isa', 'dataset_human_age_dataset_id_fkey']},
                    'id']}]}
 
-table_display=\
+table_display = \
 {'*': {'row_order': [{'column': 'name'}]},
  'row_name': {'row_markdown_pattern': '{{name}}'}}
 
-table_acls={}
-table_acl_bindings={}
+table_acls = {}
+table_acl_bindings = {}
 table_annotations = {
-    "tag:isrd.isi.edu,2016:table-display":table_display,
-    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
-    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
+    "tag:isrd.isi.edu,2016:table-display": table_display,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
+    "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
 }
-column_comment = \
-{'RCB': None,
- 'RCT': None,
- 'RID': None,
- 'RMB': None,
- 'RMT': None,
- 'alternate_dbxrefs': None,
- 'cv': None,
- 'dbxref': None,
- 'dbxref_unversioned': None,
- 'definition': None,
- 'is_obsolete': None,
- 'is_relationshiptype': None,
- 'name': None,
- 'synonyms': None}
-
 column_annotations = \
 {'alternate_dbxrefs': {'tag:isrd.isi.edu,2016:generated': None,
                        'tag:misd.isi.edu,2015:display': {'name': 'Alternate '

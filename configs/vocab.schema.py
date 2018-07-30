@@ -8,10 +8,9 @@ table_names = [
     'gender_terms',
     'cell_line_terms',
     'target_of_assay_terms',
-    'file_format_terms',
+    'phenotype_terms',
     'human_age_terms',
     'stage_terms',
-    'phenotype_terms',
     'origin_terms',
     'dataset_status_terms',
     'data_type_terms',
@@ -20,11 +19,13 @@ table_names = [
     'instrument_terms',
     'mapping_assembly_terms',
     'experiment_type_terms',
+    'file_format_terms',
     'enhancer_terms',
     'gene_terms',
     'specimen_type_terms',
     'species_terms',
     'molecule_type_terms',
+    'cellular_location_terms',
     'compound_terms',
 ]
 annotations = \
@@ -46,7 +47,6 @@ schema_def = em.Schema.define(
         'vocab',
         comment=None,
         acls=acls,
-        acl_bindings=acl_bindings,
         annotations=annotations,
     )
 

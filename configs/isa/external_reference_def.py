@@ -23,7 +23,7 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['url', 'id'],
+    em.Key.define(['id', 'url'],
                    constraint_names=[('isa', 'external_reference_pkey')],
     ),
     em.Key.define(['RID'],
@@ -42,22 +42,22 @@ fkey_defs = [
 ]
 
 
-visible_columns=\
+visible_columns = \
 {'compact': ['description'],
  'detailed': ['description', 'url'],
  'entry': ['description', 'url']}
 
-visible_foreign_keys={}
-table_display={}
-table_acls={}
-table_acl_bindings={}
+visible_foreign_keys = {}
+table_display = {}
+table_acls = {}
+table_acl_bindings = {}
 table_annotations = {
     "tag:misd.isi.edu,2015:display":
 {'name': 'Additional Information'}
 ,
-    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
-    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
-    "tag:isrd.isi.edu,2016:table-display":table_display,
+    "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
+    "tag:isrd.isi.edu,2016:table-display": table_display,
 }
 column_comment = \
 {'RCB': 'System-generated row created by user provenance.',
@@ -65,9 +65,6 @@ column_comment = \
  'RID': 'System-generated unique row ID.',
  'RMB': 'System-generated row modified by user provenance.',
  'RMT': 'System-generated row modification timestamp',
- 'description': None,
- 'id': None,
- 'link_text': None,
  'url': 'asset/reference'}
 
 column_annotations = \

@@ -53,9 +53,20 @@ key_defs = [
 
 
 fkey_defs = [
+    em.ForeignKey.define(['specimen_type'],
+            'vocab', 'specimen_type_terms', ['id'],
+            constraint_names=[('isa', 'biosample_specimen_type_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+        comment='Must be a valid reference to a specimen type.',
+    ),
     em.ForeignKey.define(['experiment'],
             'isa', 'experiment', ['RID'],
             constraint_names=[('isa', 'biosample_experiment_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+    ),
+    em.ForeignKey.define(['specimen'],
+            'isa', 'specimen', ['RID'],
+            constraint_names=[('isa', 'biosample_specimen_fkey')],
         acls={'insert': ['*'], 'update': ['*']},
     ),
     em.ForeignKey.define(['dataset'],
@@ -65,21 +76,10 @@ fkey_defs = [
         on_update='CASCADE',
         on_delete='RESTRICT',
     ),
-    em.ForeignKey.define(['specimen_type'],
-            'vocab', 'specimen_type_terms', ['id'],
-            constraint_names=[('isa', 'biosample_specimen_type_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
-        comment='Must be a valid reference to a specimen type.',
-    ),
-    em.ForeignKey.define(['specimen'],
-            'isa', 'specimen', ['RID'],
-            constraint_names=[('isa', 'biosample_specimen_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
-    ),
 ]
 
 
-visible_columns=\
+visible_columns = \
 {'*': ['cell_line', 'capillary_column', 'sample_position'],
  'compact': [['isa', 'biosample_pkey'],
              {'markdown_name': 'Cell Line',
@@ -120,11 +120,13 @@ visible_columns=\
                ['isa', 'specimen_species_fkey']],
               ['isa', 'biosample_specimen_type_fkey'], 'capillary_number',
               'sample_position', 'collection_date'],
- 'entry': [['isa', 'biosample_dataset_fkey'], 'local_identifier',
+ 'entry': [['isa', 'biosample_dataset_fkey'],
+           ['isa', ['biosample_experiment_fkey']], 'local_identifier',
            ['isa', 'biosample_specimen_fkey'],
            ['isa', 'biosample_specimen_type_fkey'], 'capillary_number',
            'sample_position', 'collection_date'],
- 'filter': {'and': [{'markdown_name': 'Cell Line',
+ 'filter': {'and': [{'entity': True, 'source': 'RID'},
+                    {'markdown_name': 'Cell Line',
                      'source': [{'outbound': ['isa',
                                               'biosample_specimen_fkey']},
                                 {'outbound': ['isa',
@@ -187,7 +189,7 @@ visible_columns=\
                                 'url']},
                     {'entity': True, 'source': 'capillary_number'}]}}
 
-visible_foreign_keys=\
+visible_foreign_keys = \
 {'*': ['cell_line', 'capillary_column', 'sample_position'],
  'compact': [['isa', 'biosample_pkey'], 'local_identifier',
              {'markdown_name': 'Cell Line',
@@ -207,7 +209,8 @@ visible_foreign_keys=\
                           'RID']},
               ['viz', 'model_biosample_fkey']],
  'entry': [['isa', 'biosample_experiment_fkey']],
- 'filter': {'and': [{'entity': True,
+ 'filter': {'and': ['RID',
+                    {'entity': True,
                      'markdown_name': 'Species',
                      'open': True,
                      'source': [{'outbound': ['isa', 'biosample_species_fkey']},
@@ -239,30 +242,53 @@ visible_foreign_keys=\
                                 {'outbound': ['isa', 'specimen_anatomy_fkey']},
                                 'name']}]}}
 
-table_display=\
+table_display = \
 {'row_name': {'row_markdown_pattern': '{{RID}} - '
                                       '{{summary}}{{#local_identifier}} '
                                       '[{{local_identifier}}] '
                                       '{{/local_identifier}}'}}
 
-table_acls={}
-table_acl_bindings={}
+table_acls = {}
+table_acl_bindings = {}
 table_annotations = {
+    "tag:isrd.isi.edu,2016:export":
+{'templates': [{'format_name': 'BDBag',
+                'format_type': 'BAG',
+                'name': 'default',
+                'outputs': [{'destination': {'name': 'biosample',
+                                             'type': 'csv'},
+                             'source': {'api': 'entity',
+                                        'table': 'isa:biosample'}},
+                            {'destination': {'name': 'MRC', 'type': 'download'},
+                             'source': {'api': 'attribute',
+                                        'path': 'url',
+                                        'table': 'isa:xray_tomography_data'}},
+                            {'destination': {'name': 'processed_data',
+                                             'type': 'download'},
+                             'source': {'api': 'attribute',
+                                        'path': 'url',
+                                        'table': 'isa:processed_tomography_data'}},
+                            {'destination': {'name': 'OBJS',
+                                             'type': 'download'},
+                             'source': {'api': 'attribute',
+                                        'path': 'url',
+                                        'table': 'isa:mesh_data'}}]}]}
+,
     "tag:isrd.isi.edu,2016:table-alternatives":
 {}
 ,
-    "tag:isrd.isi.edu,2016:table-display":table_display,
+    "tag:isrd.isi.edu,2016:table-display": table_display,
     "tag:misd.isi.edu,2015:display":
 {}
 ,
-    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
     "table_display":
 {'row_name': {'row_markdown_pattern': '{{RID}} - '
                                       '{{summary}}{{#local_identifier}} '
                                       '[{{local_identifier}}] '
                                       '{{/local_identifier}}'}}
 ,
-    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
+    "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
 }
 column_comment = \
 {'RCB': 'System-generated row created by user provenance.',
@@ -270,16 +296,11 @@ column_comment = \
  'RID': 'System-generated unique row ID.',
  'RMB': 'System-generated row modified by user provenance.',
  'RMT': 'System-generated row modification timestamp',
- '_keywords': None,
  'capillary_number': 'ID number of the capillary constaining the biosample.',
- 'collection_date': None,
- 'dataset': None,
  'experiment': 'Experiment in which this biosample is used',
- 'local_identifier': None,
  'sample_position': 'Position in the capillary where the sample is located.',
  'specimen': 'Biological material used for the biosample.',
- 'specimen_type': 'Method by which specimen is prepared.',
- 'summary': None}
+ 'specimen_type': 'Method by which specimen is prepared.'}
 
 column_annotations = \
 {'dataset': {'tag:isrd.isi.edu,2016:column-display': {},

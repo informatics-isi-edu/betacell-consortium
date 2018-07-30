@@ -38,14 +38,14 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['id'],
-                   constraint_names=[('isa', 'project_pkey')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'project_RID_key')],
     ),
     em.Key.define(['name'],
                    constraint_names=[('isa', 'project_name_key')],
+    ),
+    em.Key.define(['id'],
+                   constraint_names=[('isa', 'project_pkey')],
     ),
 ]
 
@@ -58,7 +58,7 @@ fkey_defs = [
 ]
 
 
-visible_columns=\
+visible_columns = \
 {'compact': ['name', 'abstract'],
  'detailed': ['name', 'funding', 'url', 'abstract', 'group_membership_url',
               ['isa', 'project_publication_project_id_fkey']],
@@ -78,17 +78,17 @@ visible_columns=\
                                              'project_publication_project_id_fkey']},
                                 'pmid']}]}}
 
-visible_foreign_keys=\
+visible_foreign_keys = \
 {'detailed': [['isa', 'project_investigator_project_id_fkey'],
               ['isa', 'project_member_project_id_fkey'],
               ['isa', 'dataset_project_fkey']]}
 
-table_display=\
+table_display = \
 {'compact': {'row_order': [{'column': 'pis', 'descending': False}]},
  'row_name': {'row_markdown_pattern': '{{{pis}}}: {{{name}}}'}}
 
-table_acls={}
-table_acl_bindings=\
+table_acls = {}
+table_acl_bindings = \
 {'project_edit_guard': {'projection': [{'outbound': ['isa',
                                                      'project_groups_fkey']},
                                        'groups'],
@@ -99,9 +99,9 @@ table_acl_bindings=\
                         'types': ['update', 'delete']}}
 
 table_annotations = {
-    "tag:isrd.isi.edu,2016:table-display":table_display,
-    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
-    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
+    "tag:isrd.isi.edu,2016:table-display": table_display,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
+    "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
 }
 column_comment = \
 {'RCB': 'System-generated row created by user provenance.',
@@ -109,14 +109,10 @@ column_comment = \
  'RID': 'System-generated unique row ID.',
  'RMB': 'System-generated row modified by user provenance.',
  'RMT': 'System-generated row modification timestamp',
- 'abstract': None,
- 'funding': None,
  'group_membership_url': 'URL that project members will need in order to join '
                          'the group',
  'groups': 'Users must be a member of the referenced ACL group in order to '
            'edit project records.',
- 'id': None,
- 'name': None,
  'pis': 'List of Last Names of Principal Investigator separated by /',
  'url': 'url for more information on this project on externalre site'}
 

@@ -51,6 +51,11 @@ key_defs = [
 
 
 fkey_defs = [
+    em.ForeignKey.define(['volume'],
+            'isa', 'imaging_data', ['RID'],
+            constraint_names=[('viz', 'model_volume_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+    ),
     em.ForeignKey.define(['biosample'],
             'isa', 'biosample', ['RID'],
             constraint_names=[('viz', 'model_biosample_fkey')],
@@ -58,15 +63,10 @@ fkey_defs = [
         on_update='CASCADE',
         on_delete='SET NULL',
     ),
-    em.ForeignKey.define(['volume'],
-            'isa', 'imaging_data', ['RID'],
-            constraint_names=[('viz', 'model_volume_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
-    ),
 ]
 
 
-visible_columns=\
+visible_columns = \
 {'compact': [['viz', 'model_dataset_fkey'], 'label',
              {'entity': True,
               'markdown_name': 'Cell Line',
@@ -185,19 +185,19 @@ visible_columns=\
                                 'timepoint'],
                      'ux_mode': 'choices'}]}}
 
-visible_foreign_keys=\
+visible_foreign_keys = \
 {'detailed': [{'source': [{'outbound': ['viz', 'model_replicate_fkey']},
                           {'inbound': ['viz', 'model_replicate_fkey']},
                           'RID']}]}
 
-table_display=\
+table_display = \
 {'compact': {'row_markdown_pattern': ':::iframe '
                                      '[{{{label}}}](/mesh-viewer/view.html?model=/ermrest/catalog/1/entity/viz:model_json/RID={{{_RID}}}){width=1024 '
                                      'height=768 .iframe} \n'
                                      ':::'}}
 
-table_acls={}
-table_acl_bindings={}
+table_acls = {}
+table_acl_bindings = {}
 table_annotations = {
     "tag:isrd.isi.edu,2016:export":
 {'templates': [{'format_name': 'BDBag',
@@ -212,39 +212,25 @@ table_annotations = {
                                         'path': 'isa:mesh_data/url',
                                         'table': 'viz:model_mesh_data'}}]}]}
 ,
-    "tag:isrd.isi.edu,2016:table-display":table_display,
+    "tag:isrd.isi.edu,2016:table-display": table_display,
     "tag:misd.isi.edu,2015:display":
 {'name': '3D Surface Models'}
 ,
-    "tag:isrd.isi.edu,2016:visible-foreign-keys":visible_foreign_keys,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
     "table_display":
 {'compact': {'row_markdown_pattern': ':::iframe '
                                      '[{{{label}}}](/mesh-viewer/view.html?model=/ermrest/catalog/1/entity/viz:model_json/RID={{{_RID}}}){width=1024 '
                                      'height=768 .iframe} \n'
                                      ':::'}}
 ,
-    "tag:isrd.isi.edu,2016:visible-columns":visible_columns,
+    "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
 }
 column_comment = \
 {'RCB': 'System-generated row created by user provenance.',
  'RCT': 'System-generated row creation timestamp.',
  'RID': 'System-generated unique row ID.',
  'RMB': 'System-generated row modified by user provenance.',
- 'RMT': 'System-generated row modification timestamp',
- 'bg_color_b': None,
- 'bg_color_g': None,
- 'bg_color_r': None,
- 'biosample': None,
- 'bounding_box_color_b': None,
- 'bounding_box_color_g': None,
- 'bounding_box_color_r': None,
- 'description': None,
- 'id': None,
- 'label': None,
- 'replicate': None,
- 'rotate': None,
- 'show_bounding_box': None,
- 'volume': None}
+ 'RMT': 'System-generated row modification timestamp'}
 
 column_annotations = \
 {'id': {'tag:isrd.isi.edu,2016:column-display': {},
