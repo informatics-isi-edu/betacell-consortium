@@ -7,24 +7,8 @@ server = 'pbcconsortium.isrd.isi.edu'
 term_table = 'foobar_terms'
 term_comment = 'Here you go'
 
-# List of terms you would like to add to this new table
-term_list = [
-    {'id': 'NCBITAXON:9606',
-     'uri': 'http://purl.bioontology.org/ontology/NCBITAXON/9606',
-     'name': 'Homo Sapiens',
-     'synonyms': ["man"],
-     'description': 'NCBI Taxon for man.'},
-    {'id': 'NCBITAXON:10116',
-     'uri': 'http://purl.bioontology.org/ontology/NCBITAXON/10116',
-     'name': 'Rattus norvegicus',
-     'synonyms': ["brown rat"],
-     'description': 'NCBI Taxon for rat'
-     }
-]
-
 credential = get_credential(server)
 catalog = ErmrestCatalog('https', server, 1, credentials=credential)
-
 
 def set_visible_columns(catalog, term_table):
     """
@@ -61,10 +45,6 @@ def add_terms(catalog, term_table, term_list):
     terms_dp = vocab_dp.tables[term_table]
     # Now add the terms....
     terms_dp.insert(term_list)
-
-
-experiment_type_terms_dp = vocab_dp.experiment_type_terms
-experiment_type_terms_dp.insert(experiment_type_list)
 
 def delete_foreign_keys(catalog,schema,table):
     model_root = catalog.getCatalogModel()

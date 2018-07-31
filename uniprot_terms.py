@@ -4,6 +4,18 @@ import rdflib
 g = rdflib.Graph()
 result = g.parse("uniprot.rdf")
 
+pcnt = g.query("""
+PREFIX  up_core:<http://purl.uniprot.org/core/>
+PREFIX uniprot:<http://purl.uniprot,org/uniprot>
+SELECT  DISTINCT ?protein
+where {
+  ?protein a up_core:Protein .
+   ?protein up_core:mnemonic ?mnemonic . 
+  } 
+"""
+)
+
+
 qres = g.query("""
 PREFIX  up_core:<http://purl.uniprot.org/core/>
 PREFIX uniprot:<http://purl.uniprot,org/uniprot>
@@ -17,56 +29,29 @@ where {
             ?sn up_core:fullName ?sub_name } .
  OPTIONAL { ?protein up_core:annotation ?a .
         	?a a up_core:Function_Annotation .
-            ?a rdfs:comment ?function
- } .
+            ?a rdfs:comment ?function } .
  OPTIONAL {?protein up_core:alternativeName ?n1 .
-        ?n1 up_core:fullName ?alternative_name
- } .
+        ?n1 up_core:fullName ?alternative_name } .
  OPTIONAL {?protein up_core:recommendedName ?rn .
            ?rn up_core:shortName ?shortname }
  }
 """)
  
-id_list = list(qres)
-
-# qres = g.query("""
-# PREFIX  up_core:<http://purl.uniprot.org/core/>
-# PREFIX uniprot:<http://purl.uniprot,org/uniprot>
-# SELECT  ?protein ?mnemonic ?alternative?altname ?altshortname
-# where {
-# ?protein a up_core:Protein .
-# ?protein up_core:mnemonic ?mnemonic .
-#  ?protein up_core:submittedName ?id2 .
-#  ?id2 up_core:fullName ?altname .
-#   OPTIONAL {?id2 up_core:shortName ?altshortname } .
-#    OPTIONAL { ?protein up_core:annotation ?a .
-#         	?a a up_core:Function_Annotation .
-#             ?a rdfs:comment ?function
-# }
-#  }
-# """)
-
-#id_list.extend(list(qres))
-
 uniprot_entries = {}
-for i in id_list:
+for i in qres:
     id =  os.path.basename(i['protein'])
-    if id not in uniprot_entries:
-        entry = uniprot_entries[id] = {
-            'id' : id,
-            'url': i['protein'].toPython(),
-        }
-
+    entry = uniprot_entries.setdefault(id, {
+        'id': id,
+        'url': i['protein'].toPython(),
+    })
     if 'name' in i.labels and i['name']:
         if i['name'].toPython() == entry.get('name', i['name'].toPython()):
             entry['name'] = i['name'].toPython()
         else:
             print("Multiple names for id {}: {} and {}".format(id, i['name'].toPython(), entry['name']))
     if 'alternative_name' in i.labels and i['alternative_name']:
-        print('adding alternative name', i['alternative_name'])
         entry['alternative_name'] = entry.get('alternative_name',set())
         entry['alternative_name'].add(i['alternative_name'].toPython())
-        print(entry['alternative_name'])
     if 'sub_name' in i.labels and i['sub_name']:
         entry['sub_name'] = entry.get('sub_name',set())
         entry['sub_name'].add(i['sub_name'].toPython())
@@ -76,10 +61,8 @@ for i in id_list:
         else:
             print("Multiple mnemonics for id {}: {} and {}".format(id, i['mnemonic'].toPython(), entry['mnemonic']))
     if 'function' in i.labels and i['function']:
-        if i['function'].toPython() == entry.get('function', i['function'].toPython()):
-            entry['function'] = i['function'].toPython()
-        else:
-            print("Multiple mnemonics for id {}: {} and {}".format(id, i['mnemonic'].toPython(), entry['mnemonic']))
+        entry['function'] = entry.get('function', set())
+        entry['function'].add(i['function'].toPython())
     if 'shortname' in i.labels and i['shortname']:
         entry['shortname'] = entry.get('shortname',set())
         entry['shortname'].add(i['shortname'].toPython())
@@ -96,31 +79,16 @@ for k,v  in uniprot_entries.items():
     else:
         print('name missing', v)
     if 'function' in v:
-        term['description'] = v['function']
+        term['description'] = v['function'].pop()
+        for i in v['function']:
+            term['description'] = '\n\n{}'.format(i)
+    else:
+        term['description'] = ''
     if 'alternative_name' in v:
         term['synonyms'].extend(v['alternative_name'])
     if 'sub_name' in v:
         term['synonyms'].extend(v['sub_name'])
     term_list.append(term)
-
-def make_term_dict():
-    term_dict = {}
-    for row in qres:
-        name = row['name'].toPython()
-        if name not in term_dict:
-            term_dict[name] = {
-                'id': 'UNIPROT:{}'.format(os.path.basename(row['id'])),
-                'uri': row['id'].toPython(),
-                'description': row['description'].toPython(),
-                'name': name,
-                'synonyms': [row['synonym'].toPython()]
-            }
-        else:
-            term_dict[name]['synonyms'].append(row['synonym'].toPython())
-
-
-# Now flatten dictionary out to an entity list
-term_list = [ v for k,v in term_dict.items()]
 
 def add_terms(catalog, term_table, term_list):
     pb = catalog.getPathBuilder()

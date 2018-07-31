@@ -8,21 +8,23 @@ def main():
     parser.add_argument('--server', default='pbcconsortium.isrd.isi.edu',
                         help='Catalog server name')
     parser.add_argument('--replace', action='store_true', help='replace existing values with new ones )')
-    parser.add_argument('--defpath', default='.', help='path to table definitions)')
-    parser.add_argument('table', help='Name table to be loaded.')
+    parser.add_argument('--defpath', default='configs', help='path to table definitions)')
+    parser.add_argument('table', help='Name table to be loaded schema:table.')
     parser.add_argument('mode', choices=['table', 'columns', 'annotations', 'comment', 'fkeys', 'acls'],
                         help='Operation to perform')
 
     args = parser.parse_args()
     server = args.server
     mode = args.mode
-    table = args.table
     defpath = args.defpath
     replace = args.replace
 
-    print('Importing ', table)
+    schema_arg = args.table.split(':')[0]
+    table_arg = args.table.split(':')[1]
 
-    module_spec = importlib.util.spec_from_file_location(table, '{}/{}_def.py'.format(defpath, table))
+    print('Importing {}:{}', schema_arg, table_arg, )
+
+    module_spec = importlib.util.spec_from_file_location(table_arg, '{}/{}/{}.py'.format(defpath, schema_arg, table_arg))
     mod = importlib.util.module_from_spec(module_spec)
     module_spec.loader.exec_module(mod)
 
