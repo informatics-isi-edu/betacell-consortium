@@ -49,6 +49,7 @@ def main():
             schema = model_root.schemas[mod.schema_name]
             table = schema.tables[mod.table_name]
         cnames = [i.name for i in table.column_definitions]
+        # Go through the column definitions and add a new column if it doesn't already exist.
         for i in mod.column_defs:
             if i.name not in cnames:
                 print('Creating column {}'.format(i.name))
