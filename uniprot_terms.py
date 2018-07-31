@@ -81,7 +81,7 @@ for k,v  in uniprot_entries.items():
     if 'function' in v:
         term['description'] = v['function'].pop()
         for i in v['function']:
-            term['description'] = '\n\n{}'.format(i)
+            term['description'] = '{}\n\n{}'.format(term['description'], i)
     else:
         term['description'] = ''
     if 'alternative_name' in v:
@@ -90,12 +90,4 @@ for k,v  in uniprot_entries.items():
         term['synonyms'].extend(v['sub_name'])
     term_list.append(term)
 
-def add_terms(catalog, term_table, term_list):
-    pb = catalog.getPathBuilder()
-    # Get main schema
-    vocab_dp = pb.vocab
-    # Get the term table....
-    species_terms_dp = vocab_dp.term_table
-    # Now add the terms....
-    species_terms_dp.insert(term_list)
 
