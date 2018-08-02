@@ -49,29 +49,8 @@ fkey_defs = [
 
 
 visible_columns = \
-{'compact': [{'aggregate': 'array',
-              'comment': 'Compound used to treat the cell line for the '
-                         'experiment',
-              'entity': True,
-              'markdown_name': 'Compound',
-              'source': [{'inbound': ['isa',
-                                      'protocol_compound_protocol_fkey']},
-                         {'outbound': ['isa',
-                                       'protocol_compound_compound_fkey']},
-                         'RID']},
-             {'aggregate': 'array',
-              'comment': 'Concentration of compound applied to cell line in nM',
-              'entity': True,
-              'markdown_name': 'Concentration',
-              'source': [{'inbound': ['isa',
-                                      'protocol_compound_protocol_fkey']},
-                         'compound_concentration']},
-             {'aggregate': 'array',
-              'comment': 'Measured in minutes',
-              'entity': True,
-              'source': ['timepoint']},
-             'description'],
- 'detailed': [['isa', 'protocol_pkey'], 'name', 'timepoint', 'description'],
+{'compact': ['description'],
+ 'detailed': [['isa', 'protocol_pkey'], 'name', 'description'],
  'entry': ['RID', 'compound', 'compound_concentration', 'timepoint',
            'protocol_url', 'description', 'file_url', 'filename'],
  'filter': {'and': [{'comment': 'Compound used to treat the cell line for the '
@@ -104,8 +83,7 @@ visible_columns = \
                      'source': 'description'}]}}
 
 visible_foreign_keys = \
-{'detailed': [['isa', 'protocol_compound_protocol_fkey'],
-              ['isa', 'experiment_protocol_fkey']],
+{'detailed': [['isa', 'experiment_protocol_fkey']],
  'entry': [['isa', 'experiment_protocol_fkey']]}
 
 table_display = {}
