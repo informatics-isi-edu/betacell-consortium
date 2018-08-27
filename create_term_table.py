@@ -46,9 +46,4 @@ def add_terms(catalog, term_table, term_list):
     # Now add the terms....
     terms_dp.insert(term_list)
 
-def delete_foreign_keys(catalog,schema,table):
-    model_root = catalog.getCatalogModel()
-    for i in model_root.schemas['isa'].tables['specimen'].foreign_keys:
-        i.delete(catalog)
-
 
