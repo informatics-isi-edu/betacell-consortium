@@ -12,7 +12,7 @@ catalog = ErmrestCatalog('https', server, 1, credentials=credential)
 
 def set_visible_columns(catalog, term_table):
     """
-    Set visible columns so you are looking just at the ones associated with vocab (i.e. no system)
+    Set visible columns so cd you are looking just at the ones associated with vocab (i.e. no system)
     :param catalog:
     :param term_table:
     :return:
