@@ -2,7 +2,7 @@ import argparse
 from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
 
-table_name = 'file_type_terms'
+table_name = 'uniprot_terms'
 schema_name = 'vocab'
 
 column_defs = [
@@ -29,14 +29,14 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['id'],
-                   constraint_names=[('vocab', 'file_type_terms_idkey1')],
-    ),
     em.Key.define(['uri'],
-                   constraint_names=[('vocab', 'file_type_terms_urikey1')],
+                   constraint_names=[('vocab', 'uniprot_terms_urikey1')],
     ),
     em.Key.define(['RID'],
-                   constraint_names=[('vocab', 'file_type_terms_RIDkey1')],
+                   constraint_names=[('vocab', 'uniprot_terms_RIDkey1')],
+    ),
+    em.Key.define(['id'],
+                   constraint_names=[('vocab', 'uniprot_terms_idkey1')],
     ),
 ]
 
@@ -55,7 +55,7 @@ visible_columns = \
 
 visible_foreign_keys = {}
 table_comment = \
-'Terms that describe the type of a data file'
+'Table of protein identifiers from Uniprot'
 
 table_display = {}
 table_acls = {}
@@ -74,13 +74,13 @@ column_comment = \
 
 
 
-table_def = em.Table.define('file_type_terms',
+table_def = em.Table.define('uniprot_terms',
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
     annotations=table_annotations,
     acls=table_acls,
     acl_bindings=table_acl_bindings,
-    comment='Terms that describe the type of a data file',
+    comment='Table of protein identifiers from Uniprot',
     provide_system = True
 )

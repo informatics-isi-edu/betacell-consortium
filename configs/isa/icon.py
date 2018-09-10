@@ -28,14 +28,14 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('isa', 'icon_RID_key')],
+    em.Key.define(['url'],
+                   constraint_names=[('isa', 'icon_url_key')],
     ),
     em.Key.define(['id'],
                    constraint_names=[('isa', 'icon_pkey')],
     ),
-    em.Key.define(['url'],
-                   constraint_names=[('isa', 'icon_url_key')],
+    em.Key.define(['RID'],
+                   constraint_names=[('isa', 'icon_RID_key')],
     ),
 ]
 
@@ -48,6 +48,9 @@ visible_columns = \
 {'compact': ['url', 'filename', 'caption']}
 
 visible_foreign_keys = {}
+table_comment = \
+None
+
 table_display = \
 {'compact/brief': {'row_markdown_pattern': ':::image '
                                            '[{{#caption}}{{{caption}}}{{/caption}}]({{{url}}}){height=330 '

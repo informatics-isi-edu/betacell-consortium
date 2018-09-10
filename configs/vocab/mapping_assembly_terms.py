@@ -56,13 +56,13 @@ key_defs = [
 
 
 fkey_defs = [
-    em.ForeignKey.define(['cv'],
-            'data_commons', 'cv', ['name'],
-            constraint_names=[('vocab', 'mapping_assembly_terms_cv_fkey')],
-    ),
     em.ForeignKey.define(['dbxref'],
             'data_commons', 'cvterm', ['dbxref'],
             constraint_names=[('vocab', 'mapping_assembly_terms_dbxref_fkey')],
+    ),
+    em.ForeignKey.define(['cv'],
+            'data_commons', 'cv', ['name'],
+            constraint_names=[('vocab', 'mapping_assembly_terms_cv_fkey')],
     ),
 ]
 
@@ -83,6 +83,9 @@ visible_foreign_keys = \
                    {'outbound': ['isa',
                                  'dataset_mapping_assembly_dataset_id_fkey']},
                    'id']}]}
+
+table_comment = \
+None
 
 table_display = \
 {'*': {'row_order': [{'column': 'name'}]},

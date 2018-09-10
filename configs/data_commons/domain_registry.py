@@ -31,7 +31,7 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['term_table', 'term_schema'],
+    em.Key.define(['term_schema', 'term_table'],
                    constraint_names=[('data_commons', 'domain_registry_term_schema_term_table_key')],
     ),
     em.Key.define(['id'],
@@ -49,6 +49,9 @@ fkey_defs = [
 
 visible_columns = {}
 visible_foreign_keys = {}
+table_comment = \
+None
+
 table_display = {}
 table_acls = {}
 table_acl_bindings = {}

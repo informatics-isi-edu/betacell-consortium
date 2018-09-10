@@ -43,14 +43,14 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['dbxref'],
-                   constraint_names=[('vocab', 'gender_terms_pkey')],
-    ),
-    em.Key.define(['cv', 'is_obsolete', 'name'],
+    em.Key.define(['name', 'cv', 'is_obsolete'],
                    constraint_names=[('vocab', 'gender_terms_cv_name_is_obsolete_key')],
     ),
     em.Key.define(['RID'],
                    constraint_names=[('vocab', 'gender_terms_RID_key')],
+    ),
+    em.Key.define(['dbxref'],
+                   constraint_names=[('vocab', 'gender_terms_pkey')],
     ),
 ]
 
@@ -80,6 +80,9 @@ visible_foreign_keys = \
 {'*': [{'source': [{'inbound': ['isa', 'dataset_gender_gender_fkey']},
                    {'outbound': ['isa', 'dataset_gender_dataset_id_fkey']},
                    'id']}]}
+
+table_comment = \
+None
 
 table_display = \
 {'*': {'row_order': [{'column': 'name'}]},

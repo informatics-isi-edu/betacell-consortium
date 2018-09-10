@@ -43,11 +43,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['cv', 'is_obsolete', 'name'],
-                   constraint_names=[('vocab', 'enhancer_terms_cv_name_is_obsolete_key')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('vocab', 'enhancer_terms_RID_key')],
+    ),
+    em.Key.define(['cv', 'is_obsolete', 'name'],
+                   constraint_names=[('vocab', 'enhancer_terms_cv_name_is_obsolete_key')],
     ),
     em.Key.define(['dbxref'],
                    constraint_names=[('vocab', 'enhancer_terms_pkey')],
@@ -56,13 +56,13 @@ key_defs = [
 
 
 fkey_defs = [
-    em.ForeignKey.define(['cv'],
-            'data_commons', 'cv', ['name'],
-            constraint_names=[('vocab', 'enhancer_terms_cv_fkey')],
-    ),
     em.ForeignKey.define(['dbxref'],
             'data_commons', 'cvterm', ['dbxref'],
             constraint_names=[('vocab', 'enhancer_terms_dbxref_fkey')],
+    ),
+    em.ForeignKey.define(['cv'],
+            'data_commons', 'cv', ['name'],
+            constraint_names=[('vocab', 'enhancer_terms_cv_fkey')],
     ),
 ]
 
@@ -80,6 +80,9 @@ visible_foreign_keys = \
 {'*': [{'source': [{'inbound': ['isa', 'dataset_enhancer_enhancer_fkey']},
                    {'outbound': ['isa', 'dataset_enhancer_dataset_id_fkey']},
                    'id']}]}
+
+table_comment = \
+None
 
 table_display = \
 {'*': {'row_order': [{'column': 'name'}]},

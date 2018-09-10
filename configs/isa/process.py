@@ -22,11 +22,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('isa', 'process_pkey')],
-    ),
     em.Key.define(['description'],
                    constraint_names=[('isa', 'process_description_key')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('isa', 'process_pkey')],
     ),
 ]
 
@@ -37,6 +37,9 @@ fkey_defs = [
 
 visible_columns = {}
 visible_foreign_keys = {}
+table_comment = \
+'None'
+
 table_display = {}
 table_acls = {}
 table_acl_bindings = {}

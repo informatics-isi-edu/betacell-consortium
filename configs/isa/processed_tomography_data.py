@@ -41,11 +41,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('isa', 'processed_tomography_data_pkey')],
-    ),
     em.Key.define(['url'],
                    constraint_names=[('isa', 'processed_tomography_data_url_key')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('isa', 'processed_tomography_data_pkey')],
     ),
 ]
 
@@ -54,32 +54,28 @@ fkey_defs = [
     em.ForeignKey.define(['process'],
             'isa', 'process', ['RID'],
             constraint_names=[('isa', 'processed_tomography_data_process_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
-    ),
-    em.ForeignKey.define(['file_type'],
-            'vocab', 'file_type_terms', ['id'],
-            constraint_names=[('isa', 'processed_tomography_data_file_type_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
     ),
     em.ForeignKey.define(['biosample', 'dataset'],
             'isa', 'biosample', ['RID', 'dataset'],
             constraint_names=[('isa', 'processed_tomography_data_biosample_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='RESTRICT',
     ),
     em.ForeignKey.define(['dataset'],
             'isa', 'dataset', ['RID'],
             constraint_names=[('isa', 'processed_tomography_data_dataset_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='RESTRICT',
+    ),
+    em.ForeignKey.define(['file_type'],
+            'vocab', 'file_type_terms', ['id'],
+            constraint_names=[('isa', 'processed_tomography_data_file_type_fkey')],
     ),
 ]
 
 
 visible_columns = \
-{'compact': [['isa', 'processed_tomography_data_pkey'], 'replicate', 'url',
+{'compact': [['isa', 'processed_tomography_data_pkey'], 'biosample', 'url',
              'file_type', 'mapping_assembly', 'pipeline', 'byte_count', 'md5',
              'submitted_on'],
  'detailed': [['isa', 'processed_tomography_data_pkey'],
@@ -89,7 +85,7 @@ visible_columns = \
               ['isa', 'processed_tomography_data_output_type_fkey'],
               ['isa', 'processed_tomography_data_file_type_fkey'], 'byte_count',
               'md5', 'submitted_on'],
- 'entry': ['RID', ['isa', 'processed_tomography_data_replicate_fkey'],
+ 'entry': ['RID', ['isa', 'processed_tomography_data_biosample_fkey'],
            ['isa', 'processed_tomography_data_process_fkey'],
            ['isa', 'processed_tomography_data_output_type_fkey'],
            ['isa', 'processed_tomography_data_file_type_fkey'], 'url',
@@ -134,6 +130,9 @@ visible_columns = \
                      'source': 'submitted_on'}]}}
 
 visible_foreign_keys = {}
+table_comment = \
+'None'
+
 table_display = \
 {'row_name': {'row_markdown_pattern': '{{{filename}}}'}}
 

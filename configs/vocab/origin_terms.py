@@ -46,7 +46,7 @@ key_defs = [
     em.Key.define(['dbxref'],
                    constraint_names=[('vocab', 'origin_terms_pkey')],
     ),
-    em.Key.define(['cv', 'name', 'is_obsolete'],
+    em.Key.define(['is_obsolete', 'cv', 'name'],
                    constraint_names=[('vocab', 'origin_terms_cv_name_is_obsolete_key')],
     ),
     em.Key.define(['RID'],
@@ -56,13 +56,13 @@ key_defs = [
 
 
 fkey_defs = [
-    em.ForeignKey.define(['cv'],
-            'data_commons', 'cv', ['name'],
-            constraint_names=[('vocab', 'origin_terms_cv_fkey')],
-    ),
     em.ForeignKey.define(['dbxref'],
             'data_commons', 'cvterm', ['dbxref'],
             constraint_names=[('vocab', 'origin_terms_dbxref_fkey')],
+    ),
+    em.ForeignKey.define(['cv'],
+            'data_commons', 'cv', ['name'],
+            constraint_names=[('vocab', 'origin_terms_cv_fkey')],
     ),
 ]
 
@@ -80,6 +80,9 @@ visible_foreign_keys = \
 {'*': [{'source': [{'inbound': ['isa', 'dataset_origin_origin_fkey']},
                    {'outbound': ['isa', 'dataset_origin_dataset_id_fkey']},
                    'id']}]}
+
+table_comment = \
+None
 
 table_display = \
 {'*': {'row_order': [{'column': 'name'}]},

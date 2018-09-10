@@ -43,11 +43,11 @@ column_defs = [
 
 
 key_defs = [
+    em.Key.define(['is_obsolete', 'cv', 'name'],
+                   constraint_names=[('vocab', 'human_age_terms_cv_name_is_obsolete_key')],
+    ),
     em.Key.define(['dbxref'],
                    constraint_names=[('vocab', 'human_age_terms_pkey')],
-    ),
-    em.Key.define(['cv', 'is_obsolete', 'name'],
-                   constraint_names=[('vocab', 'human_age_terms_cv_name_is_obsolete_key')],
     ),
     em.Key.define(['RID'],
                    constraint_names=[('vocab', 'human_age_terms_RID_key')],
@@ -80,6 +80,9 @@ visible_foreign_keys = \
 {'*': [{'source': [{'inbound': ['isa', 'dataset_human_age_human_age_fkey']},
                    {'outbound': ['isa', 'dataset_human_age_dataset_id_fkey']},
                    'id']}]}
+
+table_comment = \
+None
 
 table_display = \
 {'*': {'row_order': [{'column': 'name'}]},

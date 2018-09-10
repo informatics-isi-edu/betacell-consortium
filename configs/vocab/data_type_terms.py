@@ -54,6 +54,9 @@ visible_columns = \
                     {'open': True, 'source': 'synonyms'}]}}
 
 visible_foreign_keys = {}
+table_comment = \
+'Terms that describe the type of data in a file'
+
 table_display = {}
 table_acls = {}
 table_acl_bindings = {}

@@ -26,6 +26,9 @@ fkey_defs = [
 
 visible_columns = {}
 visible_foreign_keys = {}
+table_comment = \
+'Request status'
+
 table_display = {}
 table_acls = {}
 table_acl_bindings = {}

@@ -31,6 +31,7 @@ def print_annotations(table, stream):
     table_annotations = {
         'visible_columns': table.visible_columns,
         'visible_foreign_keys': table.visible_foreign_keys,
+        'table_comment': table.comment,
         'table_display': table.table_display,
         'table_acls': table.acls,
         'table_acl_bindings': table.acl_bindings

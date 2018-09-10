@@ -46,6 +46,9 @@ visible_columns = \
 {'*': [['isa', 'publication_dataset_fkey'], 'pmid']}
 
 visible_foreign_keys = {}
+table_comment = \
+None
+
 table_display = \
 {'compact': {'row_markdown_pattern': '[Link to PubMed '
                                      '(PMID:{{{_pmid}}})](http://www.ncbi.nlm.nih.gov/pubmed/{{{_pmid}}})'},

@@ -24,14 +24,14 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('data_commons', 'dbxref_RID_key')],
-    ),
-    em.Key.define(['accession', 'db', 'version'],
+    em.Key.define(['db', 'accession', 'version'],
                    constraint_names=[('data_commons', 'dbxref_db_accession_version_key')],
     ),
     em.Key.define(['name'],
                    constraint_names=[('data_commons', 'dbxref_pkey')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('data_commons', 'dbxref_RID_key')],
     ),
 ]
 
@@ -46,6 +46,9 @@ fkey_defs = [
 
 visible_columns = {}
 visible_foreign_keys = {}
+table_comment = \
+None
+
 table_display = {}
 table_acls = {}
 table_acl_bindings = {}

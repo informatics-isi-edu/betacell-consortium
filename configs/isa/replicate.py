@@ -25,7 +25,7 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['experiment', 'dataset', 'technical_replicate_number', 'biosample'],
+    em.Key.define(['technical_replicate_number', 'dataset', 'experiment', 'biosample'],
                    constraint_names=[('isa', 'replicate_dataset_experiment_biosample_technical_replicate__key')],
     ),
     em.Key.define(['dataset', 'RID'],
@@ -34,23 +34,23 @@ key_defs = [
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'replicate_pkey')],
     ),
-    em.Key.define(['dataset', 'experiment', 'biosample', 'bioreplicate_number', 'technical_replicate_number'],
+    em.Key.define(['technical_replicate_number', 'biosample', 'experiment', 'dataset', 'bioreplicate_number'],
                    constraint_names=[('isa', 'replicate_dataset_experiment_biosample_bioreplicate_number__key')],
     ),
 ]
 
 
 fkey_defs = [
+    em.ForeignKey.define(['dataset', 'experiment'],
+            'isa', 'experiment', ['dataset', 'RID'],
+            constraint_names=[('isa', 'replicate_experiment_fkey')],
+        on_update='CASCADE',
+        on_delete='RESTRICT',
+    ),
     em.ForeignKey.define(['biosample'],
             'isa', 'biosample', ['RID'],
             constraint_names=[('isa', 'replicate_biosample_fkey')],
         annotations={'tag:isrd.isi.edu,2016:foreign-key': {'domain_filter_pattern': 'dataset={{{_dataset}}}'}},
-        on_update='CASCADE',
-        on_delete='RESTRICT',
-    ),
-    em.ForeignKey.define(['experiment', 'dataset'],
-            'isa', 'experiment', ['RID', 'dataset'],
-            constraint_names=[('isa', 'replicate_experiment_fkey')],
         on_update='CASCADE',
         on_delete='RESTRICT',
     ),
@@ -101,33 +101,16 @@ visible_foreign_keys = \
            ['isa', 'processed_data_replicate_fkey'],
            ['isa', 'imaging_data_replicate_fkey']]}
 
+table_comment = \
+None
+
 table_display = \
 {'compact': {'row_order': [{'column': 'bioreplicate_number',
                             'descending': False}]},
  'row_name': {'row_markdown_pattern': '{{local_identifier}}'}}
 
 table_acls = {}
-table_acl_bindings = \
-{'curated_status_guard': {'projection': [{'outbound': ['isa',
-                                                       'replicate_dataset_fkey']},
-                                         {'filter': 'status',
-                                          'operand': 'commons:226:',
-                                          'operator': '='},
-                                         'RID'],
-                          'projection_type': 'nonnull',
-                          'scope_acl': ['*'],
-                          'types': ['select']},
- 'dataset_suppl_edit_guard': {'projection': [{'outbound': ['isa',
-                                                           'replicate_dataset_fkey']},
-                                             {'outbound': ['isa',
-                                                           'dataset_project_fkey']},
-                                             {'outbound': ['isa',
-                                                           'project_groups_fkey']},
-                                             'groups'],
-                              'projection_type': 'acl',
-                              'scope_acl': ['https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d'],
-                              'types': ['update', 'delete']}}
-
+table_acl_bindings = {}
 table_annotations = {
     "tag:isrd.isi.edu,2016:table-display": table_display,
     "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,

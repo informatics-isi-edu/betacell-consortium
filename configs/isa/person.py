@@ -29,11 +29,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['name'],
-                   constraint_names=[('isa', 'person_pkey')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'person_RID_key')],
+    ),
+    em.Key.define(['name'],
+                   constraint_names=[('isa', 'person_pkey')],
     ),
 ]
 
@@ -47,6 +47,9 @@ visible_columns = \
  'detailed': ['name', 'email', 'affiliation']}
 
 visible_foreign_keys = {}
+table_comment = \
+'domain'
+
 table_display = \
 {'*': {'row_order': [{'column': 'last_name', 'descending': False}]},
  'row_name': {'row_markdown_pattern': '{{{first_name}}} {{{last_name}}}'}}

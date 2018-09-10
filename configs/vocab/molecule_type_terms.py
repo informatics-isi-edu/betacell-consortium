@@ -46,23 +46,23 @@ key_defs = [
     em.Key.define(['is_obsolete', 'cv', 'name'],
                    constraint_names=[('vocab', 'molecule_type_terms_cv_name_is_obsolete_key')],
     ),
-    em.Key.define(['RID'],
-                   constraint_names=[('vocab', 'molecule_type_terms_RID_key')],
-    ),
     em.Key.define(['dbxref'],
                    constraint_names=[('vocab', 'molecule_type_terms_pkey')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('vocab', 'molecule_type_terms_RID_key')],
     ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['cv'],
-            'data_commons', 'cv', ['name'],
-            constraint_names=[('vocab', 'molecule_type_terms_cv_fkey')],
-    ),
     em.ForeignKey.define(['dbxref'],
             'data_commons', 'cvterm', ['dbxref'],
             constraint_names=[('vocab', 'molecule_type_terms_dbxref_fkey')],
+    ),
+    em.ForeignKey.define(['cv'],
+            'data_commons', 'cv', ['name'],
+            constraint_names=[('vocab', 'molecule_type_terms_cv_fkey')],
     ),
 ]
 
@@ -82,6 +82,9 @@ visible_foreign_keys = \
                    {'outbound': ['isa',
                                  'dataset_molecule_type_dataset_id_fkey']},
                    'id']}]}
+
+table_comment = \
+None
 
 table_display = \
 {'*': {'row_order': [{'column': 'name'}]},

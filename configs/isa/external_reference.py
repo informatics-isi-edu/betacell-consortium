@@ -23,7 +23,7 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['id', 'url'],
+    em.Key.define(['url', 'id'],
                    constraint_names=[('isa', 'external_reference_pkey')],
     ),
     em.Key.define(['RID'],
@@ -48,6 +48,9 @@ visible_columns = \
  'entry': ['description', 'url']}
 
 visible_foreign_keys = {}
+table_comment = \
+None
+
 table_display = {}
 table_acls = {}
 table_acl_bindings = {}

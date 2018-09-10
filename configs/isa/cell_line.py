@@ -29,21 +29,18 @@ key_defs = [
 
 
 fkey_defs = [
-    em.ForeignKey.define(['cell_line_id'],
-            'vocab', 'cell_line_terms', ['id'],
-            constraint_names=[('isa', 'cell_line_cell_line_terms_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
-        comment='Must be a valid reference to a cell line.',
-    ),
     em.ForeignKey.define(['species'],
             'vocab', 'species_terms', ['id'],
             constraint_names=[('isa', 'cell_line_species_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
+    ),
+    em.ForeignKey.define(['cell_line_id'],
+            'vocab', 'cell_line_terms', ['id'],
+            constraint_names=[('isa', 'cell_line_cell_line_terms_fkey')],
+        comment='Must be a valid reference to a cell line.',
     ),
     em.ForeignKey.define(['anatomy'],
             'vocab', 'anatomy_terms', ['id'],
             constraint_names=[('isa', 'cell_line_anatomy_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
     ),
 ]
 
@@ -84,6 +81,9 @@ visible_foreign_keys = \
            ['isa', 'mesh_data_replicate_fkey'],
            ['isa', 'processed_data_replicate_fkey'],
            ['isa', 'imaging_data_replicate_fkey']]}
+
+table_comment = \
+'Table of cultured  from which specimens  will be created.'
 
 table_display = {}
 table_acls = {}

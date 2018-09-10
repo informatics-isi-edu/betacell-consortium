@@ -46,21 +46,21 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('isa', 'imaging_data_pkey')],
+    em.Key.define(['url'],
+                   constraint_names=[('isa', 'imaging_data_url_key')],
     ),
     em.Key.define(['dataset', 'RID'],
                    constraint_names=[('isa', 'imaging_data_dataset_RID_key')],
     ),
-    em.Key.define(['url'],
-                   constraint_names=[('isa', 'imaging_data_url_key')],
+    em.Key.define(['RID'],
+                   constraint_names=[('isa', 'imaging_data_pkey')],
     ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['replicate', 'dataset'],
-            'isa', 'replicate', ['RID', 'dataset'],
+    em.ForeignKey.define(['dataset', 'replicate'],
+            'isa', 'replicate', ['dataset', 'RID'],
             constraint_names=[('isa', 'imaging_data_replicate_fkey')],
         on_update='CASCADE',
         on_delete='RESTRICT',
@@ -70,16 +70,16 @@ fkey_defs = [
             constraint_names=[('isa', 'imaging_data_device_fkey')],
         annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Device'}},
     ),
+    em.ForeignKey.define(['equipment_model'],
+            'vocab', 'instrument_terms', ['dbxref'],
+            constraint_names=[('isa', 'imaging_data_equipment_model_fkey')],
+        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Equipment Model'}},
+    ),
     em.ForeignKey.define(['dataset'],
             'isa', 'dataset', ['RID'],
             constraint_names=[('isa', 'imaging_data_dataset_fkey')],
         on_update='CASCADE',
         on_delete='RESTRICT',
-    ),
-    em.ForeignKey.define(['equipment_model'],
-            'vocab', 'instrument_terms', ['dbxref'],
-            constraint_names=[('isa', 'imaging_data_equipment_model_fkey')],
-        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Equipment Model'}},
     ),
 ]
 
@@ -144,36 +144,14 @@ visible_foreign_keys = \
  'entry': [['isa', 'thumbnail_thumbnail_of_fkey'],
            ['isa', 'mesh_data_derived_from_fkey']]}
 
+table_comment = \
+None
+
 table_display = \
 {'row_name': {'row_markdown_pattern': '{{{filename}}}'}}
 
 table_acls = {}
-table_acl_bindings = \
-{'dataset_suppl_edit_guard': {'projection': [{'outbound': ['isa',
-                                                           'imaging_data_dataset_fkey']},
-                                             {'outbound': ['isa',
-                                                           'dataset_project_fkey']},
-                                             {'outbound': ['isa',
-                                                           'project_groups_fkey']},
-                                             'groups'],
-                              'projection_type': 'acl',
-                              'scope_acl': ['https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764',
-                                            'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a',
-                                            'https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d'],
-                              'types': ['update', 'delete']},
- 'released_status_guard': {'projection': [{'outbound': ['isa',
-                                                        'imaging_data_dataset_fkey']},
-                                          {'or': [{'filter': 'status',
-                                                   'operand': 'commons:228:',
-                                                   'operator': '='},
-                                                  {'filter': 'status',
-                                                   'operand': 'commons:226:',
-                                                   'operator': '='}]},
-                                          'RID'],
-                           'projection_type': 'nonnull',
-                           'scope_acl': ['*'],
-                           'types': ['select']}}
-
+table_acl_bindings = {}
 table_annotations = {
     "tag:isrd.isi.edu,2016:table-display": table_display,
     "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,

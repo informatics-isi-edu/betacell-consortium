@@ -47,6 +47,9 @@ visible_columns = \
  'detailed': ['name', 'email', 'affiliation']}
 
 visible_foreign_keys = {}
+table_comment = \
+'Standard definition for a person in catalog'
+
 table_display = \
 {'*': {'row_order': [{'column': 'last_name', 'descending': False}]},
  'row_name': {'row_markdown_pattern': '{{{first_name}}} {{{last_name}}}'}}

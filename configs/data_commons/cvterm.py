@@ -38,11 +38,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['name', 'cv', 'is_obsolete'],
-                   constraint_names=[('data_commons', 'cvterm_cv_name_is_obsolete_key')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('data_commons', 'cvterm_RID_key')],
+    ),
+    em.Key.define(['name', 'cv', 'is_obsolete'],
+                   constraint_names=[('data_commons', 'cvterm_cv_name_is_obsolete_key')],
     ),
     em.Key.define(['dbxref'],
                    constraint_names=[('data_commons', 'cvterm_pkey')],
@@ -74,6 +74,9 @@ visible_columns = \
                     {'source': 'is_relationshiptype'}]}}
 
 visible_foreign_keys = {}
+table_comment = \
+None
+
 table_display = \
 {'*': {'row_order': [{'column': 'name'}]},
  'row_name': {'row_markdown_pattern': '{{name}}'}}

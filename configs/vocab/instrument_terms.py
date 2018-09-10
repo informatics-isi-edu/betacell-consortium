@@ -43,7 +43,7 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['name', 'cv', 'is_obsolete'],
+    em.Key.define(['is_obsolete', 'cv', 'name'],
                    constraint_names=[('vocab', 'instrument_terms_cv_name_is_obsolete_key')],
     ),
     em.Key.define(['RID'],
@@ -80,6 +80,9 @@ visible_foreign_keys = \
 {'*': [{'source': [{'inbound': ['isa', 'dataset_instrument_instrument_fkey']},
                    {'outbound': ['isa', 'dataset_instrument_dataset_id_fkey']},
                    'id']}]}
+
+table_comment = \
+None
 
 table_display = \
 {'*': {'row_order': [{'column': 'name'}]},

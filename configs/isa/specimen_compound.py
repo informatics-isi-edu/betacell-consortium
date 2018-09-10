@@ -35,13 +35,11 @@ fkey_defs = [
     em.ForeignKey.define(['specimen'],
             'isa', 'specimen', ['RID'],
             constraint_names=[('isa', 'specimen_compound_specimen_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
         on_delete='CASCADE',
     ),
     em.ForeignKey.define(['compound'],
             'vocab', 'compound_terms', ['id'],
             constraint_names=[('isa', 'specimen_compound_compound_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
         comment='Must be a valid reference to a compound.',
     ),
 ]
@@ -64,6 +62,9 @@ visible_columns = \
                     {'open': True, 'source': ['compound_concentration']}]}}
 
 visible_foreign_keys = {}
+table_comment = \
+'None'
+
 table_display = {}
 table_acls = {}
 table_acl_bindings = {}
@@ -76,9 +77,9 @@ column_comment = \
 {'compound': 'Compound foreign key.',
  'compound_concentration': 'Concentration of compound applied to a cell line '
                            'in mM.',
- 'protocol': 'Protocol Foreign key.'}
+ 'specimen': 'Specimen Foreign key.'}
 
-column_annotations = {}
+
 
 table_def = em.Table.define('specimen_compound',
     column_defs=column_defs,

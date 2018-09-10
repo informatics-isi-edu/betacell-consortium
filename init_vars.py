@@ -17,10 +17,10 @@ def init_variables():
 
     # Get references to main tables for manipulating the model.
     __main__.experiment = model_root.table('isa', 'experiment')
+    __main__.specimen = model_root.table('isa','experiment')
     __main__.biosample = model_root.table('isa', 'biosample')
     __main__.dataset = model_root.table('isa', 'dataset')
     __main__.protocol = model_root.table('isa', 'protocol')
-    __main__.replicate = model_root.table('isa', 'replicate')
     __main__.imaging_data = model_root.table('isa', 'imaging_data')
     __main__.model = model_root.table("viz", 'model')
 
