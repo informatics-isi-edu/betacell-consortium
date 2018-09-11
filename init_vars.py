@@ -6,11 +6,11 @@ import __main__
 # experiment_dp, biosample_dp, protocol_dp, replicate_dp, xray_tomography_dp, specimen_dp, model_dp, dataset_dp
 # experiment, biosample, dataset, protocol, replicate, imaging_data, model
 
-def init_variables():
+def init_variables(catalog_num=1):
     server = 'pbcconsortium.isrd.isi.edu'
     credential = get_credential(server)
     catalog = ErmrestCatalog('https', server, 1, credentials=credential)
-    model_root = catalog.getCatalogModel()
+    model_root = catalog.getCatalogModel(catalog_num)
 
     __main__.catalog = catalog
     __main__.model_root = model_root

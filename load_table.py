@@ -56,7 +56,7 @@ def main():
         # Go through the column definitions and add a new column if it doesn't already exist.
         for i in mod.column_defs:
             if i['name'] not in cnames:
-                print('Creating column {}'.format(i.name))
+                print('Creating column {}'.format(i['name'])
                 table.create_column(catalog, i)
     if mode == 'fkeys':
             if replace:
