@@ -9,8 +9,8 @@ import __main__
 def init_variables(catalog_num=1):
     server = 'pbcconsortium.isrd.isi.edu'
     credential = get_credential(server)
-    catalog = ErmrestCatalog('https', server, 1, credentials=credential)
-    model_root = catalog.getCatalogModel(catalog_num)
+    catalog = ErmrestCatalog('https', server, catalog_num, credentials=credential)
+    model_root = catalog.getCatalogModel()
 
     __main__.catalog = catalog
     __main__.model_root = model_root
