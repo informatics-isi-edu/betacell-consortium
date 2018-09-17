@@ -56,7 +56,7 @@ def main():
         # Go through the column definitions and add a new column if it doesn't already exist.
         for i in mod.column_defs:
             if i['name'] not in cnames:
-                print('Creating column {}'.format(i['name'])
+                print('Creating column {}'.format(i['name']))
                 table.create_column(catalog, i)
     if mode == 'fkeys':
             if replace:
@@ -74,6 +74,7 @@ def main():
     if mode == 'annotations':
         if len(mod.table_annotations) > 0:
             for k,v in mod.table_annotations.items():
+                print('setting table annotation', k)
                 table.annotations[k] = v
 
         if len(mod.column_annotations) > 0:
