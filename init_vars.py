@@ -40,7 +40,6 @@ def init_variables(catalog_num=1):
     __main__.biosample_dp = isa.biosample
     __main__.dataset_dp = isa.dataset
     __main__.protocol_dp = isa.protocol
-    __main__.replicate_dp = isa.replicate
     __main__.xray_tomography_dp = isa.xray_tomography_data
     __main__.specimen_dp = isa.specimen
     __main__.model_dp = viz.model
