@@ -52,12 +52,9 @@ fkey_defs = [
     em.ForeignKey.define(['biosample'],
             'isa', 'biosample', ['RID'],
             constraint_names=[('viz', 'model_biosample_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='SET NULL',
-    ),
-    em.ForeignKey.define(['volume'],
-            'isa', 'imaging_data', ['RID'],
-            constraint_names=[('viz', 'model_volume_fkey')],
     ),
 ]
 
@@ -220,13 +217,13 @@ column_annotations = \
 
 
 
-table_def = em.Table.define('model',
+table_def = em.Table.define(table_name,
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
     annotations=table_annotations,
     acls=table_acls,
     acl_bindings=table_acl_bindings,
-    comment='None',
+    comment=table_comment,
     provide_system = True
 )

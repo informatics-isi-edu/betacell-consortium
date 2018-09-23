@@ -50,10 +50,7 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('isa', 'xray_tomography_data_RIDkey1')],
-    ),
-    em.Key.define(['dataset', 'RID'],
+    em.Key.define(['RID', 'dataset'],
                    constraint_names=[('isa', 'xray_tomography_data_dataset_RID_key')],
        comment = 'RID and dataset must be distinct.',
     ),
@@ -61,27 +58,17 @@ key_defs = [
                    constraint_names=[('isa', 'xray_tomography_data_url_key')],
        comment = 'Unique URL must be provided.',
     ),
+    em.Key.define(['RID'],
+                   constraint_names=[('isa', 'xray_tomography_data_RIDkey1')],
+    ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['device'],
-            'vocab', 'image_creation_device_terms', ['dbxref'],
-            constraint_names=[('isa', 'xray_tomography_data_device_fkey')],
-        on_update='CASCADE',
-        on_delete='RESTRICT',
-        comment='Must be a valid reference to a device.',
-    ),
-    em.ForeignKey.define(['equipment_model'],
-            'vocab', 'instrument_terms', ['dbxref'],
-            constraint_names=[('isa', 'xray_tomography_data_equipment_model_fkey')],
-        on_update='CASCADE',
-        on_delete='RESTRICT',
-        comment='Must be a valid reference to a dataset.',
-    ),
     em.ForeignKey.define(['dataset'],
             'isa', 'dataset', ['RID'],
             constraint_names=[('isa', 'xray_tomography_dataset_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='RESTRICT',
         comment='Must be a valid reference to a dataset.',
@@ -89,6 +76,23 @@ fkey_defs = [
     em.ForeignKey.define(['biosample'],
             'isa', 'biosample', ['RID'],
             constraint_names=[('isa', 'xray_tomography_data_biosample_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+    ),
+    em.ForeignKey.define(['equipment_model'],
+            'vocab', 'instrument_terms', ['dbxref'],
+            constraint_names=[('isa', 'xray_tomography_data_equipment_model_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+        on_update='CASCADE',
+        on_delete='RESTRICT',
+        comment='Must be a valid reference to a dataset.',
+    ),
+    em.ForeignKey.define(['device'],
+            'vocab', 'image_creation_device_terms', ['dbxref'],
+            constraint_names=[('isa', 'xray_tomography_data_device_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+        on_update='CASCADE',
+        on_delete='RESTRICT',
+        comment='Must be a valid reference to a device.',
     ),
 ]
 
@@ -233,13 +237,13 @@ column_annotations = \
 
 
 
-table_def = em.Table.define('xray_tomography_data',
+table_def = em.Table.define(table_name,
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
     annotations=table_annotations,
     acls=table_acls,
     acl_bindings=table_acl_bindings,
-    comment='Table to hold X-Ray Tomography MRC files.',
+    comment=table_comment,
     provide_system = True
 )

@@ -3,11 +3,13 @@ from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
 
 table_names = [
-    'person',
+    'Protocol_Step',
+    'Protocol',
+    'Protocol_Type',
+    'Protocol_Step_Additive_Term',
 ]
 annotations = \
-{   'tag:misd.isi.edu,2015:display': {   'name_style': {   'title_case': True,
-                                                           'underline_space': True}}}
+{'tag:misd.isi.edu,2015:display': {'name_style': {'underline_space': True}}}
 acls = \
 {   'delete': [   'https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764',
                   'https://auth.globus.org/176baec4-ed26-11e5-8e88-22000ab4b42b',
@@ -21,20 +23,20 @@ acls = \
                   'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a']}
 
 schema_def = em.Schema.define(
-        'common',
+        'Beta_Cell',
         comment=None,
         acls=acls,
         annotations=annotations,
     )
 
 def main():
-    parser = argparse.ArgumentParser(description='Load  defs for schema common')
+    parser = argparse.ArgumentParser(description='Load  defs for schema Beta_Cell')
     parser.add_argument('--server', default='pbcconsortium.isrd.isi.edu',
                         help='Catalog server name')
     args = parser.parse_args()
 
     server = args.server
-    schema_name = 'common'
+    schema_name = 'Beta_Cell'
 
     credential = get_credential(server)
     catalog = ErmrestCatalog('https', server, 1, credentials=credential)

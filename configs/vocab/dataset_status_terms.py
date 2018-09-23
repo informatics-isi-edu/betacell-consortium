@@ -43,14 +43,14 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['dbxref'],
-                   constraint_names=[('vocab', 'dataset_status_terms_pkey')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('vocab', 'dataset_status_terms_RID_key')],
     ),
     em.Key.define(['cv', 'name', 'is_obsolete'],
                    constraint_names=[('vocab', 'dataset_status_terms_cv_name_is_obsolete_key')],
+    ),
+    em.Key.define(['dbxref'],
+                   constraint_names=[('vocab', 'dataset_status_terms_pkey')],
     ),
 ]
 
@@ -115,13 +115,13 @@ column_annotations = \
 
 
 
-table_def = em.Table.define('dataset_status_terms',
+table_def = em.Table.define(table_name,
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
     annotations=table_annotations,
     acls=table_acls,
     acl_bindings=table_acl_bindings,
-    comment='None',
+    comment=table_comment,
     provide_system = True
 )

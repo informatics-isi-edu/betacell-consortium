@@ -40,14 +40,14 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('viz', 'landmark_RID_key')],
-    ),
-    em.Key.define(['point_x', 'mesh', 'point_y', 'point_z'],
-                   constraint_names=[('viz', 'landmark_mesh_point_x_point_y_point_z_key')],
-    ),
     em.Key.define(['id'],
                    constraint_names=[('viz', 'landmark_pkey')],
+    ),
+    em.Key.define(['point_y', 'mesh', 'point_x', 'point_z'],
+                   constraint_names=[('viz', 'landmark_mesh_point_x_point_y_point_z_key')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('viz', 'landmark_RID_key')],
     ),
 ]
 
@@ -76,15 +76,18 @@ column_comment = \
  'RMB': 'System-generated row modified by user provenance.',
  'RMT': 'System-generated row modification timestamp'}
 
+column_annotations = \
+{}
 
 
-table_def = em.Table.define('landmark',
+
+table_def = em.Table.define(table_name,
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
     annotations=table_annotations,
     acls=table_acls,
     acl_bindings=table_acl_bindings,
-    comment='None',
+    comment=table_comment,
     provide_system = True
 )

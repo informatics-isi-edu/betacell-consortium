@@ -37,11 +37,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('isa', 'mesh_data_pkey')],
-    ),
     em.Key.define(['url'],
                    constraint_names=[('isa', 'mesh_data_url_key')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('isa', 'mesh_data_pkey')],
     ),
 ]
 
@@ -50,18 +50,21 @@ fkey_defs = [
     em.ForeignKey.define(['dataset'],
             'isa', 'dataset', ['RID'],
             constraint_names=[('isa', 'mesh_data_dataset_fkey')],
-        on_update='CASCADE',
-        on_delete='RESTRICT',
-    ),
-    em.ForeignKey.define(['biosample'],
-            'isa', 'biosample', ['RID'],
-            constraint_names=[('isa', 'mesh_data_biosample_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='RESTRICT',
     ),
     em.ForeignKey.define(['derived_from'],
             'isa', 'xray_tomography_data', ['RID'],
             constraint_names=[('isa', 'mesh_data_derived_from_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+        on_update='CASCADE',
+        on_delete='RESTRICT',
+    ),
+    em.ForeignKey.define(['biosample'],
+            'isa', 'biosample', ['RID'],
+            constraint_names=[('isa', 'mesh_data_biosample_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='RESTRICT',
     ),
@@ -135,13 +138,13 @@ column_annotations = \
 
 
 
-table_def = em.Table.define('mesh_data',
+table_def = em.Table.define(table_name,
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
     annotations=table_annotations,
     acls=table_acls,
     acl_bindings=table_acl_bindings,
-    comment='None',
+    comment=table_comment,
     provide_system = True
 )

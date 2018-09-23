@@ -79,10 +79,11 @@ def print_annotations(table, stream):
         print('column_comment = \\', file=stream)
         pprint.pprint(column_comment, width=80, depth=None, compact=False, stream=stream)
         print('', file=stream)
-    if column_annotations != {}:
-        print('column_annotations = \\', file=stream)
-        pprint.pprint(column_annotations, width=80, depth=None, compact=False, stream=stream)
-        print('', file=stream)
+
+    print('column_annotations = \\', file=stream)
+    pprint.pprint(column_annotations, width=80, depth=None, compact=False, stream=stream)
+    print('', file=stream)
+
     if column_acls != {}:
         print('column_acls = \\', file=stream)
         pprint.pprint(column_acls, width=80, depth=None, compact=False, stream=stream)

@@ -46,38 +46,33 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['url'],
-                   constraint_names=[('isa', 'imaging_data_url_key')],
+    em.Key.define(['RID'],
+                   constraint_names=[('isa', 'imaging_data_pkey')],
     ),
     em.Key.define(['dataset', 'RID'],
                    constraint_names=[('isa', 'imaging_data_dataset_RID_key')],
     ),
-    em.Key.define(['RID'],
-                   constraint_names=[('isa', 'imaging_data_pkey')],
+    em.Key.define(['url'],
+                   constraint_names=[('isa', 'imaging_data_url_key')],
     ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['dataset', 'replicate'],
-            'isa', 'replicate', ['dataset', 'RID'],
-            constraint_names=[('isa', 'imaging_data_replicate_fkey')],
-        on_update='CASCADE',
-        on_delete='RESTRICT',
-    ),
     em.ForeignKey.define(['device'],
             'vocab', 'image_creation_device_terms', ['dbxref'],
             constraint_names=[('isa', 'imaging_data_device_fkey')],
-        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Device'}},
+        acls={'insert': ['*'], 'update': ['*']},
     ),
     em.ForeignKey.define(['equipment_model'],
             'vocab', 'instrument_terms', ['dbxref'],
             constraint_names=[('isa', 'imaging_data_equipment_model_fkey')],
-        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Equipment Model'}},
+        acls={'insert': ['*'], 'update': ['*']},
     ),
     em.ForeignKey.define(['dataset'],
             'isa', 'dataset', ['RID'],
             constraint_names=[('isa', 'imaging_data_dataset_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='RESTRICT',
     ),
@@ -180,13 +175,13 @@ column_annotations = \
 
 
 
-table_def = em.Table.define('imaging_data',
+table_def = em.Table.define(table_name,
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
     annotations=table_annotations,
     acls=table_acls,
     acl_bindings=table_acl_bindings,
-    comment='None',
+    comment=table_comment,
     provide_system = True
 )

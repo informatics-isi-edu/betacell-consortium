@@ -22,11 +22,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['description'],
-                   constraint_names=[('isa', 'pipeline_description_key')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'pipeline_pkey')],
+    ),
+    em.Key.define(['description'],
+                   constraint_names=[('isa', 'pipeline_description_key')],
     ),
 ]
 
@@ -55,15 +55,18 @@ column_comment = \
  'RMB': 'System-generated row modified by user provenance.',
  'RMT': 'System-generated row modification timestamp'}
 
+column_annotations = \
+{}
 
 
-table_def = em.Table.define('pipeline',
+
+table_def = em.Table.define(table_name,
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
     annotations=table_annotations,
     acls=table_acls,
     acl_bindings=table_acl_bindings,
-    comment='None',
+    comment=table_comment,
     provide_system = True
 )

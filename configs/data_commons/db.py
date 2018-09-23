@@ -19,11 +19,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['name'],
-                   constraint_names=[('data_commons', 'db_pkey')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('data_commons', 'db_RID_key')],
+    ),
+    em.Key.define(['name'],
+                   constraint_names=[('data_commons', 'db_pkey')],
     ),
 ]
 
@@ -45,15 +45,18 @@ table_annotations = {
     "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
     "tag:isrd.isi.edu,2016:table-display": table_display,
 }
+column_annotations = \
+{}
 
 
-table_def = em.Table.define('db',
+
+table_def = em.Table.define(table_name,
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
     annotations=table_annotations,
     acls=table_acls,
     acl_bindings=table_acl_bindings,
-    comment='None',
+    comment=table_comment,
     provide_system = True
 )

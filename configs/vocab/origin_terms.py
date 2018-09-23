@@ -43,11 +43,11 @@ column_defs = [
 
 
 key_defs = [
+    em.Key.define(['cv', 'is_obsolete', 'name'],
+                   constraint_names=[('vocab', 'origin_terms_cv_name_is_obsolete_key')],
+    ),
     em.Key.define(['dbxref'],
                    constraint_names=[('vocab', 'origin_terms_pkey')],
-    ),
-    em.Key.define(['is_obsolete', 'cv', 'name'],
-                   constraint_names=[('vocab', 'origin_terms_cv_name_is_obsolete_key')],
     ),
     em.Key.define(['RID'],
                    constraint_names=[('vocab', 'origin_terms_RID_key')],
@@ -56,13 +56,13 @@ key_defs = [
 
 
 fkey_defs = [
-    em.ForeignKey.define(['dbxref'],
-            'data_commons', 'cvterm', ['dbxref'],
-            constraint_names=[('vocab', 'origin_terms_dbxref_fkey')],
-    ),
     em.ForeignKey.define(['cv'],
             'data_commons', 'cv', ['name'],
             constraint_names=[('vocab', 'origin_terms_cv_fkey')],
+    ),
+    em.ForeignKey.define(['dbxref'],
+            'data_commons', 'cvterm', ['dbxref'],
+            constraint_names=[('vocab', 'origin_terms_dbxref_fkey')],
     ),
 ]
 
@@ -112,13 +112,13 @@ column_annotations = \
 
 
 
-table_def = em.Table.define('origin_terms',
+table_def = em.Table.define(table_name,
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
     annotations=table_annotations,
     acls=table_acls,
     acl_bindings=table_acl_bindings,
-    comment='None',
+    comment=table_comment,
     provide_system = True
 )

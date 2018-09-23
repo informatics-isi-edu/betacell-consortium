@@ -86,6 +86,7 @@ def main():
             for c in table.column_definitions:
                 if c.name in mod.column_annotations:
                     for k, v in mod.column_annotations[c.name].items():
+                        print('setting column annotation', k)
                         c.annotations[k] = v
 
         table.apply(catalog)

@@ -25,26 +25,26 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['cvtermprop_id'],
-                   constraint_names=[('data_commons', 'cvtermprop_pkey')],
-    ),
-    em.Key.define(['cvterm_dbxref', 'type_dbxref', 'rank', 'value'],
+    em.Key.define(['rank', 'value', 'cvterm_dbxref', 'type_dbxref'],
                    constraint_names=[('data_commons', 'cvtermprop_cvterm_dbxref_type_dbxref_value_rank_key')],
     ),
     em.Key.define(['RID'],
                    constraint_names=[('data_commons', 'cvtermprop_RID_key')],
     ),
+    em.Key.define(['cvtermprop_id'],
+                   constraint_names=[('data_commons', 'cvtermprop_pkey')],
+    ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['type_dbxref'],
-            'data_commons', 'cvterm', ['dbxref'],
-            constraint_names=[('data_commons', 'cvtermprop_type_dbxref_fkey')],
-    ),
     em.ForeignKey.define(['cvterm_dbxref'],
             'data_commons', 'cvterm', ['dbxref'],
             constraint_names=[('data_commons', 'cvtermprop_cvterm_dbxref_fkey')],
+    ),
+    em.ForeignKey.define(['type_dbxref'],
+            'data_commons', 'cvterm', ['dbxref'],
+            constraint_names=[('data_commons', 'cvtermprop_type_dbxref_fkey')],
     ),
 ]
 
@@ -62,15 +62,18 @@ table_annotations = {
     "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
     "tag:isrd.isi.edu,2016:table-display": table_display,
 }
+column_annotations = \
+{}
 
 
-table_def = em.Table.define('cvtermprop',
+
+table_def = em.Table.define(table_name,
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
     annotations=table_annotations,
     acls=table_acls,
     acl_bindings=table_acl_bindings,
-    comment='None',
+    comment=table_comment,
     provide_system = True
 )

@@ -14,16 +14,13 @@ table_names = [
     'project_investigator',
     'publication',
     'imaging_data',
-    'specimen_compound',
     'experiment',
-    'replicate',
     'biosample',
     'project_member',
     'BellCellPlate',
     'processed_tomography_data',
     'dataset_experiment_type',
     'specimen',
-    'icon',
     'pipeline',
     'external_reference',
     'BellCellStatus',
@@ -34,6 +31,17 @@ table_names = [
 annotations = \
 {   'tag:misd.isi.edu,2015:display': {   'name_style': {   'title_case': True,
                                                            'underline_space': True}}}
+acls = \
+{   'delete': [   'https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764',
+                  'https://auth.globus.org/176baec4-ed26-11e5-8e88-22000ab4b42b',
+                  'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a'],
+    'insert': [   'https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764',
+                  'https://auth.globus.org/176baec4-ed26-11e5-8e88-22000ab4b42b',
+                  'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a',
+                  'https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d'],
+    'update': [   'https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764',
+                  'https://auth.globus.org/176baec4-ed26-11e5-8e88-22000ab4b42b',
+                  'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a']}
 
 schema_def = em.Schema.define(
         'isa',
@@ -48,7 +56,6 @@ def main():
                         help='Catalog server name')
     args = parser.parse_args()
 
-    delete_fkeys = args.delete
     server = args.server
     schema_name = 'isa'
 

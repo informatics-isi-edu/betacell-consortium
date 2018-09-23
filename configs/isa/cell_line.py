@@ -29,18 +29,21 @@ key_defs = [
 
 
 fkey_defs = [
-    em.ForeignKey.define(['species'],
-            'vocab', 'species_terms', ['id'],
-            constraint_names=[('isa', 'cell_line_species_fkey')],
+    em.ForeignKey.define(['anatomy'],
+            'vocab', 'anatomy_terms', ['id'],
+            constraint_names=[('isa', 'cell_line_anatomy_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
     ),
     em.ForeignKey.define(['cell_line_id'],
             'vocab', 'cell_line_terms', ['id'],
             constraint_names=[('isa', 'cell_line_cell_line_terms_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
         comment='Must be a valid reference to a cell line.',
     ),
-    em.ForeignKey.define(['anatomy'],
-            'vocab', 'anatomy_terms', ['id'],
-            constraint_names=[('isa', 'cell_line_anatomy_fkey')],
+    em.ForeignKey.define(['species'],
+            'vocab', 'species_terms', ['id'],
+            constraint_names=[('isa', 'cell_line_species_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
     ),
 ]
 
@@ -100,15 +103,18 @@ column_comment = \
  'description': 'Description of the specimen.',
  'species': 'Species of the specimen'}
 
+column_annotations = \
+{}
 
 
-table_def = em.Table.define('cell_line',
+
+table_def = em.Table.define(table_name,
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
     annotations=table_annotations,
     acls=table_acls,
     acl_bindings=table_acl_bindings,
-    comment='Table of cultured  from which specimens  will be created.',
+    comment=table_comment,
     provide_system = True
 )

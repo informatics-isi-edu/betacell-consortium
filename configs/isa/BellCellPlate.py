@@ -39,15 +39,18 @@ table_annotations = {
     "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
     "tag:isrd.isi.edu,2016:table-display": table_display,
 }
+column_annotations = \
+{}
 
 
-table_def = em.Table.define('BellCellPlate',
+
+table_def = em.Table.define(table_name,
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
     annotations=table_annotations,
     acls=table_acls,
     acl_bindings=table_acl_bindings,
-    comment='Plate table from USC',
+    comment=table_comment,
     provide_system = True
 )

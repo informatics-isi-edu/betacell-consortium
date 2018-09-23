@@ -54,22 +54,26 @@ fkey_defs = [
     em.ForeignKey.define(['process'],
             'isa', 'process', ['RID'],
             constraint_names=[('isa', 'processed_tomography_data_process_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+    ),
+    em.ForeignKey.define(['file_type'],
+            'vocab', 'file_type_terms', ['id'],
+            constraint_names=[('isa', 'processed_tomography_data_file_type_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
     ),
     em.ForeignKey.define(['biosample', 'dataset'],
             'isa', 'biosample', ['RID', 'dataset'],
             constraint_names=[('isa', 'processed_tomography_data_biosample_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='RESTRICT',
     ),
     em.ForeignKey.define(['dataset'],
             'isa', 'dataset', ['RID'],
             constraint_names=[('isa', 'processed_tomography_data_dataset_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='RESTRICT',
-    ),
-    em.ForeignKey.define(['file_type'],
-            'vocab', 'file_type_terms', ['id'],
-            constraint_names=[('isa', 'processed_tomography_data_file_type_fkey')],
     ),
 ]
 
@@ -159,13 +163,13 @@ column_annotations = \
 
 
 
-table_def = em.Table.define('processed_tomography_data',
+table_def = em.Table.define(table_name,
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
     annotations=table_annotations,
     acls=table_acls,
     acl_bindings=table_acl_bindings,
-    comment='None',
+    comment=table_comment,
     provide_system = True
 )

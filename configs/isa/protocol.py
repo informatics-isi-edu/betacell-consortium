@@ -29,14 +29,14 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['name'],
-                   constraint_names=[('isa', 'protocol_name_key')],
+    em.Key.define(['description'],
+                   constraint_names=[('isa', 'protocol_description_key')],
     ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'protocol_pkey')],
     ),
-    em.Key.define(['description'],
-                   constraint_names=[('isa', 'protocol_description_key')],
+    em.Key.define(['name'],
+                   constraint_names=[('isa', 'protocol_name_key')],
     ),
 ]
 
@@ -114,13 +114,13 @@ column_annotations = \
 
 
 
-table_def = em.Table.define('protocol',
+table_def = em.Table.define(table_name,
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
     annotations=table_annotations,
     acls=table_acls,
     acl_bindings=table_acl_bindings,
-    comment='None',
+    comment=table_comment,
     provide_system = True
 )

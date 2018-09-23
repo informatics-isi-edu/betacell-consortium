@@ -38,26 +38,26 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('data_commons', 'cvterm_RID_key')],
+    em.Key.define(['dbxref'],
+                   constraint_names=[('data_commons', 'cvterm_pkey')],
     ),
     em.Key.define(['name', 'cv', 'is_obsolete'],
                    constraint_names=[('data_commons', 'cvterm_cv_name_is_obsolete_key')],
     ),
-    em.Key.define(['dbxref'],
-                   constraint_names=[('data_commons', 'cvterm_pkey')],
+    em.Key.define(['RID'],
+                   constraint_names=[('data_commons', 'cvterm_RID_key')],
     ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['cv'],
-            'data_commons', 'cv', ['name'],
-            constraint_names=[('data_commons', 'cvterm_cv_fkey')],
-    ),
     em.ForeignKey.define(['dbxref'],
             'data_commons', 'dbxref', ['name'],
             constraint_names=[('data_commons', 'cvterm_dbxref_fkey')],
+    ),
+    em.ForeignKey.define(['cv'],
+            'data_commons', 'cv', ['name'],
+            constraint_names=[('data_commons', 'cvterm_cv_fkey')],
     ),
 ]
 
@@ -98,13 +98,13 @@ column_annotations = \
 
 
 
-table_def = em.Table.define('cvterm',
+table_def = em.Table.define(table_name,
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
     annotations=table_annotations,
     acls=table_acls,
     acl_bindings=table_acl_bindings,
-    comment='None',
+    comment=table_comment,
     provide_system = True
 )

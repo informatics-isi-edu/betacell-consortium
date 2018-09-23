@@ -121,6 +121,7 @@ def validate_source(source, model, table, columns, inbound_tables, outbound_tabl
         elif 'outbound' in fk:
             fk_name = '{}:{}'.format(*fk['outbound'])
             path +=  '/' + fk_name
+            print(fk_name, out_fkeys)
             if not fk_name in out_fkeys:
                 return [('error', 'unknown outbound fkey constraint: {}'.format(path))]
             else:

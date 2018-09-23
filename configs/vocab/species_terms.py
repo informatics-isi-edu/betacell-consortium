@@ -29,14 +29,14 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['uri'],
-                   constraint_names=[('vocab', 'species_terms_urikey1')],
+    em.Key.define(['RID'],
+                   constraint_names=[('vocab', 'species_terms_RIDkey1')],
     ),
     em.Key.define(['id'],
                    constraint_names=[('vocab', 'species_terms_idkey1')],
     ),
-    em.Key.define(['RID'],
-                   constraint_names=[('vocab', 'species_terms_RIDkey1')],
+    em.Key.define(['uri'],
+                   constraint_names=[('vocab', 'species_terms_urikey1')],
     ),
 ]
 
@@ -72,15 +72,18 @@ column_comment = \
  'synonyms': 'Alternate human-readable names for this term.',
  'uri': 'The preferred URI for this term.'}
 
+column_annotations = \
+{}
 
 
-table_def = em.Table.define('species_terms',
+
+table_def = em.Table.define(table_name,
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
     annotations=table_annotations,
     acls=table_acls,
     acl_bindings=table_acl_bindings,
-    comment='Terms for species',
+    comment=table_comment,
     provide_system = True
 )

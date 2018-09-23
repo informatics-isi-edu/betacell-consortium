@@ -72,15 +72,18 @@ column_comment = \
  'synonyms': 'Alternate human-readable names for this term.',
  'uri': 'The preferred URI for this term.'}
 
+column_annotations = \
+{}
 
 
-table_def = em.Table.define('experiment_type_terms',
+
+table_def = em.Table.define(table_name,
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
     annotations=table_annotations,
     acls=table_acls,
     acl_bindings=table_acl_bindings,
-    comment='Terms for experiment types',
+    comment=table_comment,
     provide_system = True
 )

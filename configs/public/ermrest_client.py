@@ -2,32 +2,31 @@ import argparse
 from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
 
-table_name = 'model_json'
-schema_name = 'viz'
+table_name = 'ermrest_client'
+schema_name = 'public'
 
 column_defs = [
     em.Column.define('id', em.builtin_types['text'],
+        nullok=False,
     ),
-    em.Column.define('label', em.builtin_types['text'],
+    em.Column.define('display_name', em.builtin_types['text'],
     ),
-    em.Column.define('description', em.builtin_types['markdown'],
+    em.Column.define('full_name', em.builtin_types['text'],
     ),
-    em.Column.define('bgcolor', em.builtin_types['jsonb'],
+    em.Column.define('email', em.builtin_types['text'],
     ),
-    em.Column.define('bboxcolor', em.builtin_types['jsonb'],
-    ),
-    em.Column.define('volume', em.builtin_types['jsonb'],
-    ),
-    em.Column.define('mesh', em.builtin_types['jsonb'],
-    ),
-    em.Column.define('landmark', em.builtin_types['jsonb'],
+    em.Column.define('client_obj', em.builtin_types['jsonb'],
+        nullok=False,
     ),
 ]
 
 
 key_defs = [
+    em.Key.define(['id'],
+                   constraint_names=[('public', 'ermrest_client_id_key')],
+    ),
     em.Key.define(['RID'],
-                   constraint_names=[('', 'viz_model_json_RID_pkey')],
+                   constraint_names=[('public', 'ermrest_client_pkey')],
     ),
 ]
 
@@ -42,7 +41,9 @@ table_comment = \
 None
 
 table_display = {}
-table_acls = {}
+table_acls = \
+{'delete': [], 'enumerate': [], 'insert': [], 'select': [], 'update': []}
+
 table_acl_bindings = {}
 table_annotations = {
     "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
