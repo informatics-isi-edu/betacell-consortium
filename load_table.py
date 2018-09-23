@@ -41,6 +41,11 @@ def main():
     skip_fkeys = False
 
     if mode == 'table':
+        if replace:
+            print('deleting table', table.name)
+            table.delete(catalog)
+            model_root = catalog.getCatalogModel()
+            schema = model_root.schemas[mod.schema_name]
         if skip_fkeys:
             mod.table_def.fkey_defs = []
         table = schema.create_table(catalog, mod.table_def)
@@ -90,6 +95,7 @@ def main():
         for c in table.column_definitions:
             if c.name in mod.column_comment:
                 c._comment = mod.column_comment[c.name]
+        table.apply(catalog)
 
     if mode == 'acls':
         for k, v in mod.table_acls.items():

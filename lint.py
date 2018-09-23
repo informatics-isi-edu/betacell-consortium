@@ -16,6 +16,14 @@ aggregate_names = ['max', 'min', 'array', 'array_d', 'cnt', 'cnt_d']
 constraint_names = ['choices', 'ranges', 'search', 'not_null']
 
 def is_pure_binary(table):
+    """
+    Check to see if the table has the propoerties of a pure binary association.  That is it only has two foreign keys:
+      1. It only has two foreign keys,
+      2. There is a uniqueness constraint on the two keys.
+      3. NULL values are not allowed in the foreign keys.
+    :param table:
+    :return:
+    """
     # table has only two foreign_key constraints.
     if len(table.foreign_keys) != 2:
         return (False,'more then two fkeys')
@@ -45,7 +53,7 @@ def is_pure_binary(table):
 
     return (True, '')
 
-def validate_filter_terms(spec, context):
+def validate_filter_terms(spec):
     for k, v in spec.items():
         if (k == "entity" or k == 'open') and (v == True or v == False):
             continue
@@ -59,7 +67,8 @@ def validate_filter_terms(spec, context):
             continue
         if k == 'ux_mode':
             continue
-        print('Invalid filter spec {} {}:{}'.format(context, k, v))
+        return [('warning','Invalid filter spec {}:{}'.format(k, v))]
+    return []
 
 
 def validate_source(source, model, table, columns, inbound_tables, outbound_tables):
@@ -78,7 +87,7 @@ def validate_source(source, model, table, columns, inbound_tables, outbound_tabl
 
         # Get list of column names.
         cnames = columns.setdefault(table_name,
-                                    [i.name for i in table.column_definitions] + [i.names for i in table.keys])
+                                    [i.name for i in table.column_definitions] + [i.names[0][1] for i in table.keys])
 
         # Construct a map of constraint names to target tables if we have not already done so.
         out_fkeys = outbound_tables.setdefault(table_name,
@@ -94,38 +103,41 @@ def validate_source(source, model, table, columns, inbound_tables, outbound_tabl
             # Column name
             path += '/' + fk
             if fk not in cnames:
-                return (False, 'unknown column: {}'.format(path))
+                return [('error', 'unknown column: {}'.format(path))]
         elif type(fk) is list:
             # Old style column name [schema, fkey]
             fk_name = '{}:{}'.format(*fk)
             path = path + '/' + fk_name
-            if not (fk_name in out_fkeys or table_name in in_fkeys):
-                return (False, 'unknown fkey constraint: {}'.format(path))
+            if not (fk_name in out_fkeys or fk_name in in_fkeys or fk[1] in cnames):
+                return [('error', 'unknown fkey constraint: {}'.format(path))]
         elif 'inbound' in fk:
             fk_name = '{}:{}'.format(*fk['inbound'])
             path +=  '/' + fk_name
             if not fk_name in in_fkeys:
-                return (False, 'unknown inbound fkey constraint: {}'.format(path))
+                return [('error', 'unknown inbound fkey constraint: {}'.format(path))]
             else:
+                # Move on to next element in the path
                 table = in_fkeys[fk_name]
         elif 'outbound' in fk:
             fk_name = '{}:{}'.format(*fk['outbound'])
             path +=  '/' + fk_name
             if not fk_name in out_fkeys:
-                return (False, 'unknown outbound fkey constraint: {}'.format(path))
+                return [('error', 'unknown outbound fkey constraint: {}'.format(path))]
             else:
+                # Move on to next element in path
                 table = out_fkeys[fk_name]
         else:
-            return (False, 'invalid path element: {}')
-    return (True,path)
+            return [('error', 'invalid path element: {}')]
+    return []
 
 
-def validate_columns(column_list, model, table, context):
+def validate_columns(column_list, model, table):
     columns, inbound, outbound = {}, {}, {}
+    results = []
 
     for i in column_list:
         if type(i) is dict:
-            validate_filter_terms(i, context)
+            results.extend(validate_filter_terms(i))
             source = i['source']
         else:
             source = i
@@ -136,11 +148,10 @@ def validate_columns(column_list, model, table, context):
         elif type(source) is list and len(source) == 2 and type(source[0]) == str and type(source[1]) == str:
             # Old style column name [schema, fkey]
             source = [source]
-        (valid, msg) = validate_source(source, model, table, columns, inbound, outbound)
-        if not valid:
-            print('ERROR: {} {}'.format(context, msg ))
+        results.extend(validate_source(source, model, table, columns, inbound, outbound))
+    return results
 
-def lint_table(catalog, table):
+def validate_table(catalog, table):
     model_root = catalog.getCatalogModel()
 
     # Check to see if all the annotations are valid
@@ -148,21 +159,40 @@ def lint_table(catalog, table):
         if i not in tag_names:
             print("Invalid tag: {}".format(i))
 
-    # Check visitble_columns annotation to make sure its ok....
+
+    # Check visible_columns annotation to make sure its ok....
+    vc_results = {}
     for f, a in table.visible_columns.items():
         if f not in ['*', 'filter', 'compact', 'detailed', 'entry']:
-            print('Invalid context: {}'.format(f))
+            vc_results.setdefault('unknown',[]).append(('warning','Invalid context: {}'.format(f)))
             continue
         if f == 'filter':
-            validate_columns(a['and'], model_root, table, 'visible_column[{}]'.format(f))
+            if not 'and' in a:
+                vc_results['filter'] = [('error','Invalid filter spec')]
+            else:
+                vc_results['filter'] = validate_columns(a['and'], model_root, table)
         else:
-            validate_columns(a, model_root, table, 'visible_column[{}]'.format(f))
-
+            vc_results[f] = validate_columns(a, model_root, table)
+    fk_results = {}
     for f, a in table.visible_foreign_keys.items():
         if f not in ['*', 'compact', 'detailed', 'entry']:
-            print('Invalid context {}'.format(f))
+            fk_results.setdefault('unknown', []).append(('warning', 'Invalid context: {}'.format(f)))
             continue
         if f == 'filter':
-            validate_columns(a['and'], model_root, table, 'visible_foreign_key[{}]'.format(f))
+            fk_results['filter'] = validate_columns(a['and'], model_root, table)
         else:
-            validate_columns(a, model_root, table, 'visible_foreign_keys[{}]'.format(f))
+            fk_results[f] = validate_columns(a, model_root, table)
+
+    print("Table {}.visible_columns".format(table.name))
+    print_validation_results(vc_results)
+    print("Table {}.visible_foreign_keys".format(table.name))
+    print_validation_results(fk_results)
+
+
+def print_validation_results(validations):
+    for k,v in validations.items():
+        if len(v):
+            print('    {}'.format(k))
+        for i in v:
+                print('        {}: {}'.format(i[0],i[1]))
+

@@ -4,8 +4,9 @@ import pprint
 import re
 
 server = 'pbcconsortium.isrd.isi.edu'
-term_table = 'foobar_terms'
-term_comment = 'Here you go'
+term_table = 'Additive_Terms'
+term_comment = 'Table containing names of additive terms'
+schema = 'Vocab'
 
 credential = get_credential(server)
 catalog = ErmrestCatalog('https', server, 1, credentials=credential)
@@ -27,14 +28,14 @@ def set_visible_columns(catalog, term_table):
 
     model_root = catalog.getCatalogModel()
     for k, v in term_visible_columns.items():
-        model_root.schemas['vocab'].tables[term_table].visible_columns[k] = v
-    model_root.schemas['vocab'].tables[term_table].apply(catalog)
+        model_root.schemas[schema].tables[term_table].visible_columns[k] = v
+    model_root.schemas[schema].tables[term_table].apply(catalog)
 
 
 def create_vocabulary_table(catalog,term_table, term_comment):
     model_root = catalog.getCatalogModel()
     new_vocab_table = \
-        model_root.schemas['vocab'].create_table(catalog, em.Table.define_vocabulary(term_table,'PBCCONSORTIUM:{RID}',comment=term_comment)
+        model_root.schemas[schema].create_table(catalog, em.Table.define_vocabulary(term_table,'PBCCONSORTIUM:{RID}',comment=term_comment)
 )
 
 def add_terms(catalog, term_table, term_list):
