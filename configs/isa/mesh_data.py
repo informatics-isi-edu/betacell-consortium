@@ -8,7 +8,7 @@ schema_name = 'isa'
 column_defs = [
     em.Column.define('url', em.builtin_types['text'],
         nullok=False,
-        annotations={'tag:isrd.isi.edu,2017:asset': {'filename_column': 'filename', 'byte_count_column': 'byte_count', 'url_pattern': '/hatrac/commons/previews/{{{_dataset}}}/{{{_replicate}}}/{{{filename}}}', 'md5': 'md5'}},
+        annotations={'tag:isrd.isi.edu,2017:asset': {'filename_column': 'filename', 'byte_count_column': 'byte_count', 'url_pattern': '/hatrac/commons/previews/{{{_dataset}}}/{{{_biosample}}}/{{{filename}}}', 'md5': 'md5'}},
     ),
     em.Column.define('filename', em.builtin_types['text'],
         nullok=False,
@@ -31,8 +31,6 @@ column_defs = [
     ),
     em.Column.define('description', em.builtin_types['markdown'],
     ),
-    em.Column.define('replicate', em.builtin_types['text'],
-    ),
     em.Column.define('biosample', em.builtin_types['text'],
     ),
 ]
@@ -49,9 +47,9 @@ key_defs = [
 
 
 fkey_defs = [
-    em.ForeignKey.define(['dataset', 'replicate'],
-            'isa', 'replicate', ['dataset', 'RID'],
-            constraint_names=[('isa', 'mesh_data_replicate_fkey')],
+    em.ForeignKey.define(['dataset'],
+            'isa', 'dataset', ['RID'],
+            constraint_names=[('isa', 'mesh_data_dataset_fkey')],
         acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='RESTRICT',
@@ -59,13 +57,6 @@ fkey_defs = [
     em.ForeignKey.define(['derived_from'],
             'isa', 'xray_tomography_data', ['RID'],
             constraint_names=[('isa', 'mesh_data_derived_from_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
-        on_update='CASCADE',
-        on_delete='RESTRICT',
-    ),
-    em.ForeignKey.define(['dataset'],
-            'isa', 'dataset', ['RID'],
-            constraint_names=[('isa', 'mesh_data_dataset_fkey')],
         acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='RESTRICT',
@@ -116,6 +107,9 @@ visible_columns = \
                                 'RID']}]}}
 
 visible_foreign_keys = {}
+table_comment = \
+None
+
 table_display = \
 {'row_name': {'row_markdown_pattern': '{{{filename}}}'}}
 
@@ -123,9 +117,9 @@ table_acls = {}
 table_acl_bindings = {}
 table_annotations = {
     "tag:isrd.isi.edu,2016:table-display": table_display,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
     "table_display": table_display,
     "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
-    "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
 }
 column_comment = \
 {'RCB': 'System-generated row created by user provenance.',
@@ -140,17 +134,17 @@ column_annotations = \
  'url': {'tag:isrd.isi.edu,2017:asset': {'byte_count_column': 'byte_count',
                                          'filename_column': 'filename',
                                          'md5': 'md5',
-                                         'url_pattern': '/hatrac/commons/previews/{{{_dataset}}}/{{{_replicate}}}/{{{filename}}}'}}}
+                                         'url_pattern': '/hatrac/commons/previews/{{{_dataset}}}/{{{_biosample}}}/{{{filename}}}'}}}
 
 
 
-table_def = em.Table.define('mesh_data',
+table_def = em.Table.define(table_name,
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
     annotations=table_annotations,
     acls=table_acls,
     acl_bindings=table_acl_bindings,
-    comment='None',
+    comment=table_comment,
     provide_system = True
 )

@@ -4,15 +4,16 @@ import pprint
 import re
 
 server = 'pbcconsortium.isrd.isi.edu'
-term_table = 'foobar_terms'
-term_comment = 'Here you go'
+term_table = 'Additive_Terms'
+term_comment = 'Table containing names of additive terms'
+schema = 'Vocab'
 
 credential = get_credential(server)
 catalog = ErmrestCatalog('https', server, 1, credentials=credential)
 
 def set_visible_columns(catalog, term_table):
     """
-    Set visible columns so you are looking just at the ones associated with vocab (i.e. no system)
+    Set visible columns so cd you are looking just at the ones associated with vocab (i.e. no system)
     :param catalog:
     :param term_table:
     :return:
@@ -27,14 +28,14 @@ def set_visible_columns(catalog, term_table):
 
     model_root = catalog.getCatalogModel()
     for k, v in term_visible_columns.items():
-        model_root.schemas['vocab'].tables[term_table].visible_columns[k] = v
-    model_root.schemas['vocab'].tables[term_table].apply(catalog)
+        model_root.schemas[schema].tables[term_table].visible_columns[k] = v
+    model_root.schemas[schema].tables[term_table].apply(catalog)
 
 
 def create_vocabulary_table(catalog,term_table, term_comment):
     model_root = catalog.getCatalogModel()
     new_vocab_table = \
-        model_root.schemas['vocab'].create_table(catalog, em.Table.define_vocabulary(term_table,'PBCCONSORTIUM:{RID}',comment=term_comment)
+        model_root.schemas[schema].create_table(catalog, em.Table.define_vocabulary(term_table,'PBCCONSORTIUM:{RID}',comment=term_comment)
 )
 
 def add_terms(catalog, term_table, term_list):
@@ -45,10 +46,5 @@ def add_terms(catalog, term_table, term_list):
     terms_dp = vocab_dp.tables[term_table]
     # Now add the terms....
     terms_dp.insert(term_list)
-
-def delete_foreign_keys(catalog,schema,table):
-    model_root = catalog.getCatalogModel()
-    for i in model_root.schemas['isa'].tables['specimen'].foreign_keys:
-        i.delete(catalog)
 
 

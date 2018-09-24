@@ -3,30 +3,23 @@ from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
 
 table_names = [
+    'uniprot_terms',
     'anatomy_terms',
-    'image_creation_device_terms',
-    'gender_terms',
-    'cell_line_terms',
-    'target_of_assay_terms',
-    'phenotype_terms',
-    'human_age_terms',
-    'stage_terms',
-    'origin_terms',
+    'cellular_location_terms',
     'dataset_status_terms',
     'data_type_terms',
+    'gender_terms',
+    'cell_line_terms',
+    'experiment_type_terms',
+    'image_creation_device_terms',
     'file_type_terms',
+    'origin_terms',
     'specimen_terms',
     'instrument_terms',
-    'mapping_assembly_terms',
-    'experiment_type_terms',
+    'phenotype_terms',
     'file_format_terms',
-    'enhancer_terms',
-    'gene_terms',
     'specimen_type_terms',
     'species_terms',
-    'molecule_type_terms',
-    'cellular_location_terms',
-    'compound_terms',
 ]
 annotations = \
 {   'tag:misd.isi.edu,2015:display': {   'name_style': {   'title_case': True,
@@ -56,7 +49,6 @@ def main():
                         help='Catalog server name')
     args = parser.parse_args()
 
-    delete_fkeys = args.delete
     server = args.server
     schema_name = 'vocab'
 

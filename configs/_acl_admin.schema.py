@@ -19,7 +19,6 @@ def main():
                         help='Catalog server name')
     args = parser.parse_args()
 
-    delete_fkeys = args.delete
     server = args.server
     schema_name = '_acl_admin'
 

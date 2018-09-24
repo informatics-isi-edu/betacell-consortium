@@ -25,11 +25,11 @@ column_defs = [
 
 
 key_defs = [
+    em.Key.define(['subject_dbxref', 'type_dbxref', 'object_dbxref'],
+                   constraint_names=[('data_commons', 'cvterm_relationship_type_dbxref_subject_dbxref_object_dbxre_key')],
+    ),
     em.Key.define(['RID'],
                    constraint_names=[('data_commons', 'cvterm_relationship_RID_key')],
-    ),
-    em.Key.define(['type_dbxref', 'subject_dbxref', 'object_dbxref'],
-                   constraint_names=[('data_commons', 'cvterm_relationship_type_dbxref_subject_dbxref_object_dbxre_key')],
     ),
     em.Key.define(['cvterm_relationship_id'],
                    constraint_names=[('data_commons', 'cvterm_relationship_pkey')],
@@ -38,27 +38,30 @@ key_defs = [
 
 
 fkey_defs = [
-    em.ForeignKey.define(['cv'],
-            'data_commons', 'cv', ['name'],
-            constraint_names=[('data_commons', 'cvterm_relationship_cv_fkey')],
-    ),
     em.ForeignKey.define(['subject_dbxref'],
             'data_commons', 'cvterm', ['dbxref'],
             constraint_names=[('data_commons', 'cvterm_relationship_subject_dbxref_fkey')],
     ),
-    em.ForeignKey.define(['object_dbxref'],
-            'data_commons', 'cvterm', ['dbxref'],
-            constraint_names=[('data_commons', 'cvterm_relationship_object_dbxref_fkey')],
-    ),
     em.ForeignKey.define(['type_dbxref'],
             'data_commons', 'cvterm', ['dbxref'],
             constraint_names=[('data_commons', 'cvterm_relationship_type_dbxref_fkey')],
+    ),
+    em.ForeignKey.define(['cv'],
+            'data_commons', 'cv', ['name'],
+            constraint_names=[('data_commons', 'cvterm_relationship_cv_fkey')],
+    ),
+    em.ForeignKey.define(['object_dbxref'],
+            'data_commons', 'cvterm', ['dbxref'],
+            constraint_names=[('data_commons', 'cvterm_relationship_object_dbxref_fkey')],
     ),
 ]
 
 
 visible_columns = {}
 visible_foreign_keys = {}
+table_comment = \
+None
+
 table_display = {}
 table_acls = {}
 table_acl_bindings = {}
@@ -67,15 +70,18 @@ table_annotations = {
     "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
     "tag:isrd.isi.edu,2016:table-display": table_display,
 }
+column_annotations = \
+{}
 
 
-table_def = em.Table.define('cvterm_relationship',
+
+table_def = em.Table.define(table_name,
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
     annotations=table_annotations,
     acls=table_acls,
     acl_bindings=table_acl_bindings,
-    comment='None',
+    comment=table_comment,
     provide_system = True
 )

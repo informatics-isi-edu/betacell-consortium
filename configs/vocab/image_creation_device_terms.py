@@ -43,14 +43,14 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['dbxref'],
-                   constraint_names=[('vocab', 'image_creation_device_terms_pkey')],
-    ),
-    em.Key.define(['is_obsolete', 'cv', 'name'],
+    em.Key.define(['cv', 'name', 'is_obsolete'],
                    constraint_names=[('vocab', 'image_creation_device_terms_cv_name_is_obsolete_key')],
     ),
     em.Key.define(['RID'],
                    constraint_names=[('vocab', 'image_creation_device_terms_RID_key')],
+    ),
+    em.Key.define(['dbxref'],
+                   constraint_names=[('vocab', 'image_creation_device_terms_pkey')],
     ),
 ]
 
@@ -84,6 +84,9 @@ visible_foreign_keys = \
                                  'dataset_image_creation_device_dataset_id_fkey']},
                    'id']}]}
 
+table_comment = \
+None
+
 table_display = \
 {'*': {'row_order': [{'column': 'name'}]},
  'row_name': {'row_markdown_pattern': '{{name}}'}}
@@ -112,13 +115,13 @@ column_annotations = \
 
 
 
-table_def = em.Table.define('image_creation_device_terms',
+table_def = em.Table.define(table_name,
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
     annotations=table_annotations,
     acls=table_acls,
     acl_bindings=table_acl_bindings,
-    comment='None',
+    comment=table_comment,
     provide_system = True
 )

@@ -46,7 +46,7 @@ key_defs = [
     em.Key.define(['dbxref'],
                    constraint_names=[('vocab', 'phenotype_terms_pkey')],
     ),
-    em.Key.define(['cv', 'name', 'is_obsolete'],
+    em.Key.define(['is_obsolete', 'cv', 'name'],
                    constraint_names=[('vocab', 'phenotype_terms_cv_name_is_obsolete_key')],
     ),
     em.Key.define(['RID'],
@@ -81,6 +81,9 @@ visible_foreign_keys = \
                    {'outbound': ['isa', 'dataset_phenotype_dataset_fkey']},
                    'id']}]}
 
+table_comment = \
+None
+
 table_display = \
 {'*': {'row_order': [{'column': 'name'}]},
  'row_name': {'row_markdown_pattern': '{{name}}'}}
@@ -109,13 +112,13 @@ column_annotations = \
 
 
 
-table_def = em.Table.define('phenotype_terms',
+table_def = em.Table.define(table_name,
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
     annotations=table_annotations,
     acls=table_acls,
     acl_bindings=table_acl_bindings,
-    comment='None',
+    comment=table_comment,
     provide_system = True
 )

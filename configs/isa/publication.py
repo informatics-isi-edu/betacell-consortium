@@ -20,14 +20,14 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['dataset', 'pmid'],
+    em.Key.define(['pmid', 'dataset'],
                    constraint_names=[('isa', 'publication_dataset_pmid_key')],
-    ),
-    em.Key.define(['id'],
-                   constraint_names=[('isa', 'publication_pkey')],
     ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'publication_RID_key')],
+    ),
+    em.Key.define(['id'],
+                   constraint_names=[('isa', 'publication_pkey')],
     ),
 ]
 
@@ -46,6 +46,9 @@ visible_columns = \
 {'*': [['isa', 'publication_dataset_fkey'], 'pmid']}
 
 visible_foreign_keys = {}
+table_comment = \
+None
+
 table_display = \
 {'compact': {'row_markdown_pattern': '[Link to PubMed '
                                      '(PMID:{{{_pmid}}})](http://www.ncbi.nlm.nih.gov/pubmed/{{{_pmid}}})'},
@@ -71,13 +74,13 @@ column_annotations = \
 
 
 
-table_def = em.Table.define('publication',
+table_def = em.Table.define(table_name,
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
     annotations=table_annotations,
     acls=table_acls,
     acl_bindings=table_acl_bindings,
-    comment='None',
+    comment=table_comment,
     provide_system = True
 )

@@ -22,5 +22,6 @@ for schema_name, schema in model_root.schemas.items():
         filename = 'configs/{}/{}.py'.format(schema_name, i)
         os.makedirs(os.path.dirname(filename), exist_ok=True)
         with open(filename, 'w') as f:
+            print('dumping table ', filename)
             dump_table.print_defs(server, schema_name, i, f)
         f.close()

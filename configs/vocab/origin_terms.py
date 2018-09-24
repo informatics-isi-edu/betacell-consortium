@@ -43,11 +43,11 @@ column_defs = [
 
 
 key_defs = [
+    em.Key.define(['cv', 'is_obsolete', 'name'],
+                   constraint_names=[('vocab', 'origin_terms_cv_name_is_obsolete_key')],
+    ),
     em.Key.define(['dbxref'],
                    constraint_names=[('vocab', 'origin_terms_pkey')],
-    ),
-    em.Key.define(['cv', 'name', 'is_obsolete'],
-                   constraint_names=[('vocab', 'origin_terms_cv_name_is_obsolete_key')],
     ),
     em.Key.define(['RID'],
                    constraint_names=[('vocab', 'origin_terms_RID_key')],
@@ -81,6 +81,9 @@ visible_foreign_keys = \
                    {'outbound': ['isa', 'dataset_origin_dataset_id_fkey']},
                    'id']}]}
 
+table_comment = \
+None
+
 table_display = \
 {'*': {'row_order': [{'column': 'name'}]},
  'row_name': {'row_markdown_pattern': '{{name}}'}}
@@ -109,13 +112,13 @@ column_annotations = \
 
 
 
-table_def = em.Table.define('origin_terms',
+table_def = em.Table.define(table_name,
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
     annotations=table_annotations,
     acls=table_acls,
     acl_bindings=table_acl_bindings,
-    comment='None',
+    comment=table_comment,
     provide_system = True
 )

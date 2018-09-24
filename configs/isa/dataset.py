@@ -59,16 +59,16 @@ key_defs = [
 
 
 fkey_defs = [
-    em.ForeignKey.define(['status'],
-            'vocab', 'dataset_status_terms', ['dbxref'],
-            constraint_names=[('isa', 'dataset_status_fkey')],
-        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Status'}},
-    ),
     em.ForeignKey.define(['project'],
             'isa', 'project', ['id'],
             constraint_names=[('isa', 'dataset_project_fkey')],
         on_update='CASCADE',
         on_delete='RESTRICT',
+    ),
+    em.ForeignKey.define(['status'],
+            'vocab', 'dataset_status_terms', ['dbxref'],
+            constraint_names=[('isa', 'dataset_status_fkey')],
+        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'to_name': 'Status'}},
     ),
 ]
 
@@ -83,9 +83,7 @@ visible_columns = \
               ['isa', 'dataset_experiment_type_dataset_id_fkey'],
               ['isa', 'dataset_data_type_dataset_id_fkey'],
               ['isa', 'dataset_phenotype_dataset_fkey'],
-              ['isa', 'dataset_organism_dataset_id_fkey'],
               ['isa', 'dataset_anatomy_dataset_id_fkey'],
-              ['isa', 'dataset_gender_dataset_id_fkey'],
               ['isa', 'dataset_instrument_dataset_id_fkey']],
  'entry': ['accession', 'title', ['isa', 'dataset_project_fkey'], 'description',
            'study_design', 'release_date', ['isa', 'dataset_status_fkey'],
@@ -159,6 +157,9 @@ visible_foreign_keys = \
        ['isa', 'clinical_assay_dataset_fkey'], ['isa', 'file_dataset_fkey'],
        ['isa', 'external_reference_id_fkey']]}
 
+table_comment = \
+None
+
 table_display = \
 {'*': {'row_order': [{'column': 'accession', 'descending': True}]},
  'row_name': {'row_markdown_pattern': '{{title}}'}}
@@ -218,13 +219,13 @@ column_acl_bindings = \
 
 
 
-table_def = em.Table.define('dataset',
+table_def = em.Table.define(table_name,
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
     annotations=table_annotations,
     acls=table_acls,
     acl_bindings=table_acl_bindings,
-    comment='None',
+    comment=table_comment,
     provide_system = True
 )

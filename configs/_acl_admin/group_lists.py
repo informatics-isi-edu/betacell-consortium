@@ -17,11 +17,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['name'],
-                   constraint_names=[('_acl_admin', 'group_lists_name_u')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('_acl_admin', 'group_lists_RID_key')],
+    ),
+    em.Key.define(['name'],
+                   constraint_names=[('_acl_admin', 'group_lists_name_u')],
     ),
 ]
 
@@ -32,6 +32,10 @@ fkey_defs = [
 
 visible_columns = {}
 visible_foreign_keys = {}
+table_comment = \
+('Named lists of groups used in ACLs. Maintained by the rbk_acls program. Do '
+ 'not update this table manually.')
+
 table_display = {}
 table_acls = {}
 table_acl_bindings = {}
@@ -53,15 +57,18 @@ column_comment = \
  'name': 'Name of grouplist, used in foreign keys. This table is maintained by '
          'the rbk_acls program and should not be updated by hand.'}
 
+column_annotations = \
+{}
 
 
-table_def = em.Table.define('group_lists',
+
+table_def = em.Table.define(table_name,
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
     annotations=table_annotations,
     acls=table_acls,
     acl_bindings=table_acl_bindings,
-    comment='Named lists of groups used in ACLs. Maintained by the rbk_acls program. Do not update this table manually.',
+    comment=table_comment,
     provide_system = True
 )

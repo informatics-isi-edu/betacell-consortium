@@ -83,6 +83,9 @@ visible_foreign_keys = \
               ['isa', 'project_member_project_id_fkey'],
               ['isa', 'dataset_project_fkey']]}
 
+table_comment = \
+'domain'
+
 table_display = \
 {'compact': {'row_order': [{'column': 'pis', 'descending': False}]},
  'row_name': {'row_markdown_pattern': '{{{pis}}}: {{{name}}}'}}
@@ -146,13 +149,13 @@ column_acl_bindings = \
 
 
 
-table_def = em.Table.define('project',
+table_def = em.Table.define(table_name,
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
     annotations=table_annotations,
     acls=table_acls,
     acl_bindings=table_acl_bindings,
-    comment='domain',
+    comment=table_comment,
     provide_system = True
 )

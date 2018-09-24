@@ -10,9 +10,6 @@ column_defs = [
         nullok=False,
         comment='None',
     ),
-    em.Column.define('anatomy', em.builtin_types['text'],
-        comment='None',
-    ),
     em.Column.define('device', em.builtin_types['text'],
         comment='None',
     ),
@@ -46,9 +43,6 @@ column_defs = [
     em.Column.define('file_id', em.builtin_types['int4'],
         comment='None',
     ),
-    em.Column.define('replicate', em.builtin_types['text'],
-        comment='None',
-    ),
     em.Column.define('biosample', em.builtin_types['ermrest_rid'],
         comment='Biosample from which this X Ray Tomography data was obtained',
     ),
@@ -56,10 +50,7 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('isa', 'xray_tomography_data_RIDkey1')],
-    ),
-    em.Key.define(['dataset', 'RID'],
+    em.Key.define(['RID', 'dataset'],
                    constraint_names=[('isa', 'xray_tomography_data_dataset_RID_key')],
        comment = 'RID and dataset must be distinct.',
     ),
@@ -67,18 +58,29 @@ key_defs = [
                    constraint_names=[('isa', 'xray_tomography_data_url_key')],
        comment = 'Unique URL must be provided.',
     ),
+    em.Key.define(['RID'],
+                   constraint_names=[('isa', 'xray_tomography_data_RIDkey1')],
+    ),
 ]
 
 
 fkey_defs = [
+    em.ForeignKey.define(['dataset'],
+            'isa', 'dataset', ['RID'],
+            constraint_names=[('isa', 'xray_tomography_dataset_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+        on_update='CASCADE',
+        on_delete='RESTRICT',
+        comment='Must be a valid reference to a dataset.',
+    ),
     em.ForeignKey.define(['biosample'],
             'isa', 'biosample', ['RID'],
             constraint_names=[('isa', 'xray_tomography_data_biosample_fkey')],
         acls={'insert': ['*'], 'update': ['*']},
     ),
-    em.ForeignKey.define(['dataset', 'replicate'],
-            'isa', 'replicate', ['dataset', 'RID'],
-            constraint_names=[('isa', 'xray_tomography_data_replicate_fkey')],
+    em.ForeignKey.define(['equipment_model'],
+            'vocab', 'instrument_terms', ['dbxref'],
+            constraint_names=[('isa', 'xray_tomography_data_equipment_model_fkey')],
         acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='RESTRICT',
@@ -92,37 +94,17 @@ fkey_defs = [
         on_delete='RESTRICT',
         comment='Must be a valid reference to a device.',
     ),
-    em.ForeignKey.define(['equipment_model'],
-            'vocab', 'instrument_terms', ['dbxref'],
-            constraint_names=[('isa', 'xray_tomography_data_equipment_model_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
-        on_update='CASCADE',
-        on_delete='RESTRICT',
-        comment='Must be a valid reference to a dataset.',
-    ),
-    em.ForeignKey.define(['dataset'],
-            'isa', 'dataset', ['RID'],
-            constraint_names=[('isa', 'xray_tomography_dataset_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
-        on_update='CASCADE',
-        on_delete='RESTRICT',
-        comment='Must be a valid reference to a dataset.',
-    ),
 ]
 
 
 visible_columns = \
-{'compact': [['isa', 'xray_tomography_data_pkey'], 'biosample_fkey', 'url',
-             ['isa', 'xray_tomography_data_file_type_fkey'], 'byte_count',
-             'md5', 'submitted_on'],
- 'detailed': [['isa', 'xray_tomography_data_pkey'],
-              ['isa', 'xray_tomography_data_dataset_fkey'],
-              ['isa', 'xray_tomography_data_biosample_fkey'],
-              ['isa', 'xray_tomography_data_device_fkey'], 'filename',
-              ['isa', 'xray_tomography_data_file_type_fkey'], 'byte_count',
-              'md5', 'submitted_on'],
- 'entry': ['RID', ['isa', 'xray_tomography_data_replicate_fkey'],
-           ['isa', 'xray_tomography_data_anatomy_fkey'],
+{'*': [['isa', 'xray_tomography_data_pkey'],
+       ['isa', 'xray_tomography_data_dataset_fkey'],
+       ['isa', 'xray_tomography_data_biosample_fkey'],
+       ['isa', 'xray_tomography_data_device_fkey'], 'filename',
+       ['isa', 'xray_tomography_data_file_type_fkey'], 'byte_count', 'md5',
+       'submitted_on'],
+ 'entry': ['RID', ['isa', 'xray_tomography_data_biosample_fkey'],
            ['isa', 'xray_tomography_data_device_fkey'],
            ['isa', 'xray_tomography_data_equipment_model_fkey'], 'description',
            'url', ['isa', 'xray_tomography_data_file_type_fkey'], 'filename',
@@ -216,6 +198,9 @@ visible_foreign_keys = \
  'entry': [['isa', 'thumbnail_thumbnail_of_fkey'],
            ['isa', 'mesh_data_derived_from_fkey']]}
 
+table_comment = \
+'Table to hold X-Ray Tomography MRC files.'
+
 table_display = \
 {'row_name': {'row_markdown_pattern': '{{{filename}}}'}}
 
@@ -228,8 +213,7 @@ table_annotations = {
     "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
 }
 column_comment = \
-{'anatomy': 'None',
- 'biosample': 'Biosample from which this X Ray Tomography data was obtained',
+{'biosample': 'Biosample from which this X Ray Tomography data was obtained',
  'byte_count': 'None',
  'dataset': 'None',
  'description': 'None',
@@ -239,7 +223,6 @@ column_comment = \
  'file_type': 'None',
  'filename': 'None',
  'md5': 'None',
- 'replicate': 'None',
  'submitted_on': 'None',
  'url': 'None'}
 
@@ -254,13 +237,13 @@ column_annotations = \
 
 
 
-table_def = em.Table.define('xray_tomography_data',
+table_def = em.Table.define(table_name,
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
     annotations=table_annotations,
     acls=table_acls,
     acl_bindings=table_acl_bindings,
-    comment='Table to hold X-Ray Tomography MRC files.',
+    comment=table_comment,
     provide_system = True
 )

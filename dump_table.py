@@ -31,6 +31,7 @@ def print_annotations(table, stream):
     table_annotations = {
         'visible_columns': table.visible_columns,
         'visible_foreign_keys': table.visible_foreign_keys,
+        'table_comment': table.comment,
         'table_display': table.table_display,
         'table_acls': table.acls,
         'table_acl_bindings': table.acl_bindings
@@ -78,10 +79,11 @@ def print_annotations(table, stream):
         print('column_comment = \\', file=stream)
         pprint.pprint(column_comment, width=80, depth=None, compact=False, stream=stream)
         print('', file=stream)
-    if column_annotations != {}:
-        print('column_annotations = \\', file=stream)
-        pprint.pprint(column_annotations, width=80, depth=None, compact=False, stream=stream)
-        print('', file=stream)
+
+    print('column_annotations = \\', file=stream)
+    pprint.pprint(column_annotations, width=80, depth=None, compact=False, stream=stream)
+    print('', file=stream)
+
     if column_acls != {}:
         print('column_acls = \\', file=stream)
         pprint.pprint(column_acls, width=80, depth=None, compact=False, stream=stream)
@@ -153,16 +155,16 @@ def print_column_defs(table, stream):
 
 
 def print_table_def(table, provide_system, stream):
-    print("""table_def = em.Table.define('{}',
+    print("""table_def = em.Table.define(table_name,
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
     annotations=table_annotations,
     acls=table_acls,
     acl_bindings=table_acl_bindings,
-    comment='{}',
+    comment=table_comment,
     provide_system = {}
-)""".format(table.name, table.comment, provide_system), file=stream)
+)""".format(provide_system), file=stream)
 
 
 def print_defs(server, schema_name, table_name, stream):

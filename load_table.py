@@ -7,14 +7,16 @@ def main():
     parser = argparse.ArgumentParser(description='Load foreign key defs for table {0}:{1}')
     parser.add_argument('--server', default='pbcconsortium.isrd.isi.edu',
                         help='Catalog server name')
-    parser.add_argument('--replace', action='store_true', help='replace existing values with new ones )')
-    parser.add_argument('--defpath', default='configs', help='path to table definitions)')
+    parser.add_argument('--replace', action='store_true', help='replace existing values with new ones ')
+    parser.add_argument('--defpath', default='configs', help='path to table definitions')
+    parser.add_argument('--catalog', default=1, help='Catalog id (integer)')
     parser.add_argument('table', help='Name table to be loaded schema:table.')
     parser.add_argument('mode', choices=['table', 'columns', 'annotations', 'comment', 'fkeys', 'acls'],
                         help='Operation to perform')
 
     args = parser.parse_args()
     server = args.server
+    catalog_number = args.catalog
     mode = args.mode
     defpath = args.defpath
     replace = args.replace
@@ -22,14 +24,14 @@ def main():
     schema_arg = args.table.split(':')[0]
     table_arg = args.table.split(':')[1]
 
-    print('Importing {}:{}', schema_arg, table_arg, )
+    print('Importing {}:{}'.format(schema_arg, table_arg) )
 
     module_spec = importlib.util.spec_from_file_location(table_arg, '{}/{}/{}.py'.format(defpath, schema_arg, table_arg))
     mod = importlib.util.module_from_spec(module_spec)
     module_spec.loader.exec_module(mod)
 
     credential = get_credential(server)
-    catalog = ErmrestCatalog('https', server, 1, credentials=credential)
+    catalog = ErmrestCatalog('https', server, catalog_number, credentials=credential)
     model_root = catalog.getCatalogModel()
     schema = model_root.schemas[mod.schema_name]
 
@@ -39,6 +41,11 @@ def main():
     skip_fkeys = False
 
     if mode == 'table':
+        if replace:
+            print('deleting table', table.name)
+            table.delete(catalog)
+            model_root = catalog.getCatalogModel()
+            schema = model_root.schemas[mod.schema_name]
         if skip_fkeys:
             mod.table_def.fkey_defs = []
         table = schema.create_table(catalog, mod.table_def)
@@ -53,8 +60,8 @@ def main():
         cnames = [i.name for i in table.column_definitions]
         # Go through the column definitions and add a new column if it doesn't already exist.
         for i in mod.column_defs:
-            if i.name not in cnames:
-                print('Creating column {}'.format(i.name))
+            if i['name'] not in cnames:
+                print('Creating column {}'.format(i['name']))
                 table.create_column(catalog, i)
     if mode == 'fkeys':
             if replace:
@@ -72,12 +79,14 @@ def main():
     if mode == 'annotations':
         if len(mod.table_annotations) > 0:
             for k,v in mod.table_annotations.items():
+                print('setting table annotation', k)
                 table.annotations[k] = v
 
         if len(mod.column_annotations) > 0:
             for c in table.column_definitions:
                 if c.name in mod.column_annotations:
                     for k, v in mod.column_annotations[c.name].items():
+                        print('setting column annotation', k)
                         c.annotations[k] = v
 
         table.apply(catalog)
@@ -87,6 +96,7 @@ def main():
         for c in table.column_definitions:
             if c.name in mod.column_comment:
                 c._comment = mod.column_comment[c.name]
+        table.apply(catalog)
 
     if mode == 'acls':
         for k, v in mod.table_acls.items():

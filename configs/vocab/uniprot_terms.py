@@ -2,7 +2,7 @@ import argparse
 from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
 
-table_name = 'cell_line_terms'
+table_name = 'uniprot_terms'
 schema_name = 'vocab'
 
 column_defs = [
@@ -16,7 +16,7 @@ column_defs = [
     ),
     em.Column.define('name', em.builtin_types['text'],
         nullok=False,
-        comment='The prefered name for a cell line',
+        comment='The preferred human-readable name for this term.',
     ),
     em.Column.define('description', em.builtin_types['markdown'],
         nullok=False,
@@ -29,14 +29,14 @@ column_defs = [
 
 
 key_defs = [
+    em.Key.define(['RID'],
+                   constraint_names=[('vocab', 'uniprot_terms_RIDkey1')],
+    ),
     em.Key.define(['id'],
-                   constraint_names=[('vocab', 'cell_line_terms_idkey1')],
+                   constraint_names=[('vocab', 'uniprot_terms_idkey1')],
     ),
     em.Key.define(['uri'],
-                   constraint_names=[('vocab', 'cell_line_terms_urikey1')],
-    ),
-    em.Key.define(['RID'],
-                   constraint_names=[('vocab', 'cell_line_terms_RIDkey1')],
+                   constraint_names=[('vocab', 'uniprot_terms_urikey1')],
     ),
 ]
 
@@ -55,7 +55,7 @@ visible_columns = \
 
 visible_foreign_keys = {}
 table_comment = \
-'Terms for cell lines'
+'Table of protein identifiers from Uniprot'
 
 table_display = {}
 table_acls = {}
@@ -68,7 +68,7 @@ table_annotations = {
 column_comment = \
 {'description': 'A longer human-readable description of this term.',
  'id': 'The preferred Compact URI (CURIE) for this term.',
- 'name': 'The prefered name for a cell line',
+ 'name': 'The preferred human-readable name for this term.',
  'synonyms': 'Alternate human-readable names for this term.',
  'uri': 'The preferred URI for this term.'}
 

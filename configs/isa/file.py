@@ -33,17 +33,17 @@ column_defs = [
 
 
 key_defs = [
+    em.Key.define(['url'],
+                   constraint_names=[('isa', 'file_url_key')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('isa', 'file_RID_key')],
+    ),
     em.Key.define(['id'],
                    constraint_names=[('isa', 'file_pkey')],
     ),
     em.Key.define(['legacy_file_id'],
                    constraint_names=[('isa', 'file_legacy_file_id_key')],
-    ),
-    em.Key.define(['RID'],
-                   constraint_names=[('isa', 'file_RID_key')],
-    ),
-    em.Key.define(['url'],
-                   constraint_names=[('isa', 'file_url_key')],
     ),
 ]
 
@@ -72,6 +72,9 @@ visible_columns = \
                                 'accession']}]}}
 
 visible_foreign_keys = {}
+table_comment = \
+None
+
 table_display = \
 {'row_name': {'row_markdown_pattern': '{{{filename}}}'}}
 
@@ -132,13 +135,13 @@ column_annotations = \
 
 
 
-table_def = em.Table.define('file',
+table_def = em.Table.define(table_name,
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
     annotations=table_annotations,
     acls=table_acls,
     acl_bindings=table_acl_bindings,
-    comment='None',
+    comment=table_comment,
     provide_system = True
 )

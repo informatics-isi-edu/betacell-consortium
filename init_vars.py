@@ -6,10 +6,10 @@ import __main__
 # experiment_dp, biosample_dp, protocol_dp, replicate_dp, xray_tomography_dp, specimen_dp, model_dp, dataset_dp
 # experiment, biosample, dataset, protocol, replicate, imaging_data, model
 
-def init_variables():
+def init_variables(catalog_num=1):
     server = 'pbcconsortium.isrd.isi.edu'
     credential = get_credential(server)
-    catalog = ErmrestCatalog('https', server, 1, credentials=credential)
+    catalog = ErmrestCatalog('https', server, catalog_num, credentials=credential)
     model_root = catalog.getCatalogModel()
 
     __main__.catalog = catalog
@@ -17,13 +17,13 @@ def init_variables():
 
     # Get references to main tables for manipulating the model.
     __main__.experiment = model_root.table('isa', 'experiment')
+    __main__.specimen = model_root.table('isa','specimen')
     __main__.biosample = model_root.table('isa', 'biosample')
     __main__.dataset = model_root.table('isa', 'dataset')
     __main__.protocol = model_root.table('isa', 'protocol')
-    __main__.replicate = model_root.table('isa', 'replicate')
     __main__.imaging_data = model_root.table('isa', 'imaging_data')
     __main__.model = model_root.table("viz", 'model')
-
+cd
     # Get references to the main tables for managing their contents using DataPath library
     pb = catalog.getPathBuilder()
     # Get main schema
@@ -40,7 +40,6 @@ def init_variables():
     __main__.biosample_dp = isa.biosample
     __main__.dataset_dp = isa.dataset
     __main__.protocol_dp = isa.protocol
-    __main__.replicate_dp = isa.replicate
     __main__.xray_tomography_dp = isa.xray_tomography_data
     __main__.specimen_dp = isa.specimen
     __main__.model_dp = viz.model

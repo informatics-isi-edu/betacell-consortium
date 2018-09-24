@@ -24,7 +24,7 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['model', 'mesh'],
+    em.Key.define(['mesh', 'model'],
                    constraint_names=[('viz', 'model_mesh_data_model_mesh_key')],
     ),
     em.Key.define(['RID'],
@@ -51,6 +51,9 @@ fkey_defs = [
 
 visible_columns = {}
 visible_foreign_keys = {}
+table_comment = \
+None
+
 table_display = {}
 table_acls = {}
 table_acl_bindings = {}
@@ -66,15 +69,18 @@ column_comment = \
  'RMB': 'System-generated row modified by user provenance.',
  'RMT': 'System-generated row modification timestamp'}
 
+column_annotations = \
+{}
 
 
-table_def = em.Table.define('model_mesh_data',
+
+table_def = em.Table.define(table_name,
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
     annotations=table_annotations,
     acls=table_acls,
     acl_bindings=table_acl_bindings,
-    comment='None',
+    comment=table_comment,
     provide_system = True
 )

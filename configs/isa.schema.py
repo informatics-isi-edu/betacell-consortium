@@ -5,7 +5,6 @@ import deriva.core.ermrest_model as em
 table_names = [
     'protocol',
     'process',
-    'dataset_gender',
     'dataset',
     'dataset_instrument',
     'mesh_data',
@@ -16,24 +15,18 @@ table_names = [
     'publication',
     'imaging_data',
     'experiment',
-    'replicate',
     'biosample',
     'project_member',
     'BellCellPlate',
     'processed_tomography_data',
     'dataset_experiment_type',
     'specimen',
-    'library',
-    'dataset_anatomy',
-    'icon',
     'pipeline',
     'external_reference',
     'BellCellStatus',
     'project',
     'person',
     'xray_tomography_data',
-    'protocol_compound',
-    'dataset_organism',
 ]
 annotations = \
 {   'tag:misd.isi.edu,2015:display': {   'name_style': {   'title_case': True,
@@ -63,7 +56,6 @@ def main():
                         help='Catalog server name')
     args = parser.parse_args()
 
-    delete_fkeys = args.delete
     server = args.server
     schema_name = 'isa'
 

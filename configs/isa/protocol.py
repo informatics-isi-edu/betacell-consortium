@@ -25,9 +25,6 @@ column_defs = [
     ),
     em.Column.define('assay_ids', em.builtin_types['int4[]'],
     ),
-    em.Column.define('timepoint', em.builtin_types['int2'],
-        comment='Measured in minutes.',
-    ),
 ]
 
 
@@ -86,17 +83,20 @@ visible_foreign_keys = \
 {'detailed': [['isa', 'experiment_protocol_fkey']],
  'entry': [['isa', 'experiment_protocol_fkey']]}
 
+table_comment = \
+None
+
 table_display = {}
 table_acls = {}
 table_acl_bindings = {}
 table_annotations = {
+    "tag:isrd.isi.edu,2016:table-display": table_display,
     "tag:misd.isi.edu,2015:display":
 {'name': 'Protocol'}
 ,
     "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
     "table_display": table_display,
     "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
-    "tag:isrd.isi.edu,2016:table-display": table_display,
 }
 column_comment = \
 {'RCB': 'System-generated row created by user provenance.',
@@ -104,8 +104,7 @@ column_comment = \
  'RID': 'System-generated unique row ID.',
  'RMB': 'System-generated row modified by user provenance.',
  'RMT': 'System-generated row modification timestamp',
- 'name': 'Provide a name that uniquely identifies the protocol',
- 'timepoint': 'Measured in minutes.'}
+ 'name': 'Provide a name that uniquely identifies the protocol'}
 
 column_annotations = \
 {'file_url': {'tag:isrd.isi.edu,2017:asset': {'byte_count_column': 'byte_count',
@@ -115,13 +114,13 @@ column_annotations = \
 
 
 
-table_def = em.Table.define('protocol',
+table_def = em.Table.define(table_name,
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
     annotations=table_annotations,
     acls=table_acls,
     acl_bindings=table_acl_bindings,
-    comment='None',
+    comment=table_comment,
     provide_system = True
 )

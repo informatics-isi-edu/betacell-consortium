@@ -47,6 +47,9 @@ visible_columns = \
  'detailed': ['name', 'email', 'affiliation']}
 
 visible_foreign_keys = {}
+table_comment = \
+'domain'
+
 table_display = \
 {'*': {'row_order': [{'column': 'last_name', 'descending': False}]},
  'row_name': {'row_markdown_pattern': '{{{first_name}}} {{{last_name}}}'}}
@@ -65,15 +68,18 @@ column_comment = \
  'RMB': 'System-generated row modified by user provenance.',
  'RMT': 'System-generated row modification timestamp'}
 
+column_annotations = \
+{}
 
 
-table_def = em.Table.define('person',
+
+table_def = em.Table.define(table_name,
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
     annotations=table_annotations,
     acls=table_acls,
     acl_bindings=table_acl_bindings,
-    comment='domain',
+    comment=table_comment,
     provide_system = True
 )
