@@ -18,6 +18,11 @@ column_defs = [
     em.Column.define('description', em.builtin_types['text'],
         comment='Description of the specimen.',
     ),
+    em.Column.define('protocol', em.builtin_types['text'],
+        comment='Protocol used to create the cell line',
+    ),
+    em.Column.define('collection_date', em.builtin_types['date'],
+    ),
 ]
 
 
@@ -29,37 +34,30 @@ key_defs = [
 
 
 fkey_defs = [
+    em.ForeignKey.define(['protocol'],
+            'Beta_Cell', 'Protocol', ['RID'],
+            constraint_names=[('isa', 'cell_line_protocol_fkey')],
+    ),
     em.ForeignKey.define(['anatomy'],
             'vocab', 'anatomy_terms', ['id'],
             constraint_names=[('isa', 'cell_line_anatomy_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
     ),
     em.ForeignKey.define(['cell_line_id'],
             'vocab', 'cell_line_terms', ['id'],
             constraint_names=[('isa', 'cell_line_cell_line_terms_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
         comment='Must be a valid reference to a cell line.',
     ),
     em.ForeignKey.define(['species'],
             'vocab', 'species_terms', ['id'],
             constraint_names=[('isa', 'cell_line_species_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
     ),
 ]
 
 
 visible_columns = \
-{'compact': [['isa', 'cell_line_pkey'], 'local_identifier',
-             ['isa', 'cell_line_cell_line_terms_fkey']],
- 'detailed': [['isa', 'specimen_pkey'], 'local_identifier',
-              ['isa', 'cell_line_cell_line_terms_fkey'],
-              ['isa', 'cell_line_species_fkey'],
-              ['isa', 'cell_line_anatomy_fkey'], 'description',
-              'collection_date'],
- 'entry': [['isa', 'local_identifier'],
-           ['isa', 'cell_line_cell_line_terms_fkey'],
-           ['isa', 'cell_line_species_fkey'], ['isa', 'cell_line_anatomy_fkey'],
-           'description', 'collection_date'],
+{'*': [['isa', 'specimen_pkey'], ['isa', 'cell_line_cell_line_terms_fkey'],
+       ['isa', 'cell_line_species_fkey'], ['isa', 'cell_line_anatomy_fkey'],
+       ['isa', 'cell_line_protocol_fkey'], 'description', 'collection_date'],
  'filter': {'and': [{'entity': True,
                      'open': True,
                      'source': [{'outbound': ['isa',
@@ -76,14 +74,7 @@ visible_columns = \
                                 'name']}]}}
 
 visible_foreign_keys = \
-{'detailed': [['isa', 'xray_tomography_data_replicate_fkey'],
-              ['isa', 'mesh_data_replicate_fkey'],
-              ['isa', 'processed_data_replicate_fkey'],
-              ['isa', 'imaging_data_replicate_fkey']],
- 'entry': [['isa', 'xray_tomography_data_replicate_fkey'],
-           ['isa', 'mesh_data_replicate_fkey'],
-           ['isa', 'processed_data_replicate_fkey'],
-           ['isa', 'imaging_data_replicate_fkey']]}
+{'*': [{'source': [{'inbound': ['isa', 'specimen_cell_line_fkey']}, 'RID']}]}
 
 table_comment = \
 'Table of cultured  from which specimens  will be created.'
@@ -101,6 +92,7 @@ column_comment = \
 {'anatomy': 'Anatomical region speciment was obtained from.',
  'cell_line_id': 'ID of cell line being used.',
  'description': 'Description of the specimen.',
+ 'protocol': 'Protocol used to create the cell line',
  'species': 'Species of the specimen'}
 
 column_annotations = \

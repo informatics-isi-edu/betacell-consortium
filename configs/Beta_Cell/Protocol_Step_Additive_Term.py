@@ -35,13 +35,11 @@ fkey_defs = [
     em.ForeignKey.define(['Additive_Term'],
             'Vocab', 'Additive_Terms', ['id'],
             constraint_names=[('Beta_Cell', 'Protocol_Step_Additive_Term_Additive_Term_FKey')],
-        acls={'insert': ['*'], 'update': ['*']},
         comment='Must be a valid reference to an additive.',
     ),
     em.ForeignKey.define(['Protocol_Step'],
             'Beta_Cell', 'Protocol_Step', ['RID'],
             constraint_names=[('Beta_Cell', 'Protocol_Step_Additive_Term_Protocol_Step_FKey')],
-        acls={'insert': ['*'], 'update': ['*']},
     ),
 ]
 

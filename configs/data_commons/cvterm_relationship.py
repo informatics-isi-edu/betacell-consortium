@@ -25,30 +25,30 @@ column_defs = [
 
 
 key_defs = [
+    em.Key.define(['cvterm_relationship_id'],
+                   constraint_names=[('data_commons', 'cvterm_relationship_pkey')],
+    ),
     em.Key.define(['subject_dbxref', 'type_dbxref', 'object_dbxref'],
                    constraint_names=[('data_commons', 'cvterm_relationship_type_dbxref_subject_dbxref_object_dbxre_key')],
     ),
     em.Key.define(['RID'],
                    constraint_names=[('data_commons', 'cvterm_relationship_RID_key')],
     ),
-    em.Key.define(['cvterm_relationship_id'],
-                   constraint_names=[('data_commons', 'cvterm_relationship_pkey')],
-    ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['subject_dbxref'],
-            'data_commons', 'cvterm', ['dbxref'],
-            constraint_names=[('data_commons', 'cvterm_relationship_subject_dbxref_fkey')],
+    em.ForeignKey.define(['cv'],
+            'data_commons', 'cv', ['name'],
+            constraint_names=[('data_commons', 'cvterm_relationship_cv_fkey')],
     ),
     em.ForeignKey.define(['type_dbxref'],
             'data_commons', 'cvterm', ['dbxref'],
             constraint_names=[('data_commons', 'cvterm_relationship_type_dbxref_fkey')],
     ),
-    em.ForeignKey.define(['cv'],
-            'data_commons', 'cv', ['name'],
-            constraint_names=[('data_commons', 'cvterm_relationship_cv_fkey')],
+    em.ForeignKey.define(['subject_dbxref'],
+            'data_commons', 'cvterm', ['dbxref'],
+            constraint_names=[('data_commons', 'cvterm_relationship_subject_dbxref_fkey')],
     ),
     em.ForeignKey.define(['object_dbxref'],
             'data_commons', 'cvterm', ['dbxref'],

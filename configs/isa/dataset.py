@@ -35,7 +35,6 @@ column_defs = [
     ),
     em.Column.define('status', em.builtin_types['text'],
         annotations={'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '{{{ $fkeys.isa.dataset_status_fkey.rowName }}}'}}},
-        acl_bindings={'dataset_edit_guard': False},
     ),
     em.Column.define('show_in_jbrowse', em.builtin_types['boolean'],
         annotations={'tag:misd.isi.edu,2015:display': {'name': 'Genome Browser'}, 'tag:isrd.isi.edu,2016:column-display': {'detailed': {'markdown_pattern': '{{#_show_in_jbrowse}}Use the embedded browser here or [view in a new window](/jbrowse/latest/?dataset={{{_RID}}}){target=_blank}.\n :::iframe [](/jbrowse/latest/?dataset={{{_RID}}}){width=800 height=600 .iframe} \n:::{{/_show_in_jbrowse}}'}}},
@@ -46,11 +45,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['id'],
-                   constraint_names=[('isa', 'dataset_pkey')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'dataset_RID_key')],
+    ),
+    em.Key.define(['id'],
+                   constraint_names=[('isa', 'dataset_pkey')],
     ),
     em.Key.define(['accession'],
                    constraint_names=[('isa', 'accession_unique')],
@@ -165,18 +164,7 @@ table_display = \
  'row_name': {'row_markdown_pattern': '{{title}}'}}
 
 table_acls = {}
-table_acl_bindings = \
-{'dataset_edit_guard': {'projection': [{'outbound': ['isa',
-                                                     'dataset_project_fkey']},
-                                       {'outbound': ['isa',
-                                                     'project_groups_fkey']},
-                                       'groups'],
-                        'projection_type': 'acl',
-                        'scope_acl': ['https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764',
-                                      'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a',
-                                      'https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d'],
-                        'types': ['update', 'delete']}}
-
+table_acl_bindings = {}
 table_annotations = {
     "tag:isrd.isi.edu,2016:table-display": table_display,
     "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
@@ -213,9 +201,6 @@ column_annotations = \
  'status': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '{{{ '
                                                                                      '$fkeys.isa.dataset_status_fkey.rowName '
                                                                                      '}}}'}}}}
-
-column_acl_bindings = \
-{'status': {'dataset_edit_guard': False}}
 
 
 

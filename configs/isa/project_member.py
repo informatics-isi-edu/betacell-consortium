@@ -48,18 +48,7 @@ table_comment = \
 
 table_display = {}
 table_acls = {}
-table_acl_bindings = \
-{'project_suppl_edit_guard': {'projection': [{'outbound': ['isa',
-                                                           'project_member_project_id_fkey']},
-                                             {'outbound': ['isa',
-                                                           'project_groups_fkey']},
-                                             'groups'],
-                              'projection_type': 'acl',
-                              'scope_acl': ['https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764',
-                                            'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a',
-                                            'https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d'],
-                              'types': ['update', 'delete']}}
-
+table_acl_bindings = {}
 table_annotations = {
     "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
     "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,

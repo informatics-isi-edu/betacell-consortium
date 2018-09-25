@@ -39,11 +39,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('viz', 'model_RID_key')],
-    ),
     em.Key.define(['id'],
                    constraint_names=[('viz', 'model_pkey')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('viz', 'model_RID_key')],
     ),
 ]
 
@@ -52,7 +52,6 @@ fkey_defs = [
     em.ForeignKey.define(['biosample'],
             'isa', 'biosample', ['RID'],
             constraint_names=[('viz', 'model_biosample_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='SET NULL',
     ),

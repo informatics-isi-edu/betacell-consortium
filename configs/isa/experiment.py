@@ -28,14 +28,14 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['dataset', 'RID'],
+    em.Key.define(['local_identifier', 'dataset'],
+                   constraint_names=[('isa', 'experiment_dataset_local_identifier_key')],
+    ),
+    em.Key.define(['RID', 'dataset'],
                    constraint_names=[('isa', 'experiment_RID_dataset_key')],
     ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'experiment_pkey')],
-    ),
-    em.Key.define(['local_identifier', 'dataset'],
-                   constraint_names=[('isa', 'experiment_dataset_local_identifier_key')],
     ),
 ]
 
@@ -50,21 +50,20 @@ fkey_defs = [
     em.ForeignKey.define(['protocol'],
             'Beta_Cell', 'Protocol', ['RID'],
             constraint_names=[('isa', 'experiment_protocol_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='RESTRICT',
     ),
     em.ForeignKey.define(['experiment_type'],
             'vocab', 'experiment_type_terms', ['RID'],
             constraint_names=[('isa', 'experiment_experiment_type_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
     ),
 ]
 
 
 visible_columns = \
-{'*': ['RID', ['isa', 'specimen_pkey'], ['isa','experiment_protocol_fkey'],
-       ['isa','experiment_experiment_type_fkey'],
+{'*': ['RID', ['isa', 'experiment_dataset_fkey'],
+       ['isa', 'experiment_protocol_fkey'],
+       ['isa', 'experiment_experiment_type_fkey'],
        {'aggregate': 'array_d',
         'entity': True,
         'markdown_name': 'Cell Line',
@@ -115,12 +114,20 @@ visible_columns = \
                    'Duration'],
         'ux_mode': 'choices'},
        'description'],
- 'entry': [['isa', 'specimen_dataset_fkey'],
+ 'entry': [['isa', 'experiment_dataset_fkey'],
            ['isa', 'experiment_protocol_fkey'],
-           ['isa', 'experiment_protocol_fkey'], 'description',
+           ['isa', 'experiment_experiment_type_fkey'], 'description',
            'collection_date'],
- 'filter': {'and': ['RID', ['isa', 'specimen_pkey'], 'local_identifier',
-                    'protocol', 'experiment_type',
+ 'filter': {'and': [{'entity': True, 'source': 'RID'},
+                    {'source': [{'outbound': ['isa',
+                                              'experiment_dataset_fkey']},
+                                'RID']},
+                    {'source': [{'outbound': ['isa',
+                                              'experiment_protocol_fkey']},
+                                'RID']},
+                    {'source': [{'outbound': ['isa',
+                                              'experiment_experiment_type_fkey']},
+                                'RID']},
                     {'aggregate': 'array_d',
                      'entity': True,
                      'markdown_name': 'Cell Line',
@@ -212,30 +219,8 @@ table_display = \
                                       '- '
                                       '{{biosample_summary}}{{/biosample_summary}}'}}
 
-
-
 table_acls = {}
-table_acl_bindings = \
-{'curated_status_guard': {'projection': [{'outbound': ['isa',
-                                                       'experiment_dataset_fkey']},
-                                         {'filter': 'status',
-                                          'operand': 'commons:226:',
-                                          'operator': '='},
-                                         'RID'],
-                          'projection_type': 'nonnull',
-                          'scope_acl': ['*'],
-                          'types': ['select']},
- 'dataset_suppl_edit_guard': {'projection': [{'outbound': ['isa',
-                                                           'experiment_dataset_fkey']},
-                                             {'outbound': ['isa',
-                                                           'dataset_project_fkey']},
-                                             {'outbound': ['isa',
-                                                           'project_groups_fkey']},
-                                             'groups'],
-                              'projection_type': 'acl',
-                              'scope_acl': ['https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d'],
-                              'types': ['update', 'delete']}}
-
+table_acl_bindings = {}
 table_annotations = {
     "tag:isrd.isi.edu,2016:table-display": table_display,
     "tag:misd.isi.edu,2015:display":
@@ -259,7 +244,7 @@ column_comment = \
 column_annotations = \
 {'biosample_summary': {'tag:isrd.isi.edu,2016:generated': None},
  'experiment_type': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '{{{$fkeys.isa.experiment_experiment_type_fkey.rowName}}}'}}},
- }
+ 'protocol': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '{{{$fkeys.isa.experiment_protocol_fkey.rowName}}}'}}}}
 
 
 

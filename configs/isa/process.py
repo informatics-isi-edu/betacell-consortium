@@ -22,11 +22,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['description'],
-                   constraint_names=[('isa', 'process_description_key')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'process_pkey')],
+    ),
+    em.Key.define(['description'],
+                   constraint_names=[('isa', 'process_description_key')],
     ),
 ]
 
