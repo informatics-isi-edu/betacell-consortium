@@ -41,35 +41,39 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['url'],
-                   constraint_names=[('isa', 'processed_tomography_data_url_key')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'processed_tomography_data_pkey')],
+    ),
+    em.Key.define(['url'],
+                   constraint_names=[('isa', 'processed_tomography_data_url_key')],
     ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['process'],
-            'isa', 'process', ['RID'],
-            constraint_names=[('isa', 'processed_tomography_data_process_fkey')],
-    ),
-    em.ForeignKey.define(['biosample', 'dataset'],
-            'isa', 'biosample', ['RID', 'dataset'],
-            constraint_names=[('isa', 'processed_tomography_data_biosample_fkey')],
-        on_update='CASCADE',
-        on_delete='RESTRICT',
-    ),
     em.ForeignKey.define(['dataset'],
             'isa', 'dataset', ['RID'],
             constraint_names=[('isa', 'processed_tomography_data_dataset_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='RESTRICT',
+    ),
+    em.ForeignKey.define(['process'],
+            'isa', 'process', ['RID'],
+            constraint_names=[('isa', 'processed_tomography_data_process_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
     ),
     em.ForeignKey.define(['file_type'],
             'vocab', 'file_type_terms', ['id'],
             constraint_names=[('isa', 'processed_tomography_data_file_type_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+    ),
+    em.ForeignKey.define(['biosample'],
+            'isa', 'biosample', ['RID'],
+            constraint_names=[('isa', 'processed_tomography_data_biosample_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+        on_update='CASCADE',
+        on_delete='RESTRICT',
     ),
 ]
 

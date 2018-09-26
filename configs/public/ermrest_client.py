@@ -2,38 +2,36 @@ import argparse
 from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
 
-table_name = 'relationship_types'
-schema_name = 'data_commons'
+table_name = 'ermrest_client'
+schema_name = 'public'
 
 column_defs = [
-    em.Column.define('cvterm_dbxref', em.builtin_types['text'],
+    em.Column.define('id', em.builtin_types['text'],
         nullok=False,
     ),
-    em.Column.define('is_reflexive', em.builtin_types['boolean'],
-        nullok=False,
+    em.Column.define('display_name', em.builtin_types['text'],
     ),
-    em.Column.define('is_transitive', em.builtin_types['boolean'],
+    em.Column.define('full_name', em.builtin_types['text'],
+    ),
+    em.Column.define('email', em.builtin_types['text'],
+    ),
+    em.Column.define('client_obj', em.builtin_types['jsonb'],
         nullok=False,
     ),
 ]
 
 
 key_defs = [
-    em.Key.define(['cvterm_dbxref'],
-                   constraint_names=[('data_commons', 'relationship_types_pkey')],
-    ),
     em.Key.define(['RID'],
-                   constraint_names=[('data_commons', 'relationship_types_RID_key')],
+                   constraint_names=[('public', 'ermrest_client_pkey')],
+    ),
+    em.Key.define(['id'],
+                   constraint_names=[('public', 'ermrest_client_id_key')],
     ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['cvterm_dbxref'],
-            'data_commons', 'cvterm', ['dbxref'],
-            constraint_names=[('data_commons', 'relationship_types_cvterm_dbxref_fkey')],
-        on_delete='CASCADE',
-    ),
 ]
 
 
@@ -43,7 +41,9 @@ table_comment = \
 None
 
 table_display = {}
-table_acls = {}
+table_acls = \
+{'delete': [], 'enumerate': [], 'insert': [], 'select': [], 'update': []}
+
 table_acl_bindings = {}
 table_annotations = {
     "tag:isrd.isi.edu,2016:visible-columns": visible_columns,

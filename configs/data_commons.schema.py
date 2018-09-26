@@ -3,18 +3,18 @@ from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
 
 table_names = [
-    'db',
-    'cvtermprop',
-    'cv',
-    'cvterm_dbxref',
-    'domain_registry',
-    'cvtermpath',
-    'cvterm',
-    'cvterm_relationship',
-    'relationship_types',
-    'dbxref',
-    'cvtermsynonym',
 ]
+acls = \
+{   'delete': [   'https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764',
+                  'https://auth.globus.org/176baec4-ed26-11e5-8e88-22000ab4b42b',
+                  'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a'],
+    'insert': [   'https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764',
+                  'https://auth.globus.org/176baec4-ed26-11e5-8e88-22000ab4b42b',
+                  'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a',
+                  'https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d'],
+    'update': [   'https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764',
+                  'https://auth.globus.org/176baec4-ed26-11e5-8e88-22000ab4b42b',
+                  'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a']}
 
 schema_def = em.Schema.define(
         'data_commons',

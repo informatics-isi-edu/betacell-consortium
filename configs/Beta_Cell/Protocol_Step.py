@@ -37,6 +37,7 @@ fkey_defs = [
     em.ForeignKey.define(['Protocol'],
             'Beta_Cell', 'Protocol', ['RID'],
             constraint_names=[('Beta_Cell', 'Protocol_Step_Protocol_FKey')],
+        acls={'insert': ['*'], 'update': ['*']},
     ),
 ]
 

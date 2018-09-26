@@ -2,31 +2,26 @@ import argparse
 from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
 
-table_name = 'file'
-schema_name = 'isa'
+table_name = 'File'
+schema_name = 'Beta_Cell'
 
 column_defs = [
-    em.Column.define('id', em.builtin_types['serial4'],
-        nullok=False,
+    em.Column.define('URL', em.builtin_types['text'],
+        annotations={'tag:isrd.isi.edu,2017:asset': {'filename_column': 'filename', 'byte_count_column': 'byte_count', 'url_pattern': '/hatrac/commons/data/{{{Dataset}}}/{{#encode}}{{{Filename}}}{{/encode}}', 'md5': 'md5'}, 'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '[**{{Filename}}**]({{{URL}}})'}, 'detailed': {'markdown_pattern': '[**{{Filename}}**]({{{URL}}})'}}},
     ),
-    em.Column.define('url', em.builtin_types['text'],
-        annotations={'tag:isrd.isi.edu,2017:asset': {'filename_column': 'filename', 'byte_count_column': 'byte_count', 'url_pattern': '/hatrac/commons/data/{{{dataset}}}/{{#encode}}{{{filename}}}{{/encode}}', 'md5': 'md5'}, 'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '[**{{filename}}**]({{{url}}})'}, 'detailed': {'markdown_pattern': '[**{{filename}}**]({{{url}}})'}}},
-    ),
-    em.Column.define('filename', em.builtin_types['text'],
+    em.Column.define('Filename', em.builtin_types['text'],
         nullok=False,
         annotations={'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '[**{{filename}}**]({{{url}}})'}, 'detailed': {'markdown_pattern': '[**{{filename}}**]({{{url}}})'}}},
     ),
-    em.Column.define('description', em.builtin_types['markdown'],
+    em.Column.define('Description', em.builtin_types['markdown'],
     ),
     em.Column.define('byte_count', em.builtin_types['int8'],
     ),
-    em.Column.define('submitted_on', em.builtin_types['timestamptz'],
+    em.Column.define('Submitted_On', em.builtin_types['timestamptz'],
     ),
     em.Column.define('md5', em.builtin_types['text'],
     ),
-    em.Column.define('legacy_file_id', em.builtin_types['int4'],
-    ),
-    em.Column.define('dataset', em.builtin_types['text'],
+    em.Column.define('Dataset', em.builtin_types['text'],
         nullok=False,
     ),
 ]
@@ -34,24 +29,19 @@ column_defs = [
 
 key_defs = [
     em.Key.define(['RID'],
-                   constraint_names=[('isa', 'file_RID_key')],
+                   constraint_names=[('Beta_Cell', 'File_RID_key')],
     ),
-    em.Key.define(['url'],
-                   constraint_names=[('isa', 'file_url_key')],
-    ),
-    em.Key.define(['legacy_file_id'],
-                   constraint_names=[('isa', 'file_legacy_file_id_key')],
-    ),
-    em.Key.define(['id'],
-                   constraint_names=[('isa', 'file_pkey')],
+    em.Key.define(['URL'],
+                   constraint_names=[('Beta_Cell', 'File_url_key')],
     ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['dataset'],
-            'isa', 'dataset', ['accession'],
-            constraint_names=[('isa', 'file_dataset_fkey')],
+    em.ForeignKey.define(['Dataset'],
+            'isa', 'dataset', ['RID'],
+            constraint_names=[('Beta_Cell', 'File_Dataset_FKey')],
+        acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='SET NULL',
     ),
@@ -85,28 +75,21 @@ table_annotations = {
     "tag:misd.isi.edu,2015:display":
 {'name': 'Supplementary Files'}
 ,
+    "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
     "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
     "tag:isrd.isi.edu,2016:table-alternatives":
 {'compact': ['isa', 'file_compact'], 'compact/brief': ['isa', 'file_compact']}
 ,
-    "tag:isrd.isi.edu,2016:visible-foreign-keys": visible_foreign_keys,
 }
-column_comment = \
-{'RCB': 'System-generated row created by user provenance.',
- 'RCT': 'System-generated row creation timestamp.',
- 'RID': 'System-generated unique row ID.',
- 'RMB': 'System-generated row modified by user provenance.',
- 'RMT': 'System-generated row modification timestamp'}
-
 column_annotations = \
-{'filename': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '[**{{filename}}**]({{{url}}})'},
+{'Filename': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '[**{{filename}}**]({{{url}}})'},
                                                        'detailed': {'markdown_pattern': '[**{{filename}}**]({{{url}}})'}}},
- 'url': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '[**{{filename}}**]({{{url}}})'},
-                                                  'detailed': {'markdown_pattern': '[**{{filename}}**]({{{url}}})'}},
+ 'URL': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '[**{{Filename}}**]({{{URL}}})'},
+                                                  'detailed': {'markdown_pattern': '[**{{Filename}}**]({{{URL}}})'}},
          'tag:isrd.isi.edu,2017:asset': {'byte_count_column': 'byte_count',
                                          'filename_column': 'filename',
                                          'md5': 'md5',
-                                         'url_pattern': '/hatrac/commons/data/{{{dataset}}}/{{#encode}}{{{filename}}}{{/encode}}'}}}
+                                         'url_pattern': '/hatrac/commons/data/{{{Dataset}}}/{{#encode}}{{{Filename}}}{{/encode}}'}}}
 
 
 

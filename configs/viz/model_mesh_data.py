@@ -24,25 +24,25 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['mesh', 'model'],
-                   constraint_names=[('viz', 'model_mesh_data_model_mesh_key')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('viz', 'model_mesh_data_pkey')],
+    ),
+    em.Key.define(['mesh', 'model'],
+                   constraint_names=[('viz', 'model_mesh_data_model_mesh_key')],
     ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['model'],
-            'viz', 'model', ['RID'],
-            constraint_names=[('viz', 'model_mesh_data_model_fkey')],
-        on_update='CASCADE',
-        on_delete='RESTRICT',
-    ),
     em.ForeignKey.define(['mesh'],
             'isa', 'mesh_data', ['RID'],
             constraint_names=[('viz', 'model_mesh_data_mesh_fkey')],
+        on_update='CASCADE',
+        on_delete='RESTRICT',
+    ),
+    em.ForeignKey.define(['model'],
+            'viz', 'model', ['RID'],
+            constraint_names=[('viz', 'model_mesh_data_model_fkey')],
         on_update='CASCADE',
         on_delete='RESTRICT',
     ),

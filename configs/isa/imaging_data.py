@@ -11,10 +11,6 @@ column_defs = [
     ),
     em.Column.define('anatomy', em.builtin_types['text'],
     ),
-    em.Column.define('device', em.builtin_types['text'],
-    ),
-    em.Column.define('equipment_model', em.builtin_types['text'],
-    ),
     em.Column.define('description', em.builtin_types['markdown'],
     ),
     em.Column.define('url', em.builtin_types['text'],
@@ -46,32 +42,25 @@ column_defs = [
 
 
 key_defs = [
+    em.Key.define(['RID'],
+                   constraint_names=[('isa', 'imaging_data_pkey')],
+    ),
     em.Key.define(['dataset', 'RID'],
                    constraint_names=[('isa', 'imaging_data_dataset_RID_key')],
     ),
     em.Key.define(['url'],
                    constraint_names=[('isa', 'imaging_data_url_key')],
     ),
-    em.Key.define(['RID'],
-                   constraint_names=[('isa', 'imaging_data_pkey')],
-    ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['device'],
-            'vocab', 'image_creation_device_terms', ['dbxref'],
-            constraint_names=[('isa', 'imaging_data_device_fkey')],
-    ),
     em.ForeignKey.define(['dataset'],
             'isa', 'dataset', ['RID'],
             constraint_names=[('isa', 'imaging_data_dataset_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='RESTRICT',
-    ),
-    em.ForeignKey.define(['equipment_model'],
-            'vocab', 'instrument_terms', ['dbxref'],
-            constraint_names=[('isa', 'imaging_data_equipment_model_fkey')],
     ),
 ]
 

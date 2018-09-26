@@ -41,6 +41,11 @@ key_defs = [
 
 
 fkey_defs = [
+    em.ForeignKey.define(['experiment_type'],
+            'vocab', 'experiment_type_terms', ['RID'],
+            constraint_names=[('isa', 'experiment_experiment_type_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+    ),
     em.ForeignKey.define(['dataset'],
             'isa', 'dataset', ['RID'],
             constraint_names=[('isa', 'experiment_dataset_fkey')],
@@ -50,12 +55,9 @@ fkey_defs = [
     em.ForeignKey.define(['protocol'],
             'Beta_Cell', 'Protocol', ['RID'],
             constraint_names=[('isa', 'experiment_protocol_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='RESTRICT',
-    ),
-    em.ForeignKey.define(['experiment_type'],
-            'vocab', 'experiment_type_terms', ['RID'],
-            constraint_names=[('isa', 'experiment_experiment_type_fkey')],
     ),
 ]
 
@@ -220,7 +222,18 @@ table_display = \
                                       '{{biosample_summary}}{{/biosample_summary}}'}}
 
 table_acls = {}
-table_acl_bindings = {}
+table_acl_bindings = \
+{'dataset_suppl_edit_guard': {'projection': [{'outbound': ['isa',
+                                                           'experiment_dataset_fkey']},
+                                             {'outbound': ['isa',
+                                                           'dataset_project_fkey']},
+                                             {'outbound': ['isa',
+                                                           'project_groups_fkey']},
+                                             'groups'],
+                              'projection_type': 'acl',
+                              'scope_acl': ['https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d'],
+                              'types': ['update', 'delete']}}
+
 table_annotations = {
     "tag:isrd.isi.edu,2016:table-display": table_display,
     "tag:misd.isi.edu,2015:display":
