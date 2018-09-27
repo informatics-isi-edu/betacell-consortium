@@ -2,8 +2,8 @@ import argparse
 from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
 
-table_name = 'experiment'
-schema_name = 'isa'
+table_name = 'Experiment'
+schema_name = 'Beta_Cell'
 
 column_defs = [
     em.Column.define('dataset', em.builtin_types['text'],
