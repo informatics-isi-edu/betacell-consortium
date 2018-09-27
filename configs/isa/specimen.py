@@ -28,32 +28,27 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('isa', 'specimen_RIDkey1')],
-    ),
     em.Key.define(['dataset', 'RID'],
                    constraint_names=[('isa', 'specimen_RID_key')],
        comment = 'RID and dataset must be distinct.',
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('isa', 'specimen_RIDkey1')],
     ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['cellular_location'],
-            'vocab', 'cellular_location_terms', ['id'],
-            constraint_names=[('isa', 'specimen_cellular_location_terms_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
-    ),
-    em.ForeignKey.define(['dataset'],
-            'isa', 'dataset', ['RID'],
-            constraint_names=[('isa', 'specimen_dataset_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
-    ),
     em.ForeignKey.define(['cell_line'],
             'isa', 'cell_line', ['RID'],
             constraint_names=[('isa', 'specimen_cell_line_fkey')],
         acls={'insert': ['*'], 'update': ['*']},
         comment='Must be a valid reference to a cell line.',
+    ),
+    em.ForeignKey.define(['dataset'],
+            'isa', 'dataset', ['RID'],
+            constraint_names=[('isa', 'specimen_dataset_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
     ),
     em.ForeignKey.define(['protocol'],
             'Beta_Cell', 'Protocol', ['RID'],
@@ -61,6 +56,11 @@ fkey_defs = [
         acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='RESTRICT',
+    ),
+    em.ForeignKey.define(['cellular_location'],
+            'vocab', 'cellular_location_terms', ['id'],
+            constraint_names=[('isa', 'specimen_cellular_location_terms_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
     ),
 ]
 
@@ -165,7 +165,8 @@ visible_foreign_keys = \
 {'*': [{'source': [{'outbound': ['isa', 'specimen_protocol_fkey']},
                    {'inbound': ['Beta_Cell', 'Protocol_Step_Protocol_FKey']},
                    'RID']},
-       {'source': [{'inbound': ['isa', 'biosample_specimen_fkey']}, 'RID']}]}
+       {'source': [{'inbound': ['Beta_Cell', 'Biosample_Specimen_FKey']},
+                   'RID']}]}
 
 table_comment = \
 'Table of biological speciments from which biosamples will be created.'

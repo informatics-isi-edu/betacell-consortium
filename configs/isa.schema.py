@@ -13,8 +13,6 @@ table_names = [
     'project',
     'person',
     'experiment',
-    'xray_tomography_data',
-    'biosample',
     'project_member',
     'project_publication',
     'cell_line',

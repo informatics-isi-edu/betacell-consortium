@@ -42,14 +42,14 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('isa', 'imaging_data_pkey')],
+    em.Key.define(['url'],
+                   constraint_names=[('isa', 'imaging_data_url_key')],
     ),
     em.Key.define(['dataset', 'RID'],
                    constraint_names=[('isa', 'imaging_data_dataset_RID_key')],
     ),
-    em.Key.define(['url'],
-                   constraint_names=[('isa', 'imaging_data_url_key')],
+    em.Key.define(['RID'],
+                   constraint_names=[('isa', 'imaging_data_pkey')],
     ),
 ]
 

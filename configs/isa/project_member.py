@@ -16,7 +16,7 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['person', 'project_id'],
+    em.Key.define(['project_id', 'person'],
                    constraint_names=[('isa', 'project_member_pkey')],
     ),
     em.Key.define(['RID'],

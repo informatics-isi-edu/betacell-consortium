@@ -31,16 +31,16 @@ key_defs = [
 
 
 fkey_defs = [
+    em.ForeignKey.define(['RCB'],
+            'public', 'ermrest_client', ['id'],
+            constraint_names=[('isa', 'dataset_rcb_fkey')],
+        acls={'insert': ['*'], 'update': ['*']},
+    ),
     em.ForeignKey.define(['project'],
             'isa', 'project', ['id'],
             constraint_names=[('isa', 'dataset_project_fkey')],
         on_update='CASCADE',
         on_delete='RESTRICT',
-    ),
-    em.ForeignKey.define(['RCB'],
-            'public', 'ermrest_client', ['id'],
-            constraint_names=[('isa', 'dataset_rcb_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
     ),
 ]
 
@@ -104,7 +104,7 @@ visible_columns = \
 
 visible_foreign_keys = \
 {'*': [['viz', 'model_dataset_fkey'], ['isa', 'experiment_dataset_fkey'],
-       ['isa', 'biosample_dataset_fkey'], ['isa', 'file_dataset_fkey']]}
+       ['Beta_Cell', 'Biosample_Dataset_FKey'], ['isa', 'file_dataset_fkey']]}
 
 table_comment = \
 None
