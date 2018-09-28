@@ -16,10 +16,10 @@ def init_variables(catalog_num=1):
     __main__.model_root = model_root
 
     # Get references to main tables for manipulating the model.
-    __main__.experiment = model_root.table('isa', 'experiment')
-    __main__.specimen = model_root.table('isa','specimen')
-    __main__.biosample = model_root.table('Beta_Cell', 'Biosample')
-    __main__.dataset = model_root.table('isa', 'dataset')
+    __main__.Experiment = model_root.table('Beta_Cell', 'Experiment')
+    __main__.Specimen = model_root.table('Beta_Cell','Specimen')
+    __main__.Biosample = model_root.table('Beta_Cell', 'Biosample')
+    __main__.Dataset = model_root.table('Beta_Cell', 'Dataset')
     __main__.imaging_data = model_root.table('isa', 'imaging_data')
     __main__.model = model_root.table("viz", 'model')
 
@@ -36,9 +36,9 @@ def init_variables(catalog_num=1):
     __main__.vocab = vocab
 
     # Get tables....
-    __main__.experiment_dp = isa.experiment
+    __main__.Experiment_dp = Beta_Cell.Experiment
     __main__.Biosample_dp = Beta_Cell.Biosample
-    __main__.dataset_dp = isa.dataset
+    __main__.dataset_dp = Beta_Cell.Dataset
     __main__.XRay_Tomography_dp = Beta_Cell.XRay_Tomography_Data
-    __main__.specimen_dp = isa.specimen
+    __main__.Specimen_dp = Beta_Cell.Specimen
     __main__.model_dp = viz.model

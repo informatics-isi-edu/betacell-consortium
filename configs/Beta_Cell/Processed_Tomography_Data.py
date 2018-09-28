@@ -38,48 +38,46 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['URL'],
-                   constraint_names=[('isa', 'Processed_Tomography_Data_URL_Key')],
-    ),
     em.Key.define(['RID'],
-                   constraint_names=[('isa', 'Processed_Tomography_Data_Key')],
+                   constraint_names=[('Beta_Cell', 'Processed_Tomography_Data_Key')],
+    ),
+    em.Key.define(['URL'],
+                   constraint_names=[('Beta_Cell', 'Processed_Tomography_Data_URL_Key')],
     ),
 ]
 
 
 fkey_defs = [
+    em.ForeignKey.define(['Biosample', 'Dataset'],
+            'Beta_Cell', 'Biosample', ['RID', 'Dataset'],
+            constraint_names=[('Beta_Cell', 'Processed_Tomography_Data_Dataset_RID_FKey')],
+        acls={'insert': ['*'], 'update': ['*']},
+        comment='Ensure that the dataset for the file is the same as for the biosample',
+    ),
     em.ForeignKey.define(['Dataset'],
-            'isa', 'dataset', ['RID'],
+            'Beta_Cell', 'Dataset', ['RID'],
             constraint_names=[('Beta_Cell', 'Processed_Tomography_Data_Dataset_FKey')],
-                         annotations={'tag:misd.isi.edu,2015:display': {}, 'tag:isrd.isi.edu,2016:foreign-key': {
-                             'domain_filter_pattern': 'RID={{{$fkeys.Beta_Cell.Processed_Tomography_Data_Biosample_FKey.values._Dataset}}}'}},
+        annotations={'tag:misd.isi.edu,2015:display': {}, 'tag:isrd.isi.edu,2016:foreign-key': {'domain_filter_pattern': 'RID={{{$fkeys.Beta_Cell.Processed_Tomography_Data_Biosample_FKey.values._Dataset}}}'}},
         acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='RESTRICT',
+    ),
+    em.ForeignKey.define(['Process'],
+            'isa', 'process', ['RID'],
+            constraint_names=[('Beta_Cell', 'Processed_Tomography_Data_Process_FKey')],
+        acls={'insert': ['*'], 'update': ['*']},
     ),
     em.ForeignKey.define(['Biosample'],
             'Beta_Cell', 'Biosample', ['RID'],
-                         annotations={'tag:isrd.isi.edu,2016:foreign-key': {
-                             'domain_filter_pattern': 'Dataset={{{_Dataset}}}'}},
             constraint_names=[('Beta_Cell', 'Processed_Tomography_Data_Biosample_FKey')],
+        annotations={'tag:isrd.isi.edu,2016:foreign-key': {'domain_filter_pattern': 'Dataset={{{_Dataset}}}'}},
         acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='RESTRICT',
     ),
-    em.ForeignKey.define(['Biosample', 'Dataset'],
-                         'Beta_Cell', 'Biosample', ['RID', 'Dataset'],
-                         constraint_names=[('isa', 'Processed_Tomography_Data_Dataset_RID_FKey')],
-                         acls={'insert': ['*'], 'update': ['*']},
-                         comment='Ensure that the dataset for the file is the same as for the biosample',
-                         ),
-    em.ForeignKey.define(['Process'],
-            'isa', 'process', ['RID'],
-            constraint_names=[('isa', 'Processed_Tomography_Data_Process_FKey')],
-        acls={'insert': ['*'], 'update': ['*']},
-    ),
     em.ForeignKey.define(['File_Type'],
             'vocab', 'file_type_terms', ['id'],
-            constraint_names=[('isa', 'Processed_Tomography_Data_File_Type_FKey')],
+            constraint_names=[('Beta_Cell', 'Processed_Tomography_Data_File_Type_FKey')],
         acls={'insert': ['*'], 'update': ['*']},
     ),
 ]
@@ -87,17 +85,24 @@ fkey_defs = [
 
 visible_columns = \
 {'compact': [['Beta_Cell', 'Processed_Tomography_Data_Key'], 'Biosample', 'URL',
-             'File_Type',  'Pipeline', 'Byte_Count',
-             'submitted_on'],
+             'File_Type',
+             ['Beta_Cell', 'Processed_Tomography_Data_Process_FKey'],
+             'Byte_Count', 'Submitted_On'],
  'detailed': [['Beta_Cell', 'Processed_Tomography_Data_Key'],
               ['Beta_Cell', 'Processed_Tomography_Data_Dataset_FKey'],
               ['Beta_Cell', 'Processed_Tomography_Data_Biosample_FKey'],
               ['Beta_Cell', 'Processed_Tomography_Data_Process_FKey'],
               ['Beta_Cell', 'Processed_Tomography_Data_Output_Type_FKey'],
-              ['Beta_Cell', 'Processed_Tomography_Data_File_Type_FKey'], 'Byte_Count',
-              'MD5', 'Submitted_On'],
- 'entry': ['RID', ['isa', 'Processed_Tomography_Data_Dataset_FKey'],
-           ['Beta_Cell', 'Processed_Tomography_Data_Biosample_FKey'],
+              ['Beta_Cell', 'Processed_Tomography_Data_File_Type_FKey'],
+              'Byte_Count', 'MD5', 'Submitted_On'],
+ 'entry': ['RID',
+           {'markdown_name': 'Dataset',
+            'source': [{'outbound': ['Beta_Cell',
+                                     'Processed_Tomography_Data_Dataset_FKey']},
+                       'RID']},
+           {'markdown_name': 'Biosample',
+            'source': [{'outbound': ['Beta_Cell', 'Processed_Tomography_Data_Biosample_FKey']},'RID']
+            },
            ['Beta_Cell', 'Processed_Tomography_Data_Process_FKey'],
            ['Beta_Cell', 'Processed_Tomography_Data_Output_Type_FKey'],
            ['Beta_Cell', 'Processed_Tomography_Data_File_Type_FKey'], 'URL',
@@ -112,10 +117,10 @@ visible_columns = \
                                               'Processed_Tomography_Data_Biosample_FKey']},
                                 {'outbound': ['Beta_Cell',
                                               'Biosample_Specimen_FKey']},
-                                {'outbound': ['isa',
-                                              'specimen_cell_line_fkey']},
-                                {'outbound': ['isa',
-                                              'cell_line_cell_line_terms_fkey']},
+                                {'outbound': ['Beta_Cell',
+                                              'Specimen_Cell_Line_FKey']},
+                                {'outbound': ['Beta_Cell',
+                                              'Cell_Line_Cell_Line_Terms_FKey']},
                                 'name']},
                     {'aggregate': 'array',
                      'comment': 'Additives used to treat the cell line for the '
@@ -126,7 +131,8 @@ visible_columns = \
                                               'Processed_Tomography_Data_Biosample_FKey']},
                                 {'outbound': ['Beta_Cell',
                                               'Biosample_Specimen_FKey']},
-                                {'outbound': ['isa', 'specimen_protocol_fkey']},
+                                {'outbound': ['Beta_Cell',
+                                              'Specimen_Protocol_FKey']},
                                 {'inbound': ['Beta_Cell',
                                              'Protocol_Step_Protocol_FKey']},
                                 {'inbound': ['Beta_Cell',
@@ -143,7 +149,8 @@ visible_columns = \
                                               'Processed_Tomography_Data_Biosample_FKey']},
                                 {'outbound': ['Beta_Cell',
                                               'Biosample_Specimen_FKey']},
-                                {'outbound': ['isa', 'specimen_protocol_fkey']},
+                                {'outbound': ['Beta_Cell',
+                                              'Specimen_Protocol_FKey']},
                                 {'inbound': ['Beta_Cell',
                                              'Protocol_Step_Protocol_FKey']},
                                 {'inbound': ['Beta_Cell',
@@ -159,7 +166,8 @@ visible_columns = \
                                               'Processed_Tomography_Data_Biosample_FKey']},
                                 {'outbound': ['Beta_Cell',
                                               'Biosample_Specimen_FKey']},
-                                {'outbound': ['isa', 'specimen_protocol_fkey']},
+                                {'outbound': ['Beta_Cell',
+                                              'Specimen_Protocol_FKey']},
                                 {'inbound': ['Beta_Cell',
                                              'Protocol_Step_Protocol_FKey']},
                                 'Duration'],
@@ -190,7 +198,7 @@ table_comment = \
 'None'
 
 table_display = \
-{'row_name': {'row_markdown_pattern': '{{{filename}}}'}}
+{'row_name': {'row_markdown_pattern': '{{{Filename}}}'}}
 
 table_acls = {}
 table_acl_bindings = {}
@@ -201,17 +209,16 @@ table_annotations = {
     "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
 }
 column_annotations = \
-{'file_type': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '{{{$fkeys.isa.Processed_Tomography_Data_file_type_FKey.rowName}}}'}}},
- 'filename': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '[**{{filename}}**]({{{URL}}})'},
-                                                       'detailed': {'markdown_pattern': '[**{{filename}}**]({{{URL}}})'}}},
- 'process': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '{{{$fkeys.isa.Processed_Tomography_Data_process_FKey.rowName}}}'}}},
- 'submitted_on': {'tag:isrd.isi.edu,2016:immutable': None},
- 'URL': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '[**{{filename}}**]({{{URL}}})'},
-                                                  'detailed': {'markdown_pattern': '[**{{filename}}**]({{{URL}}})'}},
-         'tag:isrd.isi.edu,2017:asset': {'byte_count_column': 'byte_count',
-                                         'filename_column': 'filename',
-                                         'md5': 'md5',
-                                         'url_pattern': '/hatrac/commons/data/{{{_Dataset}}}/{{{_Biosample}}}/{{{Gilename}}}'}}}
+{'File_Type': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '{{{$fkeys.isa.Processed_Tomography_Data_File_Type_FKey.rowName}}}'}}},
+ 'Filename': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '[**{{Filename}}**]({{{URL}}})'},
+                                                       'detailed': {'markdown_pattern': '[**{{Filename}}**]({{{URL}}})'}}},
+ 'Process': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '{{{$fkeys.isa.Processed_Tomography_Data_process_FKey.rowName}}}'}}},
+ 'URL': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '[**{{Filename}}**]({{{URL}}})'},
+                                                  'detailed': {'markdown_pattern': '[**{{Filename}}**]({{{URL}}})'}},
+         'tag:isrd.isi.edu,2017:asset': {'byte_count_column': 'Byte_Count',
+                                         'filename_column': 'Filename',
+                                         'md5': 'MD5',
+                                         'url_pattern': '/hatrac/commons/data/{{{_Dataset}}}/{{{_Biosample}}}/{{{Filename}}}'}}}
 
 
 

@@ -28,18 +28,18 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('Beta_Cell', 'File_RID_key')],
-    ),
     em.Key.define(['URL'],
                    constraint_names=[('Beta_Cell', 'File_url_key')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('Beta_Cell', 'File_RID_key')],
     ),
 ]
 
 
 fkey_defs = [
     em.ForeignKey.define(['Dataset'],
-            'isa', 'dataset', ['RID'],
+            'Beta_Cell', 'Dataset', ['RID'],
             constraint_names=[('Beta_Cell', 'File_Dataset_FKey')],
         acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',

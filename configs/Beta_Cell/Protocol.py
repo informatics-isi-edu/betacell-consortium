@@ -21,11 +21,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['Name'],
-                   constraint_names=[('Beta_Cell', 'Protocol_idkey1')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('Beta_Cell', 'Protocol_RIDkey1')],
+    ),
+    em.Key.define(['Name'],
+                   constraint_names=[('Beta_Cell', 'Protocol_idkey1')],
     ),
 ]
 

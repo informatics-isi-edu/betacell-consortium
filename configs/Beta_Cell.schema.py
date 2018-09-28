@@ -3,11 +3,16 @@ from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
 
 table_names = [
+    'Processed_Tomography_Data',
     'Protocol',
-    'Protocol_Step_Additive_Term',
+    'File',
+    'Specimen',
+    'Dataset',
+    'Experiment',
     'XRay_Tomography_Data',
     'Biosample',
-    'File',
+    'Protocol_Step_Additive_Term',
+    'Cell_Line',
     'Protocol_Step',
     'Protocol_Type',
 ]
