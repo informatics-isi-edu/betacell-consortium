@@ -34,6 +34,12 @@ key_defs = [
 
 
 fkey_defs = [
+    em.ForeignKey.define(['Cell_Line_Id'],
+            'vocab', 'cell_line_terms', ['id'],
+            constraint_names=[('Beta_Cell', 'Cell_Line_Cell_Line_Terms_FKey')],
+        acls={'insert': ['*'], 'update': ['*']},
+        comment='Must be a valid reference to a cell line.',
+    ),
     em.ForeignKey.define(['Anatomy'],
             'vocab', 'anatomy_terms', ['id'],
             constraint_names=[('Beta_Cell', 'Cell_Line_Anatomy_FKey')],
@@ -43,12 +49,6 @@ fkey_defs = [
             'vocab', 'species_terms', ['id'],
             constraint_names=[('Beta_Cell', 'Cell_Line_Species_FKey')],
         acls={'insert': ['*'], 'update': ['*']},
-    ),
-    em.ForeignKey.define(['Cell_Line_Id'],
-            'vocab', 'cell_line_terms', ['id'],
-            constraint_names=[('Beta_Cell', 'Cell_Line_Cell_Line_Terms_FKey')],
-        acls={'insert': ['*'], 'update': ['*']},
-        comment='Must be a valid reference to a cell line.',
     ),
     em.ForeignKey.define(['Protocol'],
             'Beta_Cell', 'Protocol', ['RID'],

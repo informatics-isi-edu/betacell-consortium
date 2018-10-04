@@ -20,14 +20,14 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['id'],
-                   constraint_names=[('isa', 'project_publication_pkey')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('isa', 'project_publication_RID_key')],
     ),
-    em.Key.define(['pmid', 'project_id'],
+    em.Key.define(['project_id', 'pmid'],
                    constraint_names=[('isa', 'project_publication_project_id_pmid_key')],
+    ),
+    em.Key.define(['id'],
+                   constraint_names=[('isa', 'project_publication_pkey')],
     ),
 ]
 

@@ -39,11 +39,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('viz', 'model_RID_key')],
-    ),
     em.Key.define(['id'],
                    constraint_names=[('viz', 'model_pkey')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('viz', 'model_RID_key')],
     ),
 ]
 

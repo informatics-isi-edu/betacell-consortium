@@ -22,26 +22,26 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['RID'],
-                   constraint_names=[('Beta_Cell', 'Experiment_RID_Key')],
-    ),
     em.Key.define(['RID', 'Dataset'],
                    constraint_names=[('Beta_Cell', 'Experiment_RID_Dataset_Key')],
+    ),
+    em.Key.define(['RID'],
+                   constraint_names=[('Beta_Cell', 'Experiment_RID_Key')],
     ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['Protocol'],
-            'Beta_Cell', 'Protocol', ['RID'],
-            constraint_names=[('Beta_Cell', 'Experiment_Protocol_FKey')],
+    em.ForeignKey.define(['Dataset'],
+            'Beta_Cell', 'Dataset', ['RID'],
+            constraint_names=[('Beta_Cell', 'Experiment_Dataset_FKey')],
         acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='RESTRICT',
     ),
-    em.ForeignKey.define(['Dataset'],
-            'Beta_Cell', 'Dataset', ['RID'],
-            constraint_names=[('Beta_Cell', 'Experiment_Dataset_FKey')],
+    em.ForeignKey.define(['Protocol'],
+            'Beta_Cell', 'Protocol', ['RID'],
+            constraint_names=[('Beta_Cell', 'Experiment_Protocol_FKey')],
         acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='RESTRICT',

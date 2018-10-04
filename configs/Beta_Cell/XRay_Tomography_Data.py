@@ -13,25 +13,11 @@ column_defs = [
     em.Column.define('Description', em.builtin_types['markdown'],
         comment='None',
     ),
-    em.Column.define('URL', em.builtin_types['text'],
-        annotations={'tag:isrd.isi.edu,2017:asset': {'filename_column': 'Filename', 'byte_count_column': 'Byte_Count', 'url_pattern': '/hatrac/commons/data/{{{_Dataset}}}/{{{_Biosample}}}/{{{Filename}}}', 'md5': 'MD5'}},
-        comment='None',
-    ),
-    em.Column.define('Filename', em.builtin_types['text'],
-        annotations={'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '[**{{Filename}}**]({{{URL}}})'}, 'detailed': {'markdown_pattern': '[**{{Filename}}**]({{{URL}}})'}}},
-        comment='None',
-    ),
     em.Column.define('File_Type', em.builtin_types['text'],
         annotations={'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '{{{$fkeys.Beta_Cell.XRay_Tomography_Data_File_Type_FKey.rowName}}}'}}},
         comment='None',
     ),
-    em.Column.define('Byte_Count', em.builtin_types['int8'],
-        comment='None',
-    ),
     em.Column.define('Submitted_On', em.builtin_types['timestamptz'],
-        comment='None',
-    ),
-    em.Column.define('MD5', em.builtin_types['text'],
         comment='None',
     ),
     em.Column.define('File_Id', em.builtin_types['int4'],
@@ -40,15 +26,26 @@ column_defs = [
     em.Column.define('Biosample', em.builtin_types['ermrest_rid'],
         comment='Biosample from which this X Ray Tomography data was obtained',
     ),
+    em.Column.define('md5', em.builtin_types['text'],
+        nullok=False,
+    ),
+    em.Column.define('length', em.builtin_types['int8'],
+        nullok=False,
+        annotations={'tag:isrd.isi.edu,2016:collumn-display': {'markdown_name': 'Length'}},
+    ),
+    em.Column.define('url', em.builtin_types['text'],
+        nullok=False,
+        annotations={'tag:isrd.isi.edu,2017:asset': {'filename_column': 'filename', 'byte_count_column': 'length', 'url_pattern': '/hatrac/commons/data/{{{_Dataset}}}/{{{_Biosample}}}/{{{filename}}}', 'md5': 'md5'}, 'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '[**{{filename}}**]({{{url}}})'}, 'detailed': {'markdown_pattern': '[**{{filename}}**]({{{url}}})'}}},
+    ),
+    em.Column.define('filename', em.builtin_types['text'],
+        nullok=False,
+        annotations={'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '[**{{filename}}**]({{{url}}})'}, 'detailed': {'markdown_pattern': '[**{{filename}}**]({{{url}}})'}, 'markdown_pattern': 'Filename'}},
+    ),
 ]
 
 
 key_defs = [
-    em.Key.define(['URL'],
-                   constraint_names=[('Beta_Cell', 'XRay_Tomography_Data_Url_Key')],
-       comment = 'Unique URL must be provided.',
-    ),
-    em.Key.define(['RID', 'Dataset'],
+    em.Key.define(['Dataset', 'RID'],
                    constraint_names=[('Beta_Cell', 'XRay_Tomography_Data_Dataset_RID_Key')],
        comment = 'RID and dataset must be distinct.',
     ),
@@ -59,17 +56,17 @@ key_defs = [
 
 
 fkey_defs = [
-    em.ForeignKey.define(['Dataset', 'Biosample'],
-            'Beta_Cell', 'Biosample', ['Dataset', 'RID'],
-            constraint_names=[('Beta_Cell', 'XRay_Tomography_Dataset_RID_FKey')],
-        acls={'insert': ['*'], 'update': ['*']},
-        comment='Ensure that the dataset for the file is the same as for the biosample',
-    ),
     em.ForeignKey.define(['Biosample'],
             'Beta_Cell', 'Biosample', ['RID'],
             constraint_names=[('Beta_Cell', 'XRay_Tomography_Data_Biosample_FKey')],
         annotations={'tag:isrd.isi.edu,2016:foreign-key': {'domain_filter_pattern': 'Dataset={{{_Dataset}}}'}},
         acls={'insert': ['*'], 'update': ['*']},
+    ),
+    em.ForeignKey.define(['Dataset', 'Biosample'],
+            'Beta_Cell', 'Biosample', ['Dataset', 'RID'],
+            constraint_names=[('Beta_Cell', 'XRay_Tomography_Dataset_RID_FKey')],
+        acls={'insert': ['*'], 'update': ['*']},
+        comment='Ensure that the dataset for the file is the same as for the biosample',
     ),
     em.ForeignKey.define(['Dataset'],
             'Beta_Cell', 'Dataset', ['RID'],
@@ -93,24 +90,14 @@ visible_columns = \
         'source': [{'outbound': ['Beta_Cell',
                                  'XRay_Tomography_Data_Biosample_FKey']},
                    'RID']},
-       'Filename', 'Description',
-       ['Beta_Cell', 'XRay_Tomography_Data_File_Type_FKey'], 'Byte_Count',
+       'filename', 'Description',
+       ['Beta_Cell', 'XRay_Tomography_Data_File_Type_FKey'], 'length',
        'submitted_on'],
- 'entry': ['RID',
-           {'markdown_name': 'Dataset',
-            'source': [{'outbound': ['Beta_Cell',
-                                     'XRay_Tomography_Data_Dataset_FKey']},
-                       'RID']},
-           {'markdown_name': 'Biosample',
-            'source': [{'outbound': ['Beta_Cell',
-                                     'XRay_Tomography_Data_Biosample_FKey']},
-                       'RID']},
-
-           'Description',
-
-           'URL', ['Beta_Cell', 'XRay_Tomography_Data_File_Type_FKey'],
-           'Filename', ['Beta_Cell', 'XRay_Tomography_Data_File_Type_FKey'],
-           'Byte_Count', 'MD5', 'submitted_on'],
+ 'entry': ['RID', ['Beta_Cell', 'XRay_Tomography_Data_Dataset_FKey'],
+           ['Beta_Cell', 'XRay_Tomography_Data_Biosample_FKey'], 'Description',
+           'url', ['Beta_Cell', 'XRay_Tomography_Data_File_Type_FKey'],
+           'filename', ['Beta_Cell', 'XRay_Tomography_Data_File_Type_FKey'],
+           'length', 'md5', 'submitted_on'],
  'filter': {'and': [{'entity': True, 'source': 'RID'},
                     {'markdown_name': 'Dataset',
                      'source': [{'outbound': ['Beta_Cell',
@@ -121,7 +108,7 @@ visible_columns = \
                                               'XRay_Tomography_Data_Biosample_FKey']},
                                 {'outbound': ['Beta_Cell',
                                               'Biosample_Specimen_FKey']},
-                                {'outbound': ['isa',
+                                {'outbound': ['Beta_Cell',
                                               'Specimen_Cell_Line_FKey']},
                                 {'outbound': ['isa',
                                               'Cell_Line_Cell_Line_Terms_FKey']},
@@ -179,7 +166,7 @@ visible_columns = \
                     {'entity': True,
                      'markdown_name': 'File Name',
                      'open': False,
-                     'source': 'Filename'},
+                     'source': 'filename'},
                     {'entity': True,
                      'markdown_name': 'Anatomy',
                      'open': True,
@@ -205,7 +192,7 @@ table_comment = \
 'Table to hold X-Ray Tomography MRC files.'
 
 table_display = \
-{'row_name': {'row_markdown_pattern': '{{{Filename}}}'}}
+{'row_name': {'row_markdown_pattern': '{{{filename}}}'}}
 
 table_acls = {}
 table_acl_bindings = {}
@@ -217,24 +204,24 @@ table_annotations = {
 }
 column_comment = \
 {'Biosample': 'Biosample from which this X Ray Tomography data was obtained',
- 'Byte_Count': 'None',
  'Dataset': 'None',
  'Description': 'None',
  'File_Id': 'None',
  'File_Type': 'None',
- 'Filename': 'None',
- 'MD5': 'None',
- 'Submitted_On': 'None',
- 'URL': 'None'}
+ 'Submitted_On': 'None'}
 
 column_annotations = \
 {'File_Type': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '{{{$fkeys.Beta_Cell.XRay_Tomography_Data_File_Type_FKey.rowName}}}'}}},
- 'Filename': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '[**{{Filename}}**]({{{URL}}})'},
-                                                       'detailed': {'markdown_pattern': '[**{{Filename}}**]({{{URL}}})'}}},
- 'URL': {'tag:isrd.isi.edu,2017:asset': {'byte_count_column': 'Byte_Count',
-                                         'filename_column': 'Filename',
-                                         'md5': 'MD5',
-                                         'url_pattern': '/hatrac/commons/data/{{{_Dataset}}}/{{{_Biosample}}}/{{{Filename}}}'}}}
+ 'filename': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '[**{{filename}}**]({{{url}}})'},
+                                                       'detailed': {'markdown_pattern': '[**{{filename}}**]({{{url}}})'},
+                                                       'markdown_pattern': 'Filename'}},
+ 'length': {'tag:isrd.isi.edu,2016:collumn-display': {'markdown_name': 'Length'}},
+ 'url': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '[**{{filename}}**]({{{url}}})'},
+                                                  'detailed': {'markdown_pattern': '[**{{filename}}**]({{{url}}})'}},
+         'tag:isrd.isi.edu,2017:asset': {'byte_count_column': 'length',
+                                         'filename_column': 'filename',
+                                         'md5': 'md5',
+                                         'url_pattern': '/hatrac/commons/data/{{{_Dataset}}}/{{{_Biosample}}}/{{{filename}}}'}}}
 
 
 

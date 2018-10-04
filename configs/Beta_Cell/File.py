@@ -28,11 +28,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['URL'],
-                   constraint_names=[('Beta_Cell', 'File_url_key')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('Beta_Cell', 'File_RID_key')],
+    ),
+    em.Key.define(['URL'],
+                   constraint_names=[('Beta_Cell', 'File_url_key')],
     ),
 ]
 

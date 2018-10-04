@@ -21,12 +21,12 @@ column_defs = [
 
 
 key_defs = [
+    em.Key.define(['RID'],
+                   constraint_names=[('Beta_Cell', 'Protocol_Step_Additive_Term_RIDkey1')],
+    ),
     em.Key.define(['Protocol_Step', 'Additive_Term'],
                    constraint_names=[('Beta_Cell', 'Protocol_Step_Additive_Term_Key')],
        comment = 'protocol and compound must be distinct.',
-    ),
-    em.Key.define(['RID'],
-                   constraint_names=[('Beta_Cell', 'Protocol_Step_Additive_Term_RIDkey1')],
     ),
 ]
 

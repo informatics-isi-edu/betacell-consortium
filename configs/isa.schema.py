@@ -4,7 +4,6 @@ import deriva.core.ermrest_model as em
 
 table_names = [
     'project_investigator',
-    'BellCellPlate',
     'process',
     'imaging_data',
     'BellCellStatus',
@@ -13,7 +12,7 @@ table_names = [
     'mesh_data',
     'project_member',
     'project_publication',
-    'cell_line',
+    'BellCellPlate',
 ]
 annotations = \
 {   'tag:misd.isi.edu,2015:display': {   'name_style': {   'title_case': True,

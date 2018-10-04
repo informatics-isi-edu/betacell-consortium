@@ -12,27 +12,28 @@ column_defs = [
     em.Column.define('Process', em.builtin_types['text'],
         annotations={'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '{{{$fkeys.isa.Processed_Tomography_Data_process_FKey.rowName}}}'}}},
     ),
-    em.Column.define('URL', em.builtin_types['text'],
-        nullok=False,
-        annotations={'tag:isrd.isi.edu,2017:asset': {'filename_column': 'Filename', 'byte_count_column': 'Byte_Count', 'url_pattern': '/hatrac/commons/data/{{{_Dataset}}}/{{{_Biosample}}}/{{{Filename}}}', 'md5': 'MD5'}, 'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '[**{{Filename}}**]({{{URL}}})'}, 'detailed': {'markdown_pattern': '[**{{Filename}}**]({{{URL}}})'}}},
-    ),
-    em.Column.define('Filename', em.builtin_types['text'],
-        nullok=False,
-        annotations={'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '[**{{Filename}}**]({{{URL}}})'}, 'detailed': {'markdown_pattern': '[**{{Filename}}**]({{{URL}}})'}}},
-    ),
     em.Column.define('Data_Type', em.builtin_types['text'],
     ),
     em.Column.define('File_Type', em.builtin_types['text'],
         nullok=False,
         annotations={'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '{{{$fkeys.isa.Processed_Tomography_Data_File_Type_FKey.rowName}}}'}}},
     ),
-    em.Column.define('Byte_Count', em.builtin_types['int8'],
-        nullok=False,
-    ),
-    em.Column.define('MD5', em.builtin_types['text'],
-        nullok=False,
-    ),
     em.Column.define('Biosample', em.builtin_types['text'],
+    ),
+    em.Column.define('filename', em.builtin_types['text'],
+        nullok=False,
+        annotations={'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '[**{{filename}}**]({{{url}}})'}, 'detailed': {'markdown_pattern': '[**{{filename}}**]({{{url}}})'}, 'markdown_pattern': 'Filename'}},
+    ),
+    em.Column.define('url', em.builtin_types['text'],
+        nullok=False,
+        annotations={'tag:isrd.isi.edu,2017:asset': {'filename_column': 'filename', 'byte_count_column': 'length', 'url_pattern': '/hatrac/commons/data/{{{_Dataset}}}/{{{_Biosample}}}/{{{filename}}}', 'md5': 'md5'}, 'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '[**{{filename}}**]({{{url}}})'}, 'detailed': {'markdown_pattern': '[**{{filename}}**]({{{url}}})'}}},
+    ),
+    em.Column.define('length', em.builtin_types['int8'],
+        nullok=False,
+        annotations={'tag:isrd.isi.edu,2016:collumn-display': {'markdown_name': 'Length'}},
+    ),
+    em.Column.define('md5', em.builtin_types['text'],
+        nullok=False,
     ),
 ]
 
@@ -41,18 +42,19 @@ key_defs = [
     em.Key.define(['RID'],
                    constraint_names=[('Beta_Cell', 'Processed_Tomography_Data_Key')],
     ),
-    em.Key.define(['URL'],
-                   constraint_names=[('Beta_Cell', 'Processed_Tomography_Data_URL_Key')],
-    ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['Biosample', 'Dataset'],
-            'Beta_Cell', 'Biosample', ['RID', 'Dataset'],
-            constraint_names=[('Beta_Cell', 'Processed_Tomography_Data_Dataset_RID_FKey')],
+    em.ForeignKey.define(['Process'],
+            'isa', 'process', ['RID'],
+            constraint_names=[('Beta_Cell', 'Processed_Tomography_Data_Process_FKey')],
         acls={'insert': ['*'], 'update': ['*']},
-        comment='Ensure that the dataset for the file is the same as for the biosample',
+    ),
+    em.ForeignKey.define(['File_Type'],
+            'vocab', 'file_type_terms', ['id'],
+            constraint_names=[('Beta_Cell', 'Processed_Tomography_Data_File_Type_FKey')],
+        acls={'insert': ['*'], 'update': ['*']},
     ),
     em.ForeignKey.define(['Dataset'],
             'Beta_Cell', 'Dataset', ['RID'],
@@ -62,10 +64,11 @@ fkey_defs = [
         on_update='CASCADE',
         on_delete='RESTRICT',
     ),
-    em.ForeignKey.define(['Process'],
-            'isa', 'process', ['RID'],
-            constraint_names=[('Beta_Cell', 'Processed_Tomography_Data_Process_FKey')],
+    em.ForeignKey.define(['Dataset', 'Biosample'],
+            'Beta_Cell', 'Biosample', ['Dataset', 'RID'],
+            constraint_names=[('Beta_Cell', 'Processed_Tomography_Data_Dataset_RID_FKey')],
         acls={'insert': ['*'], 'update': ['*']},
+        comment='Ensure that the dataset for the file is the same as for the biosample',
     ),
     em.ForeignKey.define(['Biosample'],
             'Beta_Cell', 'Biosample', ['RID'],
@@ -75,37 +78,30 @@ fkey_defs = [
         on_update='CASCADE',
         on_delete='RESTRICT',
     ),
-    em.ForeignKey.define(['File_Type'],
-            'vocab', 'file_type_terms', ['id'],
-            constraint_names=[('Beta_Cell', 'Processed_Tomography_Data_File_Type_FKey')],
-        acls={'insert': ['*'], 'update': ['*']},
-    ),
 ]
 
 
 visible_columns = \
-{'compact': [['Beta_Cell', 'Processed_Tomography_Data_Key'], 'Biosample', 'URL',
+{'compact': [['Beta_Cell', 'Processed_Tomography_Data_Key'], 'Biosample', 'url',
              'File_Type',
-             ['Beta_Cell', 'Processed_Tomography_Data_Process_FKey'],
-             'Byte_Count', 'Submitted_On'],
+             ['Beta_Cell', 'Processed_Tomography_Data_Process_FKey'], 'length',
+             'Submitted_On'],
  'detailed': [['Beta_Cell', 'Processed_Tomography_Data_Key'],
               ['Beta_Cell', 'Processed_Tomography_Data_Dataset_FKey'],
               ['Beta_Cell', 'Processed_Tomography_Data_Biosample_FKey'],
               ['Beta_Cell', 'Processed_Tomography_Data_Process_FKey'],
               ['Beta_Cell', 'Processed_Tomography_Data_Output_Type_FKey'],
               ['Beta_Cell', 'Processed_Tomography_Data_File_Type_FKey'],
-              'Byte_Count', 'MD5', 'Submitted_On'],
+              'length', 'md5', 'Submitted_On'],
  'entry': ['RID',
            {'markdown_name': 'Dataset',
             'source': [{'outbound': ['Beta_Cell',
                                      'Processed_Tomography_Data_Dataset_FKey']},
                        'RID']},
-           {'markdown_name': 'Biosample',
-            'source': [{'outbound': ['Beta_Cell', 'Processed_Tomography_Data_Biosample_FKey']},'RID']
-            },
+           ['Beta_Cell', 'Processed_Tomography_Data_Biosample_FKey'],
            ['Beta_Cell', 'Processed_Tomography_Data_Process_FKey'],
            ['Beta_Cell', 'Processed_Tomography_Data_Output_Type_FKey'],
-           ['Beta_Cell', 'Processed_Tomography_Data_File_Type_FKey'], 'URL',
+           ['Beta_Cell', 'Processed_Tomography_Data_File_Type_FKey'], 'url',
            'Submitted_On'],
  'filter': {'and': [{'entity': True, 'source': 'RID'},
                     {'markdown_name': 'Dataset',
@@ -198,7 +194,7 @@ table_comment = \
 'None'
 
 table_display = \
-{'row_name': {'row_markdown_pattern': '{{{Filename}}}'}}
+{'row_name': {'row_markdown_pattern': '{{{filename}}}'}}
 
 table_acls = {}
 table_acl_bindings = {}
@@ -210,15 +206,17 @@ table_annotations = {
 }
 column_annotations = \
 {'File_Type': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '{{{$fkeys.isa.Processed_Tomography_Data_File_Type_FKey.rowName}}}'}}},
- 'Filename': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '[**{{Filename}}**]({{{URL}}})'},
-                                                       'detailed': {'markdown_pattern': '[**{{Filename}}**]({{{URL}}})'}}},
  'Process': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '{{{$fkeys.isa.Processed_Tomography_Data_process_FKey.rowName}}}'}}},
- 'URL': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '[**{{Filename}}**]({{{URL}}})'},
-                                                  'detailed': {'markdown_pattern': '[**{{Filename}}**]({{{URL}}})'}},
-         'tag:isrd.isi.edu,2017:asset': {'byte_count_column': 'Byte_Count',
-                                         'filename_column': 'Filename',
-                                         'md5': 'MD5',
-                                         'url_pattern': '/hatrac/commons/data/{{{_Dataset}}}/{{{_Biosample}}}/{{{Filename}}}'}}}
+ 'filename': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '[**{{filename}}**]({{{url}}})'},
+                                                       'detailed': {'markdown_pattern': '[**{{filename}}**]({{{url}}})'},
+                                                       'markdown_pattern': 'Filename'}},
+ 'length': {'tag:isrd.isi.edu,2016:collumn-display': {'markdown_name': 'Length'}},
+ 'url': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '[**{{filename}}**]({{{url}}})'},
+                                                  'detailed': {'markdown_pattern': '[**{{filename}}**]({{{url}}})'}},
+         'tag:isrd.isi.edu,2017:asset': {'byte_count_column': 'length',
+                                         'filename_column': 'filename',
+                                         'md5': 'md5',
+                                         'url_pattern': '/hatrac/commons/data/{{{_Dataset}}}/{{{_Biosample}}}/{{{filename}}}'}}}
 
 
 
