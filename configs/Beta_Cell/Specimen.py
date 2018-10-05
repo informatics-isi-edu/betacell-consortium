@@ -2,86 +2,75 @@ import argparse
 from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
 
-table_name = 'specimen'
-schema_name = 'isa'
+table_name = 'Specimen'
+schema_name = 'Beta_Cell'
 
 column_defs = [
-    em.Column.define('dataset', em.builtin_types['text'],
-        comment='Cell line used for the speciman.',
-    ),
-    em.Column.define('description', em.builtin_types['text'],
+    em.Column.define('Description', em.builtin_types['text'],
         comment='Description of the specimen.',
     ),
-    em.Column.define('collection_date', em.builtin_types['date'],
+    em.Column.define('Collection_Date', em.builtin_types['date'],
         comment='Date the specimen was obtained',
     ),
-    em.Column.define('cell_line', em.builtin_types['text'],
-        comment='Cell line used for the speciman.',
+    em.Column.define('Cell_Line', em.builtin_types['text'],
+        comment='Cell line used for the specimen.',
     ),
-    em.Column.define('cellular_location', em.builtin_types['text'],
+    em.Column.define('Cellular_Location', em.builtin_types['text'],
         comment='Cellular location of the specimen',
     ),
-    em.Column.define('protocol', em.builtin_types['text'],
-        annotations={'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '{{{$fkeys.isa.experiment_protocol_fkey.rowName}}}'}}},
+    em.Column.define('Protocol', em.builtin_types['text'],
+        annotations={'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '{{{$fkeys.Beta_Cell.Experiment_Protocol_FKey.rowName}}}'}}},
     ),
 ]
 
 
 key_defs = [
     em.Key.define(['RID'],
-                   constraint_names=[('isa', 'specimen_RIDkey1')],
-    ),
-    em.Key.define(['dataset', 'RID'],
-                   constraint_names=[('isa', 'specimen_RID_key')],
-       comment = 'RID and dataset must be distinct.',
+                   constraint_names=[('Beta_Cell', 'Specimen_RIDkey1')],
     ),
 ]
 
 
 fkey_defs = [
-    em.ForeignKey.define(['cell_line'],
-            'isa', 'cell_line', ['RID'],
-            constraint_names=[('isa', 'specimen_cell_line_fkey')],
+    em.ForeignKey.define(['Cell_Line'],
+            'Beta_Cell', 'Cell_Line', ['RID'],
+            constraint_names=[('Beta_Cell', 'Specimen_Cell_Line_FKey')],
         acls={'insert': ['*'], 'update': ['*']},
         comment='Must be a valid reference to a cell line.',
     ),
-    em.ForeignKey.define(['protocol'],
+    em.ForeignKey.define(['Cellular_Location'],
+            'vocab', 'cellular_location_terms', ['id'],
+            constraint_names=[('Beta_Cell', 'Specimen_Cellular_Location_Terms_FKey')],
+        acls={'insert': ['*'], 'update': ['*']},
+    ),
+    em.ForeignKey.define(['Protocol'],
             'Beta_Cell', 'Protocol', ['RID'],
-            constraint_names=[('isa', 'specimen_protocol_fkey')],
+            constraint_names=[('Beta_Cell', 'Specimen_Protocol_FKey')],
         acls={'insert': ['*'], 'update': ['*']},
         on_update='CASCADE',
         on_delete='RESTRICT',
-    ),
-    em.ForeignKey.define(['dataset'],
-            'isa', 'dataset', ['RID'],
-            constraint_names=[('isa', 'specimen_dataset_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
-    ),
-    em.ForeignKey.define(['cellular_location'],
-            'vocab', 'cellular_location_terms', ['id'],
-            constraint_names=[('isa', 'specimen_cellular_location_terms_fkey')],
-        acls={'insert': ['*'], 'update': ['*']},
     ),
 ]
 
 
 visible_columns = \
-{'*': ['RID', 'local_identifier', 'protocol',
+{'*': ['RID', 'Protocol',
        {'entity': True,
         'markdown_name': 'Cell Line',
         'open': True,
-        'source': [{'outbound': ['isa', 'specimen_cell_line_fkey']},
-                   {'outbound': ['isa', 'cell_line_cell_line_terms_fkey']},
+        'source': [{'outbound': ['Beta_Cell', 'Specimen_Cell_Line_FKey']},
+                   {'outbound': ['Beta_Cell',
+                                 'Cell_Line_Cell_Line_Terms_FKey']},
                    'name']},
        {'markdown_name': 'Cellular Location',
-        'source': [{'outbound': ['isa',
-                                 'specimen_cellular_location_terms_fkey']},
+        'source': [{'outbound': ['Beta_Cell',
+                                 'Specimen_Cellular_Location_Terms_FKey']},
                    'name']},
        {'aggregate': 'array',
         'comment': 'Additive used to treat the cell line for the experiment',
         'entity': True,
         'markdown_name': 'Additive',
-        'source': [{'outbound': ['isa', 'specimen_protocol_fkey']},
+        'source': [{'outbound': ['Beta_Cell', 'Specimen_Protocol_FKey']},
                    {'inbound': ['Beta_Cell', 'Protocol_Step_Protocol_FKey']},
                    {'inbound': ['Beta_Cell',
                                 'Protocol_Step_Additive_Term_Protocol_Step_FKey']},
@@ -92,7 +81,7 @@ visible_columns = \
         'comment': 'Concentration of additive applied to cell line in mM',
         'entity': True,
         'markdown_name': 'Concentration',
-        'source': [{'outbound': ['isa', 'specimen_protocol_fkey']},
+        'source': [{'outbound': ['Beta_Cell', 'Specimen_Protocol_FKey']},
                    {'inbound': ['Beta_Cell', 'Protocol_Step_Protocol_FKey']},
                    {'inbound': ['Beta_Cell',
                                 'Protocol_Step_Additive_Term_Protocol_Step_FKey']},
@@ -102,35 +91,34 @@ visible_columns = \
         'comment': 'Duration in minutes',
         'entity': True,
         'markdown_name': 'Duration',
-        'source': [{'outbound': ['isa', 'specimen_protocol_fkey']},
+        'source': [{'outbound': ['Beta_Cell', 'Specimen_Protocol_FKey']},
                    {'inbound': ['Beta_Cell', 'Protocol_Step_Protocol_FKey']},
                    'Duration'],
         'ux_mode': 'choices'},
-       'description', 'collection_date'],
- 'entry': [['isa', 'local_identifier'], ['isa', 'specimen_dataset_fkey'],
-           ['isa', 'specimen_cell_line_fkey'],
-           ['isa', 'specimen_protocol_fkey'],
-           ['isa', 'specimen_compound_specimen_fkey'], 'timepoint',
-           ['isa', 'specimen_cellular_location_terms_fkey'], 'description',
-           'collection_date'],
+       'Description', 'Collection_Date'],
+ 'entry': [['Beta_Cell', 'Specimen_Cell_Line_FKey'],
+           ['Beta_Cell', 'Specimen_Protocol_FKey'],
+           ['Beta_Cell', 'Specimen_Cellular_Location_Terms_FKey'],
+           'Description', 'Collection_Date'],
  'filter': {'and': [{'entity': True,
                      'markdown_name': 'Cell Line',
                      'open': True,
-                     'source': [{'outbound': ['isa',
-                                              'specimen_cell_line_fkey']},
-                                {'outbound': ['isa',
-                                              'cell_line_cell_line_terms_fkey']},
+                     'source': [{'outbound': ['Beta_Cell',
+                                              'Specimen_Cell_Line_FKey']},
+                                {'outbound': ['Beta_Cell',
+                                              'Cell_Line_Cell_Line_Terms_FKey']},
                                 'name']},
                     {'markdown_name': 'Cellular Location',
-                     'source': [{'outbound': ['isa',
-                                              'specimen_cellular_location_terms_fkey']},
+                     'source': [{'outbound': ['Beta_Cell',
+                                              'Specimen_Cellular_Location_Terms_FKey']},
                                 'name']},
                     {'aggregate': 'array',
                      'comment': 'Additive used to treat the cell line for the '
                                 'experiment',
                      'entity': True,
                      'markdown_name': 'Additive',
-                     'source': [{'outbound': ['isa', 'specimen_protocol_fkey']},
+                     'source': [{'outbound': ['Beta_Cell',
+                                              'Specimen_Protocol_FKey']},
                                 {'inbound': ['Beta_Cell',
                                              'Protocol_Step_Protocol_FKey']},
                                 {'inbound': ['Beta_Cell',
@@ -143,7 +131,8 @@ visible_columns = \
                                 'line in mM',
                      'entity': True,
                      'markdown_name': 'Concentration',
-                     'source': [{'outbound': ['isa', 'specimen_protocol_fkey']},
+                     'source': [{'outbound': ['Beta_Cell',
+                                              'Specimen_Protocol_FKey']},
                                 {'inbound': ['Beta_Cell',
                                              'Protocol_Step_Protocol_FKey']},
                                 {'inbound': ['Beta_Cell',
@@ -154,18 +143,23 @@ visible_columns = \
                      'comment': 'Duration in minutes',
                      'entity': True,
                      'markdown_name': 'Duration',
-                     'source': [{'outbound': ['isa', 'specimen_protocol_fkey']},
+                     'source': [{'outbound': ['Beta_Cell',
+                                              'Specimen_Protocol_FKey']},
                                 {'inbound': ['Beta_Cell',
                                              'Protocol_Step_Protocol_FKey']},
                                 'Duration'],
                      'ux_mode': 'choices'},
-                    'description', 'collection_date']}}
+                    {'source': [{'inbound': ['Beta_Cell',
+                                             'Biosample_Specimen_FKey']},
+                                'RID']},
+                    'Description', 'Collection_Date']}}
 
 visible_foreign_keys = \
-{'*': [{'source': [{'outbound': ['isa', 'specimen_protocol_fkey']},
+{'*': [{'source': [{'outbound': ['Beta_Cell', 'Specimen_Protocol_FKey']},
                    {'inbound': ['Beta_Cell', 'Protocol_Step_Protocol_FKey']},
                    'RID']},
-       {'source': [{'inbound': ['isa', 'biosample_specimen_fkey']}, 'RID']}]}
+       {'source': [{'inbound': ['Beta_Cell', 'Biosample_Specimen_FKey']},
+                   'RID']}]}
 
 table_comment = \
 'Table of biological speciments from which biosamples will be created.'
@@ -180,14 +174,13 @@ table_annotations = {
     "tag:isrd.isi.edu,2016:visible-columns": visible_columns,
 }
 column_comment = \
-{'cell_line': 'Cell line used for the speciman.',
- 'cellular_location': 'Cellular location of the specimen',
- 'collection_date': 'Date the specimen was obtained',
- 'dataset': 'Cell line used for the speciman.',
- 'description': 'Description of the specimen.'}
+{'Cell_Line': 'Cell line used for the specimen.',
+ 'Cellular_Location': 'Cellular location of the specimen',
+ 'Collection_Date': 'Date the specimen was obtained',
+ 'Description': 'Description of the specimen.'}
 
 column_annotations = \
-{'protocol': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '{{{$fkeys.isa.experiment_protocol_fkey.rowName}}}'}}}}
+{'Protocol': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '{{{$fkeys.Beta_Cell.Experiment_Protocol_FKey.rowName}}}'}}}}
 
 
 

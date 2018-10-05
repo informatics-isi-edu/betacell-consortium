@@ -3,17 +3,6 @@ from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
 
 table_names = [
-    'db',
-    'cvtermprop',
-    'cv',
-    'cvterm_dbxref',
-    'domain_registry',
-    'cvtermpath',
-    'cvterm',
-    'cvterm_relationship',
-    'relationship_types',
-    'dbxref',
-    'cvtermsynonym',
 ]
 acls = \
 {   'delete': [   'https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764',

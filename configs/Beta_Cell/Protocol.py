@@ -97,7 +97,11 @@ visible_columns = \
                      'ux_mode': 'choices'},
                     'Description']}}
 
-visible_foreign_keys = {}
+visible_foreign_keys = \
+{'*': [['Beta_Cell', 'Protocol_Step_Protocol_FKey'],
+       ['isa', 'experiment_protocol_fkey'], ['isa', 'biosample_protocol_fkey'],
+       ['isa', 'specimen_protocol_fkey'], ['isa', 'cell_line_protocol_fkey']]}
+
 table_comment = \
 'Table containing names of Beta Cell protocols'
 

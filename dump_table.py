@@ -108,6 +108,8 @@ def print_foreign_key_defs(table, stream):
 
         for i in ['annotations', 'acls', 'acl_bindings', 'on_update', 'on_delete', 'comment']:
             a = getattr(fkey, i)
+            if i == 'annotations':
+                print('Found annotation',a)
             if not (a == {} or a is None or a == 'NO ACTION' or a == ''):
                 v = "'" + a + "'" if re.match('comment|on_update|on_delete', i) else a
                 print("        {}={},".format(i, v), file=stream)

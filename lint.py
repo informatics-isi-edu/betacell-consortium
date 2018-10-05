@@ -132,11 +132,11 @@ def validate_source(source, model, table, columns, inbound_tables, outbound_tabl
     return []
 
 
-def validate_columns(column_list, model, table):
+def validate_source_list(sources, model, table, filter=False):
     columns, inbound, outbound = {}, {}, {}
     results = []
 
-    for i in column_list:
+    for i in sources:
         if type(i) is dict:
             results.extend(validate_filter_terms(i))
             source = i['source']
@@ -171,18 +171,18 @@ def validate_table(catalog, table):
             if not 'and' in a:
                 vc_results['filter'] = [('error','Invalid filter spec')]
             else:
-                vc_results['filter'] = validate_columns(a['and'], model_root, table)
+                vc_results['filter'] = validate_source_list(a['and'], model_root, table, filter=True)
         else:
-            vc_results[f] = validate_columns(a, model_root, table)
+            vc_results[f] = validate_source_list(a, model_root, table)
     fk_results = {}
     for f, a in table.visible_foreign_keys.items():
         if f not in ['*', 'compact', 'detailed', 'entry']:
             fk_results.setdefault('unknown', []).append(('warning', 'Invalid context: {}'.format(f)))
             continue
         if f == 'filter':
-            fk_results['filter'] = validate_columns(a['and'], model_root, table)
+            fk_results['filter'] = validate_source_list(a['and'], model_root, table)
         else:
-            fk_results[f] = validate_columns(a, model_root, table)
+            fk_results[f] = validate_source_list(a, model_root, table)
 
     print("Table {}.visible_columns".format(table.name))
     print_validation_results(vc_results)

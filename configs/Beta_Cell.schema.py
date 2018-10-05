@@ -3,10 +3,19 @@ from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
 
 table_names = [
-    'Protocol_Step',
+    'Processed_Tomography_Data',
     'Protocol',
-    'Protocol_Type',
     'Protocol_Step_Additive_Term',
+    'Collection_Biosample',
+    'Specimen',
+    'Dataset',
+    'Experiment',
+    'XRay_Tomography_Data',
+    'Biosample',
+    'File',
+    'Cell_Line',
+    'Protocol_Step',
+    'Protocol_Type',
 ]
 annotations = \
 {'tag:misd.isi.edu,2015:display': {'name_style': {'underline_space': True}}}

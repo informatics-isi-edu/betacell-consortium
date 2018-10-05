@@ -74,7 +74,7 @@ def main():
             fknames = [i.names for i in table.foreign_keys]
             for i in mod.fkey_defs:
                 if i['names'] not in fknames:
-                    print('Creating foreign key {}'.format(i['names']))
+                    print('Creating foreign key {} {}'.format(i['names'], i))
                     table.create_fkey(catalog, i)
     if mode == 'annotations':
         if len(mod.table_annotations) > 0:
@@ -86,7 +86,7 @@ def main():
             for c in table.column_definitions:
                 if c.name in mod.column_annotations:
                     for k, v in mod.column_annotations[c.name].items():
-                        print('setting column annotation', k)
+                        print('setting column annotation', c.name, k)
                         c.annotations[k] = v
 
         table.apply(catalog)

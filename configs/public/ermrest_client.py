@@ -22,11 +22,11 @@ column_defs = [
 
 
 key_defs = [
-    em.Key.define(['id'],
-                   constraint_names=[('public', 'ermrest_client_id_key')],
-    ),
     em.Key.define(['RID'],
                    constraint_names=[('public', 'ermrest_client_pkey')],
+    ),
+    em.Key.define(['id'],
+                   constraint_names=[('public', 'ermrest_client_id_key')],
     ),
 ]
 
