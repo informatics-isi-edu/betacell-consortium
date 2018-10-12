@@ -169,9 +169,9 @@ def print_table_def(table, provide_system, stream):
 )""".format(provide_system), file=stream)
 
 
-def print_defs(server, schema_name, table_name, stream):
+def print_defs(server, catalog_id, schema_name, table_name, stream):
     credential = get_credential(server)
-    catalog = ErmrestCatalog('https', server, 1, credentials=credential)
+    catalog = ErmrestCatalog('https', server, catalog_id, credentials=credential)
     model_root = catalog.getCatalogModel()
     schema = model_root.schemas[schema_name]
     table = schema.tables[table_name]
@@ -197,8 +197,8 @@ schema_name = '{}'
 
 def main():
     parser = argparse.ArgumentParser(description='Dump annotations  for table {}:{}')
-    parser.add_argument('--server', default='pbcconsortium.isrd.isi.edu',
-                        help='Catalog server name')
+    parser.add_argument('server', help='Catalog server name')
+    parser.add_argument('--catalog', default=1, help='ID number of desired catalog')
     parser.add_argument('table', help='schema:table_name)')
     parser.add_argument('--outfile', default="stdout", help='output file name)')
     args = parser.parse_args()
@@ -206,13 +206,14 @@ def main():
     server = args.server
     schema_name = args.table.split(':')[0]
     table_name = args.table.split(':')[1]
+    catalog_id = args.catalog
     outfile = args.outfile
 
     if outfile == 'stdout':
-        print_defs(server, schema_name, table_name, sys.stdout)
+        print_defs(server, catalog_id, schema_name, table_name, sys.stdout)
     else:
         with open(outfile, 'w') as f:
-            print_defs(server, schema_name, table_name, f)
+            print_defs(server, catalog_id, schema_name, table_name, f)
         f.close()
 
 
