@@ -21,12 +21,15 @@ config = {
                 'create_record_before_upload': 'False',
                 'dir_pattern': '^.*/DS-(?P<dataset>[0-9A-Z-]+)/EXP-(?P<experiment>[0-9A-Z-]+/tomography)',
                 'ext_pattern': '.mrc$',
+                "hatrac_options": {
+                    "versioned_uris": "True"
+                },
                 'file_pattern': '.*_(?P<capillary>[0-9]+)_(?P<position>[0-9]+)_pre_rec',
                 'hatrac_templates': {
                     'hatrac_uri': '/hatrac/commons/data/{dataset_rid}/{biosample_rid}/{file_name}'},
                 'metadata_query_templates': [
                     '/attribute/D:=Beta_Cell:Dataset/E:=Beta_Cell:Experiment/RID={experiment}/B:=Beta_Cell:Biosample/Capillary_Number={capillary}/Sample_Position={position}/dataset_rid:=D:RID,experiment_rid:=E:RID,biosample_rid:=B:RID'],
-                'record_query_template': '/entity/{target_table}/Dataset={dataset_rid}/Biosample={biosample_rid}/URL={URI_urlencoded}',
+                'record_query_template': '/entity/{target_table}/Dataset={dataset_rid}/Biosample={biosample_rid}/md5={md5}/url={URI_urlencoded}',
                 'target_table': ['Beta_Cell', 'XRay_tomography_data']
             },
             {
@@ -41,12 +44,15 @@ config = {
                 'create_record_before_upload': 'False',
                 'dir_pattern': '^.*/DS-(?P<dataset>[0-9A-Z-]+)/EXP-(?P<experiment>[0-9A-Z-]+/proteomics)',
                 'ext_pattern': '.csv$',
+                "hatrac_options": {
+                    "versioned_uris": "True"
+                },
                 'file_pattern': '.*_(?P<capillary>[0-9]+)_(?P<position>[0-9]+)_pre_rec',
                 'hatrac_templates': {
                     'hatrac_uri': '/hatrac/commons/data/{dataset_rid}/{biosample_rid}/{file_name}'},
                 'metadata_query_templates': [
                     '/attribute/D:=Beta_Cell:Dataset/E:=Beta_Cell:Experiment/RID={experiment}/B:=Beta_Cell:Biosample/Capillary_Number={capillary}/Sample_Position={position}/dataset_rid:=D:RID,experiment_rid:=E:RID,biosample_rid:=B:RID'],
-                'record_query_template': '/entity/{target_table}/Dataset={dataset_rid}/Biosample={biosample_rid}/URL={URI_urlencoded}',
+                'record_query_template': '/entity/{target_table}/Dataset={dataset_rid}/Biosample={biosample_rid}/md5={md5}/url={URI_urlencoded}',
                 'target_table': ['Beta_Cell', 'XRay_tomography_data']
             }
         ],
@@ -55,7 +61,7 @@ config = {
 }
 
 server = 'pbcconsortium.isrd.isi.edu'
-credential = get_credential('server')
+credential = get_credential(server)
 
 catalog = ErmrestCatalog('https', server, 1, credentials=credential)
 model_root = catalog.getCatalogModel()
