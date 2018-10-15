@@ -120,6 +120,9 @@ def main():
         table.acl_bindings['table_display'] = mod.table_display
         table.apply(catalog)
 
+    if mode == 'catalog':
+        model_root.annotations['tag:isrd.isi.edu,2017:bulk-upload'] = config
+        model_root.apply(catalog)
 
 if __name__ == "__main__":
     main()
