@@ -24,6 +24,11 @@ tag_map = {
     'export':             'tag:isrd.isi.edu,2016:export',
 }
 
+column_annotations = {}
+column_acls = {}
+column_acl_bindings = {}
+column_comment = {}
+
 def print_annotations(table, stream):
 
     tag_rmap = {v: k for k, v in tag_map.items()}
@@ -62,10 +67,6 @@ def print_annotations(table, stream):
             print(',', file=stream)
     print('}', file=stream)
 
-    column_annotations = {}
-    column_acls = {}
-    column_acl_bindings = {}
-    column_comment = {}
     for i in table.column_definitions:
         if not (i.comment == '' or i.comment == None):
             column_comment[i.name] = i.comment
@@ -147,10 +148,10 @@ def print_column_defs(table, stream):
         if col.nullok is False:
             print("        nullok=False,", file=stream)
         for i in ['annotations', 'acls', 'acl_bindings', 'comment']:
-            a = getattr(col, i)
-            if not (a == {} or a is None):
-                v = "'" + a + "'" if i == 'comment' else a
-                print("        {}={},".format(i, v), file=stream)
+            colvar = eval('column_' + i)
+            print('colvar', i, col.name, colvar.keys())
+            if col.name in colvar:   #if we have a value for this field....
+                print("        {}=column_{}['{}'],".format(i, i, col.name), file=stream)
         print('    ),', file=stream)
     print(']', file=stream)
     return provide_system
@@ -185,12 +186,13 @@ schema_name = '{}'
 
     provide_system = print_column_defs(table, stream)
     print('\n', file=stream)
+    print_annotations(table, stream)
+    print('\n', file=stream)
     print_key_defs(table, stream)
     print('\n', file=stream)
     print_foreign_key_defs(table, stream)
     print('\n', file=stream)
-    print_annotations(table, stream)
-    print('\n', file=stream)
+
     print_table_def(table, provide_system, stream)
     return
 
