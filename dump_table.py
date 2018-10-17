@@ -24,6 +24,11 @@ tag_map = {
     'export':             'tag:isrd.isi.edu,2016:export',
 }
 
+column_annotations = {}
+column_acls = {}
+column_acl_bindings = {}
+column_comment = {}
+
 def print_annotations(table, stream):
 
     tag_rmap = {v: k for k, v in tag_map.items()}
@@ -62,10 +67,6 @@ def print_annotations(table, stream):
             print(',', file=stream)
     print('}', file=stream)
 
-    column_annotations = {}
-    column_acls = {}
-    column_acl_bindings = {}
-    column_comment = {}
     for i in table.column_definitions:
         if not (i.comment == '' or i.comment == None):
             column_comment[i.name] = i.comment
@@ -147,10 +148,10 @@ def print_column_defs(table, stream):
         if col.nullok is False:
             print("        nullok=False,", file=stream)
         for i in ['annotations', 'acls', 'acl_bindings', 'comment']:
-            a = getattr(col, i)
-            if not (a == {} or a is None):
-                v = "'" + a + "'" if i == 'comment' else a
-                print("        {}={},".format(i, v), file=stream)
+            colvar = eval('column_' + i)
+            print('colvar', i, col.name, colvar.keys())
+            if col.name in colvar:   #if we have a value for this field....
+                print("        {}=column_{}['{}'],".format(i, i, col.name), file=stream)
         print('    ),', file=stream)
     print(']', file=stream)
     return provide_system
@@ -169,9 +170,9 @@ def print_table_def(table, provide_system, stream):
 )""".format(provide_system), file=stream)
 
 
-def print_defs(server, schema_name, table_name, stream):
+def print_defs(server, catalog_id, schema_name, table_name, stream):
     credential = get_credential(server)
-    catalog = ErmrestCatalog('https', server, 1, credentials=credential)
+    catalog = ErmrestCatalog('https', server, catalog_id, credentials=credential)
     model_root = catalog.getCatalogModel()
     schema = model_root.schemas[schema_name]
     table = schema.tables[table_name]
@@ -185,20 +186,21 @@ schema_name = '{}'
 
     provide_system = print_column_defs(table, stream)
     print('\n', file=stream)
+    print_annotations(table, stream)
+    print('\n', file=stream)
     print_key_defs(table, stream)
     print('\n', file=stream)
     print_foreign_key_defs(table, stream)
     print('\n', file=stream)
-    print_annotations(table, stream)
-    print('\n', file=stream)
+
     print_table_def(table, provide_system, stream)
     return
 
 
 def main():
     parser = argparse.ArgumentParser(description='Dump annotations  for table {}:{}')
-    parser.add_argument('--server', default='pbcconsortium.isrd.isi.edu',
-                        help='Catalog server name')
+    parser.add_argument('server', help='Catalog server name')
+    parser.add_argument('--catalog', default=1, help='ID number of desired catalog')
     parser.add_argument('table', help='schema:table_name)')
     parser.add_argument('--outfile', default="stdout", help='output file name)')
     args = parser.parse_args()
@@ -206,13 +208,14 @@ def main():
     server = args.server
     schema_name = args.table.split(':')[0]
     table_name = args.table.split(':')[1]
+    catalog_id = args.catalog
     outfile = args.outfile
 
     if outfile == 'stdout':
-        print_defs(server, schema_name, table_name, sys.stdout)
+        print_defs(server, catalog_id, schema_name, table_name, sys.stdout)
     else:
         with open(outfile, 'w') as f:
-            print_defs(server, schema_name, table_name, f)
+            print_defs(server, catalog_id, schema_name, table_name, f)
         f.close()
 
 

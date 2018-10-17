@@ -11,7 +11,7 @@ def main():
     parser.add_argument('--defpath', default='configs', help='path to table definitions')
     parser.add_argument('--catalog', default=1, help='Catalog id (integer)')
     parser.add_argument('table', help='Name table to be loaded schema:table.')
-    parser.add_argument('mode', choices=['table', 'columns', 'annotations', 'comment', 'fkeys', 'acls'],
+    parser.add_argument('mode', choices=['table', 'columns', 'annotations', 'comment', 'keys', 'fkeys', 'acls'],
                         help='Operation to perform')
 
     args = parser.parse_args()
@@ -76,6 +76,19 @@ def main():
                 if i['names'] not in fknames:
                     print('Creating foreign key {} {}'.format(i['names'], i))
                     table.create_fkey(catalog, i)
+    if mode == 'keys':
+            if replace:
+                print('deleting keys')
+                for k in table.keys:
+                    k.delete(catalog)
+                model_root = catalog.getCatalogModel()
+                schema = model_root.schemas[mod.schema_name]
+                table = schema.tables[mod.table_name]
+            knames = [i.names for i in table.keys]
+            for i in mod.key_defs:
+                if i['names'] not in knames:
+                    print('Creating key {} {}'.format(i['names'], i))
+                    table.create_key(catalog, i)
     if mode == 'annotations':
         if len(mod.table_annotations) > 0:
             for k,v in mod.table_annotations.items():
@@ -107,6 +120,9 @@ def main():
         table.acl_bindings['table_display'] = mod.table_display
         table.apply(catalog)
 
+    if mode == 'catalog':
+        model_root.annotations['tag:isrd.isi.edu,2017:bulk-upload'] = config
+        model_root.apply(catalog)
 
 if __name__ == "__main__":
     main()

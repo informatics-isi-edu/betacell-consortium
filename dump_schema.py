@@ -5,9 +5,9 @@ import pprint
 import sys
 
 
-def print_schema(server, schema_name, stream):
+def print_schema(server, catalog_id, schema_name, stream):
     credential = get_credential(server)
-    catalog = ErmrestCatalog('https', server, 1, credentials=credential)
+    catalog = ErmrestCatalog('https', server, catalog_id, credentials=credential)
     model_root = catalog.getCatalogModel()
     schema = model_root.schemas[schema_name]
 
@@ -20,12 +20,10 @@ import deriva.core.ermrest_model as em
         print("    '{}',".format(i), file=stream)
     print(']', file=stream)
 
-    if schema.annotations != {}:
-        print('annotations = \\', file=stream)
-        pprint.pprint(schema.annotations, indent=4, width=80, depth=None, compact=False, stream=stream)
-    if schema.acls != {}:
-        print('acls = \\', file=stream)
-        pprint.pprint(schema.acls, indent=4, width=80, depth=None, compact=False, stream=stream)
+    print('annotations = \\', file=stream)
+    pprint.pprint(schema.annotations, indent=4, width=80, depth=None, compact=False, stream=stream)
+    print('acls = \\', file=stream)
+    pprint.pprint(schema.acls, indent=4, width=80, depth=None, compact=False, stream=stream)
 
     print('''
 schema_def = em.Schema.define(
@@ -39,15 +37,16 @@ schema_def = em.Schema.define(
     print("""
 def main():
     parser = argparse.ArgumentParser(description='Load  defs for schema {0}')
-    parser.add_argument('--server', default='pbcconsortium.isrd.isi.edu',
-                        help='Catalog server name')
+    parser.add_argument('server',  help='Catalog server name')
+    parser.add_argument('--catalog', default=1, help='ID of desired catalog')
     args = parser.parse_args()
 
     server = args.server
+    catalog_id = args.catalog
     schema_name = '{0}'
 
     credential = get_credential(server)
-    catalog = ErmrestCatalog('https', server, 1, credentials=credential)
+    catalog = ErmrestCatalog('https', server, catalog_id, credentials=credential)
     model_root = catalog.getCatalogModel()
 
     schema = model_root.create_schema(catalog, schema_def)
@@ -59,8 +58,8 @@ if __name__ == "__main__":
 
 def main():
     parser = argparse.ArgumentParser(description='Dump definition for schema {}:{}')
-    parser.add_argument('--server', default='pbcconsortium.isrd.isi.edu',
-                        help='Catalog server name')
+    parser.add_argument('server', help='Catalog server name')
+    parser.add_argument('--catalog', default=1, help='ID number of desired catalog')
     parser.add_argument('schema', help='schema)')
     parser.add_argument('--outfile', default="stdout", help='output file name)')
     args = parser.parse_args()
@@ -69,12 +68,13 @@ def main():
     outfile = args.outfile
     server = args.server
     schema_name = args.schema
+    catalog = args.catalog
 
     if outfile == 'stdout':
-        print_schema(server, schema_name, sys.stdout)
+        print_schema(server, catalog, schema_name, sys.stdout)
     else:
         with open(outfile, 'w') as f:
-            print_schema(server, schema_name, f)
+            print_schema(server, catalog, schema_name, f)
         f.close()
 
 if __name__ == "__main__":
