@@ -17,7 +17,10 @@ tag_map = {
     'column_display':     'tag:isrd.isi.edu,2016:column-display',
     'asset':              'tag:isrd.isi.edu,2017:asset',
     'export':             'tag:isrd.isi.edu,2016:export',
+    'generated': 'tag:isrd.isi.edu,2016:generated'
 }
+
+
 
 def print_variable(name, value, stream):
     """
@@ -36,33 +39,50 @@ def print_variable(name, value, stream):
 
 
 def print_tag_variables(annotations, tag_map, stream):
+    """
+    For each convenient annotation name in tag_map, print out a variable declaration of the form annotation = v where
+    v is the value of the annotation the dictionary.
+    :param annotations:
+    :param tag_map:
+    :param stream:
+    :return:
+    """
     for t,v in tag_map.items():
         if v in annotations:
-            if v == '' or v == {} or v == None or v == {}:
-                print("{} = {}".format(t,v))
-            else:
-                print('{} = \\'.format(t), file=stream)
-                pprint.pprint(v, width=80, depth=None, compact=True, stream=stream)
-                print('', file=stream)
+            print_variable(t, annotations[v], stream)
 
-def print_annotations(annotations, tag_map, stream):
+def print_annotations(annotations, tag_map, stream, var_name='annotations'):
+    """
+    Print out the annotation definition in annotations, substituting the python variable for each of the tags specified
+    in tag_map.
+    :param annotations:
+    :param tag_map:
+    :param stream:
+    :return:
+    """
     var_map = {v: k for k, v in tag_map.items()}
     if annotations == {}:
-        print('annotations = {}', file=stream)
-        return
-    print('annotations = \\', file=stream)
-    for t,v in annotations.items():
-        if t in var_map:
-            print('{} : {}'.format(t,var_map[t]), file=stream)
-        else:
-            print('{} : \\'.format(t), file=stream)
-            pprint.pprint(v, width=80, depth=None, compact=True, stream=stream)
-
+        print('{} = {{}}'.format(var_name), file=stream)
+    else:
+        print('{} = {{'.format(var_name), file=stream)
+        for t,v in annotations.items():
+            if t in var_map:
+                # Use variable value rather then inline annotation value.
+                print('    {} : {}'.format(t,var_map[t]), file=stream)
+            else:
+                print('    {} : \\'.format(t), file=stream)
+                pprint.pprint(v, width=80, depth=None, compact=True, stream=stream)
+        print('}', file=stream)
 
 def print_catalog(server, catalog_id, dumpdir):
     credential = get_credential(server)
     catalog = ErmrestCatalog('https', server, catalog_id, credentials=credential)
     model_root = catalog.getCatalogModel()
+
+    try:
+        os.makedirs(dumpdir, exist_ok=True)
+    except OSError:
+        print("Creation of the directory %s failed" % dumpdir)
 
     with open('{}/catalog-{}'.format(dumpdir,catalog_id), 'w') as f:
         print_tag_variables(model_root.annotations, tag_map, f)
@@ -81,7 +101,7 @@ def print_catalog(server, catalog_id, dumpdir):
 
         for i in schema.tables:
             print('Dumping {},{}'.format(schema_name, i))
-            filename = 'configs/{}/{}.py'.format(schema_name, i)
+            filename = '{}/{}/{}.py'.format(dumpdir, schema_name, i)
             os.makedirs(os.path.dirname(filename), exist_ok=True)
             with open(filename, 'w') as f:
                 print('dumping table ', filename)

@@ -3,6 +3,8 @@
 
 import argparse
 from deriva.core import ErmrestCatalog, get_credential
+
+from dump_catalog import print_annotations, print_tag_variables, print_variable
 import deriva.core.ermrest_model as em
 import deriva.core.ermrest_model as ec
 
@@ -24,50 +26,26 @@ tag_map = {
     'export':             'tag:isrd.isi.edu,2016:export',
 }
 
-column_annotations = {}
-column_acls = {}
-column_acl_bindings = {}
-column_comment = {}
-
-def print_annotations(table, stream):
-
+def print_table_annotations(table, stream):
     tag_rmap = {v: k for k, v in tag_map.items()}
 
-    table_annotations = {
-        'visible_columns': table.visible_columns,
-        'visible_foreign_keys': table.visible_foreign_keys,
-        'table_comment': table.comment,
-        'table_display': table.table_display,
-        'table_acls': table.acls,
-        'table_acl_bindings': table.acl_bindings
-    }
-    if tag_map['export'] in table.annotations:
-        table_annotations['export'] =  table.annotations[tag_map['export']]
+    print_tag_variables(table.annotations, tag_map, stream)
 
-    # Print out variable definitions for annotations that we are going to pull out seperately.
-    for k, v in table_annotations.items():
-        if v == {} or v == '':
-            print('{} = {}'.format(k, v), file=stream)
-        else:
-            print('{} = \\'.format(k), file=stream)
-            pprint.pprint(v, width=80, depth=None, compact=True, stream=stream)
-            print('', file=stream)
+    print_annotations(table.annotations, tag_map, stream, var_name='table_annotations')
+    print_variable('table_comment', table.comment, stream)
+    print_variable('table_acls', table.acls, stream)
+    print_variable('table_acl_bindings', table.acl_bindings, stream)
 
-    print('table_annotations = {', file=stream)
-    for k, v in table.annotations.items():
-        tag_name = tag_rmap.get(k,k)
-        if tag_name in table_annotations:
-            # Put tag value in a variable to make editing file easier.....
-            print('    "{}": {},'.format(k,tag_name), file=stream)
-        else:
-            if tag_name not in tag_map:
-                print('WARNING: Unknown tag: {}'.format(k))
-            print('    "{}":'.format(k), file=stream)
-            pprint.pprint(v, compact=True, stream=stream)
-            print(',', file=stream)
-    print('}', file=stream)
+
+def print_column_annotations(table, stream):
+    column_annotations = {}
+    column_acls = {}
+    column_acl_bindings = {}
+    column_comment = {}
 
     for i in table.column_definitions:
+        if not (i.annotations == '' or i.comment == None):
+            column_annotations[i.name] = i.annotations
         if not (i.comment == '' or i.comment == None):
             column_comment[i.name] = i.comment
         if i.annotations != {}:
@@ -76,23 +54,11 @@ def print_annotations(table, stream):
             column_acls[i.name] = i.acls
         if i.acl_bindings != {}:
             column_acl_bindings[i.name] = i.acl_bindings
-    if column_comment != {}:
-        print('column_comment = \\', file=stream)
-        pprint.pprint(column_comment, width=80, depth=None, compact=False, stream=stream)
-        print('', file=stream)
 
-    print('column_annotations = \\', file=stream)
-    pprint.pprint(column_annotations, width=80, depth=None, compact=False, stream=stream)
-    print('', file=stream)
-
-    if column_acls != {}:
-        print('column_acls = \\', file=stream)
-        pprint.pprint(column_acls, width=80, depth=None, compact=False, stream=stream)
-        print('', file=stream)
-    if column_acl_bindings != {}:
-        print('column_acl_bindings = \\', file=stream)
-        pprint.pprint(column_acl_bindings, width=80, depth=None, compact=False, stream=stream)
-        print('', file=stream)
+    print_variable('column_annotations', column_annotations, stream)
+    print_variable('column_comment', column_comment, stream)
+    print_variable('column_acls', column_acls, stream)
+    print_variable('column_acl_bindings', column_acl_bindings, stream)
     return
 
 
@@ -109,8 +75,6 @@ def print_foreign_key_defs(table, stream):
 
         for i in ['annotations', 'acls', 'acl_bindings', 'on_update', 'on_delete', 'comment']:
             a = getattr(fkey, i)
-            if i == 'annotations':
-                print('Found annotation',a)
             if not (a == {} or a is None or a == 'NO ACTION' or a == ''):
                 v = "'" + a + "'" if re.match('comment|on_update|on_delete', i) else a
                 print("        {}={},".format(i, v), file=stream)
@@ -135,22 +99,22 @@ def print_key_defs(table, stream):
 
 
 def print_column_defs(table, stream):
+
     system_columns = ['RID', 'RCB', 'RMB', 'RCT', 'RMT']
     provide_system = False
+
     print('column_defs = [', file=stream)
     for col in table.column_definitions:
         if col.name in system_columns:
             provide_system = True
-            continue
         print('''    em.Column.define('{}', em.builtin_types['{}'],'''.format(col.name,
                                col.type.typename + '[]' if 'is_array' is True else col.type.typename,
                                ), file=stream)
         if col.nullok is False:
             print("        nullok=False,", file=stream)
         for i in ['annotations', 'acls', 'acl_bindings', 'comment']:
-            colvar = eval('column_' + i)
-            print('colvar', i, col.name, colvar.keys())
-            if col.name in colvar:   #if we have a value for this field....
+            colvar = getattr(col, i)
+            if colvar:   #if we have a value for this field....
                 print("        {}=column_{}['{}'],".format(i, i, col.name), file=stream)
         print('    ),', file=stream)
     print(']', file=stream)
@@ -176,6 +140,7 @@ def print_defs(server, catalog_id, schema_name, table_name, stream):
     model_root = catalog.getCatalogModel()
     schema = model_root.schemas[schema_name]
     table = schema.tables[table_name]
+
     print("""import argparse
 from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
@@ -184,9 +149,10 @@ table_name = '{}'
 schema_name = '{}'
 """.format(table_name, schema_name), file=stream)
 
+    print_column_annotations(table, stream)
     provide_system = print_column_defs(table, stream)
     print('\n', file=stream)
-    print_annotations(table, stream)
+    print_table_annotations(table, stream)
     print('\n', file=stream)
     print_key_defs(table, stream)
     print('\n', file=stream)
