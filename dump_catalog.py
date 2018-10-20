@@ -3,6 +3,7 @@ import dump_table
 import dump_schema
 import pprint
 import os
+import autopep8
 from deriva.core import ErmrestCatalog, get_credential
 
 tag_map = {
@@ -31,11 +32,12 @@ def print_variable(name, value, stream):
     :return:
     """
     if value == None or value == '' or value == [] or value == {}:
-        print('{} = {}'.format(name,value), file= stream)
+        s = '{} = {}'.format(name,value)
     else:
-        print('{} = \\'.format(name), file=stream)
-        pprint.pprint(value, width=80, depth=None, compact=True, stream=stream)
-        print('', file=stream)
+        s = '{} = '.format(name)
+        s += pprint.pformat(value, indent=4, width=80, depth=None, compact=False)
+        s += ''
+        print(autopep8.fix_code(s), file=stream)
 
 
 def print_tag_variables(annotations, tag_map, stream):
@@ -62,17 +64,19 @@ def print_annotations(annotations, tag_map, stream, var_name='annotations'):
     """
     var_map = {v: k for k, v in tag_map.items()}
     if annotations == {}:
-        print('{} = {{}}'.format(var_name), file=stream)
+        s = '{} = {{}}'.format(var_name)
     else:
-        print('{} = {{'.format(var_name), file=stream)
+        s = '{} = {{'.format(var_name)
         for t,v in annotations.items():
             if t in var_map:
                 # Use variable value rather then inline annotation value.
-                print('    {} : {}'.format(t,var_map[t]), file=stream)
+                s += "'{}' : {},".format(t,var_map[t])
             else:
-                print('    {} : \\'.format(t), file=stream)
-                pprint.pprint(v, width=80, depth=None, compact=True, stream=stream)
-        print('}', file=stream)
+                s +=  "'{}' : \\".format(t)
+                s += pprint.pformat(v, width=80, depth=None, compact=True, stream=stream)
+                s += ','
+        s += '}'
+        print(autopep8.fix_code(s), file=stream)
 
 def print_catalog(server, catalog_id, dumpdir):
     credential = get_credential(server)

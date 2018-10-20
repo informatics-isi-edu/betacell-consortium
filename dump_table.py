@@ -2,6 +2,7 @@
 # script that can recreate the table.
 
 import argparse
+import autopep8
 from deriva.core import ErmrestCatalog, get_credential
 
 from dump_catalog import print_annotations, print_tag_variables, print_variable
@@ -63,38 +64,40 @@ def print_column_annotations(table, stream):
 
 
 def print_foreign_key_defs(table, stream):
-    print('fkey_defs = [', file=stream)
+    s = 'fkey_defs = ['
     for fkey in table.foreign_keys:
-        print("""    em.ForeignKey.define({},
+        s += """    em.ForeignKey.define({},
             '{}', '{}', {},
             constraint_names={},""".format([c['column_name'] for c in fkey.foreign_key_columns],
                                            fkey.referenced_columns[0]['schema_name'],
                                            fkey.referenced_columns[0]['table_name'],
                                            [c['column_name'] for c in fkey.referenced_columns],
-                                           fkey.names), file=stream)
+                                           fkey.names)
 
         for i in ['annotations', 'acls', 'acl_bindings', 'on_update', 'on_delete', 'comment']:
             a = getattr(fkey, i)
             if not (a == {} or a is None or a == 'NO ACTION' or a == ''):
                 v = "'" + a + "'" if re.match('comment|on_update|on_delete', i) else a
-                print("        {}={},".format(i, v), file=stream)
-        print('    ),', file=stream)
+                s += "        {}={},".format(i, v)
+        s += '    ),'
 
-    print(']', file=stream)
+    s += ']'
+    print(autopep8.fix_code(s, options={'aggressive': 4}), file=stream)
 
 
 def print_key_defs(table, stream):
-    print('key_defs = [', file=stream)
+    s = 'key_defs = ['
     for key in table.keys:
-        print("""    em.Key.define({},
-                   constraint_names={},""".format(key.unique_columns, key.names), file=stream)
-        for i in ['annotations',  'comment']:
+        s += """    em.Key.define({},
+                   constraint_names={},""".format(key.unique_columns, key.names)
+        for i in ['annotations',  'comment', 'acl_bindings', 'acls']:
             a = getattr(key, i)
             if not (a == {} or a is None or a == ''):
                 v = "'" + a + "'" if i == 'comment' else a
-                print("       {} = {},".format(i, v), file=stream)
-        print('    ),', file=stream)
-    print(']', file=stream)
+                s += "       {} = {},".format(i, v)
+        s += '),'
+    s += ']'
+    print(autopep8.fix_code(s, options={'aggressive': 4}), file=stream)
     return
 
 
@@ -103,21 +106,21 @@ def print_column_defs(table, stream):
     system_columns = ['RID', 'RCB', 'RMB', 'RCT', 'RMT']
     provide_system = False
 
-    print('column_defs = [', file=stream)
+    s = 'column_defs = ['
     for col in table.column_definitions:
         if col.name in system_columns:
             provide_system = True
-        print('''    em.Column.define('{}', em.builtin_types['{}'],'''.format(col.name,
-                               col.type.typename + '[]' if 'is_array' is True else col.type.typename,
-                               ), file=stream)
+        s += '''    em.Column.define('{}', em.builtin_types['{}'],'''.format(col.name,
+                               col.type.typename + '[]' if 'is_array' is True else col.type.typename)
         if col.nullok is False:
-            print("        nullok=False,", file=stream)
+            s += "nullok=False,"
         for i in ['annotations', 'acls', 'acl_bindings', 'comment']:
             colvar = getattr(col, i)
             if colvar:   #if we have a value for this field....
-                print("        {}=column_{}['{}'],".format(i, i, col.name), file=stream)
-        print('    ),', file=stream)
-    print(']', file=stream)
+                s += "{}=column_{}['{}'],".format(i, i, col.name)
+        s += '),\n'
+    s += ']'
+    print(autopep8.fix_code(s, options={'aggressive': 8}), file=stream)
     return provide_system
 
 
