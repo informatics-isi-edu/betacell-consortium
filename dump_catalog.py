@@ -149,6 +149,8 @@ if __name__ == "__main__":
     main()'''.format(server, catalog_id), file=f)
 
     for schema_name, schema in model_root.schemas.items():
+        if schema_name == 'public':
+            continue
         filename = '{}/{}.schema.py'.format(dumpdir, schema_name)
         os.makedirs(os.path.dirname(filename), exist_ok=True)
 
