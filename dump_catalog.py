@@ -136,8 +136,7 @@ import deriva.core.ermrest_model as em
         print_annotations(model_root.annotations, tag_map, f)
 #        print_variable('comment', model_root.comment, f)
         print_variable('acls', model_root.acls, f)
-        print('''
-comment = None
+        print('''comment = None
 
 
 def main():

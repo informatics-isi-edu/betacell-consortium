@@ -27,7 +27,7 @@ def update_annotations(object, annotations):
 
 
 def update_comment(object, comment):
-    object.comment = comment
+    object._comment = comment
     return
 
 def update_acls(object, acls):
@@ -70,14 +70,10 @@ def update_schema(server, catalog_id, schema_name, schema_def, annotations, acls
     model_root.apply(catalog)
 
 def update_table(server, catalog_id, schema_name, table_name, table_def, column_defs, key_defs, fkey_defs,
-                            table_annotations, table_acls, acl_bindings, table_comment,
+                            table_annotations, table_acls, table_acl_bindings, table_comment,
                             column_annotations, column_acls, column_acl_bindings, column_comment):
 
     server, catalog_id, mode, replace = parse_args(server,catalog_id, is_table=True)
-
-    credential = get_credential(server)
-    catalog = ErmrestCatalog('https', server, catalog_id, credentials=credential)
-    model_root = catalog.getCatalogModel()
 
     print('Importing {}:{}'.format(schema_name, table_name) )
 
@@ -156,18 +152,20 @@ def update_table(server, catalog_id, schema_name, table_name, table_def, column_
         table.apply(catalog)
 
     if mode == 'comment':
-        table._comment = table_comment
+        update_comment(table, table_comment)
         for c in table.column_definitions:
             if c.name in column_comment:
-                c._comment = column_comment[c.name]
+                update_comment(c, column_comment[c.name])
         table.apply(catalog)
 
     if mode == 'acls':
-        for k, v in table_acls.items():
-            table.acls[k] = v
+        update_acls(table, table_acls)
+        table.acl_bindings = table_acl_bindings
+        for c in table.column_definitions:
+            if c.name in column_acls:
+                update_acls(c,column_acls[c.name])
+            if c.name in column_acl_bindings:
+                c.acls = column_acl_bindings[c.name]
 
-        for k, v in acl_bindings.items():
-            table.acl_bindings[k] = v
-        table.acl_bindings['table_display'] = table_display
         table.apply(catalog)
 
