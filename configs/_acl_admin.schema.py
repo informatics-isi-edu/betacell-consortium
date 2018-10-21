@@ -1,32 +1,31 @@
 import argparse
 from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
+import update_catalog
 
 table_names = [
     'group_lists',
 ]
 
+annotations = {}
+
+acls = {}
+
+comment = None
+
 schema_def = em.Schema.define(
-        '_acl_admin',
-        comment=None,
+        'pbcconsortium.isrd.isi.edu',
+        comment=comment,
         acls=acls,
         annotations=annotations,
     )
 
+
 def main():
-    parser = argparse.ArgumentParser(description='Load  defs for schema _acl_admin')
-    parser.add_argument('--server', default='pbcconsortium.isrd.isi.edu',
-                        help='Catalog server name')
-    args = parser.parse_args()
-
-    server = args.server
+    server = 'pbcconsortium.isrd.isi.edu'
+    catalog_id = 1
     schema_name = '_acl_admin'
-
-    credential = get_credential(server)
-    catalog = ErmrestCatalog('https', server, 1, credentials=credential)
-    model_root = catalog.getCatalogModel()
-
-    schema = model_root.create_schema(catalog, schema_def)
+    update_catalog.update_schema(server, catalog_id, schema_name, schema_def, annotations, acls, comment)
 
 
 if __name__ == "__main__":

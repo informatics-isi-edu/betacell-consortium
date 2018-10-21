@@ -5,7 +5,7 @@ import argparse
 import autopep8
 from deriva.core import ErmrestCatalog, get_credential
 
-from dump_catalog import print_annotations, print_tag_variables, print_variable
+from dump_catalog import print_annotations, print_tag_variables, print_variable, tag_map
 import deriva.core.ermrest_model as em
 import deriva.core.ermrest_model as ec
 
@@ -13,25 +13,11 @@ import pprint
 import re
 import sys
 
-tag_map = {
-    'generated':          'tag:isrd.isi.edu,2016:generated',
-    'immutable':          'tag:isrd.isi.edu,2016:immutable',
-    'display':            'tag:misd.isi.edu,2015:display',
-    'visible_columns':    'tag:isrd.isi.edu,2016:visible-columns',
-    'visible_foreign_keys': 'tag:isrd.isi.edu,2016:visible-foreign-keys',
-    'foreign_key':        'tag:isrd.isi.edu,2016:foreign-key',
-    'table_display':      'tag:isrd.isi.edu,2016:table-display',
-    'table_alternatives': 'tag:isrd.isi.edu,2016:table-alternatives',
-    'column_display':     'tag:isrd.isi.edu,2016:column-display',
-    'asset':              'tag:isrd.isi.edu,2017:asset',
-    'export':             'tag:isrd.isi.edu,2016:export',
-}
 
 def print_table_annotations(table, stream):
     tag_rmap = {v: k for k, v in tag_map.items()}
 
     print_tag_variables(table.annotations, tag_map, stream)
-
     print_annotations(table.annotations, tag_map, stream, var_name='table_annotations')
     print_variable('table_comment', table.comment, stream)
     print_variable('table_acls', table.acls, stream)
@@ -64,11 +50,11 @@ def print_column_annotations(table, stream):
 
 
 def print_foreign_key_defs(table, stream):
-    s = 'fkey_defs = ['
+    s = 'fkey_defs = [\n'
     for fkey in table.foreign_keys:
         s += """    em.ForeignKey.define({},
             '{}', '{}', {},
-            constraint_names={},""".format([c['column_name'] for c in fkey.foreign_key_columns],
+            constraint_names={},\n""".format([c['column_name'] for c in fkey.foreign_key_columns],
                                            fkey.referenced_columns[0]['schema_name'],
                                            fkey.referenced_columns[0]['table_name'],
                                            [c['column_name'] for c in fkey.referenced_columns],
@@ -78,26 +64,26 @@ def print_foreign_key_defs(table, stream):
             a = getattr(fkey, i)
             if not (a == {} or a is None or a == 'NO ACTION' or a == ''):
                 v = "'" + a + "'" if re.match('comment|on_update|on_delete', i) else a
-                s += "        {}={},".format(i, v)
-        s += '    ),'
+                s += "        {}={},\n".format(i, v)
+        s += '    ),\n'
 
     s += ']'
-    print(autopep8.fix_code(s, options={'aggressive': 4}), file=stream)
+    print(autopep8.fix_code(s, options={}), file=stream)
 
 
 def print_key_defs(table, stream):
-    s = 'key_defs = ['
+    s = 'key_defs = [\n'
     for key in table.keys:
         s += """    em.Key.define({},
-                   constraint_names={},""".format(key.unique_columns, key.names)
-        for i in ['annotations',  'comment', 'acl_bindings', 'acls']:
+                   constraint_names={},\n""".format(key.unique_columns, key.names)
+        for i in ['annotations',  'comment']:
             a = getattr(key, i)
             if not (a == {} or a is None or a == ''):
                 v = "'" + a + "'" if i == 'comment' else a
-                s += "       {} = {},".format(i, v)
-        s += '),'
+                s += "       {} = {},\n".format(i, v)
+        s += '),\n'
     s += ']'
-    print(autopep8.fix_code(s, options={'aggressive': 4}), file=stream)
+    print(autopep8.fix_code(s, options={}), file=stream)
     return
 
 
@@ -125,7 +111,8 @@ def print_column_defs(table, stream):
 
 
 def print_table_def(table, provide_system, stream):
-    print("""table_def = em.Table.define(table_name,
+    s = \
+"""table_def = em.Table.define(table_name,
     column_defs=column_defs,
     key_defs=key_defs,
     fkey_defs=fkey_defs,
@@ -134,7 +121,8 @@ def print_table_def(table, provide_system, stream):
     acl_bindings=table_acl_bindings,
     comment=table_comment,
     provide_system = {}
-)""".format(provide_system), file=stream)
+)""".format(provide_system)
+    print(autopep8.fix_code(s, options={'aggressive': 8}), file=stream)
 
 
 def print_defs(server, catalog_id, schema_name, table_name, stream):
@@ -147,6 +135,7 @@ def print_defs(server, catalog_id, schema_name, table_name, stream):
     print("""import argparse
 from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
+import update_catalog
 
 table_name = '{}'
 schema_name = '{}'
@@ -154,39 +143,19 @@ schema_name = '{}'
 
     print_column_annotations(table, stream)
     provide_system = print_column_defs(table, stream)
-    print('\n', file=stream)
     print_table_annotations(table, stream)
-    print('\n', file=stream)
     print_key_defs(table, stream)
-    print('\n', file=stream)
     print_foreign_key_defs(table, stream)
-    print('\n', file=stream)
-
     print_table_def(table, provide_system, stream)
-    return
-
-
+    print('''
 def main():
-    parser = argparse.ArgumentParser(description='Dump annotations  for table {}:{}')
-    parser.add_argument('server', help='Catalog server name')
-    parser.add_argument('--catalog', default=1, help='ID number of desired catalog')
-    parser.add_argument('table', help='schema:table_name)')
-    parser.add_argument('--outfile', default="stdout", help='output file name)')
-    args = parser.parse_args()
-
-    server = args.server
-    schema_name = args.table.split(':')[0]
-    table_name = args.table.split(':')[1]
-    catalog_id = args.catalog
-    outfile = args.outfile
-
-    if outfile == 'stdout':
-        print_defs(server, catalog_id, schema_name, table_name, sys.stdout)
-    else:
-        with open(outfile, 'w') as f:
-            print_defs(server, catalog_id, schema_name, table_name, f)
-        f.close()
+    server = '{0}'
+    catalog_id = {1}
+    update_catalog.update_table(server, catalog_id, schema_name, table_name, table_def, column_defs, key_defs, fkey_defs,
+                                table_annotations, table_acls, table_acl_bindings, table_comment,
+                                column_annotations, column_acls, column_acl_bindings, column_comment)
 
 
 if __name__ == "__main__":
-    main()
+    main()'''.format(server, catalog_id), file=stream)
+    return
