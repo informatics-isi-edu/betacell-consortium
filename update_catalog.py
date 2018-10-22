@@ -1,5 +1,7 @@
 import importlib
 import argparse
+from requests.exceptions import HTTPError
+
 from deriva.core import ErmrestCatalog, get_credential
 
 
@@ -140,11 +142,13 @@ def update_table(server, catalog_id, schema_name, table_name, table_def, column_
             model_root = catalog.getCatalogModel()
             schema = model_root.schemas[schema_name]
             table = schema.tables[table_name]
-        fknames = [i.names for i in table.foreign_keys]
+
         for i in fkey_defs:
-            if i['names'] not in fknames:
-                print('Creating foreign key {} {}'.format(i['names'], i))
+            try:
                 table.create_fkey(catalog, i)
+                print('Created foreign key {} {}'.format(i['names'], i))
+            except HTTPError:
+                print("Skiping: foreign key {} {} already exists".format(i['names'], i))
     if mode == 'keys':
         if replace:
             print('deleting keys')
@@ -153,11 +157,13 @@ def update_table(server, catalog_id, schema_name, table_name, table_def, column_
             model_root = catalog.getCatalogModel()
             schema = model_root.schemas[schema_name]
             table = schema.tables[table_name]
-        knames = [i.names for i in table.keys]
         for i in key_defs:
-            if i['names'] not in knames:
-                print('Creating key {} {}'.format(i['names'], i))
+            try:
                 table.create_key(catalog, i)
+                print('Created key {}'.format(i['names']))
+            except HTTPError:
+                print("Skiping: key {} already exists".format(i['names']))
+
     if mode == 'annotations':
         update_annotations(table, table_annotations, replace)
 
@@ -165,14 +171,12 @@ def update_table(server, catalog_id, schema_name, table_name, table_def, column_
             for c in table.column_definitions:
                 if c.name in column_annotations:
                     update_annotations(c, column_annotations[c.name], replace)
-        table.apply(catalog)
 
     if mode == 'comment':
         table.comment = table_comment
         for c in table.column_definitions:
             if c.name in column_comment:
                 c.comment = column_comment[c.name]
-        table.apply(catalog)
 
     if mode == 'acls':
         update_acls(table, table_acls, replace)
@@ -182,4 +186,5 @@ def update_table(server, catalog_id, schema_name, table_name, table_def, column_
                 update_acls(c, column_acls[c.name], replace)
             if c.name in column_acl_bindings:
                 update_acl_bindings(c, column_acl_bindings[c.name], replace)
-        table.apply(catalog)
+
+    table.apply(catalog)
