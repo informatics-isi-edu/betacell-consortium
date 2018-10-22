@@ -124,12 +124,11 @@ table_def = em.Table.define(table_name,
                             )
 
 
-
-
 def main():
     server = 'pbcconsortium.isrd.isi.edu'
     catalog_id = 1
-    update_catalog.update_table(server, catalog_id, schema_name, table_name, table_def, column_defs, key_defs, fkey_defs,
+    update_catalog.update_table(server, catalog_id, schema_name, table_name, 
+                                table_def, column_defs, key_defs, fkey_defs,
                                 table_annotations, table_acls, table_acl_bindings, table_comment,
                                 column_annotations, column_acls, column_acl_bindings, column_comment)
 
