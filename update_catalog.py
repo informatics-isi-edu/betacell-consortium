@@ -148,7 +148,7 @@ def update_table(server, catalog_id, schema_name, table_name, table_def, column_
                 table.create_fkey(catalog, i)
                 print('Created foreign key {} {}'.format(i['names'], i))
             except HTTPError:
-                print("Skiping: foreign key {} {} already exists".format(i['names'], i))
+                print("Skipping: foreign key {} {} already exists".format(i['names'], i))
     if mode == 'keys':
         if replace:
             print('deleting keys')
@@ -162,15 +162,14 @@ def update_table(server, catalog_id, schema_name, table_name, table_def, column_
                 table.create_key(catalog, i)
                 print('Created key {}'.format(i['names']))
             except HTTPError:
-                print("Skiping: key {} already exists".format(i['names']))
+                print("Skipping: key {} already exists".format(i['names']))
 
     if mode == 'annotations':
         update_annotations(table, table_annotations, replace)
 
-        if len(column_annotations) > 0:
-            for c in table.column_definitions:
-                if c.name in column_annotations:
-                    update_annotations(c, column_annotations[c.name], replace)
+        for c in table.column_definitions:
+            if c.name in column_annotations:
+                update_annotations(c, column_annotations[c.name], replace)
 
     if mode == 'comment':
         table.comment = table_comment
