@@ -8,17 +8,18 @@ def parse_args(server, catalog_id, is_table=False, is_catalog=False):
     parser = argparse.ArgumentParser(description='Update catalog configuration')
     parser.add_argument('--server', default=server, help='Catalog server name')
     parser.add_argument('--catalog', default=catalog_id, help='ID of desired catalog')
-    parser.add_argument('--replace', action='store_true', help='replace existing values with new ones ')
+    parser.add_argument('--replace', action='store_true',
+                        help='Replace existing values with new ones.  Otherwise, attempt to merge in values provided.')
 
     if is_table:
-        modes = ['create', 'annotations', 'acls', 'comments', 'keys', 'fkeys', 'columns']
+        modes = ['table', 'annotations', 'acls', 'comments', 'keys', 'fkeys', 'columns']
     elif is_catalog:
         modes = ['annotations', 'acls']
     else:
-        modes = ['create', 'annotations', 'acls', 'comments']
+        modes = ['schema', 'annotations', 'acls', 'comments']
 
     parser.add_argument('mode', choices=modes,
-                        help='Operation to perform')
+                        help='Model element to be updated.')
 
     args = parser.parse_args()
     return args.server, args.catalog, args.mode, args.replace
