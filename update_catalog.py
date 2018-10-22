@@ -68,7 +68,14 @@ def update_schema(server, catalog_id, schema_name, schema_def, annotations, acls
     catalog = ErmrestCatalog('https', server, catalog_id, credentials=credential)
     model_root = catalog.getCatalogModel()
 
-    if mode == 'create':
+    if mode == 'schema':
+        if replace:
+            schema = model_root.schemas[schema_name]
+            print('Deleting schema ', schema.name)
+            ok = input('Type YES to confirm:')
+            if ok == 'YES':
+                schema.delete(catalog)
+            model_root = catalog.getCatalogModel()
         schema = model_root.create_schema(catalog, schema_def)
     else:
         schema = model_root.schemas[schema_name]
@@ -96,11 +103,13 @@ def update_table(server, catalog_id, schema_name, table_name, table_def, column_
 
     skip_fkeys = False
 
-    if mode == 'create':
+    if mode == 'table':
         if replace:
             table = schema.tables[table_name]
-            print('deleting table', table.name)
-            table.delete(catalog)
+            print('Deleting table ', table.name)
+            ok = input('Type YES to confirm:')
+            if ok == 'YES':
+                table.delete(catalog)
             model_root = catalog.getCatalogModel()
             schema = model_root.schemas[schema_name]
         if skip_fkeys:
