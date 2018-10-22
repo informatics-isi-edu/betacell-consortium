@@ -61,15 +61,15 @@ table_acls = {}
 table_acl_bindings = {}
 
 key_defs = [
-    em.Key.define(['RID'],
-                  constraint_names=[('isa', 'project_publication_RID_key')],
-                  ),
     em.Key.define(['pmid', 'project_id'],
                   constraint_names=[
                       ('isa', 'project_publication_project_id_pmid_key')],
                   ),
     em.Key.define(['id'],
                   constraint_names=[('isa', 'project_publication_pkey')],
+                  ),
+    em.Key.define(['RID'],
+                  constraint_names=[('isa', 'project_publication_RID_key')],
                   ),
 ]
 

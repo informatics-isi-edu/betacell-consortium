@@ -242,8 +242,7 @@ visible_foreign_keys = {'*': [{'source': [{'inbound': ['Beta_Cell',
 table_display = {
     'row_name': {
         'row_markdown_pattern': '{{RID}}{{#local_identifier}} '
-        '{{Container_Id}}{{/local_identifier}}'}
-}
+        '{{Container_Id}}{{/local_identifier}}'}}
 
 table_alternatives = {}
 

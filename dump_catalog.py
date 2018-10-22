@@ -132,15 +132,14 @@ import deriva.core.ermrest_model as em
 """, file=f)
         print_tag_variables(model_root.annotations, tag_map, f)
         print_annotations(model_root.annotations, tag_map, f)
-#        print_variable('comment', model_root.comment, f)
         print_variable('acls', model_root.acls, f)
-        print('''comment = None
+        print('''
 
 
 def main():
     server = '{0}'
     catalog_id = {1}
-    update_catalog.update_catalog(server, catalog_id, annotations, acls, comment)
+    update_catalog.update_catalog(server, catalog_id, annotations, acls)
     
 
 if __name__ == "__main__":

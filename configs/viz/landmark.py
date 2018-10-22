@@ -46,7 +46,7 @@ table_acls = {}
 table_acl_bindings = {}
 
 key_defs = [
-    em.Key.define(['point_x', 'mesh', 'point_y', 'point_z'],
+    em.Key.define(['point_x', 'point_y', 'mesh', 'point_z'],
                   constraint_names=[
                       ('viz', 'landmark_mesh_point_x_point_y_point_z_key')],
                   ),

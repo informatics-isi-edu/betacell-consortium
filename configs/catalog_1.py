@@ -55,13 +55,13 @@ annotations = {'tag:isrd.isi.edu,2017:bulk-upload': bulk_upload,
 
 acls = {}
 
-comment = None
+
 
 
 def main():
     server = 'pbcconsortium.isrd.isi.edu'
     catalog_id = 1
-    update_catalog.update_catalog(server, catalog_id, annotations, acls, comment)
+    update_catalog.update_catalog(server, catalog_id, annotations, acls)
     
 
 if __name__ == "__main__":
