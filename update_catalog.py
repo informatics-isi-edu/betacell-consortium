@@ -24,17 +24,26 @@ def parse_args(server, catalog_id, is_table=False, is_catalog=False):
     return args.server, args.catalog, args.mode, args.replace
 
 
-def update_annotations(o, annotations):
-    for k, v in annotations.items():
-        o.annotations[k] = v
-    return
+def update_annotations(o,annotations, replace=False):
+    if replace:
+        o.annotations.update(annotations)
+    else:
+        for k, v in annotations.items():
+            o.annotations[k] = v
 
+def update_acls(o,acls, replace=False):
+    if replace:
+        o.acls.update(acls)
+    else:
+        for k, v in acls.items():
+            o.acls[k] = v
 
-def update_acls(o, acls):
-    for k, v in acls.items():
-        o.acls[k] = v
-    return
-
+def update_acl_bindings(o,acl_bindings, replace=False):
+    if replace:
+        o.acl_bindings.update(acl_bindings)
+    else:
+        for k, v in acl_bindings.items():
+            o.acl_bindingss[k] = v
 
 def update_catalog(server, catalog_id, annotations, acls):
     server, catalog_id, mode, replace = parse_args(server, catalog_id, is_catalog=True)
@@ -44,9 +53,9 @@ def update_catalog(server, catalog_id, annotations, acls):
     model_root = catalog.getCatalogModel()
 
     if mode == 'annotations':
-        update_annotations(model_root, annotations)
+        update_annotations(model_root, annotations, replace)
     elif mode == 'acls':
-        update_acls(model_root, acls)
+        update_acls(model_root,acls, replace)
     model_root.apply(catalog)
 
 
@@ -59,16 +68,17 @@ def update_schema(server, catalog_id, schema_name, schema_def, annotations, acls
     model_root = catalog.getCatalogModel()
 
     if mode == 'create':
-        model_root.create_schema(catalog, schema_def)
+        schema = model_root.create_schema(catalog, schema_def)
     else:
         schema = model_root.schemas[schema_name]
         if mode == 'annotations':
-            update_annotations(schema, annotations)
+            update_annotations(schema,annotations, replace)
         elif mode == 'acls':
-            update_acls(schema, acls)
+            update_acls(schema, acls, replace)
         elif mode == 'comment':
             schema.comment = comment
     model_root.apply(catalog)
+    return schema
 
 
 def update_table(server, catalog_id, schema_name, table_name, table_def, column_defs, key_defs, fkey_defs,
@@ -139,18 +149,12 @@ def update_table(server, catalog_id, schema_name, table_name, table_def, column_
                 print('Creating key {} {}'.format(i['names'], i))
                 table.create_key(catalog, i)
     if mode == 'annotations':
-        if len(table_annotations) > 0:
-            for k, v in table_annotations.items():
-                print('setting table annotation', k)
-                table.annotations[k] = v
+        update_annotations(table, table_annotations, replace)
 
         if len(column_annotations) > 0:
             for c in table.column_definitions:
                 if c.name in column_annotations:
-                    for k, v in column_annotations[c.name].items():
-                        print('setting column annotation', c.name, k)
-                        c.annotations[k] = v
-
+                    update_annotations(c, column_annotations[c.name], replace)
         table.apply(catalog)
 
     if mode == 'comment':
@@ -161,12 +165,11 @@ def update_table(server, catalog_id, schema_name, table_name, table_def, column_
         table.apply(catalog)
 
     if mode == 'acls':
-        update_acls(table, table_acls)
-        table.acl_bindings = table_acl_bindings
+        update_acls(table, table_acls, replace)
+        update_acl_bindings(table, table_acl_bindings, replace)
         for c in table.column_definitions:
             if c.name in column_acls:
-                update_acls(c, column_acls[c.name])
+                update_acls(c, column_acls[c.name], replace)
             if c.name in column_acl_bindings:
-                c.acls = column_acl_bindings[c.name]
-
+                update_acl_bindings(c, column_acl_bindings[c.name], replace)
         table.apply(catalog)
