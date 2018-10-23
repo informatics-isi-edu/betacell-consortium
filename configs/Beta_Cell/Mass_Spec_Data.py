@@ -3,7 +3,7 @@ from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
 import update_catalog
 
-table_name = 'XRay_Tomography_Data'
+table_name = 'Mass_Spec_Data'
 schema_name = 'Beta_Cell'
 
 column_annotations = {
@@ -14,7 +14,8 @@ column_annotations = {
     'File_Type': {
         'tag:isrd.isi.edu,2016:column-display': {
             'compact': {
-                'markdown_pattern': '{{{$fkeys.Beta_Cell.XRay_Tomography_Data_File_Type_FKey.rowName}}}'}}},
+                'markdown_pattern': '{{{$fkeys.Beta_Cell.Mass_Spec_Data_File_Type_FKey.rowName}}}'}}},
+    'Replicate_Number': {},
     'Submitted_On': {},
     'filename': {
         'tag:isrd.isi.edu,2016:column-display': {
@@ -44,6 +45,7 @@ column_comment = {
     'Description': 'None',
     'File_Id': 'None',
     'File_Type': 'None',
+    'Replicate_Number': 'Number of the technical replicate.',
     'Submitted_On': 'None'}
 
 column_acls = {}
@@ -65,41 +67,43 @@ column_defs = [em.Column.define('RID', em.builtin_types['ermrest_rid'], nullok=F
                em.Column.define('length', em.builtin_types['int8'], nullok=False, annotations=column_annotations['length'],),
                em.Column.define('url', em.builtin_types['text'], nullok=False, annotations=column_annotations['url'],),
                em.Column.define('filename', em.builtin_types['text'], nullok=False, annotations=column_annotations['filename'],),
+               em.Column.define('Replicate_Number', em.builtin_types['int2'], comment=column_comment['Replicate_Number'],),
                ]
 
-visible_columns = {'*': [['Beta_Cell', 'XRay_Tomography_Data_Key'],
+visible_columns = {'*': [['Beta_Cell', 'Mass_Spec_Data_Key'],
                          {'markdown_name': 'Dataset',
                           'source': [{'outbound': ['Beta_Cell',
-                                                   'XRay_Tomography_Data_Dataset_FKey']},
+                                                   'Mass_Spec_Data_Dataset_FKey']},
                                      'RID']},
                          {'markdown_name': 'Biosample',
                           'source': [{'outbound': ['Beta_Cell',
-                                                   'XRay_Tomography_Data_Biosample_FKey']},
+                                                   'Mass_Spec_Data_Biosample_FKey']},
                                      'RID']},
                          'filename',
+                         'Replicate_Number',
                          'Description',
-                         ['Beta_Cell', 'XRay_Tomography_Data_File_Type_FKey'],
+                         ['Beta_Cell', 'Mass_Spec_Data_File_Type_FKey'],
                          'length',
                          'submitted_on'],
                    'entry': ['RID',
-                             ['Beta_Cell', 'XRay_Tomography_Data_Dataset_FKey'],
-                             ['Beta_Cell', 'XRay_Tomography_Data_Biosample_FKey'],
+                             ['Beta_Cell', 'Mass_Spec_Data_Dataset_FKey'],
+                             ['Beta_Cell', 'Mass_Spec_Data_Biosample_FKey'],
                              'Description',
                              'url',
-                             ['Beta_Cell', 'XRay_Tomography_Data_File_Type_FKey'],
+                             ['Beta_Cell', 'Mass_Spec_Data_File_Type_FKey'],
                              'filename',
-                             ['Beta_Cell', 'XRay_Tomography_Data_File_Type_FKey'],
+                             ['Beta_Cell', 'Mass_Spec_Data_File_Type_FKey'],
                              'length',
                              'md5',
                              'submitted_on'],
                    'filter': {'and': [{'entity': True, 'source': 'RID'},
                                       {'markdown_name': 'Dataset',
                                        'source': [{'outbound': ['Beta_Cell',
-                                                                'XRay_Tomography_Data_Dataset_FKey']},
+                                                                'Mass_Spec_Data_Dataset_FKey']},
                                                   'RID']},
                                       {'markdown_name': 'Cell Line',
                                        'source': [{'outbound': ['Beta_Cell',
-                                                                'XRay_Tomography_Data_Biosample_FKey']},
+                                                                'Mass_Spec_Data_Biosample_FKey']},
                                                   {'outbound': ['Beta_Cell',
                                                                 'Biosample_Specimen_FKey']},
                                                   {'outbound': ['Beta_Cell',
@@ -113,7 +117,7 @@ visible_columns = {'*': [['Beta_Cell', 'XRay_Tomography_Data_Key'],
                                        'entity': True,
                                        'markdown_name': 'Additive',
                                        'source': [{'outbound': ['Beta_Cell',
-                                                                'XRay_Tomography_Data_Biosample_FKey']},
+                                                                'Mass_Spec_Data_Biosample_FKey']},
                                                   {'outbound': ['Beta_Cell',
                                                                 'Biosample_Specimen_FKey']},
                                                   {'outbound': ['Beta_Cell',
@@ -131,7 +135,7 @@ visible_columns = {'*': [['Beta_Cell', 'XRay_Tomography_Data_Key'],
                                        'entity': True,
                                        'markdown_name': 'Concentration',
                                        'source': [{'outbound': ['Beta_Cell',
-                                                                'XRay_Tomography_Data_Biosample_FKey']},
+                                                                'Mass_Spec_Data_Biosample_FKey']},
                                                   {'outbound': ['Beta_Cell',
                                                                 'Biosample_Specimen_FKey']},
                                                   {'outbound': ['Beta_Cell',
@@ -148,7 +152,7 @@ visible_columns = {'*': [['Beta_Cell', 'XRay_Tomography_Data_Key'],
                                        'entity': True,
                                        'markdown_name': 'Duration',
                                        'source': [{'outbound': ['Beta_Cell',
-                                                                'XRay_Tomography_Data_Biosample_FKey']},
+                                                                'Mass_Spec_Data_Biosample_FKey']},
                                                   {'outbound': ['Beta_Cell',
                                                                 'Biosample_Specimen_FKey']},
                                                   {'outbound': ['Beta_Cell',
@@ -165,13 +169,13 @@ visible_columns = {'*': [['Beta_Cell', 'XRay_Tomography_Data_Key'],
                                        'markdown_name': 'Anatomy',
                                        'open': True,
                                        'source': [{'outbound': ['Beta_Cell',
-                                                                'XRay_Tomography_Data_Anatomy_FKey']},
+                                                                'Mass_Spec_Data_Anatomy_FKey']},
                                                   'id']},
                                       {'entity': True,
                                        'markdown_name': 'File Type',
                                        'open': True,
                                        'source': [{'outbound': ['Beta_Cell',
-                                                                'XRay_Tomography_Data_File_Type_FKey']},
+                                                                'Mass_Spec_Data_File_Type_FKey']},
                                                   'id']},
                                       {'entity': True,
                                        'markdown_name': 'Submitted On',
@@ -201,38 +205,37 @@ table_acl_bindings = {}
 key_defs = [
     em.Key.define(['RID', 'Dataset'],
                   constraint_names=[
-                      ('Beta_Cell', 'XRay_Tomography_Data_Dataset_RID_Key')],
+                      ('Beta_Cell', 'Mass_Spec_Data_Dataset_RID_Key')],
                   comment='RID and dataset must be distinct.',
                   ),
     em.Key.define(['RID'],
-                  constraint_names=[
-                      ('Beta_Cell', 'XRay_Tomography_Data_RIDkey1')],
+                  constraint_names=[('Beta_Cell', 'Mass_Spec_Data_RIDkey1')],
                   ),
 ]
 
 fkey_defs = [
-    em.ForeignKey.define(['Biosample'],
-                         'Beta_Cell', 'Biosample', ['RID'],
+    em.ForeignKey.define(['Biosample', 'Dataset'],
+                         'Beta_Cell', 'Biosample', ['RID', 'Dataset'],
                          constraint_names=[
-                             ('Beta_Cell', 'XRay_Tomography_Data_Biosample_FKey')],
-                         annotations={
-                             'tag:isrd.isi.edu,2016:foreign-key': {'domain_filter_pattern': 'Dataset={{{_Dataset}}}'}},
-                         ),
-    em.ForeignKey.define(['Dataset', 'Biosample'],
-                         'Beta_Cell', 'Biosample', ['Dataset', 'RID'],
-                         constraint_names=[
-                             ('Beta_Cell', 'XRay_Tomography_Dataset_RID_FKey')],
+                             ('Beta_Cell', 'Mass_Spec_Dataset_RID_FKey')],
                          comment='Ensure that the dataset for the file is the same as for the biosample',
                          ),
     em.ForeignKey.define(['Dataset'],
                          'Beta_Cell', 'Dataset', ['RID'],
                          constraint_names=[
-                             ('Beta_Cell', 'XRay_Tomography_Data_Dataset_FKey')],
+                             ('Beta_Cell', 'Mass_Spec_Data_Dataset_FKey')],
                          annotations={'tag:misd.isi.edu,2015:display': {}, 'tag:isrd.isi.edu,2016:foreign-key': {
-                             'domain_filter_pattern': 'RID={{{$fkeys.Beta_Cell.XRay_Tomography_Data_Biosample_FKey.values._Dataset}}}'}},
+                             'domain_filter_pattern': 'RID={{{$fkeys.Beta_Cell.Mass_Spec_Data_Biosample_FKey.values._Dataset}}}'}},
                          on_update='CASCADE',
                          on_delete='RESTRICT',
                          comment='Must be a valid reference to a dataset.',
+                         ),
+    em.ForeignKey.define(['Biosample'],
+                         'Beta_Cell', 'Biosample', ['RID'],
+                         constraint_names=[
+                             ('Beta_Cell', 'Mass_Spec_Data_Biosample_FKey')],
+                         annotations={
+                             'tag:isrd.isi.edu,2016:foreign-key': {'domain_filter_pattern': 'Dataset={{{_Dataset}}}'}},
                          ),
 ]
 

@@ -3,6 +3,14 @@ from_sname='isa'
 to_tname='Processed_Tomography_Data'
 to_sname='Beta_Cell'
 
+def copy_column(catalog, sname,tname,from_cname, to_cname, post=False):
+    data = catalog.get('/attribute/{}:{}/RID,{}'.format(sname, tname,from_cname)).json()
+    if post:
+        catalog.post("/entity/{}:{}?nondefaults=RID".format(to_sname, to_tname), json=data)
+    return
+
+
+    data = catalog.get()
 def move_table(catalog,f,t, exclude=[], post=False):
     sys_cols=['RID','RCT','RCB','RMB','RMT']
     from_sname,from_tname = f
