@@ -48,8 +48,7 @@ def update_acl_bindings(o,acl_bindings, replace=False):
         for k, v in acl_bindings.items():
             o.acl_bindingss[k] = v
 
-def update_catalog(server, catalog_id, annotations, acls):
-    server, catalog_id, mode, replace = parse_args(server, catalog_id, is_catalog=True)
+def update_catalog(mode, replace, server, catalog_id, annotations, acls):
 
     credential = get_credential(server)
     catalog = ErmrestCatalog('https', server, catalog_id, credentials=credential)
@@ -62,9 +61,7 @@ def update_catalog(server, catalog_id, annotations, acls):
     model_root.apply(catalog)
 
 
-def update_schema(server, catalog_id, schema_name, schema_def, annotations, acls, comment):
-
-    server, catalog_id, mode, replace = parse_args(server, catalog_id)
+def update_schema(mode, replace, server, catalog_id, schema_name, schema_def, annotations, acls, comment):
 
     credential = get_credential(server)
     catalog = ErmrestCatalog('https', server, catalog_id, credentials=credential)
@@ -91,10 +88,9 @@ def update_schema(server, catalog_id, schema_name, schema_def, annotations, acls
     return schema
 
 
-def update_table(server, catalog_id, schema_name, table_name, table_def, column_defs, key_defs, fkey_defs,
+def update_table(mode, replace, server, catalog_id, schema_name, table_name, table_def, column_defs, key_defs, fkey_defs,
                  table_annotations, table_acls, table_acl_bindings, table_comment,
                  column_annotations, column_acls, column_acl_bindings, column_comment):
-    server, catalog_id, mode, replace = parse_args(server, catalog_id, is_table=True)
 
     print('Importing {}:{}'.format(schema_name, table_name))
 
