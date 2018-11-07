@@ -65,7 +65,26 @@ table_comment = 'domain'
 
 table_acls = {}
 
-table_acl_bindings = {}
+table_acl_bindings = {
+    'project_suppl_edit_guard': {
+        'projection': [
+            {
+                'outbound': [
+                    'isa',
+                    'project_member_project_id_fkey']},
+            {
+                'outbound': [
+                    'isa',
+                    'project_groups_fkey']},
+            'groups'],
+        'projection_type': 'acl',
+        'scope_acl': [
+            'https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764',
+            'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a',
+            'https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d'],
+        'types': [
+            'update',
+            'delete']}}
 
 key_defs = [
     em.Key.define(['person', 'project_id'],
@@ -108,7 +127,8 @@ table_def = em.Table.define(table_name,
 def main():
     server = 'pbcconsortium.isrd.isi.edu'
     catalog_id = 1
-    update_catalog.update_table(server, catalog_id, schema_name, table_name, 
+    mode, replace, server, catalog_id = update_catalog.parse_args(server, catalog_id, is_table=True)
+    update_catalog.update_table(mode, replace, server, catalog_id, schema_name, table_name, 
                                 table_def, column_defs, key_defs, fkey_defs,
                                 table_annotations, table_acls, table_acl_bindings, table_comment,
                                 column_annotations, column_acls, column_acl_bindings, column_comment)

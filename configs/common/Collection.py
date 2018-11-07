@@ -112,43 +112,36 @@ visible_foreign_keys = None
 
 table_display = {}
 
-export = {'templates': [{'format_name': 'BDBag (Holey)',
-                         'format_type': 'BAG',
-                         'name': 'default',
+export = {'templates': [{'displayname': 'BDBag (Holey)',
                          'outputs': [{'destination': {'name': 'Collection',
                                                       'type': 'csv'},
-                                      'source': {'api': 'entity',
-                                                 'table': 'Common:Collection'}},
+                                      'source': {'api': 'entity'}},
                                      {'destination': {'name': 'Biosample',
                                                       'type': 'csv'},
                                       'source': {'api': 'attributegroup',
-                                                 'path': '(RID)=(Collection_Biosample:Collection)/BS:=(Biosample)=(Biosample:RID)/CollectionRID:=M:RID,Dataset:=BS:Dataset,BiosampleRID:=RID,Container_Id,Sample_Position',
-                                                 'table': 'Common:Collection'}},
+                                                 'path': '(RID)=(Collection_Biosample:Collection)/BS:=(Biosample)=(Biosample:RID)/CollectionRID:=M:RID,Dataset:=BS:Dataset,BiosampleRID:=RID,Container_Id,Sample_Position'}},
                                      {'destination': {'name': 'Processed_Tomography_Data',
                                                       'type': 'csv'},
                                       'source': {'api': 'attributegroup',
-                                                 'path': '(RID)=(Collection_Biosample:Collection)/BS:=(Biosample)=(Biosample:RID)/XR:=(RID)=(Processed_Tomography_Data:Biosample)/Collection:=M:RID,Dataset:=BS:Dataset,Experiment:=BS:Experiment,Biosample:=BS:RID,url,filename,length',
-                                                 'table': 'Common:Collection'}},
+                                                 'path': '(RID)=(Collection_Biosample:Collection)/BS:=(Biosample)=(Biosample:RID)/XR:=(RID)=(Processed_Tomography_Data:Biosample)/Collection:=M:RID,Dataset:=BS:Dataset,Experiment:=BS:Experiment,Biosample:=BS:RID,url,filename,length'}},
                                      {'destination': {'name': 'DS-{Dataset}/EXP-{Experiment}/BS-{Biosample}/Processed_Tomography_Data',
                                                       'type': 'fetch'},
                                       'source': {'api': 'attributegroup',
-                                                 'path': '(RID)=(Collection_Biosample:Collection)/BS:=(Biosample)=(Biosample:RID)/(RID)=(Processed_Tomography_Data:Biosample)/Collection:=M:RID,Dataset:=BS:Dataset,Experiment:=BS:Experiment,Biosample:=BS:RID,url,md5,length',
-                                                 'table': 'Common:Collection'}},
+                                                 'path': '(RID)=(Collection_Biosample:Collection)/BS:=(Biosample)=(Biosample:RID)/(RID)=(Processed_Tomography_Data:Biosample)/Collection:=M:RID,Dataset:=BS:Dataset,Experiment:=BS:Experiment,Biosample:=BS:RID,url,md5,length'}},
                                      {'destination': {'name': 'XRay_Tomography_Data',
                                                       'type': 'csv'},
                                       'source': {'api': 'attributegroup',
-                                                 'path': '(RID)=(Collection_Biosample:Collection)/BS:=(Biosample)=(Biosample:RID)/XR:=(RID)=(Processed_Tomography_Data:Biosample)/Collection:=M:RID,Dataset:=BS:Dataset,Experiment:=BS:Experiment,Biosample:=BS:RID,url,filename,length',
-                                                 'table': 'Common:Collection'}},
+                                                 'path': '(RID)=(Collection_Biosample:Collection)/BS:=(Biosample)=(Biosample:RID)/XR:=(RID)=(Processed_Tomography_Data:Biosample)/Collection:=M:RID,Dataset:=BS:Dataset,Experiment:=BS:Experiment,Biosample:=BS:RID,url,filename,length'}},
                                      {'destination': {'name': 'DS-{Dataset}/EXP-{Experiment}/BS-{Biosample}/XRay_Tomography_Data',
                                                       'type': 'fetch'},
                                       'source': {'api': 'attributegroup',
-                                                 'path': '(RID)=(Collection_Biosample:Collection)/BS:=(Biosample)=(Biosample:RID)/XR:=(RID)=(XRay_Tomography_Data:Biosample)/Collection:=M:RID,Dataset:=BS:Dataset,Experiment:=BS:Experiment,Biosample:=BS:RID,url,md5,length',
-                                                 'table': 'Common:Collection'}}],
+                                                 'path': '(RID)=(Collection_Biosample:Collection)/BS:=(Biosample)=(Biosample:RID)/XR:=(RID)=(XRay_Tomography_Data:Biosample)/Collection:=M:RID,Dataset:=BS:Dataset,Experiment:=BS:Experiment,Biosample:=BS:RID,url,md5,length'}}],
                          'postprocessors': [{'processor': 'cloud_upload',
                                              'processor_params': {'acl': 'public-read',
                                                                   'target_url': 's3://pbcconsortium/test'}},
                                             {'processor': 'identifier',
-                                                'processor_params': {'test': 'False'}}]}]}
+                                                'processor_params': {'test': 'False'}}],
+                         'type': 'BAG'}]}
 
 table_annotations = {
     'tag:isrd.isi.edu,2016:table-display': table_display,
@@ -190,7 +183,8 @@ table_def = em.Table.define(table_name,
 def main():
     server = 'pbcconsortium.isrd.isi.edu'
     catalog_id = 1
-    update_catalog.update_table(server, catalog_id, schema_name, table_name, 
+    mode, replace, server, catalog_id = update_catalog.parse_args(server, catalog_id, is_table=True)
+    update_catalog.update_table(mode, replace, server, catalog_id, schema_name, table_name, 
                                 table_def, column_defs, key_defs, fkey_defs,
                                 table_annotations, table_acls, table_acl_bindings, table_comment,
                                 column_annotations, column_acls, column_acl_bindings, column_comment)

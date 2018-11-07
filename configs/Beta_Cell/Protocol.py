@@ -118,6 +118,7 @@ fkey_defs = [
                          'Beta_Cell', 'Protocol_Type', ['RID'],
                          constraint_names=[
                              ('Beta_Cell', 'Protocol_Protocol_Type_FKey')],
+                         acls={'insert': ['*'], 'update': ['*']},
                          comment='Must be a protocol type.',
                          ),
 ]
@@ -137,7 +138,8 @@ table_def = em.Table.define(table_name,
 def main():
     server = 'pbcconsortium.isrd.isi.edu'
     catalog_id = 1
-    update_catalog.update_table(server, catalog_id, schema_name, table_name, 
+    mode, replace, server, catalog_id = update_catalog.parse_args(server, catalog_id, is_table=True)
+    update_catalog.update_table(mode, replace, server, catalog_id, schema_name, table_name, 
                                 table_def, column_defs, key_defs, fkey_defs,
                                 table_annotations, table_acls, table_acl_bindings, table_comment,
                                 column_annotations, column_acls, column_acl_bindings, column_comment)

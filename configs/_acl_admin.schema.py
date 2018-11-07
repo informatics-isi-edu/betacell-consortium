@@ -25,7 +25,9 @@ def main():
     server = 'pbcconsortium.isrd.isi.edu'
     catalog_id = 1
     schema_name = '_acl_admin'
-    update_catalog.update_schema(server, catalog_id, schema_name, schema_def, annotations, acls, comment)
+    
+    mode, replace, server, catalog_id = update_catalog.parse_args(server, catalog_id)
+    update_catalog.update_schema(mode, replace, server, catalog_id, schema_name, schema_def, annotations, acls, comment)
 
 
 if __name__ == "__main__":

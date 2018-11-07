@@ -53,7 +53,17 @@ bulk_upload = {'asset_mappings': [{'asset_type': 'table',
 annotations = {'tag:isrd.isi.edu,2017:bulk-upload': bulk_upload,
                'tag:misd.isi.edu,2015:display': display, }
 
-acls = {}
+acls = {
+    'create': [],
+    'delete': [],
+    'enumerate': ['*'],
+    'insert': [],
+    'owner': [
+        'https://auth.globus.org/a45e5ba2-709f-11e8-a40d-0e847f194132',
+        'https://auth.globus.org/3938e0d0-ed35-11e5-8641-22000ab4b42b'],
+    'select': ['*'],
+    'update': ['https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764'],
+    'write': []}
 
 
 
@@ -61,7 +71,8 @@ acls = {}
 def main():
     server = 'pbcconsortium.isrd.isi.edu'
     catalog_id = 1
-    update_catalog.update_catalog(server, catalog_id, annotations, acls)
+    mode, replace, server, catalog_id = update_catalog.parse_args(server, catalog_id, is_catalog=True)
+    update_catalog.update_catalog(mode, replace, server, catalog_id, annotations, acls)
     
 
 if __name__ == "__main__":

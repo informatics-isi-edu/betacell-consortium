@@ -67,7 +67,7 @@ column_defs = [em.Column.define('RID', em.builtin_types['ermrest_rid'], nullok=F
                em.Column.define('length', em.builtin_types['int8'], nullok=False, annotations=column_annotations['length'],),
                em.Column.define('url', em.builtin_types['text'], nullok=False, annotations=column_annotations['url'],),
                em.Column.define('filename', em.builtin_types['text'], nullok=False, annotations=column_annotations['filename'],),
-               em.Column.define('Replicate_Number', em.builtin_types['int2'], comment=column_comment['Replicate_Number'],),
+               em.Column.define('Replicate_Number', em.builtin_types['int2'], default=1comment=column_comment['Replicate_Number'],),
                ]
 
 visible_columns = {'*': [['Beta_Cell', 'Mass_Spec_Data_Key'],
@@ -214,10 +214,19 @@ key_defs = [
 ]
 
 fkey_defs = [
-    em.ForeignKey.define(['Biosample', 'Dataset'],
-                         'Beta_Cell', 'Biosample', ['RID', 'Dataset'],
+    em.ForeignKey.define(['Biosample'],
+                         'Beta_Cell', 'Biosample', ['RID'],
+                         constraint_names=[
+                             ('Beta_Cell', 'Mass_Spec_Data_Biosample_FKey')],
+                         annotations={
+                             'tag:isrd.isi.edu,2016:foreign-key': {'domain_filter_pattern': 'Dataset={{{_Dataset}}}'}},
+                         acls={'insert': ['*'], 'update': ['*']},
+                         ),
+    em.ForeignKey.define(['Dataset', 'Biosample'],
+                         'Beta_Cell', 'Biosample', ['Dataset', 'RID'],
                          constraint_names=[
                              ('Beta_Cell', 'Mass_Spec_Dataset_RID_FKey')],
+                         acls={'insert': ['*'], 'update': ['*']},
                          comment='Ensure that the dataset for the file is the same as for the biosample',
                          ),
     em.ForeignKey.define(['Dataset'],
@@ -226,16 +235,10 @@ fkey_defs = [
                              ('Beta_Cell', 'Mass_Spec_Data_Dataset_FKey')],
                          annotations={'tag:misd.isi.edu,2015:display': {}, 'tag:isrd.isi.edu,2016:foreign-key': {
                              'domain_filter_pattern': 'RID={{{$fkeys.Beta_Cell.Mass_Spec_Data_Biosample_FKey.values._Dataset}}}'}},
+                         acls={'insert': ['*'], 'update': ['*']},
                          on_update='CASCADE',
                          on_delete='RESTRICT',
                          comment='Must be a valid reference to a dataset.',
-                         ),
-    em.ForeignKey.define(['Biosample'],
-                         'Beta_Cell', 'Biosample', ['RID'],
-                         constraint_names=[
-                             ('Beta_Cell', 'Mass_Spec_Data_Biosample_FKey')],
-                         annotations={
-                             'tag:isrd.isi.edu,2016:foreign-key': {'domain_filter_pattern': 'Dataset={{{_Dataset}}}'}},
                          ),
 ]
 
@@ -254,7 +257,8 @@ table_def = em.Table.define(table_name,
 def main():
     server = 'pbcconsortium.isrd.isi.edu'
     catalog_id = 1
-    update_catalog.update_table(server, catalog_id, schema_name, table_name, 
+    mode, replace, server, catalog_id = update_catalog.parse_args(server, catalog_id, is_table=True)
+    update_catalog.update_table(mode, replace, server, catalog_id, schema_name, table_name, 
                                 table_def, column_defs, key_defs, fkey_defs,
                                 table_annotations, table_acls, table_acl_bindings, table_comment,
                                 column_annotations, column_acls, column_acl_bindings, column_comment)

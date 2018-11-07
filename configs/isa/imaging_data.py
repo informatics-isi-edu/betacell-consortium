@@ -49,7 +49,7 @@ column_defs = [em.Column.define('RID', em.builtin_types['ermrest_rid'], nullok=F
                em.Column.define('filename', em.builtin_types['text'], nullok=False, annotations=column_annotations['filename'],),
                em.Column.define('file_type', em.builtin_types['text'], nullok=False, annotations=column_annotations['file_type'],),
                em.Column.define('byte_count', em.builtin_types['int8'], nullok=False,),
-               em.Column.define('submitted_on', em.builtin_types['timestamptz'], annotations=column_annotations['submitted_on'],),
+               em.Column.define('submitted_on', em.builtin_types['timestamptz'], default=now()annotations=column_annotations['submitted_on'],),
                em.Column.define('md5', em.builtin_types['text'], nullok=False,),
                em.Column.define('RCB', em.builtin_types['ermrest_rcb'], comment=column_comment['RCB'],),
                em.Column.define('RMB', em.builtin_types['ermrest_rmb'], comment=column_comment['RMB'],),
@@ -153,11 +153,11 @@ key_defs = [
     em.Key.define(['RID'],
                   constraint_names=[('isa', 'imaging_data_pkey')],
                   ),
-    em.Key.define(['url'],
-                  constraint_names=[('isa', 'imaging_data_url_key')],
-                  ),
     em.Key.define(['dataset', 'RID'],
                   constraint_names=[('isa', 'imaging_data_dataset_RID_key')],
+                  ),
+    em.Key.define(['url'],
+                  constraint_names=[('isa', 'imaging_data_url_key')],
                   ),
 ]
 
@@ -166,6 +166,7 @@ fkey_defs = [
                          'Beta_Cell', 'Dataset', ['RID'],
                          constraint_names=[
                              ('isa', 'imaging_data_dataset_fkey')],
+                         acls={'insert': ['*'], 'update': ['*']},
                          on_update='CASCADE',
                          on_delete='RESTRICT',
                          ),
@@ -186,7 +187,8 @@ table_def = em.Table.define(table_name,
 def main():
     server = 'pbcconsortium.isrd.isi.edu'
     catalog_id = 1
-    update_catalog.update_table(server, catalog_id, schema_name, table_name, 
+    mode, replace, server, catalog_id = update_catalog.parse_args(server, catalog_id, is_table=True)
+    update_catalog.update_table(mode, replace, server, catalog_id, schema_name, table_name, 
                                 table_def, column_defs, key_defs, fkey_defs,
                                 table_annotations, table_acls, table_acl_bindings, table_comment,
                                 column_annotations, column_acls, column_acl_bindings, column_comment)

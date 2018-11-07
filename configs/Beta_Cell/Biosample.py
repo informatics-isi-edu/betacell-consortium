@@ -319,26 +319,38 @@ key_defs = [
 ]
 
 fkey_defs = [
-    em.ForeignKey.define(['Dataset', 'Experiment'],
-                         'Beta_Cell', 'Experiment', ['Dataset', 'RID'],
+    em.ForeignKey.define(['Experiment'],
+                         'Beta_Cell', 'Experiment', ['RID'],
                          constraint_names=[
-                             ('Beta_Cell', 'Biosample_Experiment_Dataset_FKey')],
+                             ('Beta_Cell', 'Biosample_Experiment_FKey')],
+                         annotations={'tag:misd.isi.edu,2015:display': {
+                         }, 'tag:isrd.isi.edu,2016:foreign-key': {'domain_filter_pattern': 'Dataset={{{_Dataset}}}'}},
+                         acls={'insert': ['*'], 'update': ['*']},
                          ),
     em.ForeignKey.define(['Specimen'],
                          'Beta_Cell', 'Specimen', ['RID'],
                          constraint_names=[
                              ('Beta_Cell', 'Biosample_Specimen_FKey')],
-                         ),
-    em.ForeignKey.define(['Specimen_Type'],
-                         'vocab', 'specimen_type_terms', ['id'],
-                         constraint_names=[
-                             ('Beta_Cell', 'Biosample_Specimen_Type_FKey')],
-                         comment='Must be a valid reference to a specimen type.',
+                         acls={'insert': ['*'], 'update': ['*']},
                          ),
     em.ForeignKey.define(['Protocol'],
                          'Beta_Cell', 'Protocol', ['RID'],
                          constraint_names=[
                              ('Beta_Cell', 'Biosample_Protocol_FKey')],
+                         acls={'insert': ['*'], 'update': ['*']},
+                         ),
+    em.ForeignKey.define(['Experiment', 'Dataset'],
+                         'Beta_Cell', 'Experiment', ['RID', 'Dataset'],
+                         constraint_names=[
+                             ('Beta_Cell', 'Biosample_Experiment_Dataset_FKey')],
+                         acls={'insert': ['*'], 'update': ['*']},
+                         ),
+    em.ForeignKey.define(['Specimen_Type'],
+                         'vocab', 'specimen_type_terms', ['id'],
+                         constraint_names=[
+                             ('Beta_Cell', 'Biosample_Specimen_Type_FKey')],
+                         acls={'insert': ['*'], 'update': ['*']},
+                         comment='Must be a valid reference to a specimen type.',
                          ),
     em.ForeignKey.define(['Dataset'],
                          'Beta_Cell', 'Dataset', ['RID'],
@@ -346,15 +358,9 @@ fkey_defs = [
                              ('Beta_Cell', 'Biosample_Dataset_FKey')],
                          annotations={'tag:misd.isi.edu,2015:display': {}, 'tag:isrd.isi.edu,2016:foreign-key': {
                              'domain_filter_pattern': 'RID={{{$fkeys.Beta_Cell.Biosample_Experiment_FKey.values._Dataset}}}'}},
+                         acls={'insert': ['*'], 'update': ['*']},
                          on_update='CASCADE',
                          on_delete='RESTRICT',
-                         ),
-    em.ForeignKey.define(['Experiment'],
-                         'Beta_Cell', 'Experiment', ['RID'],
-                         constraint_names=[
-                             ('Beta_Cell', 'Biosample_Experiment_FKey')],
-                         annotations={'tag:misd.isi.edu,2015:display': {
-                         }, 'tag:isrd.isi.edu,2016:foreign-key': {'domain_filter_pattern': 'Dataset={{{_Dataset}}}'}},
                          ),
 ]
 
@@ -373,7 +379,8 @@ table_def = em.Table.define(table_name,
 def main():
     server = 'pbcconsortium.isrd.isi.edu'
     catalog_id = 1
-    update_catalog.update_table(server, catalog_id, schema_name, table_name, 
+    mode, replace, server, catalog_id = update_catalog.parse_args(server, catalog_id, is_table=True)
+    update_catalog.update_table(mode, replace, server, catalog_id, schema_name, table_name, 
                                 table_def, column_defs, key_defs, fkey_defs,
                                 table_annotations, table_acls, table_acl_bindings, table_comment,
                                 column_annotations, column_acls, column_acl_bindings, column_comment)

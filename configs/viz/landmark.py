@@ -25,8 +25,8 @@ column_defs = [em.Column.define('id', em.builtin_types['serial4'], nullok=False,
                em.Column.define('point_x', em.builtin_types['int4'], nullok=False,),
                em.Column.define('point_y', em.builtin_types['int4'], nullok=False,),
                em.Column.define('point_z', em.builtin_types['int4'], nullok=False,),
-               em.Column.define('radius', em.builtin_types['float8'], nullok=False,),
-               em.Column.define('color_r', em.builtin_types['int4'],),
+               em.Column.define('radius', em.builtin_types['float8'], nullok=False, default=0.1),
+               em.Column.define('color_r', em.builtin_types['int4'], default=255),
                em.Column.define('color_g', em.builtin_types['int4'],),
                em.Column.define('color_b', em.builtin_types['int4'],),
                em.Column.define('anatomy', em.builtin_types['text'],),
@@ -46,7 +46,7 @@ table_acls = {}
 table_acl_bindings = {}
 
 key_defs = [
-    em.Key.define(['point_x', 'point_y', 'mesh', 'point_z'],
+    em.Key.define(['point_x', 'mesh', 'point_y', 'point_z'],
                   constraint_names=[
                       ('viz', 'landmark_mesh_point_x_point_y_point_z_key')],
                   ),
@@ -76,7 +76,8 @@ table_def = em.Table.define(table_name,
 def main():
     server = 'pbcconsortium.isrd.isi.edu'
     catalog_id = 1
-    update_catalog.update_table(server, catalog_id, schema_name, table_name, 
+    mode, replace, server, catalog_id = update_catalog.parse_args(server, catalog_id, is_table=True)
+    update_catalog.update_table(mode, replace, server, catalog_id, schema_name, table_name, 
                                 table_def, column_defs, key_defs, fkey_defs,
                                 table_annotations, table_acls, table_acl_bindings, table_comment,
                                 column_annotations, column_acls, column_acl_bindings, column_comment)

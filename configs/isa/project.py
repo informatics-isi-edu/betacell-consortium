@@ -6,17 +6,17 @@ import update_catalog
 table_name = 'project'
 schema_name = 'isa'
 
-column_annotations = {
-    'RCB': {}, 'RCT': {}, 'RID': {}, 'RMB': {}, 'RMT': {}, 'name': {
-        'tag:isrd.isi.edu,2016:column-display': {
-            'compact': {
-                'markdown_pattern': '{{{pis}}}: '
-                '{{{name}}}'}}}, 'pis': {
-                    'tag:misd.isi.edu,2015:display': {
-                        'name': 'List of PI Last Names'}}, 'url': {
-                            'tag:isrd.isi.edu,2016:column-display': {
-                                '*': {
-                                    'markdown_pattern': '[{{{url}}}]({{{url}}})'}}}}
+column_annotations = {'RCB': {},
+                      'RCT': {},
+                      'RID': {},
+                      'RMB': {},
+                      'RMT': {},
+                      'group_membership_url': {},
+                      'groups': {},
+                      'name': {'tag:isrd.isi.edu,2016:column-display': {'compact': {'markdown_pattern': '{{{pis}}}: '
+                                                                                    '{{{name}}}'}}},
+                      'pis': {'tag:misd.isi.edu,2015:display': {'name': 'List of PI Last Names'}},
+                      'url': {'tag:isrd.isi.edu,2016:column-display': {'*': {'markdown_pattern': '[{{{url}}}]({{{url}}})'}}}}
 
 column_comment = {
     'RCB': 'System-generated row created by user provenance.',
@@ -24,12 +24,39 @@ column_comment = {
     'RID': 'System-generated unique row ID.',
     'RMB': 'System-generated row modified by user provenance.',
     'RMT': 'System-generated row modification timestamp',
+    'group_membership_url': 'URL that project members will need in order to '
+    'join the group',
+    'groups': 'Users must be a member of the referenced ACL group in order to '
+    'edit project records.',
     'pis': 'List of Last Names of Principal Investigator separated by /',
     'url': 'url for more information on this project on externalre site'}
 
-column_acls = {}
+column_acls = {
+    'group_membership_url': {
+        'enumerate': [
+            'https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764',
+            'https://auth.globus.org/176baec4-ed26-11e5-8e88-22000ab4b42b',
+            'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a',
+            'https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d'],
+        'select': [
+            'https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764',
+            'https://auth.globus.org/176baec4-ed26-11e5-8e88-22000ab4b42b',
+            'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a',
+            'https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d']},
+    'groups': {
+        'enumerate': [
+            'https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764',
+            'https://auth.globus.org/176baec4-ed26-11e5-8e88-22000ab4b42b',
+            'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a',
+            'https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d'],
+        'select': [
+            'https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764',
+            'https://auth.globus.org/176baec4-ed26-11e5-8e88-22000ab4b42b',
+            'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a',
+            'https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d']}}
 
-column_acl_bindings = {}
+column_acl_bindings = {'group_membership_url': {'project_edit_guard': False},
+                       'groups': {'project_edit_guard': False}}
 
 column_defs = [em.Column.define('id', em.builtin_types['serial4'], nullok=False,),
                em.Column.define('funding', em.builtin_types['text'],),
@@ -42,6 +69,8 @@ column_defs = [em.Column.define('id', em.builtin_types['serial4'], nullok=False,
                em.Column.define('RCT', em.builtin_types['ermrest_rct'], nullok=False, comment=column_comment['RCT'],),
                em.Column.define('RMT', em.builtin_types['ermrest_rmt'], nullok=False, comment=column_comment['RMT'],),
                em.Column.define('pis', em.builtin_types['text'], annotations=column_annotations['pis'], comment=column_comment['pis'],),
+               em.Column.define('groups', em.builtin_types['text'], default=writersacls=column_acls['groups'], acl_bindings=column_acl_bindings['groups'], comment=column_comment['groups'],),
+               em.Column.define('group_membership_url', em.builtin_types['text'], acls=column_acls['group_membership_url'], acl_bindings=column_acl_bindings['group_membership_url'], comment=column_comment['group_membership_url'],),
                ]
 
 visible_columns = {'compact': ['name', 'abstract'],
@@ -95,7 +124,22 @@ table_comment = 'domain'
 
 table_acls = {}
 
-table_acl_bindings = {}
+table_acl_bindings = {
+    'project_edit_guard': {
+        'projection': [
+            {
+                'outbound': [
+                    'isa',
+                    'project_groups_fkey']},
+            'groups'],
+        'projection_type': 'acl',
+        'scope_acl': [
+            'https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764',
+            'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a',
+            'https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d'],
+        'types': [
+            'update',
+            'delete']}}
 
 key_defs = [
     em.Key.define(['name'],
@@ -110,6 +154,10 @@ key_defs = [
 ]
 
 fkey_defs = [
+    em.ForeignKey.define(['groups'],
+                         '_acl_admin', 'group_lists', ['name'],
+                         constraint_names=[('isa', 'project_groups_fkey')],
+                         ),
 ]
 
 table_def = em.Table.define(table_name,
@@ -127,7 +175,8 @@ table_def = em.Table.define(table_name,
 def main():
     server = 'pbcconsortium.isrd.isi.edu'
     catalog_id = 1
-    update_catalog.update_table(server, catalog_id, schema_name, table_name, 
+    mode, replace, server, catalog_id = update_catalog.parse_args(server, catalog_id, is_table=True)
+    update_catalog.update_table(mode, replace, server, catalog_id, schema_name, table_name, 
                                 table_def, column_defs, key_defs, fkey_defs,
                                 table_annotations, table_acls, table_acl_bindings, table_comment,
                                 column_annotations, column_acls, column_acl_bindings, column_comment)

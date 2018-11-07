@@ -21,10 +21,10 @@ column_acl_bindings = {}
 column_defs = [em.Column.define('RID', em.builtin_types['ermrest_rid'], nullok=False, comment=column_comment['RID'],),
                em.Column.define('model', em.builtin_types['text'], nullok=False,),
                em.Column.define('mesh', em.builtin_types['text'], nullok=False,),
-               em.Column.define('color_r', em.builtin_types['int4'],),
-               em.Column.define('color_g', em.builtin_types['int4'],),
+               em.Column.define('color_r', em.builtin_types['int4'], default=255),
+               em.Column.define('color_g', em.builtin_types['int4'], default=215),
                em.Column.define('color_b', em.builtin_types['int4'],),
-               em.Column.define('opacity', em.builtin_types['float8'],),
+               em.Column.define('opacity', em.builtin_types['float8'], default=1.0),
                em.Column.define('RCB', em.builtin_types['ermrest_rcb'], comment=column_comment['RCB'],),
                em.Column.define('RMB', em.builtin_types['ermrest_rmb'], comment=column_comment['RMB'],),
                em.Column.define('RCT', em.builtin_types['ermrest_rct'], nullok=False, comment=column_comment['RCT'],),
@@ -80,7 +80,8 @@ table_def = em.Table.define(table_name,
 def main():
     server = 'pbcconsortium.isrd.isi.edu'
     catalog_id = 1
-    update_catalog.update_table(server, catalog_id, schema_name, table_name, 
+    mode, replace, server, catalog_id = update_catalog.parse_args(server, catalog_id, is_table=True)
+    update_catalog.update_table(mode, replace, server, catalog_id, schema_name, table_name, 
                                 table_def, column_defs, key_defs, fkey_defs,
                                 table_annotations, table_acls, table_acl_bindings, table_comment,
                                 column_annotations, column_acls, column_acl_bindings, column_comment)
