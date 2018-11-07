@@ -107,7 +107,9 @@ def main():
     server = '{0}'
     catalog_id = {1}
     schema_name = '{2}'
-    update_catalog.update_schema(server, catalog_id, schema_name, schema_def, annotations, acls, comment)
+    
+    mode, replace, server, catalog_id = update_catalog.parse_args(server, catalog_id)
+    update_catalog.update_schema(mode, replace, server, catalog_id, schema_name, schema_def, annotations, acls, comment)
 
 
 if __name__ == "__main__":
@@ -139,7 +141,8 @@ import deriva.core.ermrest_model as em
 def main():
     server = '{0}'
     catalog_id = {1}
-    update_catalog.update_catalog(server, catalog_id, annotations, acls)
+    mode, replace, server, catalog_id = update_catalog.parse_args(server, catalog_id, is_catalog=True)
+    update_catalog.update_catalog(mode, replace, server, catalog_id, annotations, acls)
     
 
 if __name__ == "__main__":
@@ -298,7 +301,8 @@ schema_name = '{}'
 def main():
     server = '{0}'
     catalog_id = {1}
-    update_catalog.update_table(server, catalog_id, schema_name, table_name, 
+    mode, replace, server, catalog_id = update_catalog.parse_args(server, catalog_id, is_table=True)
+    update_catalog.update_table(mode, replace, server, catalog_id, schema_name, table_name, 
                                 table_def, column_defs, key_defs, fkey_defs,
                                 table_annotations, table_acls, table_acl_bindings, table_comment,
                                 column_annotations, column_acls, column_acl_bindings, column_comment)
