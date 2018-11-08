@@ -251,7 +251,7 @@ def print_column_defs(table, stream):
         if col.nullok is False:
             s += "nullok=False,"
         if col.default and col.name not in system_columns:
-            s += 'default={}'.format(col.default)
+            s += f"default={col.default!r},"
         for i in ['annotations', 'acls', 'acl_bindings', 'comment']:
             colvar = getattr(col, i)
             if colvar:  # if we have a value for this field....
