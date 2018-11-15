@@ -1,3 +1,4 @@
+from __future__ import print_function
 import os
 import autopep8
 import re
@@ -193,8 +194,7 @@ def print_column_defs(table_schema, stream):
             continue
         t = f"{col.type}:{col.format}"
         s += f"    em.Column.define('{col.name}', em.builtin_types['{table_schema_ermrest_type_map[t]}'],"
-        if col.required:
-            s += "nullok=False,"
+        s += f"nullok={col.required},"
         try:
             s += f"comment=column_comment['{col.descriptor['description']}'],"
         except KeyError:

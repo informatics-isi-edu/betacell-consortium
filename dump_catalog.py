@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import argparse
 import pprint
 import os
@@ -32,7 +34,7 @@ def print_variable(name, value, stream):
     if not value or value == '' or value == [] or value == {}:
         s = '{} = {}'.format(name, value)
     else:
-        s = '{} = {}'.format(name, pprint.pformat(value, indent=4, width=80, depth=None, compact=False))
+        s = '{} = {}'.format(name, pprint.pformat(value, indent=4, width=80, depth=None))
     print(autopep8.fix_code(s, options={'aggressive': 4}), file=stream)
 
 
@@ -70,7 +72,7 @@ def print_annotations(annotations, tag_map, stream, var_name='annotations'):
                 s += "'{}' : {},".format(t, var_map[t])
             else:
                 s += "'{}' : ".format(t)
-                s += pprint.pformat(v, width=80, depth=None, compact=True)
+                s += pprint.pformat(v, width=80, depth=None)
                 s += ','
         s += '}'
     print(autopep8.fix_code(s, options={'aggressive': 4}), file=stream)
