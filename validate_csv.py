@@ -7,7 +7,7 @@ from tableschema import validate, exceptions
 
 from deriva.core import ErmrestCatalog, get_credential
 
-from dump_catalog import print_variable, print_tag_variables, print_annotations, tag_map
+from dump_catalog import print_variable, print_tag_variables, print_annotations, print_table_def, tag_map
 
 # We should get range info in there....
 table_schema_type_map = {
@@ -177,11 +177,18 @@ def print_key_defs(table_schema, schema_name, table_name, stream):
 
 
 def print_column_defs(table_schema, stream):
+    """
+    Print out a list of the deriva_py column definions, one for each field in the schema.
+    :param table_schema: A table schema object
+    :param stream: Output file
+    :return:
+    """
     provide_system = True
     system_columns = ['RID', 'RCB', 'RMB', 'RCT', 'RMT']
 
     s = 'column_defs = ['
     for col in table_schema.fields:
+        # Don't include system columns in the list of column definitions.
         if col.name in system_columns:
             continue
         t = f"{col.type}:{col.format}"
@@ -196,16 +203,6 @@ def print_column_defs(table_schema, stream):
     s += ']'
     print(autopep8.fix_code(s, options={'aggressive': 8}), file=stream)
     return provide_system
-
-
-def print_table_def(schema, stream):
-    print_tag_variables({}, tag_map, stream)
-    print_annotations({}, tag_map, stream, var_name='table_annotations')
-    print_variable('table_comment', None, stream)
-    print_variable('table_acls', {}, stream)
-    print_variable('table_acl_bindings', {}, stream)
-    return
-
 
 def print_table(server, catalog_id, table_schema, schema_name, table_name, stream):
     print("""import argparse
