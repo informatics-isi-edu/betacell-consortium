@@ -18,6 +18,7 @@ table_schema_type_map = {
     'int8': ('integer', 'default'),
     'float8': ('number', 'default'),
     'text': ('string', 'default'),
+    'markdown': ('string', 'default'),
     'date': ('date', 'default'),
     'json': ('object', 'default'),
     'boolean': ('boolean', 'default'),
@@ -36,7 +37,7 @@ table_schema_type_map = {
     'int2[]': ('integer', 'default'),
     'timestamptz[]': ('any', 'default'),
     'ermrest_uri': ('string', 'uri'),
-    'ermrest_rid': 'string',
+    'ermrest_rid': ('string','default'),
     'ermrest_rct': ('datetime', 'default'),
     'ermrest_rmt': ('datetime', 'default'),
     'ermrest_rcb': ('string', 'default'),
@@ -45,7 +46,7 @@ table_schema_type_map = {
 
 table_schema_ermrest_type_map = {
     'string:default': 'text',
-    'string:email': 'ermrest_uri',
+    'string:email': 'text',
     'string:uri': 'ermrest_uri',
     'string:binary': 'text',
     'string:uuid': 'text',
@@ -65,7 +66,16 @@ table_schema_ermrest_type_map = {
 }
 
 
-def schema_from_catalog(server, catalog_id, schema_name, table_name):
+def table_schema_from_catalog(server, catalog_id, schema_name, table_name, outfile=None):
+    """
+    Create a TableSchema by querying an ERMRest catalog and converting the model format.
+    :param server: Server on which the catalog resides
+    :param catalog_id: Catalog ID to use for the model
+    :param schema_name: Schema from which to get the table
+    :param table_name: Table whose model you want to convert
+    :param outfile: if this argument is specified, dump the scheme into the specified file.
+    :return: table schema representation of the model
+    """
     credential = get_credential(server)
     catalog = ErmrestCatalog('https', server, catalog_id, credentials=credential)
     model_root = catalog.getCatalogModel()
@@ -77,21 +87,25 @@ def schema_from_catalog(server, catalog_id, schema_name, table_name):
         for col in table.column_definitions:
             field = Field({
                 "name": col.name,
-                "type": table_schema_type_map[col.type.typename],
+                "type": table_schema_type_map[col.type.typename][0],
+                "constraints":{}
             })
+            if table_schema_type_map[col.type.typename][1] != 'default':
+                field.descriptor['format'] = table_schema_type_map[col.type.typename][1]
             if col.display:
-                field.title = col.display
+                field.descriptor['title'] = col.display
             if col.comment:
-                field.description = col.comment
+                field.descriptor['description'] = col.comment
             if [col.name] in [i.unique_columns for i in table.keys]:
-                field.constraints['unique'] = True
-            field.constraints['required'] = not col.nullok
-            if col.default:
-                field.missingvalues = [col.default]
+                field.descriptor['constraints']['unique'] = True
+            if not col.nullok:
+                field.descriptor['constraints']['required'] = True
             table_schema.add_field(field.descriptor)
         table_schema.commit()
         if not table_schema.valid:
             print(table_schema.errors)
+        if outfile:
+            table_schema.save(outfile)
     except exceptions.ValidationError as exception:
         print('error.....')
         print(exception.errors)
@@ -230,8 +244,8 @@ def cannonical_column_name(name):
     return '_'.join(list(map(lambda x: x[0].upper() + x[1:], re.findall(split_words, name))))
 
 
-def convert_table_to_deriva(table_loc, server, catalog_id=1, schema_name, table_name=None, outfile=None,
-                            map_column_names=False, key_columns=[]):
+def convert_table_to_deriva(table_loc, server, catalog_id, schema_name, table_name=None, outfile=None,
+                            map_column_names=False, key_columns=None):
     """
     Read in a table, try to figure out the type of its columns and output a deriva-py program that can be used to create
     the table in a catalog.
@@ -244,9 +258,14 @@ def convert_table_to_deriva(table_loc, server, catalog_id=1, schema_name, table_
     :param outfile: Where to put the deriva_py program.
     :param map_column_names:
     :param key_columns:
-    :return:
+    :return: dictionary that has the column name mapping derived by this routine.
     """
     column_map = {}
+
+    if not table_name:
+        table_name = os.path.splitext(os.path.basename(table_loc))[0]
+    if not outfile:
+        outfile = table_name + '.py'
     table = Table(table_loc)
     table.infer()
     if map_column_names:
