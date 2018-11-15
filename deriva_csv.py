@@ -4,9 +4,7 @@ import autopep8
 import re
 
 from tableschema import Table, Schema, Field, exceptions
-
 from deriva.core import ErmrestCatalog, get_credential
-
 from dump_catalog import print_variable, print_tag_variables, print_annotations, print_table_def, tag_map
 
 # We should get range info in there....
