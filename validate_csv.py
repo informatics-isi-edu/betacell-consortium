@@ -3,8 +3,7 @@ import os
 import autopep8
 import re
 
-from tableschema import Table, Schema, Field
-from tableschema import validate, exceptions
+from tableschema import Table, Schema, Field, exceptions
 
 from deriva.core import ErmrestCatalog, get_credential
 
@@ -38,7 +37,7 @@ table_schema_type_map = {
     'int2[]': ('integer', 'default'),
     'timestamptz[]': ('any', 'default'),
     'ermrest_uri': ('string', 'uri'),
-    'ermrest_rid': ('string','default'),
+    'ermrest_rid': ('string', 'default'),
     'ermrest_rct': ('datetime', 'default'),
     'ermrest_rmt': ('datetime', 'default'),
     'ermrest_rcb': ('string', 'default'),
@@ -89,7 +88,7 @@ def table_schema_from_catalog(server, catalog_id, schema_name, table_name, outfi
             field = Field({
                 "name": col.name,
                 "type": table_schema_type_map[col.type.typename][0],
-                "constraints":{}
+                "constraints": {}
             })
             if table_schema_type_map[col.type.typename][1] != 'default':
                 field.descriptor['format'] = table_schema_type_map[col.type.typename][1]
@@ -162,15 +161,15 @@ def print_foreign_key_defs(table_schema, stream):
 
 def print_key_defs(table_schema, schema_name, table_name, stream):
     s = 'key_defs = [\n'
-    constraint_name = (schema_name, cannonical_column_name(f'{table_name}_{table_schema.primary_key}_Key)'))
-    s += f"""    em.Key.define({table_schema.primary_key},
-                 constraint_names={constraint_name},\n)\n"""
+    constraint_name = (schema_name, cannonical_column_name('{}_{}_Key)'.format(table_name, table_schema.primary_key)))
+    s += """    em.Key.define({},
+                 constraint_names={},\n)\n""".format(table_schema.primary_key, constraint_name)
 
     for col in table_schema.fields:
         if col.required and col.constraints['unique']:
-            constraint_name = (schema_name, cannonical_column_name(f'{table_name}_{col.name}_Key)'))
-            s += f"""    em.Key.define([{col.name!r}],
-                     constraint_names={constraint_name},\n"""
+            constraint_name = (schema_name, cannonical_column_name('{}_{}_Key)'.format(table_name, col.name)))
+            s += """    em.Key.define([{!r}],
+                     constraint_names={},\n""".format(col.name, constraint_name)
             s += '),\n'
     s += ']'
     print(autopep8.fix_code(s, options={}), file=stream)
@@ -192,17 +191,18 @@ def print_column_defs(table_schema, stream):
         # Don't include system columns in the list of column definitions.
         if col.name in system_columns:
             continue
-        t = f"{col.type}:{col.format}"
-        s += f"    em.Column.define('{col.name}', em.builtin_types['{table_schema_ermrest_type_map[t]}'],"
-        s += f"nullok={col.required},"
+        t = "{}:{}".format(col.type, col.format)
+        s += "    em.Column.define('{}', em.builtin_types['{}'],".format(col.name, table_schema_ermrest_type_map[t])
+        s += "nullok={},".format(col.required)
         try:
-            s += f"comment=column_comment['{col.descriptor['description']}'],"
+            s += "comment=column_comment['{}'],".format(col.descriptor['description'])
         except KeyError:
             pass
         s += '),\n'
     s += ']'
     print(autopep8.fix_code(s, options={'aggressive': 8}), file=stream)
     return provide_system
+
 
 def print_table(server, catalog_id, table_schema, schema_name, table_name, stream):
     print("""import argparse
@@ -270,9 +270,9 @@ def convert_table_to_deriva(table_loc, server, catalog_id, schema_name, table_na
             column_map[c.name] = cannonical_column_name(c.name)
             c.descriptor['name'] = column_map[c.name]
     table.schema.descriptor['primaryKey'] = 'RID'
-    for i,col in enumerate(table.schema.fields):
+    for i, col in enumerate(table.schema.fields):
         if col.name in key_columns:
-            table.schema.descriptor['fields'][i]['constraints'] = {'required':True, 'unique':True}
+            table.schema.descriptor['fields'][i]['constraints'] = {'required': True, 'unique': True}
     table.schema.commit()
 
     with open(outfile, 'w') as stream:
