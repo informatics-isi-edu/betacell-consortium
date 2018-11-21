@@ -1,7 +1,7 @@
 import argparse
 from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
-import update_catalog
+from deriva.utils.catalog.manage import update_catalog
 
 table_name = 'project_member'
 schema_name = 'isa'
@@ -87,28 +87,28 @@ table_acl_bindings = {
             'delete']}}
 
 key_defs = [
-    em.Key.define(['person', 'project_id'],
-                  constraint_names=[('isa', 'project_member_pkey')],
-                  ),
     em.Key.define(['RID'],
                   constraint_names=[('isa', 'project_member_RID_key')],
+                  ),
+    em.Key.define(['project_id', 'person'],
+                  constraint_names=[('isa', 'project_member_pkey')],
                   ),
 ]
 
 fkey_defs = [
-    em.ForeignKey.define(['project_id'],
-                         'isa', 'project', ['id'],
-                         constraint_names=[
-                             ('isa', 'project_member_project_id_fkey')],
-                         on_update='CASCADE',
-                         on_delete='CASCADE',
-                         ),
     em.ForeignKey.define(['person'],
                          'isa', 'person', ['RID'],
                          constraint_names=[
                              ('isa', 'project_member_person_fkey')],
                          on_update='CASCADE',
                          on_delete='RESTRICT',
+                         ),
+    em.ForeignKey.define(['project_id'],
+                         'isa', 'project', ['id'],
+                         constraint_names=[
+                             ('isa', 'project_member_project_id_fkey')],
+                         on_update='CASCADE',
+                         on_delete='CASCADE',
                          ),
 ]
 
@@ -124,10 +124,10 @@ table_def = em.Table.define(table_name,
                             )
 
 
-def main():
-    server = 'pbcconsortium.isrd.isi.edu'
-    catalog_id = 1
-    mode, replace, server, catalog_id = update_catalog.parse_args(server, catalog_id, is_table=True)
+def main(skip_args=False, mode='annotations', replace=False, server='pbcconsortium.isrd.isi.edu', catalog_id=1):
+    
+    if not skip_args:
+        mode, replace, server, catalog_id = update_catalog.parse_args(server, catalog_id, is_table=True)
     update_catalog.update_table(mode, replace, server, catalog_id, schema_name, table_name, 
                                 table_def, column_defs, key_defs, fkey_defs,
                                 table_annotations, table_acls, table_acl_bindings, table_comment,

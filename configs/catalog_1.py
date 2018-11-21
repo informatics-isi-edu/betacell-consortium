@@ -1,6 +1,6 @@
 import argparse
 from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
-import update_catalog
+from deriva.utils.catalog.manage import update_catalog
 import deriva.core.ermrest_model as em
 
 display = {}

@@ -1,7 +1,7 @@
 import argparse
 from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
-import update_catalog
+from deriva.utils.catalog.manage import update_catalog
 
 table_name = 'Experiment'
 schema_name = 'Beta_Cell'
@@ -292,23 +292,21 @@ table_acls = {}
 table_acl_bindings = {}
 
 key_defs = [
+    em.Key.define(['RID'],
+                  constraint_names=[('Beta_Cell', 'Experiment_RID_Key')],
+                  ),
     em.Key.define(['RID', 'Dataset'],
                   constraint_names=[
                       ('Beta_Cell', 'Experiment_RID_Dataset_Key')],
                   ),
-    em.Key.define(['RID'],
-                  constraint_names=[('Beta_Cell', 'Experiment_RID_Key')],
-                  ),
 ]
 
 fkey_defs = [
-    em.ForeignKey.define(['Protocol'],
-                         'Beta_Cell', 'Protocol', ['RID'],
+    em.ForeignKey.define(['Experiment_Type'],
+                         'vocab', 'experiment_type_terms', ['RID'],
                          constraint_names=[
-                             ('Beta_Cell', 'Experiment_Protocol_FKey')],
+                             ('Beta_Cell', 'Experiment_Experiment_Type_FKey')],
                          acls={'insert': ['*'], 'update': ['*']},
-                         on_update='CASCADE',
-                         on_delete='RESTRICT',
                          ),
     em.ForeignKey.define(['Dataset'],
                          'Beta_Cell', 'Dataset', ['RID'],
@@ -318,11 +316,13 @@ fkey_defs = [
                          on_update='CASCADE',
                          on_delete='RESTRICT',
                          ),
-    em.ForeignKey.define(['Experiment_Type'],
-                         'vocab', 'experiment_type_terms', ['RID'],
+    em.ForeignKey.define(['Protocol'],
+                         'Beta_Cell', 'Protocol', ['RID'],
                          constraint_names=[
-                             ('Beta_Cell', 'Experiment_Experiment_Type_FKey')],
+                             ('Beta_Cell', 'Experiment_Protocol_FKey')],
                          acls={'insert': ['*'], 'update': ['*']},
+                         on_update='CASCADE',
+                         on_delete='RESTRICT',
                          ),
 ]
 
@@ -338,10 +338,10 @@ table_def = em.Table.define(table_name,
                             )
 
 
-def main():
-    server = 'pbcconsortium.isrd.isi.edu'
-    catalog_id = 1
-    mode, replace, server, catalog_id = update_catalog.parse_args(server, catalog_id, is_table=True)
+def main(skip_args=False, mode='annotations', replace=False, server='pbcconsortium.isrd.isi.edu', catalog_id=1):
+    
+    if not skip_args:
+        mode, replace, server, catalog_id = update_catalog.parse_args(server, catalog_id, is_table=True)
     update_catalog.update_table(mode, replace, server, catalog_id, schema_name, table_name, 
                                 table_def, column_defs, key_defs, fkey_defs,
                                 table_annotations, table_acls, table_acl_bindings, table_comment,

@@ -1,7 +1,7 @@
 import argparse
 from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
-import update_catalog
+from deriva.utils.catalog.manage import update_catalog
 
 table_name = 'project'
 schema_name = 'isa'
@@ -58,20 +58,81 @@ column_acls = {
 column_acl_bindings = {'group_membership_url': {'project_edit_guard': False},
                        'groups': {'project_edit_guard': False}}
 
-column_defs = [em.Column.define('id', em.builtin_types['serial4'], nullok=False,),
-               em.Column.define('funding', em.builtin_types['text'],),
-               em.Column.define('url', em.builtin_types['text'], annotations=column_annotations['url'], comment=column_comment['url'],),
-               em.Column.define('name', em.builtin_types['text'], annotations=column_annotations['name'],),
-               em.Column.define('abstract', em.builtin_types['markdown'],),
-               em.Column.define('RID', em.builtin_types['ermrest_rid'], nullok=False, comment=column_comment['RID'],),
-               em.Column.define('RCB', em.builtin_types['ermrest_rcb'], comment=column_comment['RCB'],),
-               em.Column.define('RMB', em.builtin_types['ermrest_rmb'], comment=column_comment['RMB'],),
-               em.Column.define('RCT', em.builtin_types['ermrest_rct'], nullok=False, comment=column_comment['RCT'],),
-               em.Column.define('RMT', em.builtin_types['ermrest_rmt'], nullok=False, comment=column_comment['RMT'],),
-               em.Column.define('pis', em.builtin_types['text'], annotations=column_annotations['pis'], comment=column_comment['pis'],),
-               em.Column.define('groups', em.builtin_types['text'], default=writersacls=column_acls['groups'], acl_bindings=column_acl_bindings['groups'], comment=column_comment['groups'],),
-               em.Column.define('group_membership_url', em.builtin_types['text'], acls=column_acls['group_membership_url'], acl_bindings=column_acl_bindings['group_membership_url'], comment=column_comment['group_membership_url'],),
-               ]
+column_defs = [
+    em.Column.define(
+        'id',
+        em.builtin_types['serial4'],
+        nullok=False,
+    ),
+    em.Column.define(
+        'funding',
+        em.builtin_types['text'],
+    ),
+    em.Column.define(
+        'url',
+        em.builtin_types['text'],
+        annotations=column_annotations['url'],
+        comment=column_comment['url'],
+    ),
+    em.Column.define(
+        'name',
+        em.builtin_types['text'],
+        annotations=column_annotations['name'],
+    ),
+    em.Column.define(
+        'abstract',
+        em.builtin_types['markdown'],
+    ),
+    em.Column.define(
+        'RID',
+        em.builtin_types['ermrest_rid'],
+        nullok=False,
+        comment=column_comment['RID'],
+    ),
+    em.Column.define(
+        'RCB',
+        em.builtin_types['ermrest_rcb'],
+        comment=column_comment['RCB'],
+    ),
+    em.Column.define(
+        'RMB',
+        em.builtin_types['ermrest_rmb'],
+        comment=column_comment['RMB'],
+    ),
+    em.Column.define(
+        'RCT',
+        em.builtin_types['ermrest_rct'],
+        nullok=False,
+        comment=column_comment['RCT'],
+    ),
+    em.Column.define(
+        'RMT',
+        em.builtin_types['ermrest_rmt'],
+        nullok=False,
+        comment=column_comment['RMT'],
+    ),
+    em.Column.define(
+        'pis',
+        em.builtin_types['text'],
+        annotations=column_annotations['pis'],
+        comment=column_comment['pis'],
+    ),
+    em.Column.define(
+        'groups',
+        em.builtin_types['text'],
+        default='writers',
+        acls=column_acls['groups'],
+        acl_bindings=column_acl_bindings['groups'],
+        comment=column_comment['groups'],
+    ),
+    em.Column.define(
+        'group_membership_url',
+        em.builtin_types['text'],
+        acls=column_acls['group_membership_url'],
+        acl_bindings=column_acl_bindings['group_membership_url'],
+        comment=column_comment['group_membership_url'],
+    ),
+]
 
 visible_columns = {'compact': ['name', 'abstract'],
                    'detailed': ['name',
@@ -142,14 +203,14 @@ table_acl_bindings = {
             'delete']}}
 
 key_defs = [
+    em.Key.define(['id'],
+                  constraint_names=[('isa', 'project_pkey')],
+                  ),
     em.Key.define(['name'],
                   constraint_names=[('isa', 'project_name_key')],
                   ),
     em.Key.define(['RID'],
                   constraint_names=[('isa', 'project_RID_key')],
-                  ),
-    em.Key.define(['id'],
-                  constraint_names=[('isa', 'project_pkey')],
                   ),
 ]
 
@@ -172,10 +233,10 @@ table_def = em.Table.define(table_name,
                             )
 
 
-def main():
-    server = 'pbcconsortium.isrd.isi.edu'
-    catalog_id = 1
-    mode, replace, server, catalog_id = update_catalog.parse_args(server, catalog_id, is_table=True)
+def main(skip_args=False, mode='annotations', replace=False, server='pbcconsortium.isrd.isi.edu', catalog_id=1):
+    
+    if not skip_args:
+        mode, replace, server, catalog_id = update_catalog.parse_args(server, catalog_id, is_table=True)
     update_catalog.update_table(mode, replace, server, catalog_id, schema_name, table_name, 
                                 table_def, column_defs, key_defs, fkey_defs,
                                 table_annotations, table_acls, table_acl_bindings, table_comment,

@@ -1,10 +1,9 @@
 import argparse
 from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
-import update_catalog
+from deriva.utils.catalog.manage import update_catalog
 
 table_names = [
-    'uniprot_terms',
     'anatomy_terms',
     'cellular_location_terms',
     'data_type_terms',

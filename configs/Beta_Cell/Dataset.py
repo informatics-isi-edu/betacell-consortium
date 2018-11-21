@@ -1,7 +1,7 @@
 import argparse
 from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
-import update_catalog
+from deriva.utils.catalog.manage import update_catalog
 
 table_name = 'Dataset'
 schema_name = 'Beta_Cell'
@@ -104,11 +104,6 @@ key_defs = [
 ]
 
 fkey_defs = [
-    em.ForeignKey.define(['RCB'],
-                         'public', 'ermrest_client', ['id'],
-                         constraint_names=[('Beta_Cell', 'Dataset_RCB_FKey')],
-                         acls={'insert': ['*'], 'update': ['*']},
-                         ),
     em.ForeignKey.define(['Project'],
                          'isa', 'project', ['id'],
                          constraint_names=[
@@ -116,6 +111,11 @@ fkey_defs = [
                          acls={'insert': ['*'], 'update': ['*']},
                          on_update='CASCADE',
                          on_delete='RESTRICT',
+                         ),
+    em.ForeignKey.define(['RCB'],
+                         'public', 'ermrest_client', ['id'],
+                         constraint_names=[('Beta_Cell', 'Dataset_RCB_FKey')],
+                         acls={'insert': ['*'], 'update': ['*']},
                          ),
 ]
 
@@ -131,10 +131,10 @@ table_def = em.Table.define(table_name,
                             )
 
 
-def main():
-    server = 'pbcconsortium.isrd.isi.edu'
-    catalog_id = 1
-    mode, replace, server, catalog_id = update_catalog.parse_args(server, catalog_id, is_table=True)
+def main(skip_args=False, mode='annotations', replace=False, server='pbcconsortium.isrd.isi.edu', catalog_id=1):
+    
+    if not skip_args:
+        mode, replace, server, catalog_id = update_catalog.parse_args(server, catalog_id, is_table=True)
     update_catalog.update_table(mode, replace, server, catalog_id, schema_name, table_name, 
                                 table_def, column_defs, key_defs, fkey_defs,
                                 table_annotations, table_acls, table_acl_bindings, table_comment,

@@ -1,7 +1,7 @@
 import argparse
 from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
-import update_catalog
+from deriva.utils.catalog.manage import update_catalog
 
 table_name = 'Processed_Tomography_Data'
 schema_name = 'Beta_Cell'
@@ -64,8 +64,7 @@ visible_columns = {'compact': [['Beta_Cell', 'Processed_Tomography_Data_Key'],
                                'url',
                                'File_Type',
                                ['Beta_Cell', 'Processed_Tomography_Data_Process_FKey'],
-                               'length',
-                               'Submitted_On'],
+                               'length'],
                    'detailed': [['Beta_Cell', 'Processed_Tomography_Data_Key'],
                                 ['Beta_Cell', 'Processed_Tomography_Data_Dataset_FKey'],
                                 ['Beta_Cell', 'Processed_Tomography_Data_Biosample_FKey'],
@@ -73,8 +72,7 @@ visible_columns = {'compact': [['Beta_Cell', 'Processed_Tomography_Data_Key'],
                                 ['Beta_Cell', 'Processed_Tomography_Data_Output_Type_FKey'],
                                 ['Beta_Cell', 'Processed_Tomography_Data_File_Type_FKey'],
                                 'length',
-                                'md5',
-                                'Submitted_On'],
+                                'md5'],
                    'entry': ['RID',
                              {'markdown_name': 'Dataset',
                               'source': [{'outbound': ['Beta_Cell',
@@ -84,8 +82,7 @@ visible_columns = {'compact': [['Beta_Cell', 'Processed_Tomography_Data_Key'],
                              ['Beta_Cell', 'Processed_Tomography_Data_Process_FKey'],
                              ['Beta_Cell', 'Processed_Tomography_Data_Output_Type_FKey'],
                              ['Beta_Cell', 'Processed_Tomography_Data_File_Type_FKey'],
-                             'url',
-                             'Submitted_On'],
+                             'url'],
                    'filter': {'and': [{'entity': True, 'source': 'RID'},
                                       {'markdown_name': 'Dataset',
                                        'source': [{'outbound': ['Beta_Cell',
@@ -166,11 +163,7 @@ visible_columns = {'compact': [['Beta_Cell', 'Processed_Tomography_Data_Key'],
                                        'open': True,
                                        'source': [{'outbound': ['Beta_Cell',
                                                                 'Processed_Tomography_Data_File_Type_FKey']},
-                                                  'id']},
-                                      {'entity': True,
-                                       'markdown_name': 'Submitted On',
-                                       'open': False,
-                                       'source': 'Submitted_On'}]}}
+                                                  'id']}]}}
 
 visible_foreign_keys = {}
 
@@ -199,12 +192,12 @@ key_defs = [
 ]
 
 fkey_defs = [
-    em.ForeignKey.define(['Dataset'],
-                         'Beta_Cell', 'Dataset', ['RID'],
+    em.ForeignKey.define(['Biosample'],
+                         'Beta_Cell', 'Biosample', ['RID'],
                          constraint_names=[
-                             ('Beta_Cell', 'Processed_Tomography_Data_Dataset_FKey')],
-                         annotations={'tag:misd.isi.edu,2015:display': {}, 'tag:isrd.isi.edu,2016:foreign-key': {
-                             'domain_filter_pattern': 'RID={{{$fkeys.Beta_Cell.Processed_Tomography_Data_Biosample_FKey.values._Dataset}}}'}},
+                             ('Beta_Cell', 'Processed_Tomography_Data_Biosample_FKey')],
+                         annotations={
+                             'tag:isrd.isi.edu,2016:foreign-key': {'domain_filter_pattern': 'Dataset={{{_Dataset}}}'}},
                          acls={'insert': ['*'], 'update': ['*']},
                          on_update='CASCADE',
                          on_delete='RESTRICT',
@@ -215,28 +208,28 @@ fkey_defs = [
                              ('Beta_Cell', 'Processed_Tomography_Data_File_Type_FKey')],
                          acls={'insert': ['*'], 'update': ['*']},
                          ),
-    em.ForeignKey.define(['Biosample', 'Dataset'],
-                         'Beta_Cell', 'Biosample', ['RID', 'Dataset'],
+    em.ForeignKey.define(['Dataset', 'Biosample'],
+                         'Beta_Cell', 'Biosample', ['Dataset', 'RID'],
                          constraint_names=[
                              ('Beta_Cell', 'Processed_Tomography_Data_Dataset_RID_FKey')],
                          acls={'insert': ['*'], 'update': ['*']},
                          comment='Ensure that the dataset for the file is the same as for the biosample',
+                         ),
+    em.ForeignKey.define(['Dataset'],
+                         'Beta_Cell', 'Dataset', ['RID'],
+                         constraint_names=[
+                             ('Beta_Cell', 'Processed_Tomography_Data_Dataset_FKey')],
+                         annotations={'tag:misd.isi.edu,2015:display': {}, 'tag:isrd.isi.edu,2016:foreign-key': {
+                             'domain_filter_pattern': 'RID={{{$fkeys.Beta_Cell.Processed_Tomography_Data_Biosample_FKey.values._Dataset}}}'}},
+                         acls={'insert': ['*'], 'update': ['*']},
+                         on_update='CASCADE',
+                         on_delete='RESTRICT',
                          ),
     em.ForeignKey.define(['Process'],
                          'isa', 'process', ['RID'],
                          constraint_names=[
                              ('Beta_Cell', 'Processed_Tomography_Data_Process_FKey')],
                          acls={'insert': ['*'], 'update': ['*']},
-                         ),
-    em.ForeignKey.define(['Biosample'],
-                         'Beta_Cell', 'Biosample', ['RID'],
-                         constraint_names=[
-                             ('Beta_Cell', 'Processed_Tomography_Data_Biosample_FKey')],
-                         annotations={
-                             'tag:isrd.isi.edu,2016:foreign-key': {'domain_filter_pattern': 'Dataset={{{_Dataset}}}'}},
-                         acls={'insert': ['*'], 'update': ['*']},
-                         on_update='CASCADE',
-                         on_delete='RESTRICT',
                          ),
 ]
 
@@ -252,10 +245,10 @@ table_def = em.Table.define(table_name,
                             )
 
 
-def main():
-    server = 'pbcconsortium.isrd.isi.edu'
-    catalog_id = 1
-    mode, replace, server, catalog_id = update_catalog.parse_args(server, catalog_id, is_table=True)
+def main(skip_args=False, mode='annotations', replace=False, server='pbcconsortium.isrd.isi.edu', catalog_id=1):
+    
+    if not skip_args:
+        mode, replace, server, catalog_id = update_catalog.parse_args(server, catalog_id, is_table=True)
     update_catalog.update_table(mode, replace, server, catalog_id, schema_name, table_name, 
                                 table_def, column_defs, key_defs, fkey_defs,
                                 table_annotations, table_acls, table_acl_bindings, table_comment,

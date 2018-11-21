@@ -3,8 +3,8 @@ from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
 from deriva.utils.catalog.manage import update_catalog
 
-table_name = 'person'
-schema_name = 'common'
+table_name = 'Ingredient'
+schema_name = 'Beta_Cell'
 
 column_annotations = {}
 
@@ -19,28 +19,16 @@ column_defs = [em.Column.define('RID', em.builtin_types['ermrest_rid'], nullok=F
                em.Column.define('RMT', em.builtin_types['ermrest_rmt'], nullok=False,),
                em.Column.define('RCB', em.builtin_types['ermrest_rcb'],),
                em.Column.define('RMB', em.builtin_types['ermrest_rmb'],),
-               em.Column.define('name', em.builtin_types['text'], nullok=False,),
-               em.Column.define('first_name', em.builtin_types['text'], nullok=False,),
-               em.Column.define('middle_name', em.builtin_types['text'],),
-               em.Column.define('last_name', em.builtin_types['text'], nullok=False,),
-               em.Column.define('email', em.builtin_types['text'],),
-               em.Column.define('degrees', em.builtin_types['json'],),
-               em.Column.define('affiliation', em.builtin_types['text'],),
-               em.Column.define('website', em.builtin_types['text'],),
+               em.Column.define('Title', em.builtin_types['text'],),
+               em.Column.define('Ingredient_ID', em.builtin_types['int4'],),
+               em.Column.define('UniProt_ID', em.builtin_types['text'],),
+               em.Column.define('Gene_UniProt', em.builtin_types['text'],),
+               em.Column.define('UniProt_Name', em.builtin_types['text'],),
                ]
 
-visible_columns = {'compact': ['name', 'email', 'affiliation'],
-                   'detailed': ['name', 'email', 'affiliation']}
+table_annotations = {}
 
-table_display = {'*': {'row_order': [{'column': 'last_name', 'descending': False}]},
-                 'row_name': {'row_markdown_pattern': '{{{first_name}}} {{{last_name}}}'}}
-
-table_annotations = {
-    'tag:isrd.isi.edu,2016:table-display': table_display,
-    'tag:isrd.isi.edu,2016:visible-columns': visible_columns,
-}
-
-table_comment = 'Standard definition for a person in catalog'
+table_comment = None
 
 table_acls = {}
 
@@ -48,14 +36,18 @@ table_acl_bindings = {}
 
 key_defs = [
     em.Key.define(['RID'],
-                  constraint_names=[('common', 'person_RID_key')],
-                  ),
-    em.Key.define(['name'],
-                  constraint_names=[('common', 'person_pkey')],
+                  constraint_names=[('Beta_Cell', 'Ingredient_RID_Key')],
                   ),
 ]
 
 fkey_defs = [
+    em.ForeignKey.define(['UniProt_ID'],
+                         'Vocab', 'UniProt_Term', ['id'],
+                         constraint_names=[
+                             ('Beta_Cell', 'Ingredient_UniProt_Term_FKey')],
+                         acls={'insert': ['*'], 'update': ['*']},
+                         comment='Must be a valid reference to a UniProt term.',
+                         ),
 ]
 
 table_def = em.Table.define(table_name,

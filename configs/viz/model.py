@@ -1,7 +1,7 @@
 import argparse
 from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
-import update_catalog
+from deriva.utils.catalog.manage import update_catalog
 
 table_name = 'model'
 schema_name = 'viz'
@@ -31,8 +31,8 @@ column_defs = [em.Column.define('id', em.builtin_types['serial4'], nullok=False,
                em.Column.define('bg_color_r', em.builtin_types['int4'],),
                em.Column.define('bg_color_g', em.builtin_types['int4'],),
                em.Column.define('bg_color_b', em.builtin_types['int4'],),
-               em.Column.define('bounding_box_color_r', em.builtin_types['int4'], default=255),
-               em.Column.define('bounding_box_color_g', em.builtin_types['int4'], default=255),
+               em.Column.define('bounding_box_color_r', em.builtin_types['int4'], default=255,),
+               em.Column.define('bounding_box_color_g', em.builtin_types['int4'], default=255,),
                em.Column.define('bounding_box_color_b', em.builtin_types['int4'],),
                em.Column.define('show_bounding_box', em.builtin_types['boolean'],),
                em.Column.define('rotate', em.builtin_types['boolean'],),
@@ -257,10 +257,10 @@ table_def = em.Table.define(table_name,
                             )
 
 
-def main():
-    server = 'pbcconsortium.isrd.isi.edu'
-    catalog_id = 1
-    mode, replace, server, catalog_id = update_catalog.parse_args(server, catalog_id, is_table=True)
+def main(skip_args=False, mode='annotations', replace=False, server='pbcconsortium.isrd.isi.edu', catalog_id=1):
+    
+    if not skip_args:
+        mode, replace, server, catalog_id = update_catalog.parse_args(server, catalog_id, is_table=True)
     update_catalog.update_table(mode, replace, server, catalog_id, schema_name, table_name, 
                                 table_def, column_defs, key_defs, fkey_defs,
                                 table_annotations, table_acls, table_acl_bindings, table_comment,

@@ -1,7 +1,7 @@
 import argparse
 from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
-import update_catalog
+from deriva.utils.catalog.manage import update_catalog
 
 table_names = [
     'Processed_Tomography_Data',
@@ -9,6 +9,7 @@ table_names = [
     'File',
     'Collection_Biosample',
     'Specimen',
+    'PDB_Model',
     'Dataset',
     'Experiment',
     'XRay_Tomography_Data',
@@ -17,7 +18,9 @@ table_names = [
     'Cell_Line',
     'Protocol_Step',
     'Mass_Spec_Data',
+    'PHYRE2_Model',
     'Protocol_Type',
+    'Ingredient',
 ]
 
 display = {'name_style': {'underline_space': True}}

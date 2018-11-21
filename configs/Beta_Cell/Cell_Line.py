@@ -1,7 +1,7 @@
 import argparse
 from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
-import update_catalog
+from deriva.utils.catalog.manage import update_catalog
 
 table_name = 'Cell_Line'
 schema_name = 'Beta_Cell'
@@ -93,18 +93,18 @@ fkey_defs = [
                              ('Beta_Cell', 'Cell_Line_Species_FKey')],
                          acls={'insert': ['*'], 'update': ['*']},
                          ),
-    em.ForeignKey.define(['Anatomy'],
-                         'vocab', 'anatomy_terms', ['id'],
-                         constraint_names=[
-                             ('Beta_Cell', 'Cell_Line_Anatomy_FKey')],
-                         acls={'insert': ['*'], 'update': ['*']},
-                         ),
     em.ForeignKey.define(['Cell_Line_Id'],
                          'vocab', 'cell_line_terms', ['id'],
                          constraint_names=[
                              ('Beta_Cell', 'Cell_Line_Cell_Line_Terms_FKey')],
                          acls={'insert': ['*'], 'update': ['*']},
                          comment='Must be a valid reference to a cell line.',
+                         ),
+    em.ForeignKey.define(['Anatomy'],
+                         'vocab', 'anatomy_terms', ['id'],
+                         constraint_names=[
+                             ('Beta_Cell', 'Cell_Line_Anatomy_FKey')],
+                         acls={'insert': ['*'], 'update': ['*']},
                          ),
     em.ForeignKey.define(['Protocol'],
                          'Beta_Cell', 'Protocol', ['RID'],
@@ -126,10 +126,10 @@ table_def = em.Table.define(table_name,
                             )
 
 
-def main():
-    server = 'pbcconsortium.isrd.isi.edu'
-    catalog_id = 1
-    mode, replace, server, catalog_id = update_catalog.parse_args(server, catalog_id, is_table=True)
+def main(skip_args=False, mode='annotations', replace=False, server='pbcconsortium.isrd.isi.edu', catalog_id=1):
+    
+    if not skip_args:
+        mode, replace, server, catalog_id = update_catalog.parse_args(server, catalog_id, is_table=True)
     update_catalog.update_table(mode, replace, server, catalog_id, schema_name, table_name, 
                                 table_def, column_defs, key_defs, fkey_defs,
                                 table_annotations, table_acls, table_acl_bindings, table_comment,

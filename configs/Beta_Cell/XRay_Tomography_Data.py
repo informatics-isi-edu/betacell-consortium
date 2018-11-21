@@ -1,7 +1,7 @@
 import argparse
 from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
-import update_catalog
+from deriva.utils.catalog.manage import update_catalog
 
 table_name = 'XRay_Tomography_Data'
 schema_name = 'Beta_Cell'
@@ -211,6 +211,13 @@ key_defs = [
 ]
 
 fkey_defs = [
+    em.ForeignKey.define(['Biosample', 'Dataset'],
+                         'Beta_Cell', 'Biosample', ['RID', 'Dataset'],
+                         constraint_names=[
+                             ('Beta_Cell', 'XRay_Tomography_Dataset_RID_FKey')],
+                         acls={'insert': ['*'], 'update': ['*']},
+                         comment='Ensure that the dataset for the file is the same as for the biosample',
+                         ),
     em.ForeignKey.define(['Dataset'],
                          'Beta_Cell', 'Dataset', ['RID'],
                          constraint_names=[
@@ -221,13 +228,6 @@ fkey_defs = [
                          on_update='CASCADE',
                          on_delete='RESTRICT',
                          comment='Must be a valid reference to a dataset.',
-                         ),
-    em.ForeignKey.define(['Biosample', 'Dataset'],
-                         'Beta_Cell', 'Biosample', ['RID', 'Dataset'],
-                         constraint_names=[
-                             ('Beta_Cell', 'XRay_Tomography_Dataset_RID_FKey')],
-                         acls={'insert': ['*'], 'update': ['*']},
-                         comment='Ensure that the dataset for the file is the same as for the biosample',
                          ),
     em.ForeignKey.define(['Biosample'],
                          'Beta_Cell', 'Biosample', ['RID'],
@@ -251,10 +251,10 @@ table_def = em.Table.define(table_name,
                             )
 
 
-def main():
-    server = 'pbcconsortium.isrd.isi.edu'
-    catalog_id = 1
-    mode, replace, server, catalog_id = update_catalog.parse_args(server, catalog_id, is_table=True)
+def main(skip_args=False, mode='annotations', replace=False, server='pbcconsortium.isrd.isi.edu', catalog_id=1):
+    
+    if not skip_args:
+        mode, replace, server, catalog_id = update_catalog.parse_args(server, catalog_id, is_table=True)
     update_catalog.update_table(mode, replace, server, catalog_id, schema_name, table_name, 
                                 table_def, column_defs, key_defs, fkey_defs,
                                 table_annotations, table_acls, table_acl_bindings, table_comment,

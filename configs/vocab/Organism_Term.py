@@ -3,8 +3,8 @@ from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
 from deriva.utils.catalog.manage import update_catalog
 
-table_name = 'file_type_terms'
-schema_name = 'vocab'
+table_name = 'Organism_Term'
+schema_name = 'Vocab'
 
 column_annotations = {
     'description': {},
@@ -81,35 +81,23 @@ column_defs = [
     ),
 ]
 
-visible_columns = {
-    'compact': [
-        'name', 'id', 'synonyms', 'description'], 'detailed': [
-            'name', 'id', 'synonyms', 'uri', 'description'], 'entry': [
-                'name', 'id', 'synonyms', 'uri', 'description'], 'filter': {
-                    'and': [
-                        {
-                            'open': True, 'source': 'name'}, {
-                                'open': True, 'source': 'id'}, {
-                                    'open': True, 'source': 'synonyms'}]}}
+table_annotations = {}
 
-table_annotations = {
-    'tag:isrd.isi.edu,2016:visible-columns': visible_columns, }
-
-table_comment = 'Terms that describe the type of a data file'
+table_comment = 'Taxon terms for organisms'
 
 table_acls = {}
 
 table_acl_bindings = {}
 
 key_defs = [
-    em.Key.define(['uri'],
-                  constraint_names=[('vocab', 'file_type_terms_urikey1')],
+    em.Key.define(['id'],
+                  constraint_names=[('Vocab', 'Organism_Term_idkey1')],
                   ),
     em.Key.define(['RID'],
-                  constraint_names=[('vocab', 'file_type_terms_RIDkey1')],
+                  constraint_names=[('Vocab', 'Organism_Term_RIDkey1')],
                   ),
-    em.Key.define(['id'],
-                  constraint_names=[('vocab', 'file_type_terms_idkey1')],
+    em.Key.define(['uri'],
+                  constraint_names=[('Vocab', 'Organism_Term_urikey1')],
                   ),
 ]
 

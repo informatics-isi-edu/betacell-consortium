@@ -1,7 +1,7 @@
 import argparse
 from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
-import update_catalog
+from deriva.utils.catalog.manage import update_catalog
 
 table_name = 'Mass_Spec_Data'
 schema_name = 'Beta_Cell'
@@ -67,7 +67,7 @@ column_defs = [em.Column.define('RID', em.builtin_types['ermrest_rid'], nullok=F
                em.Column.define('length', em.builtin_types['int8'], nullok=False, annotations=column_annotations['length'],),
                em.Column.define('url', em.builtin_types['text'], nullok=False, annotations=column_annotations['url'],),
                em.Column.define('filename', em.builtin_types['text'], nullok=False, annotations=column_annotations['filename'],),
-               em.Column.define('Replicate_Number', em.builtin_types['int2'], default=1comment=column_comment['Replicate_Number'],),
+               em.Column.define('Replicate_Number', em.builtin_types['int2'], default=1, comment=column_comment['Replicate_Number'],),
                ]
 
 visible_columns = {'*': [['Beta_Cell', 'Mass_Spec_Data_Key'],
@@ -203,7 +203,7 @@ table_acls = {}
 table_acl_bindings = {}
 
 key_defs = [
-    em.Key.define(['RID', 'Dataset'],
+    em.Key.define(['Dataset', 'RID'],
                   constraint_names=[
                       ('Beta_Cell', 'Mass_Spec_Data_Dataset_RID_Key')],
                   comment='RID and dataset must be distinct.',
@@ -254,10 +254,10 @@ table_def = em.Table.define(table_name,
                             )
 
 
-def main():
-    server = 'pbcconsortium.isrd.isi.edu'
-    catalog_id = 1
-    mode, replace, server, catalog_id = update_catalog.parse_args(server, catalog_id, is_table=True)
+def main(skip_args=False, mode='annotations', replace=False, server='pbcconsortium.isrd.isi.edu', catalog_id=1):
+    
+    if not skip_args:
+        mode, replace, server, catalog_id = update_catalog.parse_args(server, catalog_id, is_table=True)
     update_catalog.update_table(mode, replace, server, catalog_id, schema_name, table_name, 
                                 table_def, column_defs, key_defs, fkey_defs,
                                 table_annotations, table_acls, table_acl_bindings, table_comment,
