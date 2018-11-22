@@ -1,0 +1,291 @@
+Title,Ingredient_ID,UniProt_ID,Gene_UniProt,UniProt_Name
+BSG,271,P63045,Vamp2,Vesicle-associated membrane protein 2
+ALL,125,,Insulin_crystal,None - Insulin_crystal
+BH,195,P11598,Pdia3,Protein disulfide-isomerase A3
+SCHVARTZ,242,P16086,Sptan1,"Spectrin alpha chain, non-erythrocytic 1"
+BS,89,P04937,Fn1,Fibronectin
+SCHVARTZ,255,G3V852,Tln1,"RCG55135, isoform CRA_b"
+SCHVARTZ,148,Q62812,Myh9,Myosin-9
+SCHVARTZ,84,Q4G061,Eif3b,Eukaryotic translation initiation factor 3 subunit B
+SCHVARTZ,129,G3V7Q7,Iqgap1,"IQ motif containing GTPase activating protein 1 (Predicted), isoform CRA_b"
+SCHVARTZ,57,P11442,Cltc,Clathrin heavy chain 1
+SCHVARTZ,171,A0A0G2JWA9,Cit,Citron rho-interacting serine/threonine kinase
+SCHVARTZ,79,A0A0G2JZI2,Eprs,Glutamyl-prolyl-tRNA synthetase
+SCHVARTZ,60,P97536,Cand1,Cullin-associated NEDD8-dissociated protein 1
+SCHVARTZ,278,D4A7U5,Vwa5b2,RGD1564491 (Predicted)
+SCHVARTZ,149,Q05096,Myo1b,Unconventional myosin-Ib
+SCHVARTZ,123,D4A781,Ipo5,Importin 5
+HS,34,P16638,Acly,ATP-citrate synthase
+SCHVARTZ,257,F1M280,Tll2,Metalloendopeptidase
+BRUNNER,146,Q6P762,Man2b1,Alpha-mannosidase
+HICKEY,154,P06685,Atp1a1,Sodium/potassium-transporting ATPase subunit alpha-1
+BSG,223,Q63475,Ptprn2,Receptor-type tyrosine-protein phosphatase N2
+HICKEY,120,Q63617,Hyou1,Hypoxia up-regulated protein 1
+SCHVARTZ,80,D3ZM69,Epb41l2,Erythrocyte membrane protein band 4.1-like 2
+SCHVARTZ,133,Q2PQA9,Kif5b,Kinesin-1 heavy chain
+SCHVARTZ,87,B1WBN7,Fam20c,FAM20C
+SCHVARTZ,132,D4AAG4,Kif23,Kinesin-like protein
+BS,165,P14925,Pam,Peptidyl-glycine alpha-amidating monooxygenase
+BS,224,Q63259,Ptprn,Receptor-type tyrosine-protein phosphatase-like N
+BH,138,Q6P7A9,Gaa,Lysosomal alpha-glucosidase
+SCHVARTZ,75,Q64610,Enpp2,Ectonucleotide pyrophosphatase/phosphodiesterase family member 2
+SCHVARTZ,124,P52296,Kpnb1,Importin subunit beta-1
+HICKEY,76,P70531,Eef2,Eukaryotic elongation factor 2 kinase
+SCHVARTZ,73,F1M8K0,Dag1,Dystroglycan 1
+SCHVARTZ,238,,,
+BRUNNER,185,A0A0G2JVY4,Tmem63a,Transmembrane protein 63a
+SCHVARTZ,192,,,
+SCHVARTZ,90,,,
+HICKEY,18,Q9ER34,Aco2,"Aconitate hydratase, mitochondrial"
+BS,188,Q5U367,Plod3,"Procollagen-lysine,2-oxoglutarate 5-dioxygenase 3"
+SG,190,P28840,Pcsk1,Neuroendocrine convertase 1
+SCHVARTZ,189,Q63321,Plod1,"Procollagen-lysine,2-oxoglutarate 5-dioxygenase 1"
+HICKEY,113,P34058,Hsp90ab1,Heat shock protein HSP 90-beta
+SCHVARTZ,247,Q6IUU3,Qsox1,Sulfhydryl oxidase 1
+BRUNNER,175,D3ZZL3,Naglu,N-acetyl-alpha-glucosaminidase
+SCHVARTZ,110,Q63803,Gnas,Guanine nucleotide-binding protein G(s) subunit alpha isoforms XLas
+BHSG,230,O35314,Chgb,Secretogranin-1
+BRUNNER,251,Q8VHQ7,Sytl4,Synaptotagmin-like protein 4
+SCHVARTZ,43,Q5M9G3,Caprin1,Caprin-1
+BRUNNER,28,Q5RKH6,Os9,Protein OS-9
+SCHVARTZ,276,P53813,Pros1,Vitamin K-dependent protein S
+SCHVARTZ,259,D4A8G5,Tgfbi,"Transforming growth factor, beta-induced"
+SCHVARTZ,68,Q62950,Crmp1,Dihydropyrimidinase-related protein 1
+HICKEY,264,Q66HD0,Hsp90b1,Endoplasmin
+HICKEY,245,P48721,Hspa9,"Stress-70 protein, mitochondrial"
+BRUNNER,179,D3ZUM4,Glb1,Beta-galactosidase
+SCHVARTZ,72,Q07266,Dbn1,Drebrin
+HICKEY,112,P06761,Hspa5,Endoplasmic reticulum chaperone BiP
+SCHVARTZ,29,Q5XI77,Anxa11,Annexin
+BHSG,231,P10362,Scg2,Secretogranin-2
+HICKEY,71,,,Not in Uniprot - dnaK-type molecular chaperone hsp72-ps1
+BHSG,155,P28841,Pcsk2,Neuroendocrine convertase 2
+SCHVARTZ,200,D3ZES9,Prc1,Protein regulator of cytokinesis 1
+SCHVARTZ,208,B2GV02,Racgap1,Rac GTPase-activating protein 1
+SCHVARTZ,115,Q566E4,Hnrnpr,Heterogeneous nuclear ribonucleoprotein R
+BRUNNER,178,D4A133,Atp6v1a,ATPase H+-transporting V1 subunit A
+HICKEY,159,P20156,Vgf,Neurosecretory protein VGF
+BRUNNER,137,D3ZPB7,Taf3,RCG55816
+BRUNNER,136,Q9WU74,Lsr,Lipolysis-stimulated lipoprotein receptor
+BRUNNER,222,Q4QQW8,Plbd2,Putative phospholipase B-like 2
+SCHVARTZ,17,Q5XI34,Ppp2r1a,"Protein phosphatase 2 (Formerly 2A), regulatory subunit A (PR 65), alpha isoform, isoform CRA_a"
+BRUNNER,145,O70513,Lgals3bp,Galectin-3-binding protein
+SCHVARTZ,66,None,Ckap4,
+SCHVARTZ,97,Q6P6V0,Gpi,Glucose-6-phosphate isomerase
+BRUNNER,39,Q6AXR4,Hexb,Beta-hexosaminidase subunit beta
+BRUNNER,260,Q9EQV6,Tpp1,Tripeptidyl-peptidase 1
+BS,246,P10960,Psap,Prosaposin
+BRUNNER,96,Q32KJ5,Gns,N-acetylglucosamine-6-sulfatase
+HICKEY,53,Q6P502,Cct3,T-complex protein 1 subunit gamma
+BRUNNER,38,Q641X3,Hexa,Beta-hexosaminidase subunit alpha
+BH,33,P15999,Atp5f1a,"ATP synthase subunit alpha, mitochondrial"
+HICKEY,55,,,Not in Uniprot - Chromogranin/secretogranin-like vesicle protein precursor
+HICKEY,117,Q4FZU2,Krt6a,"Keratin, type II cytoskeletal 6A"
+BRUNNER,31,P50430,Arsb,Arylsulfatase B
+BRUNNER,93,Q32KJ6,Galns,N-acetylgalactosamine-6-sulfatase
+SCHVARTZ,13,Q794F9,Slc3a2,4F2 cell-surface antigen heavy chain
+HICKEY,198,,,Not in Uniprot - Protein kinase C substrate
+HICKEY,142,P11980,Pkm,Pyruvate kinase PKM
+SCHVARTZ,88,Q5BK32,Faf2,FAS-associated factor 2
+BRUNNER,181,B2RYC9,Gba,Glucosylceramidase
+SCHVARTZ,252,Q5XIM9,Cct2,T-complex protein 1 subunit beta
+SCHVARTZ,157,Q9JMJ4,Prpf19,Pre-mRNA-processing factor 19
+BRUNNER,184,P82450,Siae,Sialate O-acetylesterase
+HICKEY,196,P04785,P4hb,Protein disulfide-isomerase
+BRUNNER,268,P62815,Atp6v1b2,"V-type proton ATPase subunit B, brain isoform"
+HICKEY,32,P10719,Atp5f1b,"ATP synthase subunit beta, mitochondrial"
+BRUNNER,176,D4AA31,Prcp,Prolylcarboxypeptidase
+BRUNNER,69,Q9EPB1,Dpp7,Dipeptidyl peptidase 2
+SCHVARTZ,227,,,
+SCHVARTZ,235,Q5U3Z7,Shmt2,Serine hydroxymethyltransferase
+BRUNNER,168,Q5FVH2,Pld3,Phospholipase D3
+BRUNNER,74,P84039,Enpp5,Ectonucleotide pyrophosphatase/phosphodiesterase family member 5
+BRUNNER,139,P27615,Scarb2,Lysosome membrane protein 2
+BS,275,O35796,Gc,"Complement component 1 Q subcomponent-binding protein, mitochondrial"
+BS,160,Q63083,Nucb1,Nucleobindin-1
+BRUNNER,254,P17164,Fuca1,Tissue alpha-L-fucosidase
+BHSG,44,P15087,Cpe,Carboxypeptidase E
+BRUNNER,169,Q6AYS4,Fuca2,Plasma alpha-L-fucosidase
+BSG,232,P47868,Scg3,Secretogranin-3
+BHSG,54,P10354,Chga,Chromogranin-A
+BRUNNER,45,Q9EQV8,Cpn1,Carboxypeptidase N catalytic chain
+BRUNNER,49,Q499S6,Ctsf,Cathepsin F
+SCHVARTZ,111,O35162,Hspa13,Heat shock 70 kDa protein 13
+SCHVARTZ,104,D3ZYS7,G3bp1,G3BP stress granule assembly factor 1
+SCHVARTZ,21,O88767,Cap1,Protein/nucleic acid deglycase DJ-1
+BS,59,P05371,Clu,Clusterin
+BRUNNER,194,Q6AYS3,Ctsa,Carboxypeptidase
+BRUNNER,226,Q920A6,Scpep1,Retinoid-inducible serine carboxypeptidase
+SCHVARTZ,267,O54715,Atp6ap1,V-type proton ATPase subunit S1
+HICKEY,114,P61980,Hnrnpk,Heterogeneous nuclear ribonucleoprotein K
+BRUNNER,36,A0A0G2K9J2,Atp6v1h,V-type proton ATPase subunit H
+HICKEY,244,P62632,Eef1a2,Elongation factor 1-alpha 2
+HICKEY,262,P68370,Tuba1a,Tubulin alpha-1A chain
+BHS,161,Q9JI85,Nucb2,Nucleobindin-2
+HS,263,Q3KRE8,Tubb2b,Tubulin beta-2B chain
+SCHVARTZ,234,B3GNI6,Sept11,Septin-11
+SCHVARTZ,193,F1LMZ8,Psmd11,26S proteasome non-ATPase regulatory subunit 11
+SCHVARTZ,241,F1M6V6,Spock1,"Sparc/osteonectin, cwcv and kazal-like domains proteoglycan 1"
+BS,180,D3Z9H2,Hapln4,Hyaluronan and proteoglycan link protein 4
+BRUNNER,174,D3ZJF9,Gla,Alpha-galactosidase
+BS,225,Q6AXS4,Atp6ap2,Renin receptor
+SCHVARTZ,63,P32551,Uqcrc2,"Cytochrome b-c1 complex subunit 2, mitochondrial"
+HICKEY,197,Q63081,Pdia6,Protein disulfide-isomerase A6
+HICKEY,42,P18418,Calr,Calreticulin
+BS,258,Q9R0D6,Tcn2,Transcobalamin-2
+SCHVARTZ,5,Q63570,Psmc4,26S proteasome regulatory subunit 6B
+HICKEY,98,P00507,Got2,"Aspartate aminotransferase, mitochondrial"
+BRUNNER,158,P47971,Nptx1,Neuronal pentraxin-1
+HICKEY,25,P04764,Eno1,Alpha-enolase
+BS,240,A0A0G2K946,Spock2,Spock2
+BRUNNER,27,Q66H12,Naga,Alpha-N-acetylgalactosaminidase
+SCHVARTZ,163,Q9Z2G8,Nap1l1,Nucleosome assembly protein 1-like 1
+BRUNNER,141,P17046,Lamp2,Lysosome-associated membrane glycoprotein 2
+SCHVARTZ,46,P19139,Csnk2a1,Casein kinase II subunit alpha
+SCHVARTZ,170,Q6AXS5,Serbp1,Plasminogen activator inhibitor 1 RNA-binding protein
+BRUNNER,236,Q99PW3,Neu1,Sialidase-1
+BH,48,P24268,Ctsd,Cathepsin D
+BRUNNER,151,Q6P7S1,Asah1,Acid ceramidase
+HICKEY,101,P38406,Gnal,Guanine nucleotide-binding protein G(olf) subunit alpha
+BRUNNER,140,P14562,Lamp1,Lysosome-associated membrane glycoprotein 1
+BS,250,P47861,Syt5,Synaptotagmin-5
+SG,269,P16612,Vegfa,Vascular endothelial growth factor A
+SCHVARTZ,152,Q6JE36,Ndrg1,Protein NDRG1
+SCHVARTZ,261,Q6P7B0,Wars,"Tryptophan--tRNA ligase, cytoplasmic"
+SCHVARTZ,26,P85515,Actr1a,Alpha-centractin
+SCHVARTZ,130,Q68FX0,Idh3B,"Isocitrate dehydrogenase [NAD] subunit beta, mitochondrial"
+SCHVARTZ,109,P82471,Gnaq,Guanine nucleotide-binding protein G(q) subunit alpha
+HICKEY,24,P68136,Acta1,"Actin, alpha skeletal muscle"
+BH,19,P60711,Actb,"Actin, cytoplasmic 1"
+BS,279,Q6IN38,Wif1,Wnt inhibitory factor 1
+BRUNNER,67,Q01460,Ctbs,Di-N-acetylchitobiase
+SCHVARTZ,199,P27791,Prkaca,cAMP-dependent protein kinase catalytic subunit alpha
+BS,266,Q5M7T6,Atp6v0d1,V-type proton ATPase subunit
+HS,108,P59215,Gnao1,Guanine nucleotide-binding protein G(o) subunit alpha
+BRUNNER,173,,,
+BRUNNER,167,P16036,Slc25a3,"Phosphate carrier protein, mitochondrial"
+SCHVARTZ,237,Q6H8N0,St3gal1,Sialyltransferase ST3Gal-I
+BH,91,P05065,Aldoa,Fructose-bisphosphate aldolase A
+SCHVARTZ,83,Q6P685,Eif2s2,Eukaryotic translation initiation factor 2 subunit beta
+BRUNNER,233,P56603,Scamp1,Secretory carrier-associated membrane protein 1
+SCHVARTZ,86,D4AC36,Eif3f,Eukaryotic translation initiation factor 3 subunit F
+BRUNNER,50,P07154,Ctsl,Cathepsin L1
+BRUNNER,47,P00787,Ctsb,Cathepsin B
+HICKEY,102,O35353,Gnb4,Guanine nucleotide-binding protein subunit beta-4
+SCHVARTZ,107,P54311,Gnb1,Guanine nucleotide-binding protein G(I)/G(S)/G(T) subunit beta-1
+BRUNNER,177,D3ZXN8,Anxa10,Annexin A10
+BS,106,P54313,Gnb2,Guanine nucleotide-binding protein G(I)/G(S)/G(T) subunit beta-2
+BRUNNER,153,P30919,Aga,N(4)-(Beta-N-acetylglucosaminyl)-L-asparaginase
+SCHVARTZ,82,P68101,Eif2s1,Eukaryotic translation initiation factor 2 subunit 1
+BRUNNER,30,P55260,Anxa4,Annexin A4
+BH,99,P04797,Gapdh,Glyceraldehyde-3-phosphate dehydrogenase
+BRUNNER,144,P04636,Mdh2,"Malate dehydrogenase, mitochondrial"
+SCHVARTZ,65,D3ZFQ8,Cyc1,Cytochrome c-1
+SCHVARTZ,150,B0BNH1,Gnptg,Gnptg protein
+SCHVARTZ,134,Q5RJR8,Lrrc59,Leucine-rich repeat-containing protein 59
+BS,128,E9PT30,Itln1,Intelectin 1
+BRUNNER,164,P45479,Ppt1,Palmitoyl-protein thioesterase 1
+SCHVARTZ,205,O54880,Rph3al,Rab effector Noc2
+HICKEY,162,P13084,Npm1,Nucleophosmin
+BRUNNER,119,Q6AY17,Abhd17b,Alpha/beta hydrolase domain-containing protein 17B
+BRUNNER,135,O08564,Plpp1,Phospholipid phosphatase 1
+BRUNNER,172,A9CMA6,Tmem163,Transmembrane protein 163
+SCHVARTZ,105,M0R809,Gng4,Guanine nucleotide-binding protein subunit gamma
+BRUNNER,202,Q9Z0V5,Prdx4,Peroxiredoxin-4
+BRUNNER,277,Q9Z2L0,Vdac1,Voltage-dependent anion-selective channel protein 1
+SCHVARTZ,85,A0JPM9,Eif3j,Eukaryotic translation initiation factor 3 subunit J
+BRUNNER,35,Q6P503,Atp6v1d,ATPase H+-transporting V1 subunit D
+BRUNNER,2,P61983,Ywhag,14-3-3 protein gamma
+BRUNNER,3,P68255,Ywhaq,14-3-3 protein theta
+BH,4,P63102,Ywhaz,14-3-3 protein zeta/delta
+BS,243,P97574,Stc1,Stanniocalcin-1
+BS,191,Q9QXU9,Pcsk1n,ProSAAS
+BRUNNER,187,P58200,Vti1b,Vesicle transport through interaction with t-SNAREs homolog 1B
+BRUNNER,51,Q62745,Cd81,CD81 antigen
+BRUNNER,218,P62824,Rab3c,Ras-related protein Rab-3C
+SCHVARTZ,116,P52925,Hmgb2,High mobility group protein B2
+BRUNNER,77,Q5XII0,Epdr1,Mammalian ependymin-related protein 1
+BS,94,F1M5V2,Glipr2,GLI pathogenesis-related 2
+BHG,217,P63012,Rab3a,Ras-related protein Rab-3A
+HICKEY,256,Q63584,Tmed10,Transmembrane emp24 domain-containing protein 10
+BRUNNER,273,Q9JHW5,Vamp7,Vesicle-associated membrane protein 7
+SCHVARTZ,81,B5DEN5,Eef1b2,Eukaryotic translation elongation factor 1 beta 2
+BSG,207,D4A0G7,Rab37,"RAB37, member RAS oncogene family"
+SCHVARTZ,214,Q99P74,Rab27b,Ras-related protein Rab-27B
+BRUNNER,103,Q63942,Rab3d,GTP-binding protein Rab-3D
+BRUNNER,211,P61107,Rab14,Ras-related protein Rab-14
+BSG,156,P27682,Scg5,Neuroendocrine protein 7B2
+BRUNNER,182,A1L1J8,Rab5b,"RAB5B, member RAS oncogene family"
+BRUNNER,239,M0RC99,Rab5a,Ras-related protein Rab-5A
+BH,215,P05712,Rab2a,Ras-related protein Rab-2A
+BRUNNER,219,P09527,Rab7a,Ras-related protein Rab-7a
+BRUNNER,183,B0BNK1,Rab5c,"RAB5C, member RAS oncogene family"
+BRUNNER,216,Q5U316,Rab35,Ras-related protein Rab-35
+SCHVARTZ,15,P62914,Rpl11,60S ribosomal protein L11
+SCHVARTZ,12,P62859,Rps28,40S ribosomal protein S28
+BH,212,Q6NYB7,Rab1A,Ras-related protein Rab-1A
+BRUNNER,206,P35281,Rab10,Ras-related protein Rab-10
+SCHVARTZ,221,B2RZD5,Rpl22l1,"RCG41580, isoform CRA_a"
+BRUNNER,213,P10536,Rab1b,Ras-related protein Rab-1B
+BRUNNER,70,P60905,Dnajc5,DnaJ homolog subfamily C member 5
+HICKEY,228,P12001,Rpl18,60S ribosomal protein L18
+BRUNNER,23,Q66HA6,Arl8b,ADP-ribosylation factor-like protein 8B
+BRUNNER,100,Q6IN37,Gm2a,GM2 ganglioside activator
+SCHVARTZ,210,Q32PX6,Rhog,Ras homolog family member G
+SCHVARTZ,40,None,,
+BG,220,P62836,Rap1a,Ras-related protein Rap-1A
+SCHVARTZ,95,P06883,Gcg,Glucagon
+SCHVARTZ,203,D3ZMI0,Angptl8,Angiopoietin-like 8
+SCHVARTZ,22,P62332,Arf6,ADP-ribosylation factor 6
+SCHVARTZ,147,P18666,Myl12b,Myosin regulatory light chain 12B
+SCHVARTZ,20,P36972,Aprt,Adenine phosphoribosyltransferase
+SCHVARTZ,7,P63326,Rps10,40S ribosomal protein S10
+SCHVARTZ,10,P60868,Rps20,40S ribosomal protein S20
+BRUNNER,253,P01830,Thy1,Thy-1 membrane glycoprotein
+BH,166,P10111,Ppia,Peptidyl-prolyl cis-trans isomerase A
+SCHVARTZ,16,P23358,Rpl12,60S ribosomal protein L12
+BRUNNER,118,Q6P791,Lamtor1,Ragulator complex protein LAMTOR1
+HICKEY,229,P62752,Rpl23a,60S ribosomal protein L23a
+SCHVARTZ,9,P62271,Rps18,40S ribosomal protein S18
+SCHVARTZ,56,D4ACN8,Plgrkt,Plasminogen receptor (KT)
+SCHVARTZ,61,Q8VHC1,Cst6,Cystatin
+BRUNNER,201,Q6P742,Plp2,Proteolipid protein 2
+BRUNNER,248,P07632,Sod1,Superoxide dismutase [Cu-Zn]
+BS,62,P14841,Cst3,Cystatin-C
+SCHVARTZ,6,Q5BJX1,Mrpl41,"39S ribosomal protein L41, mitochondrial"
+SCHVARTZ,8,P62246,Rps15a,40S ribosomal protein S15a
+SCHVARTZ,204,Q5PQZ9,Ndufc2,NADH dehydrogenase [ubiquinone] 1 subunit C2
+HICKEY,64,P12075,Cox5b,"Cytochrome c oxidase subunit 5B, mitochondrial"
+BRUNNER,186,B2GUV5,Atp6v1g1,V-type proton ATPase subunit G
+SCHVARTZ,265,B2RYS2,Uqcrb,Cytochrome b-c1 complex subunit 7
+SCHVARTZ,143,P30904,Mif,Macrophage migration inhibitory factor
+BHSG,126,P01322,Ins1,Insulin-1
+BHSG,127,P01323,Ins2,Insulin-2
+SCHVARTZ,14,P02401,Rplp2,60S acidic ribosomal protein P2
+BS,272,P63025,Vamp3,Vesicle-associated membrane protein 3
+BRUNNER,274,Q9WUF4,Vamp8,Vesicle-associated membrane protein 8
+BRUNNER,1,P26772,Hspe1,"10 kDa heat shock protein, mitochondrial"
+SCHVARTZ,11,P05765,Rps21,40S ribosomal protein S21
+SCHVARTZ,92,B1H2A6,Fxr2,FMR1 autosomal homolog 2
+GOODSELL,270,,ATP6,ATPase H+-transporting V1; vATPase
+GOODSELL,52,Q8CFN2,Cdc42,Cell division control protein 42 homolog
+GOODSELL,209,Q6RUV5,Rac1,Ras-related C3 botulinum toxin substrate 1
+GOODSELL,41,P01322,Ins1,C-peptide
+GOODSELL,249,Q62747,Syt7,Synaptotagmin-7
+GOODSELL,131,P70673,Kcnj11,ATP-sensitive inward rectifier potassium channel 11
+GOODSELL,122,P01346,Igf2,Insulin-like growth factor II
+GOODSELL,78,P54757,Epha5,Ephrin type-A receptor 5
+GOODSELL,58,P51792,Clcn3,H(+)/Cl(-) exchange transporter 3
+GOODSELL,121,P12969,Iapp,Islet amyloid polypeptide
+GOODSELL,280,P0CE46,Slc30a8,Zinc transporter 8
+OTHER,37,,,
+ALL,281,P10354,Chga,Beta-granin
+ALL,282,P10354,Chga,Pancreastatin
+ALL,283,P10354,Chga,WE-14
+ALL,284,P10354,Chga,Catestatin
+ALL,285,P10354,Chga,GE-25
+ALL,286,P10354,Chga,Serpinin
+ALL,287,P10354,Chga,p-Glu serpinin precursor
+ALL,288,P10354,Chga,Serpinin-RRG
+GOODSELL,289,,,
+GOODSELL,290,,,

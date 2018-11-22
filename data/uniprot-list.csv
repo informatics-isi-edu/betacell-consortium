@@ -1,0 +1,242 @@
+id,name,description,Gene names,Gene names  (synonym ),Gene names  (primary )
+P63045,VAMP2_RAT,Vesicle-associated membrane protein 2 (VAMP-2) (Synaptobrevin-2),Vamp2 Syb2,Syb2,Vamp2
+P11598,PDIA3_RAT,Protein disulfide-isomerase A3 (EC 5.3.4.1) (58 kDa glucose-regulated protein) (58 kDa microsomal protein) (p58) (Disulfide isomerase ER-60) (Endoplasmic reticulum resident protein 57) (ER protein 57) (ERp57) (Endoplasmic reticulum resident protein 60) (ER protein 60) (ERp60) (HIP-70) (Q-2),Pdia3 Erp60 Grp58,Erp60 Grp58,Pdia3
+P16086,SPTN1_RAT,"Spectrin alpha chain, non-erythrocytic 1 (Alpha-II spectrin) (Fodrin alpha chain)",Sptan1 Spna2 Spta2,Spna2 Spta2,Sptan1
+P04937,FINC_RAT,Fibronectin (FN) [Cleaved into: Anastellin],Fn1,,Fn1
+G3V852,G3V852_RAT,"RCG55135, isoform CRA_b (Talin 1)",Tln1 rCG_55135,,Tln1
+Q62812,MYH9_RAT,"Myosin-9 (Cellular myosin heavy chain, type A) (Myosin heavy chain 9) (Myosin heavy chain, non-muscle IIa) (Non-muscle myosin heavy chain A) (NMMHC-A) (Non-muscle myosin heavy chain IIa) (NMMHC II-a) (NMMHC-IIA)",Myh9,,Myh9
+Q4G061,EIF3B_RAT,Eukaryotic translation initiation factor 3 subunit B (eIF3b) (Eukaryotic translation initiation factor 3 subunit 9) (eIF-3-eta),Eif3b Eif3s9,Eif3s9,Eif3b
+P11442,CLH1_RAT,Clathrin heavy chain 1,Cltc,,Cltc
+A0A0G2JWA9,A0A0G2JWA9_RAT,Citron rho-interacting serine/threonine kinase,Cit,,Cit
+A0A0G2JZI2,A0A0G2JZI2_RAT,Glutamyl-prolyl-tRNA synthetase,Eprs,,Eprs
+P97536,CAND1_RAT,Cullin-associated NEDD8-dissociated protein 1 (Cullin-associated and neddylation-dissociated protein 1) (TBP-interacting protein of 120 kDa A) (TBP-interacting protein 120A) (p120 CAND1),Cand1 Tip120 Tip120a,Tip120 Tip120a,Cand1
+D4A7U5,D4A7U5_RAT,RGD1564491 (Predicted) (von Willebrand factor A domain-containing 5B2),Vwa5b2 RGD1564491_predicted rCG_36797,RGD1564491_predicted,Vwa5b2
+Q05096,MYO1B_RAT,Unconventional myosin-Ib (Myosin I alpha) (MMI-alpha) (MMIa) (Myosin heavy chain myr 1),Myo1b Myo1a Myr1,Myo1a Myr1,Myo1b
+D4A781,D4A781_RAT,Importin 5,Ipo5,,Ipo5
+P16638,ACLY_RAT,ATP-citrate synthase (EC 2.3.3.8) (ATP-citrate (pro-S-)-lyase) (Citrate cleavage enzyme),Acly,,Acly
+F1M280,F1M280_RAT,Metalloendopeptidase (EC 3.4.24.-),Tll2,,Tll2
+Q6P762,Q6P762_RAT,Alpha-mannosidase (EC 3.2.1.-),Man2b1 rCG_51515,,Man2b1
+P06685,AT1A1_RAT,Sodium/potassium-transporting ATPase subunit alpha-1 (Na(+)/K(+) ATPase alpha-1 subunit) (EC 3.6.3.9) (Sodium pump subunit alpha-1),Atp1a1,,Atp1a1
+Q63475,PTPR2_RAT,Receptor-type tyrosine-protein phosphatase N2 (R-PTP-N2) (EC 3.1.3.-) (EC 3.1.3.48) (PTP NE-6) (PTPNE6) (Phogrin) [Cleaved into: IA-2beta60],Ptprn2,,Ptprn2
+Q63617,HYOU1_RAT,Hypoxia up-regulated protein 1 (150 kDa oxygen-regulated protein) (ORP-150),Hyou1 Orp150,Orp150,Hyou1
+Q2PQA9,KINH_RAT,Kinesin-1 heavy chain (Conventional kinesin heavy chain) (Ubiquitous kinesin heavy chain) (UKHC),Kif5b Khc,Khc,Kif5b
+B1WBN7,B1WBN7_RAT,"FAM20C (FAM20C, golgi-associated secretory pathway kinase) (Family with sequence similarity 20, member C)",Fam20c,,Fam20c
+D4AAG4,D4AAG4_RAT,Kinesin-like protein,Kif23,,Kif23
+P14925,AMD_RAT,Peptidyl-glycine alpha-amidating monooxygenase (PAM) [Includes: Peptidylglycine alpha-hydroxylating monooxygenase (PHM) (EC 1.14.17.3); Peptidyl-alpha-hydroxyglycine alpha-amidating lyase (EC 4.3.2.5) (Peptidylamidoglycolate lyase) (PAL)],Pam,,Pam
+Q63259,PTPRN_RAT,Receptor-type tyrosine-protein phosphatase-like N (R-PTP-N) (105 kDa islet cell antigen) (BEM-3) (Brain-enriched membrane-associated protein tyrosine phosphatase) (ICA105) (ICA512) (PTP IA-2) (PTPLP) [Cleaved into: ICA512-N-terminal fragment (ICA512-NTF); ICA512-transmembrane fragment (ICA512-TMF); ICA512-cleaved cytosolic fragment (ICA512-CCF)],Ptprn,,Ptprn
+Q64610,ENPP2_RAT,Ectonucleotide pyrophosphatase/phosphodiesterase family member 2 (E-NPP 2) (EC 3.1.4.39) (Autotaxin) (Extracellular lysophospholipase D) (LysoPLD),Enpp2 Atx Npps2,Atx Npps2,Enpp2
+P52296,IMB1_RAT,Importin subunit beta-1 (Karyopherin subunit beta-1) (Nuclear factor p97) (Pore targeting complex 97 kDa subunit) (PTAC97),Kpnb1,,Kpnb1
+P70531,EF2K_RAT,Eukaryotic elongation factor 2 kinase (eEF-2 kinase) (eEF-2K) (EC 2.7.11.20) (Calcium/calmodulin-dependent eukaryotic elongation factor 2 kinase),Eef2k,,Eef2k
+F1M8K0,F1M8K0_RAT,Dystroglycan 1,Dag1,,Dag1
+A0A0G2JVY4,A0A0G2JVY4_RAT,Transmembrane protein 63a,Tmem63a,,Tmem63a
+Q9ER34,ACON_RAT,"Aconitate hydratase, mitochondrial (Aconitase) (EC 4.2.1.3) (Citrate hydro-lyase)",Aco2,,Aco2
+Q5U367,PLOD3_RAT,"Multifunctional procollagen lysine hydroxylase and glycosyltransferase LH3 [Includes: Procollagen-lysine,2-oxoglutarate 5-dioxygenase 3 (EC 1.14.11.4) (Lysyl hydroxylase 3) (LH3); Procollagen glycosyltransferase (EC 2.4.1.50) (EC 2.4.1.66) (Galactosylhydroxylysine-glucosyltransferase) (Procollagen galactosyltransferase) (Procollagen glucosyltransferase)]",Plod3,,Plod3
+P28840,NEC1_RAT,Neuroendocrine convertase 1 (NEC 1) (EC 3.4.21.93) (Prohormone convertase 1) (Proprotein convertase 1) (PC1),Pcsk1 Bdp Nec-1 Nec1,Bdp Nec-1 Nec1,Pcsk1
+Q63321,PLOD1_RAT,"Procollagen-lysine,2-oxoglutarate 5-dioxygenase 1 (EC 1.14.11.4) (Lysyl hydroxylase 1) (LH1)",Plod1 Plod,Plod,Plod1
+P34058,HS90B_RAT,Heat shock protein HSP 90-beta (Heat shock 84 kDa) (HSP 84) (HSP84),Hsp90ab1 Hsp84 Hspcb,Hsp84 Hspcb,Hsp90ab1
+Q6IUU3,QSOX1_RAT,Sulfhydryl oxidase 1 (rQSOX) (rSOx) (EC 1.8.3.2) (FAD-dependent sulfhydryl oxidase-2) (SOx-2) (Quiescin Q6),Qsox1 Qscn6 Sox2,Qscn6 Sox2,Qsox1
+D3ZZL3,D3ZZL3_RAT,"N-acetyl-alpha-glucosaminidase (RCG33377, isoform CRA_b)",Naglu rCG_33377,,Naglu
+Q63803,GNAS1_RAT,Guanine nucleotide-binding protein G(s) subunit alpha isoforms XLas (Adenylate cyclase-stimulating G alpha protein) (Extra large alphas protein) (XLalphas) (G-alpha-8),Gnas Gnas1,Gnas1,Gnas
+O35314,SCG1_RAT,Secretogranin-1 (Chromogranin-B) (CgB) (Glucagonoma peptide) (Secretogranin-I) (SgI) [Cleaved into: PE-11; CCB peptide short form; CCB peptide long form],Chgb,,Chgb
+Q8VHQ7,SYTL4_RAT,Synaptotagmin-like protein 4 (Exophilin-2) (Granuphilin),Sytl4,,Sytl4
+Q5M9G3,CAPR1_RAT,Caprin-1 (Cytoplasmic activation- and proliferation-associated protein 1) (GPI-anchored protein p137) (GPI-p137) (p137GPI) (RNA granule protein 105),Caprin1 Gpiap1 Rng105,Gpiap1 Rng105,Caprin1
+P53813,PROS_RAT,Vitamin K-dependent protein S,Pros1 Pros,Pros,Pros1
+D4A8G5,D4A8G5_RAT,"Transforming growth factor, beta-induced",Tgfbi,,Tgfbi
+Q62950,DPYL1_RAT,Dihydropyrimidinase-related protein 1 (DRP-1) (Collapsin response mediator protein 1) (CRMP-1),Crmp1 Dpysl1,Dpysl1,Crmp1
+Q66HD0,ENPL_RAT,Endoplasmin (94 kDa glucose-regulated protein) (GRP-94) (Heat shock protein 90 kDa beta member 1),Hsp90b1 Grp94 Tra1,Grp94 Tra1,Hsp90b1
+P48721,GRP75_RAT,"Stress-70 protein, mitochondrial (75 kDa glucose-regulated protein) (GRP-75) (Heat shock 70 kDa protein 9) (Mortalin) (Peptide-binding protein 74) (PBP74) (mtHSP70)",Hspa9 Grp75 Hspa9a,Grp75 Hspa9a,Hspa9
+D3ZUM4,D3ZUM4_RAT,Beta-galactosidase (EC 3.2.1.23),Glb1 Glb1_mapped rCG_25043,Glb1_mapped,Glb1
+Q07266,DREB_RAT,Drebrin (Developmentally-regulated brain protein),Dbn1,,Dbn1
+P06761,BIP_RAT,Endoplasmic reticulum chaperone BiP (EC 3.6.4.10) (78 kDa glucose-regulated protein) (GRP-78) (Binding-immunoglobulin protein) (BiP) (Heat shock protein 70 family protein 5) (HSP70 family protein 5) (Heat shock protein family A member 5) (Immunoglobulin heavy chain-binding protein) (Steroidogenesis-activator polypeptide),Hspa5 Grp78,Grp78,Hspa5
+Q5XI77,Q5XI77_RAT,Annexin,Anxa11 rCG_39189,,Anxa11
+P10362,SCG2_RAT,Secretogranin-2 (Chromogranin-C) (Secretogranin II) (SgII) [Cleaved into: Secretoneurin (SN); Manserin],Scg2 Chgc Scg-2,Chgc Scg-2,Scg2
+P28841,NEC2_RAT,Neuroendocrine convertase 2 (NEC 2) (EC 3.4.21.94) (KEX2-like endoprotease 2) (Prohormone convertase 2) (Proprotein convertase 2) (PC2),Pcsk2 Nec-2 Nec2 Rpc2,Nec-2 Nec2 Rpc2,Pcsk2
+D3ZES9,D3ZES9_RAT,"Protein regulator of cytokinesis 1 (Protein regulator of cytokinesis 1 (Predicted), isoform CRA_b)",Prc1 Prc1_predicted rCG_24697,Prc1_predicted,Prc1
+B2GV02,B2GV02_RAT,Rac GTPase-activating protein 1 (Rac GTPase-activating protein 1 (Predicted)) (Racgap1 protein),Racgap1 LOC100909901 Racgap1_predicted rCG_50622,LOC100909901 Racgap1_predicted,Racgap1
+Q566E4,Q566E4_RAT,Heterogeneous nuclear ribonucleoprotein R,Hnrnpr Hnrpr,Hnrpr,Hnrnpr
+D4A133,D4A133_RAT,ATPase H+-transporting V1 subunit A (RCG52629),Atp6v1a rCG_52629,,Atp6v1a
+P20156,VGF_RAT,Neurosecretory protein VGF (VGF8a protein) [Cleaved into: VGF(24-63); VGF(180-194); VGF(375-407); Neuroendocrine regulatory peptide-1 (NERP-1); Neuroendocrine regulatory peptide-2 (NERP-2); TLQP-11; TLQP-21; TLQP-30; TLQP-62; HFHH-10; AQEE-30; LQEQ-19],Vgf,,Vgf
+D3ZPB7,D3ZPB7_RAT,"ATP synthase subunit gamma, mitochondrial (RCG55816)",Taf3 Atp5f1c rCG_55816,Atp5f1c,Taf3
+Q9WU74,LSR_RAT,Lipolysis-stimulated lipoprotein receptor (Lipolysis-stimulated remnant receptor),Lsr Lisch7,Lisch7,Lsr
+Q4QQW8,PLBL2_RAT,Putative phospholipase B-like 2 (EC 3.1.1.-) (LAMA-like protein 2) (Lamina ancestor homolog 2) (Phospholipase B domain-containing protein 2),Plbd2 RDCR-0918-3,,Plbd2
+Q5XI34,Q5XI34_RAT,"Protein phosphatase 2 (Formerly 2A), regulatory subunit A (PR 65), alpha isoform, isoform CRA_a (Protein phosphatase 2 (Formerly 2A), regulatory subunit A, alpha isoform) (Protein phosphatase 2 scaffold subunit A alpha)",Ppp2r1a rCG_22961,,Ppp2r1a
+O70513,LG3BP_RAT,Galectin-3-binding protein (Cyp-C-associated protein) (CyCAP) (Lectin galactoside-binding soluble 3-binding protein) (Mac-2-binding protein) (MAC2BP) (Mac-2 BP) (Protein 90K),Lgals3bp,,Lgals3bp
+Q6P6V0,G6PI_RAT,Glucose-6-phosphate isomerase (GPI) (EC 5.3.1.9) (Autocrine motility factor) (AMF) (Neuroleukin) (NLK) (Phosphoglucose isomerase) (PGI) (Phosphohexose isomerase) (PHI),Gpi,,Gpi
+Q6AXR4,HEXB_RAT,Beta-hexosaminidase subunit beta (EC 3.2.1.52) (Beta-N-acetylhexosaminidase subunit beta) (Hexosaminidase subunit B) (N-acetyl-beta-glucosaminidase subunit beta),Hexb,,Hexb
+Q9EQV6,TPP1_RAT,Tripeptidyl-peptidase 1 (TPP-1) (EC 3.4.14.9) (Tripeptidyl aminopeptidase) (Tripeptidyl-peptidase I) (TPP-I),Tpp1 Cln2,Cln2,Tpp1
+P10960,SAP_RAT,Prosaposin (Sulfated glycoprotein 1) (SGP-1) [Cleaved into: Saposin-A; Saposin-B-Val; Saposin-B; Saposin-C; Saposin-D],Psap Sgp1,Sgp1,Psap
+Q32KJ5,Q32KJ5_RAT,N-acetylglucosamine-6-sulfatase (EC 3.1.6.14) (Glucosamine-6-sulfatase),Gns LOC100909505,LOC100909505,Gns
+Q6P502,TCPG_RAT,T-complex protein 1 subunit gamma (TCP-1-gamma) (CCT-gamma),Cct3,,Cct3
+Q641X3,HEXA_RAT,Beta-hexosaminidase subunit alpha (EC 3.2.1.52) (Beta-N-acetylhexosaminidase subunit alpha) (Hexosaminidase subunit A) (N-acetyl-beta-glucosaminidase subunit alpha),Hexa,,Hexa
+P15999,ATPA_RAT,"ATP synthase subunit alpha, mitochondrial (ATP synthase F1 subunit alpha)",Atp5f1a Atp5a1,Atp5a1,Atp5f1a
+P50430,ARSB_RAT,Arylsulfatase B (ASB) (EC 3.1.6.12) (N-acetylgalactosamine-4-sulfatase) (G4S),Arsb,,Arsb
+Q32KJ6,GALNS_RAT,N-acetylgalactosamine-6-sulfatase (EC 3.1.6.4) (Chondroitinsulfatase) (Chondroitinase) (Galactose-6-sulfate sulfatase) (N-acetylgalactosamine-6-sulfate sulfatase) (GalNAc6S sulfatase),Galns,,Galns
+P11980,KPYM_RAT,Pyruvate kinase PKM (EC 2.7.1.40) (Pyruvate kinase muscle isozyme),Pkm Pkm2 Pykm,Pkm2 Pykm,Pkm
+Q5BK32,FAF2_RAT,FAS-associated factor 2 (UBX domain-containing protein 8),Faf2 Ubxd8,Ubxd8,Faf2
+B2RYC9,B2RYC9_RAT,Glucosylceramidase (EC 3.2.1.45),Gba rCG_62590,,Gba
+Q5XIM9,TCPB_RAT,T-complex protein 1 subunit beta (TCP-1-beta) (CCT-beta),Cct2 Cctb,Cctb,Cct2
+Q9JMJ4,PRP19_RAT,Pre-mRNA-processing factor 19 (EC 2.3.2.27) (Neuronal differentiation-related gene protein) (PRP19/PSO4 homolog) (RING-type E3 ubiquitin transferase PRP19),Prpf19 Prp19,Prp19,Prpf19
+P82450,SIAE_RAT,Sialate O-acetylesterase (EC 3.1.1.53) (Sialic acid-specific 9-O-acetylesterase) (Yolk sac protein 2) [Cleaved into: Sialate O-acetylesterase small subunit; Sialate O-acetylesterase large subunit],Siae Ysg2,Ysg2,Siae
+P04785,PDIA1_RAT,Protein disulfide-isomerase (PDI) (EC 5.3.4.1) (Cellular thyroid hormone-binding protein) (Prolyl 4-hydroxylase subunit beta),P4hb Pdia1,Pdia1,P4hb
+P62815,VATB2_RAT,"V-type proton ATPase subunit B, brain isoform (V-ATPase subunit B 2) (Endomembrane proton pump 58 kDa subunit) (Vacuolar proton pump subunit B 2)",Atp6v1b2 Atp6b2 Vat2,Atp6b2 Vat2,Atp6v1b2
+P10719,ATPB_RAT,"ATP synthase subunit beta, mitochondrial (EC 7.1.2.2) (ATP synthase F1 subunit beta)",Atp5f1b Atp5b,Atp5b,Atp5f1b
+D4AA31,D4AA31_RAT,Prolylcarboxypeptidase,Prcp,,Prcp
+Q9EPB1,DPP2_RAT,Dipeptidyl peptidase 2 (EC 3.4.14.2) (Dipeptidyl aminopeptidase II) (Dipeptidyl peptidase 7) (Dipeptidyl peptidase II) (DPP II) (Quiescent cell proline dipeptidase),Dpp7 Dpp2,Dpp2,Dpp7
+Q5U3Z7,Q5U3Z7_RAT,Serine hydroxymethyltransferase (EC 2.1.2.1),Shmt2,,Shmt2
+Q5FVH2,PLD3_RAT,Phospholipase D3 (PLD 3) (EC 3.1.4.4) (Choline phosphatase 3) (Phosphatidylcholine-hydrolyzing phospholipase D3),Pld3,,Pld3
+P84039,ENPP5_RAT,Ectonucleotide pyrophosphatase/phosphodiesterase family member 5 (E-NPP 5) (NPP-5) (EC 3.1.-.-),Enpp5,,Enpp5
+O35796,C1QBP_RAT,"Complement component 1 Q subcomponent-binding protein, mitochondrial (GC1q-R protein) (Glycoprotein gC1qBP) (C1qBP)",C1qbp Gc1qbp,Gc1qbp,C1qbp
+Q63083,NUCB1_RAT,Nucleobindin-1 (Bone 63 kDa calcium-binding protein) (CALNUC),Nucb1 Nuc,Nuc,Nucb1
+P17164,FUCO_RAT,Tissue alpha-L-fucosidase (EC 3.2.1.51) (Alpha-L-fucosidase I) (Alpha-L-fucoside fucohydrolase 1) (Alpha-L-fucosidase 1),Fuca1 Fuca,Fuca,Fuca1
+P15087,CBPE_RAT,Carboxypeptidase E (CPE) (EC 3.4.17.10) (Carboxypeptidase H) (CPH) (Enkephalin convertase) (Prohormone-processing carboxypeptidase),Cpe,,Cpe
+Q6AYS4,FUCO2_RAT,Plasma alpha-L-fucosidase (EC 3.2.1.51) (Alpha-L-fucoside fucohydrolase 2) (Alpha-L-fucosidase 2),Fuca2,,Fuca2
+P47868,SCG3_RAT,Secretogranin-3 (1B1075) (Secretogranin III) (SgIII),Scg3,,Scg3
+P10354,CMGA_RAT,Chromogranin-A (CgA) [Cleaved into: Pancreastatin; Beta-granin; WE-14; Catestatin; GE-25; Serpinin-RRG; Serpinin; p-Glu serpinin precursor],Chga,,Chga
+Q499S6,Q499S6_RAT,"Cathepsin F (Cathepsin F, isoform CRA_a)",Ctsf rCG_47118,,Ctsf
+O35162,HSP13_RAT,Heat shock 70 kDa protein 13 (Microsomal stress-70 protein ATPase core) (Stress-70 protein chaperone microsome-associated 60 kDa protein),Hspa13 Stch,Stch,Hspa13
+D3ZYS7,D3ZYS7_RAT,G3BP stress granule assembly factor 1,G3bp1,,G3bp1
+O88767,PARK7_RAT,Protein/nucleic acid deglycase DJ-1 (EC 3.1.2.-) (EC 3.5.1.-) (EC 3.5.1.124) (Contraception-associated protein 1) (Protein CAP1) (Fertility protein SP22) (Maillard deglycase) (Parkinson disease protein 7 homolog) (Parkinsonism-associated deglycase) (Protein DJ-1) (DJ-1),Park7 Cap1,Cap1,Park7
+Q6AYS3,Q6AYS3_RAT,Carboxypeptidase (EC 3.4.16.-),Ctsa Ppgb,Ppgb,Ctsa
+Q920A6,RISC_RAT,Retinoid-inducible serine carboxypeptidase (EC 3.4.16.-) (Serine carboxypeptidase 1),Scpep1 Risc,Risc,Scpep1
+O54715,VAS1_RAT,V-type proton ATPase subunit S1 (V-ATPase subunit S1) (C7-1 protein) (V-ATPase Ac45 subunit) (V-ATPase S1 accessory protein) (Vacuolar proton pump subunit S1),Atp6ap1 Atp6ip1 Atp6s1,Atp6ip1 Atp6s1,Atp6ap1
+P61980,HNRPK_RAT,Heterogeneous nuclear ribonucleoprotein K (hnRNP K) (dC stretch-binding protein) (CSBP),Hnrnpk Hnrpk,Hnrpk,Hnrnpk
+A0A0G2K9J2,A0A0G2K9J2_RAT,V-type proton ATPase subunit H,Atp6v1h rCG_30515,,Atp6v1h
+P62632,EF1A2_RAT,Elongation factor 1-alpha 2 (EF-1-alpha-2) (Eukaryotic elongation factor 1 A-2) (eEF1A-2) (Statin-S1),Eef1a2 Eef1al Stn Stnl,Eef1al Stn Stnl,Eef1a2
+P68370,TBA1A_RAT,Tubulin alpha-1A chain (Alpha-tubulin 1) (Tubulin alpha-1 chain) [Cleaved into: Detyrosinated tubulin alpha-1A chain],Tuba1a Tuba1,Tuba1,Tuba1a
+Q9JI85,NUCB2_RAT,Nucleobindin-2 (DNA-binding protein NEFA) (Prepronesfatin) [Cleaved into: Nesfatin-1],Nucb2 Nefa,Nefa,Nucb2
+B3GNI6,SEP11_RAT,Septin-11,Sept11,,Sept11
+F1LMZ8,PSD11_RAT,26S proteasome non-ATPase regulatory subunit 11 (26S proteasome regulatory subunit RPN6),Psmd11,,Psmd11
+F1M6V6,F1M6V6_RAT,"Sparc/osteonectin, cwcv and kazal-like domains proteoglycan 1",Spock1,,Spock1
+D3Z9H2,D3Z9H2_RAT,Hyaluronan and proteoglycan link protein 4 (Hyaluronan and proteoglycan link protein 4 (Predicted)),Hapln4 Hapln4_predicted LOC100911378 rCG_38867,Hapln4_predicted LOC100911378,Hapln4
+D3ZJF9,D3ZJF9_RAT,Alpha-galactosidase (EC 3.2.1.-),Gla,,Gla
+Q6AXS4,RENR_RAT,Renin receptor (ATPase H(+)-transporting lysosomal accessory protein 2) (ATPase H(+)-transporting lysosomal-interacting protein 2) (Renin/prorenin receptor),Atp6ap2 Atp6ip2,Atp6ip2,Atp6ap2
+P32551,QCR2_RAT,"Cytochrome b-c1 complex subunit 2, mitochondrial (Complex III subunit 2) (Core protein II) (Ubiquinol-cytochrome-c reductase complex core protein 2)",Uqcrc2,,Uqcrc2
+Q63081,PDIA6_RAT,Protein disulfide-isomerase A6 (EC 5.3.4.1) (Calcium-binding protein 1) (CaBP1) (Protein disulfide isomerase P5) (Thioredoxin domain-containing protein 7),Pdia6 Cabp1 Txndc7,Cabp1 Txndc7,Pdia6
+P18418,CALR_RAT,Calreticulin (CALBP) (CRP55) (Calcium-binding protein 3) (CABP3) (Calregulin) (Endoplasmic reticulum resident protein 60) (ERp60) (HACBP),Calr,,Calr
+Q9R0D6,TCO2_RAT,Transcobalamin-2 (TC-2) (Transcobalamin II) (TC II) (TCII),Tcn2,,Tcn2
+Q63570,PRS6B_RAT,26S proteasome regulatory subunit 6B (26S proteasome AAA-ATPase subunit RPT3) (Proteasome 26S subunit ATPase 4) (S6 ATPase) (Tat-binding protein 7) (TBP-7),Psmc4 Tbp7,Tbp7,Psmc4
+P00507,AATM_RAT,"Aspartate aminotransferase, mitochondrial (mAspAT) (EC 2.6.1.1) (EC 2.6.1.7) (Fatty acid-binding protein) (FABP-1) (Glutamate oxaloacetate transaminase 2) (Kynurenine aminotransferase 4) (Kynurenine aminotransferase IV) (Kynurenine--oxoglutarate transaminase 4) (Kynurenine--oxoglutarate transaminase IV) (Plasma membrane-associated fatty acid-binding protein) (FABPpm) (Transaminase A)",Got2 Maat,Maat,Got2
+P47971,NPTX1_RAT,Neuronal pentraxin-1 (NP1) (47 kDa taipoxin-binding protein) (Neuronal pentraxin I) (NP-I),Nptx1,,Nptx1
+P04764,ENOA_RAT,Alpha-enolase (EC 4.2.1.11) (2-phospho-D-glycerate hydro-lyase) (Enolase 1) (Non-neural enolase) (NNE),Eno1 Eno-1,Eno-1,Eno1
+A0A0G2K946,A0A0G2K946_RAT,"SPARC/osteonectin, cwcv and kazal-like domains proteoglycan 2 (Sparc/osteonectin, cwcv and kazal-like domains proteoglycan 2 (Predicted))",Spock2 Spock2_predicted rCG_22136,Spock2_predicted,Spock2
+Q9Z2G8,NP1L1_RAT,Nucleosome assembly protein 1-like 1 (NAP-1-related protein),Nap1l1 Nrp,Nrp,Nap1l1
+P19139,CSK21_RAT,Casein kinase II subunit alpha (CK II alpha) (EC 2.7.11.1),Csnk2a1,,Csnk2a1
+Q6AXS5,PAIRB_RAT,Plasminogen activator inhibitor 1 RNA-binding protein (PAI1 RNA-binding protein 1) (PAI-RBP1) (RDA288) (SERPINE1 mRNA-binding protein 1),Serbp1 Pairbp1 Rda288,Pairbp1 Rda288,Serbp1
+Q99PW3,NEUR1_RAT,Sialidase-1 (EC 3.2.1.18) (Lysosomal sialidase) (N-acetyl-alpha-neuraminidase 1),Neu1,,Neu1
+P24268,CATD_RAT,Cathepsin D (EC 3.4.23.5) [Cleaved into: Cathepsin D 12 kDa light chain; Cathepsin D 9 kDa light chain; Cathepsin D 34 kDa heavy chain; Cathepsin D 30 kDa heavy chain],Ctsd,,Ctsd
+Q6P7S1,ASAH1_RAT,Acid ceramidase (AC) (ACDase) (Acid CDase) (EC 3.5.1.23) (Acylsphingosine deacylase) (N-acylsphingosine amidohydrolase),Asah1,,Asah1
+P38406,GNAL_RAT,"Guanine nucleotide-binding protein G(olf) subunit alpha (Adenylate cyclase-stimulating G alpha protein, olfactory type)",Gnal,,Gnal
+P14562,LAMP1_RAT,Lysosome-associated membrane glycoprotein 1 (LAMP-1) (Lysosome-associated membrane protein 1) (120 kDa lysosomal membrane glycoprotein) (LGP-120) (CD107 antigen-like family member A) (CD antigen CD107a),Lamp1 Lamp-1,Lamp-1,Lamp1
+P47861,SYT5_RAT,Synaptotagmin-5 (Synaptotagmin IX) (Synaptotagmin V) (SytV),Syt5,,Syt5
+P16612,VEGFA_RAT,Vascular endothelial growth factor A (VEGF-A) (Vascular permeability factor) (VPF),Vegfa Vegf,Vegf,Vegfa
+Q6JE36,NDRG1_RAT,Protein NDRG1 (N-myc downstream-regulated gene 1 protein) (Protein Ndr1),Ndrg1 Ndr1,Ndr1,Ndrg1
+Q6P7B0,SYWC_RAT,"Tryptophan--tRNA ligase, cytoplasmic (EC 6.1.1.2) (Tryptophanyl-tRNA synthetase) (TrpRS) [Cleaved into: T1-TrpRS; T2-TrpRS]",Wars,,Wars
+P85515,ACTZ_RAT,Alpha-centractin (Centractin),Actr1a Ctrn1,Ctrn1,Actr1a
+Q68FX0,IDH3B_RAT,"Isocitrate dehydrogenase [NAD] subunit beta, mitochondrial (Isocitric dehydrogenase subunit beta) (NAD(+)-specific ICDH subunit beta)",Idh3B,,Idh3B
+P82471,GNAQ_RAT,Guanine nucleotide-binding protein G(q) subunit alpha (Guanine nucleotide-binding protein alpha-q),Gnaq,,Gnaq
+P68136,ACTS_RAT,"Actin, alpha skeletal muscle (Alpha-actin-1) [Cleaved into: Actin, alpha skeletal muscle, intermediate form]",Acta1 Acta,Acta,Acta1
+P60711,ACTB_RAT,"Actin, cytoplasmic 1 (Beta-actin) [Cleaved into: Actin, cytoplasmic 1, N-terminally processed]",Actb,,Actb
+Q6IN38,WIF1_RAT,Wnt inhibitory factor 1 (WIF-1),Wif1,,Wif1
+Q01460,DIAC_RAT,Di-N-acetylchitobiase (EC 3.2.1.-),Ctbs Ctb,Ctb,Ctbs
+Q5M7T6,Q5M7T6_RAT,V-type proton ATPase subunit,Atp6v0d1 rCG_51062,,Atp6v0d1
+P59215,GNAO_RAT,Guanine nucleotide-binding protein G(o) subunit alpha,Gnao1 Gna0 Gnao,Gna0 Gnao,Gnao1
+P16036,MPCP_RAT,"Phosphate carrier protein, mitochondrial (Phosphate transport protein) (PTP) (Solute carrier family 25 member 3)",Slc25a3 Phc,Phc,Slc25a3
+Q6H8N0,Q6H8N0_RAT,Sialyltransferase ST3Gal-I (EC 2.4.99.4),St3gal1 siat4A,siat4A,St3gal1
+P05065,ALDOA_RAT,Fructose-bisphosphate aldolase A (EC 4.1.2.13) (Muscle-type aldolase),Aldoa,,Aldoa
+Q6P685,Q6P685_RAT,"Eukaryotic translation initiation factor 2 subunit beta (Eukaryotic translation initiation factor 2, subunit 2 (Beta)) (Eukaryotic translation initiation factor 2, subunit 2 (Beta), isoform CRA_a)",Eif2s2 rCG_37232,,Eif2s2
+P56603,SCAM1_RAT,Secretory carrier-associated membrane protein 1 (Secretory carrier membrane protein 1) (SCAMP 37),Scamp1 Scamp,Scamp,Scamp1
+D4AC36,D4AC36_RAT,Eukaryotic translation initiation factor 3 subunit F (eIF3f) (Eukaryotic translation initiation factor 3 subunit 5) (eIF-3-epsilon) (eIF3 p47),Eif3f EIF3F EIF3S5,EIF3F EIF3S5,Eif3f
+P07154,CATL1_RAT,Cathepsin L1 (EC 3.4.22.15) (Cathepsin L) (Cyclic protein 2) (CP-2) (Major excreted protein) (MEP) [Cleaved into: Procathepsin L; Cathepsin L1 heavy chain; Cathepsin L1 light chain],Ctsl Ctsl1,Ctsl1,Ctsl
+P00787,CATB_RAT,Cathepsin B (EC 3.4.22.1) (Cathepsin B1) (RSG-2) [Cleaved into: Cathepsin B light chain; Cathepsin B heavy chain],Ctsb,,Ctsb
+O35353,GBB4_RAT,Guanine nucleotide-binding protein subunit beta-4 (Transducin beta chain 4),Gnb4,,Gnb4
+P54311,GBB1_RAT,Guanine nucleotide-binding protein G(I)/G(S)/G(T) subunit beta-1 (Transducin beta chain 1),Gnb1,,Gnb1
+D3ZXN8,D3ZXN8_RAT,Annexin A10,Anxa10,,Anxa10
+P54313,GBB2_RAT,Guanine nucleotide-binding protein G(I)/G(S)/G(T) subunit beta-2 (G protein subunit beta-2) (Transducin beta chain 2),Gnb2,,Gnb2
+P30919,ASPG_RAT,N(4)-(Beta-N-acetylglucosaminyl)-L-asparaginase (EC 3.5.1.26) (Aspartylglucosaminidase) (AGA) (Glycosylasparaginase) (N4-(N-acetyl-beta-glucosaminyl)-L-asparagine amidase) [Cleaved into: Glycosylasparaginase alpha chain; Glycosylasparaginase beta chain],Aga,,Aga
+P68101,IF2A_RAT,Eukaryotic translation initiation factor 2 subunit 1 (Eukaryotic translation initiation factor 2 subunit alpha) (eIF-2-alpha) (eIF-2A) (eIF-2alpha),Eif2s1 Eif2a,Eif2a,Eif2s1
+P55260,ANXA4_RAT,Annexin A4 (36 kDa zymogen granule membrane-associated protein) (ZAP36) (Annexin IV) (Annexin-4) (Lipocortin IV),Anxa4 Anx4,Anx4,Anxa4
+P04797,G3P_RAT,Glyceraldehyde-3-phosphate dehydrogenase (GAPDH) (EC 1.2.1.12) (38 kDa BFA-dependent ADP-ribosylation substrate) (BARS-38) (Peptidyl-cysteine S-nitrosylase GAPDH) (EC 2.6.99.-),Gapdh Gapd,Gapd,Gapdh
+P04636,MDHM_RAT,"Malate dehydrogenase, mitochondrial (EC 1.1.1.37)",Mdh2 Mor1,Mor1,Mdh2
+D3ZFQ8,D3ZFQ8_RAT,"Cytochrome c-1 (Cytochrome c-1 (Predicted), isoform CRA_c)",Cyc1 Cyc1_predicted rCG_59628,Cyc1_predicted,Cyc1
+B0BNH1,B0BNH1_RAT,"Gnptg protein (N-acetylglucosamine-1-phosphate transferase subunit gamma) (N-acetylglucosamine-1-phosphotransferase, gamma subunit, isoform CRA_a)",Gnptg rCG_33336,,Gnptg
+Q5RJR8,LRC59_RAT,"Leucine-rich repeat-containing protein 59 (Protein p34) [Cleaved into: Leucine-rich repeat-containing protein 59, N-terminally processed]",Lrrc59 Rbp34,Rbp34,Lrrc59
+E9PT30,E9PT30_RAT,Intelectin 1,Itln1,,Itln1
+P45479,PPT1_RAT,Palmitoyl-protein thioesterase 1 (PPT-1) (EC 3.1.2.22) (Palmitoyl-protein hydrolase 1),Ppt1 Cln1 Ppt,Cln1 Ppt,Ppt1
+O54880,RPH3L_RAT,Rab effector Noc2 (No C2 domains protein) (Rabphilin-3A-like protein),Rph3al Noc2,Noc2,Rph3al
+P13084,NPM_RAT,Nucleophosmin (NPM) (Nucleolar phosphoprotein B23) (Nucleolar protein NO38) (Numatrin),Npm1,,Npm1
+Q6AY17,AB17B_RAT,Alpha/beta hydrolase domain-containing protein 17B (Abhydrolase domain-containing protein 17B) (EC 3.1.2.22),Abhd17b,,Abhd17b
+O08564,PLPP1_RAT,Phospholipid phosphatase 1 (EC 3.1.3.4) (Lipid phosphate phosphohydrolase 1) (PAP2-alpha) (Phosphatidate phosphohydrolase type 2a) (Phosphatidic acid phosphatase 2a) (PAP-2a) (PAP2a),Plpp1 Lpp1 Ppap2a,Lpp1 Ppap2a,Plpp1
+A9CMA6,TM163_RAT,Transmembrane protein 163 (Synaptic vesicle membrane protein of 31 kDa),Tmem163 Sv31,Sv31,Tmem163
+M0R809,M0R809_RAT,Guanine nucleotide-binding protein subunit gamma,Gng4 rCG_19927,,Gng4
+Q9Z0V5,PRDX4_RAT,Peroxiredoxin-4 (EC 1.11.1.15) (Antioxidant enzyme AOE372) (Peroxiredoxin IV) (Prx-IV) (Thioredoxin peroxidase AO372) (Thioredoxin-dependent peroxide reductase A0372),Prdx4 Rno2CysPrx04,Rno2CysPrx04,Prdx4
+Q9Z2L0,VDAC1_RAT,Voltage-dependent anion-selective channel protein 1 (VDAC-1) (rVDAC1) (Outer mitochondrial membrane protein porin 1),Vdac1,,Vdac1
+A0JPM9,EIF3J_RAT,Eukaryotic translation initiation factor 3 subunit J (eIF3j) (Eukaryotic translation initiation factor 3 subunit 1) (eIF-3-alpha) (eIF3 p35),Eif3j Eif3s1,Eif3s1,Eif3j
+Q6P503,Q6P503_RAT,"ATPase H+-transporting V1 subunit D (ATPase, H+ transporting, V1 subunit D, isoform CRA_c) (ATPase, H+ transporting, lysosomal V1 subunit D)",Atp6v1d rCG_61537,,Atp6v1d
+P61983,1433G_RAT,"14-3-3 protein gamma [Cleaved into: 14-3-3 protein gamma, N-terminally processed]",Ywhag,,Ywhag
+P63102,1433Z_RAT,14-3-3 protein zeta/delta (Mitochondrial import stimulation factor S1 subunit) (Protein kinase C inhibitor protein 1) (KCIP-1),Ywhaz Msfs1,Msfs1,Ywhaz
+P97574,STC1_RAT,Stanniocalcin-1 (STC-1),Stc1 Stc,Stc,Stc1
+Q9QXU9,PCSK1_RAT,ProSAAS (Proprotein convertase subtilisin/kexin type 1 inhibitor) (Proprotein convertase 1 inhibitor) (pro-SAAS) [Cleaved into: KEP; Big SAAS (b-SAAS); Little SAAS (l-SAAS); Big PEN-LEN (b-PEN-LEN) (SAAS CT(1-49)); PEN; PEN-20; Little LEN (l-LEN); Big LEN (b-LEN) (SAAS CT(25-40))],Pcsk1n,,Pcsk1n
+P58200,VTI1B_RAT,Vesicle transport through interaction with t-SNAREs homolog 1B (Vesicle transport v-SNARE protein Vti1-like 1) (Vti1-rp1),Vti1b Vti1l1,Vti1l1,Vti1b
+P62824,RAB3C_RAT,Ras-related protein Rab-3C,Rab3c,,Rab3c
+P52925,HMGB2_RAT,High mobility group protein B2 (High mobility group protein 2) (HMG-2),Hmgb2 Hmg2,Hmg2,Hmgb2
+Q5XII0,EPDR1_RAT,Mammalian ependymin-related protein 1 (MERP-1),Epdr1 Epdr2 Merp1 Merp2,Epdr2 Merp1 Merp2,Epdr1
+F1M5V2,F1M5V2_RAT,GLI pathogenesis-related 2,Glipr2,,Glipr2
+P63012,RAB3A_RAT,Ras-related protein Rab-3A,Rab3a,,Rab3a
+Q63584,TMEDA_RAT,Transmembrane emp24 domain-containing protein 10 (21 kDa transmembrane-trafficking protein) (Transmembrane protein Tmp21) (p24 family protein delta-1) (p24delta1),Tmed10 Tmp21,Tmp21,Tmed10
+Q9JHW5,VAMP7_RAT,Vesicle-associated membrane protein 7 (VAMP-7) (Synaptobrevin-like protein 1),Vamp7 Sybl1,Sybl1,Vamp7
+B5DEN5,B5DEN5_RAT,"Eukaryotic translation elongation factor 1 beta 2 (RCG22471, isoform CRA_b)",Eef1b2 rCG_22471,,Eef1b2
+D4A0G7,D4A0G7_RAT,"RAB37, member RAS oncogene family (RCG35079, isoform CRA_b)",Rab37 rCG_35079,,Rab37
+Q99P74,RB27B_RAT,Ras-related protein Rab-27B,Rab27b,,Rab27b
+Q63942,RAB3D_RAT,GTP-binding protein Rab-3D,Rab3d Rab16,Rab16,Rab3d
+P27682,7B2_RAT,Neuroendocrine protein 7B2 (Secretogranin V) (Secretogranin-5) (Secretory granule endocrine protein I) [Cleaved into: N-terminal peptide; C-terminal peptide],Scg5 Sgne1,Sgne1,Scg5
+A1L1J8,A1L1J8_RAT,"RAB5B, member RAS oncogene family (RAB5B, member RAS oncogene family (Predicted), isoform CRA_c)",Rab5b Rab5b_predicted rCG_42413,Rab5b_predicted,Rab5b
+M0RC99,RAB5A_RAT,Ras-related protein Rab-5A (Small GTP-binding protein rab5),Rab5a,,Rab5a
+P05712,RAB2A_RAT,Ras-related protein Rab-2A,Rab2a Rab2,Rab2,Rab2a
+P09527,RAB7A_RAT,Ras-related protein Rab-7a (Ras-related protein BRL-RAS) (Ras-related protein p23),Rab7a Rab7,Rab7,Rab7a
+B0BNK1,B0BNK1_RAT,"RAB5C, member RAS oncogene family (RCG32615, isoform CRA_a) (Rab5c protein)",Rab5c rCG_32615,,Rab5c
+P62914,RL11_RAT,60S ribosomal protein L11,Rpl11,,Rpl11
+P62859,RS28_RAT,40S ribosomal protein S28,Rps28,,Rps28
+Q6NYB7,RAB1A_RAT,Ras-related protein Rab-1A,Rab1A Rab1,Rab1,Rab1A
+B2RZD5,B2RZD5_RAT,"RCG41580, isoform CRA_a (Ribosomal protein L22-like 1)",Rpl22l1 LOC688712 rCG_41580,LOC688712,Rpl22l1
+P10536,RAB1B_RAT,Ras-related protein Rab-1B,Rab1b,,Rab1b
+P60905,DNJC5_RAT,DnaJ homolog subfamily C member 5 (Cysteine string protein) (CSP),Dnajc5,,Dnajc5
+P12001,RL18_RAT,60S ribosomal protein L18,Rpl18,,Rpl18
+Q66HA6,ARL8B_RAT,ADP-ribosylation factor-like protein 8B,Arl8b,,Arl8b
+Q6IN37,Q6IN37_RAT,GM2 ganglioside activator (GM2 ganglioside activator protein),Gm2a rCG_33908,,Gm2a
+Q32PX6,Q32PX6_RAT,"Ras homolog family member G (Ras homolog gene family, member G) (Ras homolog gene family, member G (Rho G))",Rhog rCG_39701,,Rhog
+P62836,RAP1A_RAT,Ras-related protein Rap-1A (Ras-related protein Krev-1),Rap1a Krev1,Krev1,Rap1a
+P06883,GLUC_RAT,Glucagon [Cleaved into: Glicentin; Glicentin-related polypeptide (GRPP); Oxyntomodulin (OXM) (OXY); Glucagon; Glucagon-like peptide 1 (GLP-1); Glucagon-like peptide 1(7-37) (GLP-1(7-37)); Glucagon-like peptide 1(7-36) (GLP-1(7-36)); Glucagon-like peptide 2 (GLP-2)],Gcg,,Gcg
+D3ZMI0,D3ZMI0_RAT,Angiopoietin-like 8 (RCG31799),Angptl8 LOC100361444 rCG_31799,LOC100361444,Angptl8
+P62332,ARF6_RAT,ADP-ribosylation factor 6,Arf6,,Arf6
+P18666,ML12B_RAT,"Myosin regulatory light chain 12B (Myosin RLC-B) (Myosin regulatory light chain 2-B, smooth muscle isoform) (MLC-2) (Myosin regulatory light chain 20 kDa) (MLC20) (Myosin regulatory light chain MRLC2)",Myl12b Mrlc2 Mrlcb Mylc2b,Mrlc2 Mrlcb Mylc2b,Myl12b
+P36972,APT_RAT,Adenine phosphoribosyltransferase (APRT) (EC 2.4.2.7),Aprt,,Aprt
+P63326,RS10_RAT,40S ribosomal protein S10,Rps10,,Rps10
+P01830,THY1_RAT,Thy-1 membrane glycoprotein (Thy-1 antigen) (CD antigen CD90),Thy1 Thy-1,Thy-1,Thy1
+P10111,PPIA_RAT,"Peptidyl-prolyl cis-trans isomerase A (PPIase A) (EC 5.2.1.8) (Cyclophilin A) (Cyclosporin A-binding protein) (Rotamase A) (p1B15) (p31) [Cleaved into: Peptidyl-prolyl cis-trans isomerase A, N-terminally processed]",Ppia,,Ppia
+P23358,RL12_RAT,60S ribosomal protein L12,Rpl12,,Rpl12
+Q6P791,LTOR1_RAT,Ragulator complex protein LAMTOR1 (Late endosomal/lysosomal adaptor and MAPK and MTOR activator 1) (Lipid raft adaptor protein p18),Lamtor1,,Lamtor1
+P62271,RS18_RAT,40S ribosomal protein S18,Rps18,,Rps18
+D4ACN8,PLRKT_RAT,Plasminogen receptor (KT) (Plg-R(KT)),Plgrkt,,Plgrkt
+Q8VHC1,Q8VHC1_RAT,Cystatin,Cst6 rCG_47933,,Cst6
+Q6P742,PLP2_RAT,Proteolipid protein 2,Plp2,,Plp2
+Q5BJX1,RM41_RAT,"39S ribosomal protein L41, mitochondrial (L41mt) (MRP-L41)",Mrpl41,,Mrpl41
+P62246,RS15A_RAT,40S ribosomal protein S15a,Rps15a,,Rps15a
+Q5PQZ9,Q5PQZ9_RAT,NADH dehydrogenase [ubiquinone] 1 subunit C2,Ndufc2 rCG_39969,,Ndufc2
+B2GUV5,B2GUV5_RAT,V-type proton ATPase subunit G,Atp6v1g1 rCG_55259,,Atp6v1g1
+P30904,MIF_RAT,Macrophage migration inhibitory factor (MIF) (EC 5.3.2.1) (Glutathione-binding 13 kDa protein) (L-dopachrome isomerase) (L-dopachrome tautomerase) (EC 5.3.3.12) (Phenylpyruvate tautomerase),Mif,,Mif
+P01322,INS1_RAT,Insulin-1 [Cleaved into: Insulin-1 B chain; Insulin-1 A chain],Ins1 Ins-1,Ins-1,Ins1
+P01323,INS2_RAT,Insulin-2 [Cleaved into: Insulin-2 B chain; Insulin-2 A chain],Ins2 Ins-2,Ins-2,Ins2
+P63025,VAMP3_RAT,Vesicle-associated membrane protein 3 (VAMP-3) (Cellubrevin) (CEB) (Synaptobrevin-3),Vamp3 Syb3,Syb3,Vamp3
+Q9WUF4,VAMP8_RAT,Vesicle-associated membrane protein 8 (VAMP-8) (Endobrevin) (EDB),Vamp8,,Vamp8
+P26772,CH10_RAT,"10 kDa heat shock protein, mitochondrial (Hsp10) (10 kDa chaperonin) (Chaperonin 10) (CPN10)",Hspe1,,Hspe1
+P05765,RS21_RAT,40S ribosomal protein S21,Rps21,,Rps21
+B1H2A6,B1H2A6_RAT,FMR1 autosomal homolog 2 (Fxr2 protein),Fxr2,,Fxr2
+Q8CFN2,CDC42_RAT,Cell division control protein 42 homolog,Cdc42,,Cdc42
+Q6RUV5,RAC1_RAT,Ras-related C3 botulinum toxin substrate 1 (p21-Rac1),Rac1,,Rac1
+Q62747,SYT7_RAT,Synaptotagmin-7 (Protein Syt7) (Synaptotagmin VII) (SytVII),Syt7,,Syt7
+P70673,KCJ11_RAT,"ATP-sensitive inward rectifier potassium channel 11 (BIR) (Inward rectifier K(+) channel Kir6.2) (Potassium channel, inwardly rectifying subfamily J member 11)",Kcnj11,,Kcnj11
+P01346,IGF2_RAT,Insulin-like growth factor II (IGF-II) (Multiplication-stimulating activity) (MSA) (Multiplication-stimulating polypeptide) [Cleaved into: Insulin-like growth factor II; Preptin],Igf2 Igf-2,Igf-2,Igf2
+P54757,EPHA5_RAT,Ephrin type-A receptor 5 (EC 2.7.10.1) (EPH homology kinase 1) (EHK-1),Epha5 Ehk-1 Ekh1 Rek7,Ehk-1 Ekh1 Rek7,Epha5
+P51792,CLCN3_RAT,H(+)/Cl(-) exchange transporter 3 (Chloride channel protein 3) (ClC-3) (Chloride transporter ClC-3),Clcn3,,Clcn3
+P12969,IAPP_RAT,Islet amyloid polypeptide (Amylin) (Diabetes-associated peptide) (DAP),Iapp,,Iapp
+P0CE46,ZNT8_RAT,Zinc transporter 8 (ZnT-8) (Solute carrier family 30 member 8),Slc30a8 Znt8,Znt8,Slc30a8

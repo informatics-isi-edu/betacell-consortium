@@ -1,0 +1,291 @@
+Ingredient_ID,PHYRE2_PDB_Final,BU,PHYRE2_Intensive_Model,#_Description,Job_Id,Hit,Confidence_(Percent),Sequence_Identity_(Percent),Alignment_Coverage_(Percent),Hit_Info_1,Hit_Info_2,Hit_Info_3
+271,P63045_phyre2.pdb,AU,,P63045,cf2f92d7cdbb606e,c2kogA_,100,100,99.00,UNK,PDB header:membrane protein,Chain: A: PDB Molecule:vesicle-associated membrane protein 2
+125,1trz.pdb,AU,,,,,,,,,,
+195,P11598_phyre2.pdb,AU,,P11598,934ce68b610a2f71,c3f8uA_,100,93,97.00,2.6,PDB header:immune system/isomerase,Chain: A: PDB Molecule:protein disulfide-isomerase a3erp57
+242,P16086_phyre2.pdb,AU,,P16086,a1beaed0cb4cc0bf,c1sjjB_,100,29,24.00,20,PDB header:contractile protein,Chain: B: PDB Molecule:actinin
+89,P04937_phyre2.pdb,AU,,P04937,2f4412f0b844cea2,c3m7pA_,100,94,12.00,2.5,PDB header:cell adhesion,Chain: A: PDB Molecule:fn1 protein
+255,G3V852_phyre2.pdb,AU,,G3V852,e92a7808d356c3c9,c3ivfA_,100,100,15.00,1.94,PDB header:structural protein,Chain: A: PDB Molecule:talin-1
+148,Q62812_phyre2.pdb,AU,,Q62812,881b2e7b02d26b3e,c3j04A_,100,83,45.00,20,PDB header:structural protein,Chain: A: PDB Molecule:myosin-11
+84,Q4G061_phyre2.pdb,AU,,Q4G061,2729e955d41a585b,c5a5uB_,100,98,76.00,9,PDB header:translation,Chain: B: PDB Molecule:eukaryotic translation initiation factor 3 subunit b
+129,G3V7Q7_phyre2.pdb,AU,,G3V7Q7,915928973fd50e71,c3fayA_,100,96,22.00,2.2,PDB header:membrane protein,Chain: A: PDB Molecule:ras gtpase-activating-like protein iqgap1
+57,P11442_phyre2.pdb,AU,,P11442,bd01255fe2ceacb2,c1xi4D_,100,100,97.00,7.9,PDB header:endocytosis/exocytosis,Chain: D: PDB Molecule:clathrin heavy chain
+171,A0A0G2JWA9_phyre2.pdb,AU,,A0A0G2JWA9,43aa7a8b8f5e65c3,c3tkuB_,100,45,19.00,2.15,PDB header:transferase/transferase inhibitor,Chain: B: PDB Molecule:serine/threonine-protein kinase mrck beta
+79,A0A0G2JZI2_phyre2.pdb,AU,,A0A0G2JZI2,9353eed24915adf2,c4h3sA_,100,33,35.00,2.15,PDB header:ligase,Chain: A: PDB Molecule:glutamine-trna ligase
+60,P97536_phyre2.pdb,AU,,P97536,26382815aaeb6f3a,d1u6gc_,100,100,98.00,alpha-alpha superhelix,ARM repeat,HEAT repeat
+278,D4A7U5.final.pdb,AU,,D4A7U5,16d0189b7feb5057,c4fx5A_,100,14,14.00,1.73,PDB header:blood clotting,Chain: A: PDB Molecule:von willebrand factor type a
+149,Q05096_phyre2.pdb,AU,,Q05096,570005d07bca2539,c3j04A_,100,38,73.00,20,PDB header:structural protein,Chain: A: PDB Molecule:myosin-11
+123,D4A781_phyre2.pdb,AU,D4A781_phyre2_intensive.pdb,D4A781,c6ddbd9b359597e1,c3w3zA_,100,,98.00,2.7,PDB header:protein transport/nuclear protein,Chain: A: PDB Molecule:importin subunit beta-3
+34,P16638.final.pdb,AU,,P16638,3260ccc50b79809b,c3mwdA_,100,95,38.00,2.1,PDB header:transferase,Chain: A: PDB Molecule:atp-citrate synthase
+257,F1M280_phyre2.pdb,AU,,F1M280,3235ca4a22d17250,c3kq4D_,100,34,54.00,3.3,PDB header:transport protein,Chain: D: PDB Molecule:cubilin
+146,Q6P762.final.pdb,AU,,Q6P762,1068eea9cfd1a4e9,c2ow7A_,100,25,99.00,1.77,PDB header:hydrolase,Chain: A: PDB Molecule:alpha-mannosidase 2
+154,P06685_phyre2.pdb,AU,,P06685,6583fff31ca6fc92,c2zxeA_,100,88,96.00,2.4,PDB header:hydrolase/transport protein,"Chain: A: PDB Molecule:na, k-atpase alpha subunit"
+223,Q63475_phyre2.pdb,AU,,Q63475,8ce325257c3a1390,c3ps5A_,100,36,29.00,3.1,"PDB header:hydrolase, signaling protein",Chain: A: PDB Molecule:tyrosine-protein phosphatase non-receptor type 6
+120,Q63617_phyre2.pdb,AU,,Q63617,66a351a7569645cf,c3d2fC_,100,29,81.00,2.3,PDB header:chaperone,Chain: C: PDB Molecule:heat shock protein homolog sse1
+80,D3ZM69.final.pdb,AU,,D3ZM69,4bbb8830501beb78,c4rm9A_,100,30,33.00,2,PDB header:peptide binding protein,Chain: A: PDB Molecule:ezrin
+133,Q2PQA9.final.pdb,AU,,Q2PQA9,183c5fc0da06b64f,c5mioC_,100,37,33.00,3.19,PDB header:motor protein,"Chain: C: PDB Molecule:kinesin-like protein kif2c,kif2c fused to a darpin,kif2c"
+87,B1WBN7_phyre2.pdb,AU,,B1WBN7,c92b3ceade765e7d,c5wrrA_,100,52,71.00,2.51,PDB header:transferase,Chain: A: PDB Molecule:pseudokinase fam20a
+132,D4AAG4_phyre2.pdb,AU,,D4AAG4,7694ae1e1abc39fb,c5mioC_,100,28,44.00,3.19,PDB header:motor protein,"Chain: C: PDB Molecule:kinesin-like protein kif2c,kif2c fused to a darpin,kif2c"
+165,P14925_phyre2.pdb,AU,,P14925,ca9af973968d6b6f,c1opmA_,100,100,32.00,2.1,PDB header:oxidoreductase,Chain: A: PDB Molecule:protein (peptidylglycine alpha-hydroxylating
+224,Q63259_phyre2.pdb,AU,,Q63259,c68624a88d73e619,c3ps5A_,100,33,30.00,3.1,"PDB header:hydrolase, signaling protein",Chain: A: PDB Molecule:tyrosine-protein phosphatase non-receptor type 6
+138,Q6P7A9_phyre2.pdb,AU,,Q6P7A9,211ad637451d01da,c5kzxA_,100,86,94.00,2,PDB header:hydrolase,Chain: A: PDB Molecule:lysosomal alpha-glucosidase
+75,Q64610_phyre2.pdb,AU,,Q64610,18f8e7e47d969cc4,c2xr9A_,100,100,96.00,2.05,PDB header:hydrolase,Chain: A: PDB Molecule:ectonucleotide pyrophosphatase/phosphodiesterase family
+124,P52296_phyre2.pdb,AU,,P52296,f3bf17a2691f0cbc,d1qgra_,100,97,99.00,alpha-alpha superhelix,ARM repeat,Armadillo repeat
+76,P70531_phyre2.pdb,AU,,P70531,ea34c59153e0f742,c3pdtA_,100,44,29.00,1.8,PDB header:transferase,Chain: A: PDB Molecule:myosin heavy chain kinase a
+73,F1M8K0_phyre2.pdb,AU,,F1M8K0,9b752bb057e23c98,c1u2cA_,100,99,28.00,2.3,PDB header:protein binding,Chain: A: PDB Molecule:dystroglycan
+238,D3ZEG5.final.pdb,AU,,,,,,,,,,
+185,A0A0G2JVY4_phyre2.pdb,AU,,A0A0G2JVY4,2d97b3dad00d8ee4,c5z1fA_,100,21,86.00,4.8,PDB header:metal transport,Chain: A: PDB Molecule:csc1-like protein erd4
+192,F1M8A2.final.pdb,AU,,,,,,,,,,
+90,D3Z927.final.pdb,AU,,,,,,,,,,
+18,Q9ER34_phyre2.pdb,AU,,Q9ER34,8f83f2df7ac568bf,c5acnA_,100,98,96.00,2.1,PDB header:lyase(carbon-oxygen),Chain: A: PDB Molecule:aconitase
+188,Q5U367_phyre2.pdb,AU,,Q5U367,6f8379b1d4767456,c6fxyA_,100,92,98.00,2.14,PDB header:transferase,"Chain: A: PDB Molecule:procollagen-lysine,2-oxoglutarate 5-dioxygenase 3"
+190,P28840.final.pdb,AU,,P28840,c6e692146861deb8,c1r64A_,100,41,66.00,2.2,PDB header:hydrolase/hydrolase inhibitor,Chain: A: PDB Molecule:kexin
+189,Q63321.final.pdb,AU,,Q63321,43c3ad9094fddb9d,c6ax6B_,100,41,29.00,2.24,PDB header:oxidoreductase,Chain: B: PDB Molecule:procollagen lysyl hydroxylase and glycosyltransferase
+113,P34058_phyre2.pdb,AU,,P34058,a33720f6c1055239,c5fwkA_,100,100,93.00,3.9,PDB header:signaling protein,Chain: A: PDB Molecule:heat shock protein hsp 90 beta
+247,Q6IUU3.final.pdb,AU,,Q6IUU3,c831fc88a3ab37b1,c3t59D_,100,92,70.00,2.8,PDB header:oxidoreductase,Chain: D: PDB Molecule:sulfhydryl oxidase 1
+175,D3ZZL3_phyre2.pdb,AU,,D3ZZL3,de554e39fdc5bffb,c4xwhA_,100,83,99.00,2.32,PDB header:hydrolase,Chain: A: PDB Molecule:alpha-n-acetylglucosaminidase
+110,Q63803_phyre2.pdb,AU,,Q63803,5e928a80dd98be5a,c3ah8A_,100,42,32.00,2.9,PDB header:signaling protein/inhibitor,Chain: A: PDB Molecule:guanine nucleotide-binding protein g(i) subunit alpha-
+230,O35314_phyre2.pdb,AU,,O35314,205bd06d5fb96013,c3ojaB_,22.9,8,21.00,2.7,PDB header:protein binding,Chain: B: PDB Molecule:anopheles plasmodium-responsive leucine-rich repeat protein
+251,Q8VHQ7.final.pdb,AU,,Q8VHQ7,64d3e3442b582ff7,c2r83B_,100,36,45.00,2.7,"PDB header:endocytosis, exocytosis",Chain: B: PDB Molecule:synaptotagmin-1
+43,Q5M9G3_phyre2.pdb,AU,,Q5M9G3,416aafdd280ee79d,c5j97B_,100,46,17.00,2.55,PDB header:rna binding protein,Chain: B: PDB Molecule:caprin-2
+28,Q5RKH6.final.pdb,AU,,Q5RKH6,6eeca4fe60ccc2ff,c3aihB_,100,92,18.00,2.1,PDB header:sugar binding protein,Chain: B: PDB Molecule:protein os-9
+276,P53813.final.pdb,AU,,P53813,e7db647a0f683ff8,c2c5dA_,100,39,59.00,3.3,PDB header:signaling protein/receptor,Chain: A: PDB Molecule:growth-arrest-specific protein 6 precursor
+259,D4A8G5_phyre2.pdb,AU,,D4A8G5,90a89d1d8a157ae0,c5nv6A_,100,91,89.00,2.93,PDB header:structural protein,Chain: A: PDB Molecule:transforming growth factor-beta-induced protein ig-h3
+68,Q62950_phyre2.pdb,AU,,Q62950,4ff6f1a350fa0bfe,c2vr2A_,100,62,84.00,2.8,PDB header:hydrolase,Chain: A: PDB Molecule:dihydropyrimidinase
+264,Q66HD0_phyre2.pdb,AU,,Q66HD0,60d374dc8e92ab42,c5ulsA_,100,98,89.00,2.62,PDB header:chaperone,Chain: A: PDB Molecule:endoplasmin
+245,P48721.final.pdb,AU,,P48721,bb22c7af8ffacaca,c2khoA_,100,63,87.00,UNK,PDB header:chaperone,Chain: A: PDB Molecule:heat shock protein 70
+179,D3ZUM4.final.pdb,AU,,D3ZUM4,d938ade4a4da7a98,c3thdD_,100,80,99.00,1.79,PDB header:hydrolase,Chain: D: PDB Molecule:beta-galactosidase
+72,Q07266_phyre2.pdb,AU,,Q07266,39c749a832b7e1d8,d1hqz1_,100,20,19.00,Gelsolin-like,Actin depolymerizing proteins,Cofilin-like
+112,P06761.final.pdb,AU,,P06761,11e42da24c664d69,c5e84B_,100,99,95.00,2.99,PDB header:chaperone,Chain: B: PDB Molecule:78 kda glucose-regulated protein
+29,Q5XI77_phyre2.pdb,AU,,Q5XI77,72944121731267f2,c5n7gA_,100,47,63.00,2.95,PDB header:signaling protein,"Chain: A: PDB Molecule:membrane-associated guanylate kinase, ww and pdz domain-"
+231,P10362.final.pdb,AU,P10362_phyre2_intensive.pdb,P10362,54f0d5056dd92f8c,,,,,,,
+71,complicated.final.pdb,AU,,,,,,,,,,
+155,P28841.final.pdb,AU,,P28841,7aa85a0971d8a520,c1r64A_,100,38,78.00,2.2,PDB header:hydrolase/hydrolase inhibitor,Chain: A: PDB Molecule:kexin
+200,D3ZES9_phyre2.pdb,AU,,D3ZES9,9852c10c8768b0d6,c4l6yB_,99.7,81,72.00,3.3,PDB header:structural protein,Chain: B: PDB Molecule:protein regulator of cytokinesis 1
+208,B2GV02.final.pdb,AU,,B2GV02,91c506685832427d,c1xa6A_,100,30,40.00,3.2,PDB header:signaling protein,Chain: A: PDB Molecule:beta2-chimaerin
+115,Q566E4_phyre2.pdb,AU,,Q566E4,685c0b2fe1f7de0d,c5vsuA_,100,20,40.00,3.1,PDB header:splicing,Chain: A: PDB Molecule:u4/u6 snrna-associated-splicing factor prp24
+178,D4A133.final.pdb,AU,,D4A133,ee994731427fba74,c3j9vC_,100,67,97.00,8.3,PDB header:hydrolase,Chain: C: PDB Molecule:v-type proton atpase catalytic subunit a
+159,P20156_phyre2.pdb,AU,P20156_phyre2_intensive.pdb,P20156,a8c0891395155cf2,,,,,,,
+137,D3ZPB7_phyre2.pdb,AU,,D3ZPB7,9d24e17630e38126,c4wv4B_,99.8,28,9.00,1.91,PDB header:transcription,Chain: B: PDB Molecule:transcription initiation factor tfiid subunit 8
+136,Q9WU74_phyre2.pdb,AU,,Q9WU74,de5a4725a304a45c,c1xt5A_,99.3,25,27.00,1.15,PDB header:immune system,Chain: A: PDB Molecule:variable region-containing chitin-binding
+222,Q4QQW8.final.pdb,AU,,Q4QQW8,7244131d6ba0674c,c3fbxA_,100,95,96.00,2.4,PDB header:hydrolase,Chain: A: PDB Molecule:putative phospholipase b-like 2
+17,Q5XI34_phyre2.pdb,AU,,Q5XI34,8d1227b0f09c3029,d1b3ua_,100,100,99.00,alpha-alpha superhelix,ARM repeat,HEAT repeat
+145,O70513.final.pdb,AU,,O70513,b86a1fc3f68ff1d0,c3i3nA_,100,20,47.00,2.6,PDB header:protein binding,Chain: A: PDB Molecule:kelch-like protein 11
+66,D3ZH41.final.pdb,AU,,,,,,,,,,
+97,Q6P6V0.final.pdb,AU,,Q6P6V0,5cc80ec92fe85f5f,d1u0fa_,100,94,99.00,SIS domain,SIS domain,"Phosphoglucose isomerase, PGI"
+39,Q6AXR4_phyre2.pdb,AU,,Q6AXR4,a13a2a5c2c5d4b6d,c3lmyA_,100,77,96.00,2.8,PDB header:hydrolase,Chain: A: PDB Molecule:beta-hexosaminidase subunit beta
+260,Q9EQV6_phyre2.pdb,AU,,Q9EQV6,2846ca95cfe23094,c3edyA_,100,88,99.00,1.85,PDB header:hydrolase,Chain: A: PDB Molecule:tripeptidyl-peptidase 1
+246,P10960_phyre2.pdb,AU,,P10960,9261ac428400eb22,c3rfiA_,99.8,30,23.00,1.9,PDB header:hydrolase,Chain: A: PDB Molecule:asp
+96,Q32KJ5.final.pdb,AU,,Q32KJ5,cb8885c26abb7689,c4uplC_,100,22,91.00,1.81,PDB header:hydrolase,Chain: C: PDB Molecule:sulfatase family protein
+53,Q6P502.final.pdb,AU,,Q6P502,477f322c4b948df9,c3iygG_,100,98,94.00,4,PDB header:chaperone,Chain: G: PDB Molecule:t-complex protein 1 subunit gamma
+38,Q641X3.final.pdb,AU,,Q641X3,e5edc4cb43a95db5,c2gjxE_,100,84,99.00,2.8,PDB header:hydrolase,Chain: E: PDB Molecule:beta-hexosaminidase alpha chain
+33,P15999.final.pdb,AU,,P15999,10867dd7ac331b09,c4b2qA_,100,75,87.00,37,PDB header:hydrolase,"Chain: A: PDB Molecule:atp synthase subunit alpha, mitochondrial"
+55,complicated.final.pdb,AU,,,,,,,,,,
+117,Q4FZU2.final.pdb,AU,,Q4FZU2,37b5e414a1587ad4,c1ciiA_,99.7,14,67.00,3,PDB header:transmembrane protein,Chain: A: PDB Molecule:colicin ia
+31,P50430_phyre2.pdb,AU,,P50430,34b27380152912aa,d1fsua_,100,82,92.00,Alkaline phosphatase-like,Alkaline phosphatase-like,Arylsulfatase
+93,Q32KJ6_phyre2.pdb,AU,,Q32KJ6,c0a8860254dbdd51,c4fdiA_,100,87,99.00,2.2,PDB header:hydrolase,Chain: A: PDB Molecule:n-acetylgalactosamine-6-sulfatase
+13,Q794F9_phyre2.pdb,AU,,Q794F9,4412eb57da8e0349,c2dh3A_,100,72,79.00,2.8,"PDB header:transport protein, signaling protein",Chain: A: PDB Molecule:4f2 cell-surface antigen heavy chain
+198,complicated.final.pdb,AU,,,,,,,,,,
+142,P11980_phyre2.pdb,AU,,P11980,b43d0fc1015ab262,c1t5aB_,100,94,97.00,2.8,PDB header:transferase,"Chain: B: PDB Molecule:pyruvate kinase, m2 isozyme"
+88,Q5BK32_phyre2.pdb,AU,,Q5BK32,3306093382ec3e4d,c2ec4A_,100,25,41.00,UNK,"PDB header:structural genomics, unknown function",Chain: A: PDB Molecule:fas-associated factor 1
+181,B2RYC9.final.pdb,AU,,B2RYC9,a4f020e87acb5c8c,c2f61A_,100,89,99.00,2.5,PDB header:hydrolase,Chain: A: PDB Molecule:acid beta-glucosidase
+252,Q5XIM9_phyre2.pdb,AU,,Q5XIM9,bed9c70aeca945aa,c3kttB_,100,98,95.00,4,PDB header:chaperone,Chain: B: PDB Molecule:t-complex protein 1 subunit beta
+157,Q9JMJ4_phyre2.pdb,AU,,Q9JMJ4,507fa7e1333b9046,c3jb9U_,100,31,99.00,3.6,PDB header:rna binding protein/rna,Chain: U: PDB Molecule:pre-mrna-processing factor 19
+184,P82450_phyre2.pdb,AU,,P82450,414f0b6e65cdd455,d1zmba1,100,16,68.00,Flavodoxin-like,SGNH hydrolase,Putative acetylxylan esterase-like
+196,P04785.final.pdb,AU,,P04785,b15c8c89b1284a01,c5xf7A_,100,32,93.00,2.38,PDB header:chaperone,Chain: A: PDB Molecule:protein disulfide-isomerase-like protein of the testis
+268,P62815_phyre2.pdb,AU,,P62815,faf437561cdcb5df,c3j9uD_,100,82,89.00,7.6,PDB header:hydrolase,Chain: D: PDB Molecule:v-type proton atpase subunit b
+32,P10719_phyre2.pdb,AU,,P10719,bd0f5daf48f59321,c2w6jD_,100,98,88.00,3.84,PDB header:hydrolase,"Chain: D: PDB Molecule:atp synthase subunit beta, mitochondrial"
+176,D4AA31_phyre2.pdb,AU,,D4AA31,c897774cda9da04f,c3n2zB_,100,81,93.00,2.79,PDB header:hydrolase,Chain: B: PDB Molecule:lysosomal pro-x carboxypeptidase
+69,Q9EPB1.final.pdb,AU,,Q9EPB1,30f7fe7ecde223ad,c3jyhD_,100,82,96.00,2.19,PDB header:hydrolase,Chain: D: PDB Molecule:dipeptidyl-peptidase 2
+227,D3ZLP8.final.pdb,AU,,,,,,,,,,
+235,Q5U3Z7_phyre2.pdb,AU,,Q5U3Z7,376052504f39cbdb,d1ejia_,100,63,91.00,PLP-dependent transferase-like,PLP-dependent transferases,GABA-aminotransferase-like
+168,Q5FVH2.final.pdb,AU,,Q5FVH2,c7f56a0d599f2070,c1v0sA_,100,18,74.00,1.75,PDB header:hydrolase,Chain: A: PDB Molecule:phospholipase d
+74,P84039_phyre2.pdb,AU,,P84039,8dd3aef8630a2d60,c6c02B_,100,32,86.00,1.94,PDB header:hydrolase,Chain: B: PDB Molecule:ectonucleotide pyrophosphatase/phosphodiesterase family
+139,P27615.final.pdb,AU,,P27615,e7ebffedf622c9de,c4f7bA_,100,84,82.00,3,PDB header:cell adhesion,Chain: A: PDB Molecule:lysosome membrane protein 2
+275,O35796_phyre2.pdb,AU,,O35796,874b60247b14380d,d1p32a_,100,92,74.00,Mitochondrial glycoprotein MAM33-like,Mitochondrial glycoprotein MAM33-like,Mitochondrial glycoprotein MAM33-like
+160,Q63083_phyre2.pdb,AU,,Q63083,acacf1a947dea8eb,c1ciiA_,96,7,93.00,3,PDB header:transmembrane protein,Chain: A: PDB Molecule:colicin ia
+254,P17164.final.pdb,AU,,P17164,d0040974a12592d3,c1hl8B_,100,36,98.00,2.4,PDB header:hydrolase,Chain: B: PDB Molecule:putative alpha-l-fucosidase
+44,P15087.final.pdb,AU,,P15087,a4f408f74250db6d,c2nsmA_,100,54,89.00,2.1,PDB header:hydrolase,Chain: A: PDB Molecule:carboxypeptidase n catalytic chain
+169,Q6AYS4.final.pdb,AU,,Q6AYS4,3f49ae98c406b720,c4ni3B_,100,27,98.00,1.4,PDB header:hydrolase,Chain: B: PDB Molecule:alpha-fucosidase gh29
+232,P47868_phyre2.pdb,AU,,P47868,66ab0ffc43579926,d1nh2d1,78.2,27,8.00,"Transcription factor IIA (TFIIA), alpha-helical domain","Transcription factor IIA (TFIIA), alpha-helical domain","Transcription factor IIA (TFIIA), alpha-helical domain"
+54,P10354_phyre2.pdb,AU,,P10354,40e920dff99ea304,c5vx3H_,5.3,83,1.00,1.95,PDB header:apoptosis,Chain: H: PDB Molecule:bcl-2-like protein 11
+45,Q9EQV8.final.pdb,AU,,Q9EQV8,12be89c9f10c80b5,c2nsmA_,100,87,90.00,2.1,PDB header:hydrolase,Chain: A: PDB Molecule:carboxypeptidase n catalytic chain
+49,Q499S6.final.pdb,AU,,Q499S6,fc713fc59f7228dd,d7pcka_,100,32,68.00,Cysteine proteinases,Cysteine proteinases,Papain-like
+111,O35162.final.pdb,AU,,O35162,129e343c41ecdde5,c3d2fC_,100,25,96.00,2.3,PDB header:chaperone,Chain: C: PDB Molecule:heat shock protein homolog sse1
+104,D3ZYS7.final.pdb,AU,,D3ZYS7,40381c2bb6913162,c3q90A_,100,99,27.00,1.7,PDB header:hydrolase,Chain: A: PDB Molecule:ras gtpase-activating protein-binding protein 1
+21,O88767_phyre2.pdb,AU,,O88767,ff57bd860d1672e8,d1p5fa_,100,91,97.00,Flavodoxin-like,Class I glutamine amidotransferase-like,DJ-1/PfpI
+59,P05371_phyre2.pdb,AU,,P05371,b0e6fc77274ced44,c4h9sF_,77.2,18,22.00,2.6,PDB header:dna binding protein/apoptosis,Chain: F: PDB Molecule:death domain-associated protein 6
+194,Q6AYS3.final.pdb,AU,,Q6AYS3,92f36f65c0754cd9,d1ivya_,100,78,99.00,alpha/beta-Hydrolases,alpha/beta-Hydrolases,Serine carboxypeptidase-like
+226,Q920A6.final.pdb,AU,,Q920A6,fb95939e73f774af,d1ac5a_,100,25,99.00,alpha/beta-Hydrolases,alpha/beta-Hydrolases,Serine carboxypeptidase-like
+267,O54715.final.pdb,AU,,O54715,2f1c487d28cba313,c5gv0A_,99.9,14,37.00,1.5,PDB header:membrane protein,Chain: A: PDB Molecule:lysosome-associated membrane glycoprotein 1
+114,P61980_phyre2.pdb,AU,,P61980,a1d63815f6fec43d,c3n89B_,100,15,89.00,2.79,PDB header:cell cycle,"Chain: B: PDB Molecule:defective in germ line development protein 3, isoform a"
+36,A0A0G2K9J2_phyre2.pdb,AU,,A0A0G2K9J2,edd739c541ae7eb0,d1ho8a_,100,22,94.00,alpha-alpha superhelix,ARM repeat,Regulatory subunit H of the V-type ATPase
+244,P62632_phyre2.pdb,AU,,P62632,b502e0f4a24828a3,c1g7cA_,100,80,95.00,2.05,PDB header:translation,Chain: A: PDB Molecule:elongation factor 1-alpha
+262,P68370_phyre2.pdb,AU,,P68370,8070af5c5c194752,c2p4nB_,100,41,96.00,9,PDB header:transport protein,Chain: B: PDB Molecule:tubulin beta chain
+161,Q9JI85_phyre2.pdb,AU,,Q9JI85,603ea4f9ca5569b0,c5lm2B_,97,7,81.00,2.54,PDB header:hydrolase,Chain: B: PDB Molecule:tyrosine-protein phosphatase non-receptor type 23
+263,Q3KRE8_phyre2.pdb,AU,,Q3KRE8,4864ef0000bab12e,c2p4nB_,100,99,95.00,9,PDB header:transport protein,Chain: B: PDB Molecule:tubulin beta chain
+234,B3GNI6_phyre2.pdb,AU,,B3GNI6,c0c5a0438cf58a27,c5irrB_,100,27,61.00,2.04,PDB header:hydrolase,Chain: B: PDB Molecule:septin-like protein
+193,F1LMZ8_phyre2.pdb,AU,,F1LMZ8,7b7d319c86aaf3ec,c5gjqQ_,100,100,99.00,4.5,PDB header:hydrolase,Chain: Q: PDB Molecule:26s proteasome non-atpase regulatory subunit 11
+241,F1M6V6_phyre2.pdb,AU,,F1M6V6,87b4ec3ae3e6d316,c1bmoA_,100,31,59.00,3.1,PDB header:extracellular module,Chain: A: PDB Molecule:bm-40
+180,D3Z9H2.final.pdb,AU,,D3Z9H2,dfa9c8427fcd7951,d1uuha_,100,22,30.00,C-type lectin-like,C-type lectin-like,Link domain
+174,D3ZJF9_phyre2.pdb,AU,,D3ZJF9,a73c08f50200935e,c3lrmB_,100,34,91.00,2.7,PDB header:hydrolase,Chain: B: PDB Molecule:alpha-galactosidase 1
+225,Q6AXS4_phyre2.pdb,AU,,Q6AXS4,87c77573baf5a85d,c5gz4A_,93.8,17,25.00,2.55,PDB header:hydrolase,Chain: A: PDB Molecule:snake venom phosphodiesterase (pde)
+63,P32551_phyre2.pdb,AU,,P32551,701569cf460b8b74,c1l0lB_,100,84,93.00,2.35,PDB header:oxidoreductase,Chain: B: PDB Molecule:ubiquinol-cytochrome c reductase complex core protein 2
+197,Q63081.final.pdb,AU,,Q63081,1c5445ddd8a14ff1,c3apoA_,100,24,89.00,2.4,PDB header:oxidoreductase,Chain: A: PDB Molecule:dnaj homolog subfamily c member 10
+42,P18418.final.pdb,AU,,P18418,2642f0863ac53d1c,c1jhnA_,100,46,82.00,2.9,PDB header:chaperone,Chain: A: PDB Molecule:calnexin
+258,Q9R0D6_phyre2.pdb,AU,,Q9R0D6,dedff27d8546bf45,c2v3nA_,100,68,99.00,2.73,PDB header:transport protein,Chain: A: PDB Molecule:transcobalamin-2
+5,Q63570_phyre2.pdb,AU,,Q63570,049ff94fb5712146,c4b4tK_,100,72,90.00,7.4,PDB header:hydrolase,Chain: K: PDB Molecule:26s protease regulatory subunit 6b homolog
+98,P00507.final.pdb,AU,,P00507,6afafde21179830b,d7aata_,100,87,93.00,PLP-dependent transferase-like,PLP-dependent transferases,AAT-like
+158,P47971.final.pdb,AU,,P47971,abe8904f36aee73f,c3flpJ_,100,30,49.00,2.3,PDB header:sugar binding protein,Chain: J: PDB Molecule:sap-like pentraxin
+25,P04764.final.pdb,AU,,P04764,e787e6c3eb3e6ec0,c2akmA_,100,84,98.00,1.92,PDB header:lyase,Chain: A: PDB Molecule:gamma enolase
+240,A0A0G2K946_phyre2.pdb,AU,,A0A0G2K946,2d9d29aa519a1a81,c1bmoA_,100,26,54.00,3.1,PDB header:extracellular module,Chain: A: PDB Molecule:bm-40
+27,Q66H12.final.pdb,AU,,Q66H12,47fa2ef499928b20,c3lrmB_,100,31,95.00,2.7,PDB header:hydrolase,Chain: B: PDB Molecule:alpha-galactosidase 1
+163,Q9Z2G8.final.pdb,AU,,Q9Z2G8,b2340dc832bf1467,c2ayuA_,100,36,76.00,3,PDB header:chaperone,Chain: A: PDB Molecule:nucleosome assembly protein
+141,P17046_phyre2.pdb,AU,,P17046,d4ce51bc085b9a49,c5gv3B_,100,73,41.00,2.1,PDB header:membrane protein,Chain: B: PDB Molecule:lysosome-associated membrane glycoprotein 2
+46,P19139.final.pdb,AU,,P19139,f3544b4999af3356,c5ebzF_,100,22,75.00,4.5,PDB header:transferase/transferase inhibitor,Chain: F: PDB Molecule:inhibitor of nuclear factor kappa-b kinase subunit alpha
+170,Q6AXS5.final.pdb,AU,,Q6AXS5,13369ea00779f939,c3j3ah_,98.4,68,40.00,5,PDB header:ribosome,Chain: H: PDB Molecule:40s ribosomal protein s7
+236,Q99PW3.final.pdb,AU,,Q99PW3,35fcad91d1c19c21,c4fj6C_,100,25,98.00,1.9,PDB header:hydrolase,"Chain: C: PDB Molecule:glycoside hydrolase family 33, candidate sialidase"
+48,P24268_phyre2.pdb,AU,,P24268,27fd0cdad33962e4,d3psga_,100,47,99.00,Acid proteases,Acid proteases,Pepsin-like
+151,Q6P7S1_phyre2.pdb,AU,,Q6P7S1,5572ee84c8540ad3,c5u84A_,100,80,97.00,2.34,PDB header:hydrolase,Chain: A: PDB Molecule:acid ceramidase
+101,P38406.final.pdb,AU,,P38406,79c1c5be860465ff,c3v00C_,100,44,99.00,2.9,PDB header:signaling protein,Chain: C: PDB Molecule:guanine nucleotide-binding protein g(t) subunit alpha-1/
+140,P14562.final.pdb,AU,,P14562,f7842aa861a967ce,c5gv0A_,100,83,41.00,1.5,PDB header:membrane protein,Chain: A: PDB Molecule:lysosome-associated membrane glycoprotein 1
+250,P47861.final.pdb,AU,,P47861,4d744292da341123,c2r83B_,100,73,70.00,2.7,"PDB header:endocytosis, exocytosis",Chain: B: PDB Molecule:synaptotagmin-1
+269,P16612_phyre2.pdb,AU,,P16612,baf422248891f767,d1fltv_,100,92,50.00,Cystine-knot cytokines,Cystine-knot cytokines,Platelet-derived growth factor-like
+152,Q6JE36.final.pdb,AU,,Q6JE36,3fd0bff91e010d0c,c2qmqA_,100,56,70.00,1.7,PDB header:signaling protein,Chain: A: PDB Molecule:protein ndrg2
+261,Q6P7B0_phyre2.pdb,AU,,Q6P7B0,39eac1e6789e2473,c1r6tA_,100,89,95.00,2.1,PDB header:ligase,Chain: A: PDB Molecule:tryptophanyl-trna synthetase
+26,P85515_phyre2.pdb,AU,,P85515,2f2c2549a7647599,c5afuB_,100,100,98.00,3.5,PDB header:motor protein,Chain: B: PDB Molecule:dynactin
+130,Q68FX0.final.pdb,AU,,Q68FX0,a4574fe51c701618,c2d1cB_,100,34,87.00,1.8,PDB header:oxidoreductase,Chain: B: PDB Molecule:isocitrate dehydrogenase
+109,P82471_phyre2.pdb,AU,,P82471,5543b5edb5d74c0c,c3ah8A_,100,95,94.00,2.9,PDB header:signaling protein/inhibitor,Chain: A: PDB Molecule:guanine nucleotide-binding protein g(i) subunit alpha-
+24,P68136_phyre2.pdb,AU,,P68136,476cc8a8bd2e3a8c,c1o1f4_,100,100,98.00,70,PDB header:contractile protein,Chain: 4: PDB Molecule:skeletal muscle actin
+19,P60711.final.pdb,AU,,P60711,647d90c8c39d13ea,c1o1f4_,100,94,98.00,70,PDB header:contractile protein,Chain: 4: PDB Molecule:skeletal muscle actin
+279,Q6IN38_phyre2.pdb,AU,,Q6IN38,624eda6fc142855a,c2ygqA_,100,92,86.00,3.95,PDB header:signaling protein,Chain: A: PDB Molecule:wnt inhibitory factor 1
+67,Q01460.final.pdb,AU,,Q01460,e661b21862194562,c5hbfB_,100,22,98.00,1.95,PDB header:hydrolase,Chain: B: PDB Molecule:chitotriosidase-1
+199,P27791_phyre2.pdb,AU,,P27791,6c59bf6fa980d805,d1rdqe_,100,96,97.00,Protein kinase-like (PK-like),Protein kinase-like (PK-like),"Protein kinases, catalytic subunit"
+266,Q5M7T6.final.pdb,AU,,Q5M7T6,86226429dbc96eab,c3j9tQ_,100,47,98.00,6.9,PDB header:hydrolase,Chain: Q: PDB Molecule:v-type proton atpase subunit d
+108,P59215_phyre2.pdb,AU,,P59215,b60f09b5c0afaedf,c3v00C_,100,65,99.00,2.9,PDB header:signaling protein,Chain: C: PDB Molecule:guanine nucleotide-binding protein g(t) subunit alpha-1/
+173,D3ZPI3.final.pdb,AU,,,,,,,,,,
+167,P16036.final.pdb,AU,,P16036,ec55d35f6979d774,c4c9qB_,100,22,79.00,3.2,PDB header:transport protein,"Chain: B: PDB Molecule:adp, atp carrier protein 3"
+237,Q6H8N0.final.pdb,AU,,Q6H8N0,a3f09a3986f88115,c2wnfA_,100,81,82.00,1.25,PDB header:transferase,Chain: A: PDB Molecule:cmp-n-acetylneuraminate-beta-galactosamide-alpha-
+91,P05065.final.pdb,AU,,P05065,eeb4d107747e7dff,d1zaia1,100,97,99.00,TIM beta/alpha-barrel,Aldolase,Class I aldolase
+83,Q6P685.final.pdb,AU,,Q6P685,23f92dafdfc4ae56,c2dcuB_,100,41,41.00,3.4,PDB header:translation,Chain: B: PDB Molecule:translation initiation factor 2 beta subunit
+233,P56603.final.pdb,AU,,P56603,e2f796b24d343533,c4or2A_,61.1,12,61.00,2.8,PDB header:signaling protein,"Chain: A: PDB Molecule:soluble cytochrome b562, metabotropic glutamate receptor 1"
+86,D4AC36_phyre2.pdb,AU,,D4AC36,17d4ea3a2b631adb,c5a5tF_,100,99,75.00,6,PDB header:hydrolase,Chain: F: PDB Molecule:eukaryotic translation initiation factor 3 subunit f
+50,P07154_phyre2.pdb,AU,,P07154,b63773299006adae,d1cs8a_,100,74,98.00,Cysteine proteinases,Cysteine proteinases,Papain-like
+47,P00787.final.pdb,AU,,P00787,59e8a904db0c690d,d3pbha_,100,81,97.00,Cysteine proteinases,Cysteine proteinases,Papain-like
+102,O35353.final.pdb,AU,,O35353,caa400ed33a78d10,d1tbga_,100,90,99.00,7-bladed beta-propeller,WD40 repeat-like,WD40-repeat
+107,P54311_phyre2.pdb,AU,,P54311,8aba21e5ab02617f,d1tbga_,100,100,99.00,7-bladed beta-propeller,WD40 repeat-like,WD40-repeat
+177,D3ZXN8_phyre2.pdb,AU,,D3ZXN8,008d56715d62a7c3,c5n7gA_,100,38,95.00,2.95,PDB header:signaling protein,"Chain: A: PDB Molecule:membrane-associated guanylate kinase, ww and pdz domain-"
+106,P54313_phyre2.pdb,AU,,P54313,835f71a5cb5434e3,d1tbga_,100,90,99.00,7-bladed beta-propeller,WD40 repeat-like,WD40-repeat
+153,P30919.final.pdb,AU,,P30919,c916de3f661208fa,c1p4vA_,100,43,96.00,1.9,PDB header:hydrolase,Chain: A: PDB Molecule:n(4)-(beta-n-acetylglucosaminyl)-l-asparaginase
+82,P68101_phyre2.pdb,AU,,P68101,8b55cf9dab0f8371,c1q8kA_,100,98,94.00,UNK,PDB header:translation,Chain: A: PDB Molecule:eukaryotic translation initiation factor 2
+30,P55260.final.pdb,AU,,P55260,8d72df91b7af5d85,c5n7gA_,100,50,99.00,2.95,PDB header:signaling protein,"Chain: A: PDB Molecule:membrane-associated guanylate kinase, ww and pdz domain-"
+99,P04797_phyre2.pdb,AU,,P04797,2a2756407df2a500,c1i32D_,100,54,99.00,2.6,PDB header:oxidoreductase,Chain: D: PDB Molecule:glyceraldehyde 3-phosphate dehydrogenase
+144,P04636_phyre2.pdb,AU,,P04636,7d2a067c43ed6c98,c1mldA_,100,96,92.00,1.83,PDB header:oxidoreductase(nad(a)-choh(d)),Chain: A: PDB Molecule:malate dehydrogenase
+65,D3ZFQ8_phyre2.pdb,AU,,D3ZFQ8,1eb42855b6cde4f8,c1p84D_,100,59,74.00,2.5,PDB header:oxidoreductase,"Chain: D: PDB Molecule:cytochrome c1, heme protein"
+150,B0BNH1_phyre2.pdb,AU,,B0BNH1,c4b561d71c004715,c2lvxA_,100,26,37.00,UNK,"PDB header:hydrolase, sugar binding protein",Chain: A: PDB Molecule:glucosidase 2 subunit beta
+134,Q5RJR8.final.pdb,AU,,Q5RJR8,206c388827709d95,c4mn8A_,100,34,39.00,3.06,PDB header:transferase/transferase receptor,Chain: A: PDB Molecule:lrr receptor-like serine/threonine-protein kinase fls2
+128,E9PT30.final.pdb,AU,,E9PT30,a6e47af85176fa2d,c4wmyB_,100,85,94.00,1.6,PDB header:sugar binding protein,Chain: B: PDB Molecule:intelectin-1
+164,P45479_phyre2.pdb,AU,,P45479,48e6eaca86cdb4b3,d1ei9a_,100,85,99.00,alpha/beta-Hydrolases,alpha/beta-Hydrolases,Thioesterases
+205,O54880.final.pdb,AU,,O54880,c47e6b4adc4d43f7,c2zetD_,99.9,23,41.00,3,PDB header:signaling protein,Chain: D: PDB Molecule:melanophilin
+162,P13084.final.pdb,AU,,P13084,bf4ec9886f40adc9,d1xe0a_,100,80,35.00,Nucleoplasmin-like/VP (viral coat and capsid proteins),Nucleoplasmin-like core domain,Nucleoplasmin-like core domain
+119,Q6AY17_phyre2.pdb,AU,,Q6AY17,7b810b61a05c6d94,c5oljA_,100,16,88.00,2.2,PDB header:hydrolase,Chain: A: PDB Molecule:dipeptidyl peptidase iv
+135,O08564.final.pdb,AU,,O08564,e64daff457585ba2,c4px7A_,100,16,61.00,3.2,PDB header:hydrolase,Chain: A: PDB Molecule:phosphatidylglycerophosphatase
+172,A9CMA6_phyre2.pdb,AU,,A9CMA6,561ad089df97b152,c3j1zP_,100,17,72.00,13,PDB header:metal transport,Chain: P: PDB Molecule:cation efflux family protein
+105,M0R809_phyre2.pdb,AU,,M0R809,857e92be9fdf4a6d,d1omwg_,99.9,80,78.00,Non-globular all-alpha subunits of globular proteins,"Transducin (heterotrimeric G protein), gamma chain","Transducin (heterotrimeric G protein), gamma chain"
+202,Q9Z0V5.final.pdb,AU,,Q9Z0V5,2e970925f7918d22,c3tkpB_,100,97,84.00,2.49,PDB header:oxidoreductase,Chain: B: PDB Molecule:peroxiredoxin-4
+277,Q9Z2L0_phyre2.pdb,AU,,Q9Z2L0,c804bb1f9977b21e,c2k4tA_,100,99,99.00,UNK,"PDB header:membrane protein,apoptosis",Chain: A: PDB Molecule:voltage-dependent anion-selective channel
+85,A0JPM9.final.pdb,AU,,A0JPM9,f1641293faef1e24,c3bpjD_,99.9,99,26.00,1.85,PDB header:translation,Chain: D: PDB Molecule:eukaryotic translation initiation factor 3 subunit j
+35,Q6P503.final.pdb,AU,,Q6P503,2ccadcdaa56301dc,c3j9vM_,100,56,83.00,8.3,PDB header:hydrolase,Chain: M: PDB Molecule:v-type proton atpase subunit d
+2,P61983_phyre2.pdb,AU,,P61983,0fa5cfe0b105a07b,c2npmB_,100,59,94.00,2.52,PDB header:protein binding,Chain: B: PDB Molecule:14-3-3 domain containing protein
+3,P68255_phyre2.pdb,AU,,P68255,5ad4259ce4904a34,c2c1nA_,100,81,93.00,2,PDB header:signaling protein,Chain: A: PDB Molecule:14-3-3 protein zeta/delta
+4,P63102_phyre2.pdb,AU,,P63102,54265f0e3af8e243,c2c1nA_,100,100,93.00,2,PDB header:signaling protein,Chain: A: PDB Molecule:14-3-3 protein zeta/delta
+243,P97574_phyre2.pdb,AU,,P97574,6886ea8869158937,c2magA_,42.4,75,7.00,UNK,PDB header:antibiotic,Chain: A: PDB Molecule:magainin 2
+191,Q9QXU9_phyre2.pdb,AU,,Q9QXU9,61a7cc13c04b9b8d,d3bgea1,41.2,37,15.00,post-AAA+ oligomerization domain-like,post-AAA+ oligomerization domain-like,MgsA/YrvN C-terminal domain-like
+187,P58200_phyre2.pdb,AU,,P58200,0574f64762c353d5,c2v8sV_,99.5,98,39.00,2.22,PDB header:protein transport,Chain: V: PDB Molecule:vesicle transport through interaction with
+51,Q62745.final.pdb,AU,,Q62745,ba2200435d9458d2,c5tcxA_,100,88,95.00,2.96,PDB header:cell invasion,Chain: A: PDB Molecule:cd81 antigen
+218,P62824_phyre2.pdb,AU,,P62824,2f969287e43e0fd7,c5c2kA_,100,27,79.00,1.42,PDB header:hydrolase activator,"Chain: A: PDB Molecule:transforming protein rhoa,rac gtpase-activating protein 1"
+116,P52925_phyre2.pdb,AU,,P52925,0c493e36ad4fa5e2,c2yrqA_,100,87,78.00,UNK,PDB header:dna binding protein,Chain: A: PDB Molecule:high mobility group protein b1
+77,Q5XII0.final.pdb,AU,,Q5XII0,f53b57f8b2170f82,c2qcqA_,65.4,17,14.00,2.21,PDB header:signaling protein,Chain: A: PDB Molecule:bone morphogenetic protein 3
+94,F1M5V2.final.pdb,AU,,F1M5V2,ed6547ea1f93fce8,d1smba_,100,89,87.00,PR-1-like,PR-1-like,PR-1-like
+217,P63012_phyre2.pdb,AU,,P63012,91e018d017e32062,d2bcgy1,100,45,87.00,P-loop containing nucleoside triphosphate hydrolases,P-loop containing nucleoside triphosphate hydrolases,G proteins
+256,Q63584.final.pdb,AU,,Q63584,df2816e3d23f4f15,c5azyA_,99.9,100,51.00,1.8,PDB header:protein transport,Chain: A: PDB Molecule:transmembrane emp24 domain-containing protein 10
+273,Q9JHW5.final.pdb,AU,,Q9JHW5,3c8a4adbc48f2370,c4b93A_,100,99,73.00,2,PDB header:exocytosis,Chain: A: PDB Molecule:vesicle-associated membrane protein 7
+81,B5DEN5.final.pdb,AU,,B5DEN5,b36316f210353516,c2n51A_,100,79,58.00,UNK,PDB header:translation,Chain: A: PDB Molecule:elongation factor 1-delta
+207,D4A0G7_phyre2.pdb,AU,,D4A0G7,55cf1940ba37d6f0,d2bcgy1,100,42,88.00,P-loop containing nucleoside triphosphate hydrolases,P-loop containing nucleoside triphosphate hydrolases,G proteins
+214,Q99P74.final.pdb,AU,,Q99P74,c3bcd7f9efa14cf1,d2bcgy1,99.9,29,98.00,P-loop containing nucleoside triphosphate hydrolases,P-loop containing nucleoside triphosphate hydrolases,G proteins
+103,Q63942.final.pdb,AU,,Q63942,0880b40f3a945491,d2bcgy1,100,43,88.00,P-loop containing nucleoside triphosphate hydrolases,P-loop containing nucleoside triphosphate hydrolases,G proteins
+211,P61107.final.pdb,AU,,P61107,2bf1e513c2e040c0,d2bcgy1,100,41,89.00,P-loop containing nucleoside triphosphate hydrolases,P-loop containing nucleoside triphosphate hydrolases,G proteins
+156,P27682_phyre2.pdb,AU,,P27682,dbea93865fe0a019,d1dx5i2,44.4,38,10.00,"Knottins (small inhibitors, toxins, lectins)",EGF/Laminin,EGF-type module
+182,A1L1J8.final.pdb,AU,,A1L1J8,22bdc0b1367c8ec8,d2bcgy1,100,42,92.00,P-loop containing nucleoside triphosphate hydrolases,P-loop containing nucleoside triphosphate hydrolases,G proteins
+239,M0RC99_phyre2.pdb,AU,,M0RC99,ceec8b053fa1e2e7,c5c2kA_,100,29,85.00,1.42,PDB header:hydrolase activator,"Chain: A: PDB Molecule:transforming protein rhoa,rac gtpase-activating protein 1"
+215,P05712.final.pdb,AU,,P05712,8069359a9a0e547d,d2bcgy1,100,44,99.00,P-loop containing nucleoside triphosphate hydrolases,P-loop containing nucleoside triphosphate hydrolases,G proteins
+219,P09527.final.pdb,AU,,P09527,669eb2a8509e190b,c5c2kA_,100,28,87.00,1.42,PDB header:hydrolase activator,"Chain: A: PDB Molecule:transforming protein rhoa,rac gtpase-activating protein 1"
+183,B0BNK1_phyre2.pdb,AU,,B0BNK1,fe9535b7f427d045,c5c2kA_,100,30,78.00,1.42,PDB header:hydrolase activator,"Chain: A: PDB Molecule:transforming protein rhoa,rac gtpase-activating protein 1"
+216,Q5U316_phyre2.pdb,AU,,Q5U316,9b7d0b01160642d5,d2bcgy1,100,49,98.00,P-loop containing nucleoside triphosphate hydrolases,P-loop containing nucleoside triphosphate hydrolases,G proteins
+15,P62914_phyre2.pdb,AU,,P62914,5945ca87e4b643b0,c4a1cD_,100,65,93.00,3.52,PDB header:ribosome,Chain: D: PDB Molecule:60s ribosomal protein l11
+12,P62859_phyre2.pdb,AU,,P62859,3c6fa9b398e304ca,c2xzm1_,100,60,85.00,3.93,PDB header:ribosome,Chain: 1: PDB Molecule:ribosomal protein s28e containing protein
+212,Q6NYB7.final.pdb,AU,,Q6NYB7,fb4ce8b29822a8a1,d2bcgy1,100,74,96.00,P-loop containing nucleoside triphosphate hydrolases,P-loop containing nucleoside triphosphate hydrolases,G proteins
+206,P35281_phyre2.pdb,AU,,P35281,71e4db3d63801841,d2bcgy1,100,50,97.00,P-loop containing nucleoside triphosphate hydrolases,P-loop containing nucleoside triphosphate hydrolases,G proteins
+221,B2RZD5_phyre2.pdb,AU,,B2RZD5,408f0ab88d4de8d9,c3j39U_,100,54,94.00,6,PDB header:ribosome,Chain: U: PDB Molecule:60s ribosomal protein l22
+213,P10536.final.pdb,AU,,P10536,0ca74ad430467e14,d2bcgy1,100,71,98.00,P-loop containing nucleoside triphosphate hydrolases,P-loop containing nucleoside triphosphate hydrolases,G proteins
+70,P60905_phyre2.pdb,AU,,P60905,037d1b96034a5ed4,c4j80B_,100,24,93.00,2.9,PDB header:chaperone,Chain: B: PDB Molecule:chaperone protein dnaj 2
+228,P12001.final.pdb,AU,,P12001,43ff4c4ec72312ff,c3j3bQ_,100,97,99.00,5,PDB header:ribosome,Chain: Q: PDB Molecule:60s ribosomal protein l18
+23,Q66HA6_phyre2.pdb,AU,,Q66HA6,64aaae050a911c99,c6bbqA_,100,34,91.00,35,PDB header:lipid binding protein,"Chain: A: PDB Molecule:cytohesin-3,adp-ribosylation factor 6"
+100,Q6IN37_phyre2.pdb,AU,,Q6IN37,26f7ef9dadef6315,d2ag4a1,100,75,90.00,Ganglioside M2 (gm2) activator,Ganglioside M2 (gm2) activator,Ganglioside M2 (gm2) activator
+210,Q32PX6_phyre2.pdb,AU,,Q32PX6,6527ede69ac02484,d2ngra_,100,61,99.00,P-loop containing nucleoside triphosphate hydrolases,P-loop containing nucleoside triphosphate hydrolases,G proteins
+40,complicated.final.pdb,AU,,,,,,,,,,
+220,P62836_phyre2.pdb,AU,,P62836,c3b5cbcbd54c9c16,d2ngra_,100,30,99.00,P-loop containing nucleoside triphosphate hydrolases,P-loop containing nucleoside triphosphate hydrolases,G proteins
+95,P06883.final.pdb,AU,,P06883,d73f8df165e2cda1,c2l64A_,99.4,97,20.00,UNK,PDB header:hormone,Chain: A: PDB Molecule:glucagon-like peptide 2
+203,D3ZMI0_phyre2.pdb,AU,,D3ZMI0,7cb5a5ed639ce916,c6gapB_,98.6,17,80.00,2.15,PDB header:viral protein,Chain: B: PDB Molecule:outer capsid protein sigma-1
+22,P62332_phyre2.pdb,AU,,P62332,ce9bdbe21218adc1,d1z6xa1,100,65,98.00,P-loop containing nucleoside triphosphate hydrolases,P-loop containing nucleoside triphosphate hydrolases,G proteins
+147,P18666.final.pdb,AU,,P18666,8afe30885039e0ef,d1wdcb_,99.9,49,82.00,EF Hand-like,EF-hand,Calmodulin-like
+20,P36972_phyre2.pdb,AU,,P36972,085747ac3e1b1795,d1zn7a1,100,87,98.00,PRTase-like,PRTase-like,Phosphoribosyltransferases (PRTases)
+7,P63326_phyre2.pdb,AU,,P63326,a5c48ef3475e4d02,c3j3aK_,100,100,58.00,5,PDB header:ribosome,Chain: K: PDB Molecule:40s ribosomal protein s10
+10,P60868_phyre2.pdb,AU,,P60868,470571bda5a656fe,c3iz6J_,100,68,97.00,5.5,PDB header:ribosome,Chain: J: PDB Molecule:40s ribosomal protein s20 (s10p)
+253,P01830.final.pdb,AU,,P01830,0b65fbc5f0677516,c2frgP_,98.3,11,64.00,1.19,PDB header:immune system,Chain: P: PDB Molecule:trem-like transcript-1
+166,P10111.final.pdb,AU,,P10111,164e61b5e88ace8a,c1ihgA_,100,64,98.00,1.8,PDB header:isomerase,Chain: A: PDB Molecule:cyclophilin 40
+16,P23358_phyre2.pdb,AU,,P23358,f415b126b012094e,c3j39K_,100,78,95.00,6,PDB header:ribosome,Chain: K: PDB Molecule:60s ribosomal protein l12
+118,Q6P791.final.pdb,AU,,Q6P791,06dc5aa3e35271df,c6ehrE_,100,100,70.00,2.9,PDB header:signaling protein,Chain: E: PDB Molecule:ragulator complex protein lamtor1
+229,P62752_phyre2.pdb,AU,,P62752,b02a2db95e6e11af,c4a17R_,100,53,75.00,3.52,PDB header:ribosome,Chain: R: PDB Molecule:rpl23a
+9,P62271_phyre2.pdb,AU,,P62271,6eac4d6a7b5484ac,c3iz6M_,100,70,99.00,5.5,PDB header:ribosome,Chain: M: PDB Molecule:40s ribosomal protein s18 (s13p)
+56,D4ACN8.final.pdb,AU,,D4ACN8,6a33e94d7cdcbf51,c5oa1W_,79.6,16,44.00,4.4,PDB header:transcription,Chain: W: PDB Molecule:rna polymerase i-specific transcription initiation factor
+61,Q8VHC1.final.pdb,AU,,Q8VHC1,65dad7f1d72fb407,c4n6oB_,100,75,93.00,1.8,PDB header:hydrolase/hydrolase inhibitor,Chain: B: PDB Molecule:cystatin-m
+201,Q6P742.final.pdb,AU,,Q6P742,51af899115ee0e1a,c2micA_,41.5,26,17.00,UNK,PDB header:membrane protein,Chain: A: PDB Molecule:tumor necrosis factor receptor superfamily member 16
+248,P07632_phyre2.pdb,AU,,P07632,e9b72b0932e83777,d2c9va1,100,83,98.00,Immunoglobulin-like beta-sandwich,"Cu,Zn superoxide dismutase-like","Cu,Zn superoxide dismutase-like"
+62,P14841_phyre2.pdb,AU,,P14841,0a8623d260c0c89b,d1roaa_,100,53,90.00,Cystatin-like,Cystatin/monellin,Cystatins
+6,Q5BJX1.final.pdb,AU,,Q5BJX1,c2ee5159e6d173e1,c4v1ae_,100,84,88.00,3.4,PDB header:ribosome,Chain: E: PDB Molecule:
+8,P62246_phyre2.pdb,AU,,P62246,65ce376423bef92c,c5xxuW_,100,74,98.00,3.35,PDB header:ribosome,Chain: W: PDB Molecule:ribosomal protein us8
+204,Q5PQZ9.final.pdb,AU,,Q5PQZ9,e3ed692f212c64e4,c5lnko_,100,74,99.00,3.9,PDB header:oxidoreductase,Chain: O: PDB Molecule:
+64,P12075_phyre2.pdb,AU,,P12075,afae960f67948053,d1v54f_,100,83,75.00,Rubredoxin-like,Rubredoxin-like,Cytochrome c oxidase Subunit F
+186,B2GUV5.final.pdb,AU,,B2GUV5,25fa21494d1c7172,c4dl0G_,100,38,88.00,2.91,PDB header:hydrolase,Chain: G: PDB Molecule:v-type proton atpase subunit g
+265,B2RYS2.final.pdb,AU,,B2RYS2,1cc24209c008b0aa,d1bccf_,100,85,89.00,14 kDa protein of cytochrome bc1 complex (Ubiquinol-cytochrome c reductase),14 kDa protein of cytochrome bc1 complex (Ubiquinol-cytochrome c reductase),14 kDa protein of cytochrome bc1 complex (Ubiquinol-cytochrome c reductase)
+143,P30904_phyre2.pdb,AU,,P30904,d7178ef78dd5b91c,d1uiza_,100,68,99.00,Tautomerase/MIF,Tautomerase/MIF,MIF-related
+126,P01322.final.pdb,AU,,P01322,78f8f3c70b89cc5a,c2kqpA_,100,80,98.00,UNK,PDB header:hormone,Chain: A: PDB Molecule:insulin
+127,P01323.final.pdb,AU,,P01323,4d24ddbbacc75ac1,c2kqpA_,100,83,98.00,UNK,PDB header:hormone,Chain: A: PDB Molecule:insulin
+14,P02401.final.pdb,AU,,P02401,d97b8c8fc94e66ec,c4behB_,100,97,99.00,UNK,PDB header:translation,Chain: B: PDB Molecule:60s acidic ribosomal protein p2
+272,P63025_phyre2.pdb,AU,,P63025,7df31d51022b161e,c2kogA_,99.9,78,95.00,UNK,PDB header:membrane protein,Chain: A: PDB Molecule:vesicle-associated membrane protein 2
+274,Q9WUF4_phyre2.pdb,AU,,Q9WUF4,48bf517107ab3a31,c3hd7A_,100,38,88.00,3.4,PDB header:exocytosis,Chain: A: PDB Molecule:vesicle-associated membrane protein 2
+1,P26772.final.pdb,AU,,P26772,e0157d4dbf2004ef,c4pj1V_,100,99,97.00,3.15,PDB header:chaperone,"Chain: V: PDB Molecule:10 kda heat shock protein, mitochondrial"
+11,P05765.final.pdb,AU,,P05765,b9394fbd406ceafc,c3j38V_,100,87,97.00,6,PDB header:ribosome,Chain: V: PDB Molecule:40s ribosomal protein s21
+92,B1H2A6_phyre2.pdb,AU,,B1H2A6,a15b2d2aa72be106,c4qvzB_,100,70,30.00,3.19,PDB header:translation,Chain: B: PDB Molecule:fragile x mental retardation protein 1
+270,A0A2I2MDI1.final.pdb,AU,,,,,,,,,,
+52,Q8CFN2_phyre2.pdb,AU,,Q8CFN2,5df212ed9b3eaff8,d2ngra_,100,100,99.00,P-loop containing nucleoside triphosphate hydrolases,P-loop containing nucleoside triphosphate hydrolases,G proteins
+209,Q6RUV5_phyre2.pdb,AU,,Q6RUV5,a85e3503b82cc93f,d2ngra_,100,71,99.00,P-loop containing nucleoside triphosphate hydrolases,P-loop containing nucleoside triphosphate hydrolases,G proteins
+41,P01322_phyre2.pdb,AU,,P01322,2e126bfc071e5760,c2kqpA_,100,80,98.00,UNK,PDB header:hormone,Chain: A: PDB Molecule:insulin
+249,Q62747_phyre2.pdb,AU,,Q62747,a4f7faf92657e901,c6ankA_,100,100,66.00,2.25,PDB header:protein binding,Chain: A: PDB Molecule:synaptotagmin-7
+131,P70673_phyre2.pdb,AU,,P70673,fc8b8a9dfcd17b8f,c5twvG_,100,100,83.00,6.3,PDB header:transport protein,Chain: G: PDB Molecule:atp-sensitive inward rectifier potassium channel 11
+122,P01346_phyre2.pdb,AU,,P01346,84d7e4410cea2def,d1igla_,100,94,42.00,Insulin-like,Insulin-like,Insulin-like
+78,P54757_phyre2.pdb,AU,,P54757,5049724238815cfe,c4bk4A_,100,63,51.00,3.65,PDB header:signaling protein,Chain: A: PDB Molecule:ephrin type-a receptor 4
+58,P51792_phyre2.pdb,AU,,P51792,fd14ad831006cadb,c5tr1A_,100,25,84.00,3.95,PDB header:transport protein,Chain: A: PDB Molecule:chloride channel protein
+121,P12969_phyre2.pdb,AU,,P12969,2f80d171d485aa42,c2l86A_,99.7,84,51.00,UNK,PDB header:apoptosis,Chain: A: PDB Molecule:islet amyloid polypeptide
+280,P0CE46_phyre2.pdb,AU,P0CE46_phyre2_intensive.pdb,P0CE46,31cdbc5b1922cbdd,c3j1zP_,100,17,81.00,13,PDB header:metal transport,Chain: P: PDB Molecule:cation efflux family protein
+37,A0A2I2MDI1.final.pdb,AU,,,,,,,,,,
+281,,AU,,,,,,,,,,
+282,,AU,,,,,,,,,,
+283,,AU,,,,,,,,,,
+284,,AU,,,,,,,,,,
+285,,AU,,,,,,,,,,
+286,,AU,,,,,,,,,,
+287,,AU,,,,,,,,,,
+288,,AU,,,,,,,,,,
+289,,AU,,,,,,,,,,
+290,,AU,,,,,,,,,,
