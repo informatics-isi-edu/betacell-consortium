@@ -4,8 +4,8 @@ import pprint
 import re
 
 server = 'pbcconsortium.isrd.isi.edu'
-term_table = 'Additive_Terms'
-term_comment = 'Table containing names of additive terms'
+term_table = 'Organism_Term'
+term_comment = 'Table containing UniProt terms'
 schema = 'Vocab'
 
 credential = get_credential(server)
