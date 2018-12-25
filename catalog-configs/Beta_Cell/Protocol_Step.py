@@ -3,22 +3,11 @@ from attrdict import AttrDict
 from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
 from deriva.core.ermrest_config import tag as chaise_tags
-from deriva.utils.catalog.manage import update_catalog
+from deriva.utils.catalog.manage.update_catalog import CatalogUpdater, parse_args
 
 table_name = 'Protocol_Step'
 
 schema_name = 'Beta_Cell'
-
-groups = AttrDict(
-    {
-        'admins': 'https://auth.globus.org/80df6c56-a0e8-11e8-b9dc-0ada61684422',
-        'modelers': 'https://auth.globus.org/a45e5ba2-709f-11e8-a40d-0e847f194132',
-        'curators': 'https://auth.globus.org/da80b96c-edab-11e8-80e2-0a7c1eab007a',
-        'writers': 'https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764',
-        'readers': 'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a',
-        'isrd': 'https://auth.globus.org/3938e0d0-ed35-11e5-8641-22000ab4b42b'
-    }
-)
 
 column_annotations = {
     'RCB': {
@@ -54,17 +43,6 @@ column_acls = {}
 column_acl_bindings = {}
 
 column_defs = [
-    em.Column.define('RID', em.builtin_types['ermrest_rid'], nullok=False,
-                     ),
-    em.Column.define('RCT', em.builtin_types['ermrest_rct'], nullok=False,
-                     ),
-    em.Column.define('RMT', em.builtin_types['ermrest_rmt'], nullok=False,
-                     ),
-    em.Column.define(
-        'RCB', em.builtin_types['ermrest_rcb'], annotations=column_annotations['RCB'],
-    ),
-    em.Column.define('RMB', em.builtin_types['ermrest_rmb'],
-                     ),
     em.Column.define('Description', em.builtin_types['markdown'],
                      ),
     em.Column.define('Step_Number', em.builtin_types['int4'], nullok=False,
@@ -74,17 +52,15 @@ column_defs = [
     em.Column.define(
         'Start_Time', em.builtin_types['int4'], comment=column_comment['Start_Time'],
     ),
-    em.Column.define(
-        'Duration', em.builtin_types['int4'], comment=column_comment['Duration'],
-    ),
+    em.Column.define('Duration', em.builtin_types['int4'], comment=column_comment['Duration'],
+                     ),
     em.Column.define(
         'Cellular_Location',
         em.builtin_types['text'],
         comment=column_comment['Cellular_Location'],
     ),
-    em.Column.define(
-        'Owner', em.builtin_types['text'], annotations=column_annotations['Owner'],
-    ),
+    em.Column.define('Owner', em.builtin_types['text'], annotations=column_annotations['Owner'],
+                     ),
 ]
 
 visible_columns = {
@@ -94,13 +70,10 @@ visible_columns = {
                 'source': 'RID'
             }, {
                 'source': 'Name'
-            },
-            {
-                'source': [
-                    {
-                        'outbound': ['Beta_Cell', 'Protocol_Step_Protocol_FKey']
-                    }, 'RID'
-                ]
+            }, {
+                'source': [{
+                    'outbound': ['Beta_Cell', 'Protocol_Step_Protocol_FKey']
+                }, 'RID']
             },
             {
                 'source': [
@@ -114,9 +87,7 @@ visible_columns = {
             {
                 'source': [
                     {
-                        'outbound': [
-                            'Beta_Cell, Protocol_Step_Cellular_Location_Term_FKey'
-                        ]
+                        'outbound': ['Beta_Cell, Protocol_Step_Cellular_Location_Term_FKey']
                     }, 'id'
                 ]
             },
@@ -124,14 +95,9 @@ visible_columns = {
                 'comment': 'Additive used in protocol step',
                 'source': [
                     {
-                        'inbound': [
-                            'Beta_Cell', 'Protocol_Step_Additive_Term_Protocol_Step_FKey'
-                        ]
-                    },
-                    {
-                        'outbound': [
-                            'Beta_Cell', 'Protocol_Step_Additive_Term_Additive_Term_FKey'
-                        ]
+                        'inbound': ['Beta_Cell', 'Protocol_Step_Additive_Term_Protocol_Step_FKey']
+                    }, {
+                        'outbound': ['Beta_Cell', 'Protocol_Step_Additive_Term_Additive_Term_FKey']
                     }, 'RID'
                 ],
                 'aggregate': 'array',
@@ -145,9 +111,7 @@ visible_columns = {
                 'ux_mode': 'choices',
                 'source': [
                     {
-                        'inbound': [
-                            'Beta_Cell', 'Protocol_Step_Additive_Term_Protocol_Step_FKey'
-                        ]
+                        'inbound': ['Beta_Cell', 'Protocol_Step_Additive_Term_Protocol_Step_FKey']
                     }, 'Additive_Concentration'
                 ],
                 'aggregate': 'array'
@@ -166,8 +130,7 @@ visible_columns = {
     '*': [
         {
             'source': 'RID'
-        }, 'RCB',
-        {
+        }, 'RCB', {
             'source': [{
                 'outbound': ['Beta_Cell', 'Protocol_Step_Owner_Fkey']
             }, 'id']
@@ -192,9 +155,7 @@ visible_columns = {
         {
             'source': [
                 {
-                    'outbound': [
-                        'Beta_Cell', 'Protocol_Step_Cellular_Location_Term_FKey'
-                    ]
+                    'outbound': ['Beta_Cell', 'Protocol_Step_Cellular_Location_Term_FKey']
                 }, 'id'
             ]
         },
@@ -202,14 +163,9 @@ visible_columns = {
             'comment': 'Additive used in protocol step',
             'source': [
                 {
-                    'inbound': [
-                        'Beta_Cell', 'Protocol_Step_Additive_Term_Protocol_Step_FKey'
-                    ]
-                },
-                {
-                    'outbound': [
-                        'Beta_Cell', 'Protocol_Step_Additive_Term_Additive_Term_FKey'
-                    ]
+                    'inbound': ['Beta_Cell', 'Protocol_Step_Additive_Term_Protocol_Step_FKey']
+                }, {
+                    'outbound': ['Beta_Cell', 'Protocol_Step_Additive_Term_Additive_Term_FKey']
                 }, 'RID'
             ],
             'aggregate': 'array',
@@ -220,9 +176,7 @@ visible_columns = {
             'comment': 'Additive concentration used in protocol step',
             'source': [
                 {
-                    'inbound': [
-                        'Beta_Cell', 'Protocol_Step_Additive_Term_Protocol_Step_FKey'
-                    ]
+                    'inbound': ['Beta_Cell', 'Protocol_Step_Additive_Term_Protocol_Step_FKey']
                 }, 'Additive_Concentration'
             ],
             'aggregate': 'array',
@@ -240,9 +194,7 @@ visible_foreign_keys = {
         {
             'source': [
                 {
-                    'inbound': [
-                        'Beta_Cell', 'Protocol_Step_Additive_Term_Protocol_Step_FKey'
-                    ]
+                    'inbound': ['Beta_Cell', 'Protocol_Step_Additive_Term_Protocol_Step_FKey']
                 }, 'RID'
             ]
         }
@@ -262,23 +214,69 @@ table_annotations = {
 }
 table_comment = 'Defines a single step in a protocol'
 table_acls = {}
-table_acl_bindings = {}
+table_acl_bindings = {
+    'self_service_creator': {
+        'scope_acl': ['*'],
+        'projection': ['RCB'],
+        'types': ['update', 'delete'],
+        'projection_type': 'acl'
+    },
+    'self_service_owner': {
+        'scope_acl': ['*'],
+        'projection': ['Owner'],
+        'types': ['update', 'delete'],
+        'projection_type': 'acl'
+    }
+}
 
 key_defs = [
-    em.Key.define(
-        ['Protocol', 'Step_Number'],
-        constraint_names=[('Beta_Cell', 'Protocol_Step_Key')],
-    ),
     em.Key.define(['RID'], constraint_names=[('Beta_Cell', 'Protocol_Step_RIDkey1')],
                   ),
+    em.Key.define(
+        ['Step_Number', 'Protocol'], constraint_names=[('Beta_Cell', 'Protocol_Step_Key')],
+    ),
 ]
 
 fkey_defs = [
+    em.ForeignKey.define(
+        ['RCB'],
+        'public',
+        'ermrest_client', ['id'],
+        constraint_names=[('Beta_Cell', 'Protocol_Step_RCB_Fkey')],
+        acls={
+            'insert': ['*'],
+            'update': ['*']
+        },
+    ),
+    em.ForeignKey.define(
+        ['Cellular_Location'],
+        'vocab',
+        'cellular_location_terms', ['id'],
+        constraint_names=[('Beta_Cell', 'Protocol_Step_Cellular_Location_Term_FKey')],
+        acls={
+            'insert': ['*'],
+            'update': ['*']
+        },
+    ),
+    em.ForeignKey.define(
+        ['Owner'],
+        'public',
+        'ermrest_client', ['id'],
+        constraint_names=[('Beta_Cell', 'Protocol_Step_Owner_Fkey')],
+        acls={
+            'insert': ['*'],
+            'update': ['*']
+        },
+    ),
     em.ForeignKey.define(
         ['Protocol'],
         'Beta_Cell',
         'Protocol', ['RID'],
         constraint_names=[('Beta_Cell', 'Protocol_Step_Protocol_FKey')],
+        acls={
+            'insert': ['*'],
+            'update': ['*']
+        },
     ),
 ]
 
@@ -295,26 +293,16 @@ table_def = em.Table.define(
 )
 
 
-def main(
-    skip_args=False,
-    mode='annotations',
-    replace=False,
-    server='pbcconsortium.isrd.isi.edu',
-    catalog_id=1
-):
-
-    if not skip_args:
-        mode, replace, server, catalog_id = update_catalog.parse_args(
-            server, catalog_id, is_table=True
-        )
-    update_catalog.update_table(
-        mode, replace, server, catalog_id, schema_name, table_name, table_def,
-        column_defs, key_defs, fkey_defs, table_annotations, table_acls,
-        table_acl_bindings, table_comment, column_annotations, column_acls,
-        column_acl_bindings, column_comment
-    )
+def main(catalog, mode, replace=False):
+    updater = CatalogUpdater(catalog)
+    updater.update_table(mode, schema_name, table_def, replace=replace)
 
 
 if __name__ == "__main__":
-    main()
+    server = 'pbcconsortium.isrd.isi.edu'
+    catalog_id = 1
+    mode, replace, server, catalog_id = parse_args(server, catalog_id, is_table=True)
+    credential = get_credential(server)
+    catalog = ErmrestCatalog('https', server, catalog_id, credentials=credential)
+    main(catalog, mode, replace)
 

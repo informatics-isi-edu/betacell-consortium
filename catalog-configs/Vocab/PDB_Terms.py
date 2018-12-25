@@ -5,18 +5,18 @@ import deriva.core.ermrest_model as em
 from deriva.core.ermrest_config import tag as chaise_tags
 from deriva.utils.catalog.manage.update_catalog import CatalogUpdater, parse_args
 
-table_name = 'cell_line_terms'
+table_name = 'PDB_Terms'
 
-schema_name = 'vocab'
+schema_name = 'Vocab'
 
-column_annotations = {'id': {}, 'uri': {}, 'name': {}, 'description': {}, 'synonyms': {}}
+column_annotations = {'ID': {}, 'URI': {}, 'Name': {}, 'Description': {}, 'Synonyms': {}}
 
 column_comment = {
-    'id': 'The preferred Compact URI (CURIE) for this term.',
-    'uri': 'The preferred URI for this term.',
-    'name': 'The prefered name for a cell line',
-    'description': 'A longer human-readable description of this term.',
-    'synonyms': 'Alternate human-readable names for this term.'
+    'ID': 'The preferred Compact URI (CURIE) for this term.',
+    'URI': 'The preferred URI for this term.',
+    'Name': 'The preferred human-readable name for this term.',
+    'Description': 'A longer human-readable description of this term.',
+    'Synonyms': 'Alternate human-readable names for this term.'
 }
 
 column_acls = {}
@@ -25,63 +25,43 @@ column_acl_bindings = {}
 
 column_defs = [
     em.Column.define(
-        'id',
+        'ID',
         em.builtin_types['ermrest_curie'],
         nullok=False,
         default='PBCCONSORTIUM:{RID}',
-        comment=column_comment['id'],
+        comment=column_comment['ID'],
     ),
     em.Column.define(
-        'uri',
+        'URI',
         em.builtin_types['ermrest_uri'],
         nullok=False,
         default='/id/{RID}',
-        comment=column_comment['uri'],
+        comment=column_comment['URI'],
     ),
     em.Column.define(
-        'name', em.builtin_types['text'], nullok=False, comment=column_comment['name'],
+        'Name', em.builtin_types['text'], nullok=False, comment=column_comment['Name'],
     ),
     em.Column.define(
-        'description',
+        'Description',
         em.builtin_types['markdown'],
         nullok=False,
-        comment=column_comment['description'],
+        comment=column_comment['Description'],
     ),
-    em.Column.define('synonyms', em.builtin_types['text[]'], comment=column_comment['synonyms'],
+    em.Column.define('Synonyms', em.builtin_types['text[]'], comment=column_comment['Synonyms'],
                      ),
 ]
 
-visible_columns = {
-    'filter': {
-        'and': [
-            {
-                'source': 'name',
-                'open': True
-            }, {
-                'source': 'id',
-                'open': True
-            }, {
-                'source': 'synonyms',
-                'open': True
-            }
-        ]
-    },
-    'entry': ['name', 'id', 'synonyms', 'uri', 'description'],
-    'detailed': ['name', 'id', 'synonyms', 'uri', 'description'],
-    'compact': ['name', 'id', 'synonyms', 'description']
-}
-
-table_annotations = {chaise_tags.visible_columns: visible_columns, }
-table_comment = 'Terms for cell lines'
+table_annotations = {}
+table_comment = 'Terms from PDB Repository'
 table_acls = {}
 table_acl_bindings = {}
 
 key_defs = [
-    em.Key.define(['id'], constraint_names=[('vocab', 'cell_line_terms_idkey1')],
+    em.Key.define(['URI'], constraint_names=[('Vocab', 'PDB_Terms_URIkey1')],
                   ),
-    em.Key.define(['uri'], constraint_names=[('vocab', 'cell_line_terms_urikey1')],
+    em.Key.define(['ID'], constraint_names=[('Vocab', 'PDB_Terms_IDkey1')],
                   ),
-    em.Key.define(['RID'], constraint_names=[('vocab', 'cell_line_terms_RIDkey1')],
+    em.Key.define(['RID'], constraint_names=[('Vocab', 'PDB_Terms_RIDkey1')],
                   ),
 ]
 

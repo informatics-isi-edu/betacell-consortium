@@ -48,3 +48,4 @@ def add_terms(catalog, term_table, term_list):
     terms_dp.insert(term_list)
 
 
+

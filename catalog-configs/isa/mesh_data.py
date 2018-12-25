@@ -3,22 +3,11 @@ from attrdict import AttrDict
 from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
 from deriva.core.ermrest_config import tag as chaise_tags
-from deriva.utils.catalog.manage import update_catalog
+from deriva.utils.catalog.manage.update_catalog import CatalogUpdater, parse_args
 
 table_name = 'mesh_data'
 
 schema_name = 'isa'
-
-groups = AttrDict(
-    {
-        'admins': 'https://auth.globus.org/80df6c56-a0e8-11e8-b9dc-0ada61684422',
-        'modelers': 'https://auth.globus.org/a45e5ba2-709f-11e8-a40d-0e847f194132',
-        'curators': 'https://auth.globus.org/da80b96c-edab-11e8-80e2-0a7c1eab007a',
-        'writers': 'https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764',
-        'readers': 'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a',
-        'isrd': 'https://auth.globus.org/3938e0d0-ed35-11e5-8641-22000ab4b42b'
-    }
-)
 
 column_annotations = {
     'RID': {},
@@ -60,16 +49,7 @@ column_acl_bindings = {}
 
 column_defs = [
     em.Column.define(
-        'RID',
-        em.builtin_types['ermrest_rid'],
-        nullok=False,
-        comment=column_comment['RID'],
-    ),
-    em.Column.define(
-        'url',
-        em.builtin_types['text'],
-        nullok=False,
-        annotations=column_annotations['url'],
+        'url', em.builtin_types['text'], nullok=False, annotations=column_annotations['url'],
     ),
     em.Column.define(
         'filename',
@@ -91,24 +71,6 @@ column_defs = [
                      ),
     em.Column.define('description', em.builtin_types['markdown'],
                      ),
-    em.Column.define(
-        'RCB', em.builtin_types['ermrest_rcb'], comment=column_comment['RCB'],
-    ),
-    em.Column.define(
-        'RMB', em.builtin_types['ermrest_rmb'], comment=column_comment['RMB'],
-    ),
-    em.Column.define(
-        'RCT',
-        em.builtin_types['ermrest_rct'],
-        nullok=False,
-        comment=column_comment['RCT'],
-    ),
-    em.Column.define(
-        'RMT',
-        em.builtin_types['ermrest_rmt'],
-        nullok=False,
-        comment=column_comment['RMT'],
-    ),
     em.Column.define('biosample', em.builtin_types['text'],
                      ),
 ]
@@ -149,19 +111,17 @@ visible_columns = {
         ]
     },
     'entry': [
-        'RID', ['isa', 'mesh_data_biosample_fkey'],
-        ['isa', 'mesh_data_derived_from_fkey'], 'url', 'filename', 'byte_count', 'md5',
-        ['isa', 'mesh_data_anatomy_fkey'], 'label', 'description'
+        'RID', ['isa', 'mesh_data_biosample_fkey'], ['isa', 'mesh_data_derived_from_fkey'], 'url',
+        'filename', 'byte_count', 'md5', ['isa', 'mesh_data_anatomy_fkey'], 'label', 'description'
     ],
     'detailed': [
         ['isa', 'mesh_data_pkey'], ['isa', 'mesh_data_dataset_fkey'],
-        ['isa', 'mesh_data_biosample_fkey'],
-        ['isa', 'mesh_data_derived_from_fkey'], 'filename', 'byte_count', 'md5',
-        ['isa', 'mesh_data_anatomy_fkey'], 'label', 'description'
+        ['isa', 'mesh_data_biosample_fkey'], ['isa', 'mesh_data_derived_from_fkey'], 'filename',
+        'byte_count', 'md5', ['isa', 'mesh_data_anatomy_fkey'], 'label', 'description'
     ],
     'compact': [
-        ['isa', 'mesh_data_pkey'], 'biosample', ['isa', 'mesh_data_derived_from_fkey'],
-        'url', 'byte_count', 'md5'
+        ['isa', 'mesh_data_pkey'], 'biosample', ['isa', 'mesh_data_derived_from_fkey'], 'url',
+        'byte_count', 'md5'
     ]
 }
 
@@ -183,9 +143,51 @@ table_comment = None
 table_acls = {}
 table_acl_bindings = {}
 
-key_defs = []
+key_defs = [
+    em.Key.define(['RID'], constraint_names=[('isa', 'mesh_data_pkey')],
+                  ),
+    em.Key.define(['url'], constraint_names=[('isa', 'mesh_data_url_key')],
+                  ),
+]
 
-fkey_defs = []
+fkey_defs = [
+    em.ForeignKey.define(
+        ['derived_from'],
+        'Beta_Cell',
+        'XRay_Tomography_Data', ['RID'],
+        constraint_names=[('isa', 'mesh_data_derived_from_fkey')],
+        acls={
+            'insert': ['*'],
+            'update': ['*']
+        },
+        on_update='CASCADE',
+        on_delete='RESTRICT',
+    ),
+    em.ForeignKey.define(
+        ['biosample'],
+        'Beta_Cell',
+        'Biosample', ['RID'],
+        constraint_names=[('isa', 'mesh_data_biosample_fkey')],
+        acls={
+            'insert': ['*'],
+            'update': ['*']
+        },
+        on_update='CASCADE',
+        on_delete='RESTRICT',
+    ),
+    em.ForeignKey.define(
+        ['dataset'],
+        'Beta_Cell',
+        'Dataset', ['RID'],
+        constraint_names=[('isa', 'mesh_data_dataset_fkey')],
+        acls={
+            'insert': ['*'],
+            'update': ['*']
+        },
+        on_update='CASCADE',
+        on_delete='RESTRICT',
+    ),
+]
 
 table_def = em.Table.define(
     table_name,
@@ -200,26 +202,16 @@ table_def = em.Table.define(
 )
 
 
-def main(
-    skip_args=False,
-    mode='annotations',
-    replace=False,
-    server='pbcconsortium.isrd.isi.edu',
-    catalog_id=1
-):
-
-    if not skip_args:
-        mode, replace, server, catalog_id = update_catalog.parse_args(
-            server, catalog_id, is_table=True
-        )
-    update_catalog.update_table(
-        mode, replace, server, catalog_id, schema_name, table_name, table_def,
-        column_defs, key_defs, fkey_defs, table_annotations, table_acls,
-        table_acl_bindings, table_comment, column_annotations, column_acls,
-        column_acl_bindings, column_comment
-    )
+def main(catalog, mode, replace=False):
+    updater = CatalogUpdater(catalog)
+    updater.update_table(mode, schema_name, table_def, replace=replace)
 
 
 if __name__ == "__main__":
-    main()
+    server = 'pbcconsortium.isrd.isi.edu'
+    catalog_id = 1
+    mode, replace, server, catalog_id = parse_args(server, catalog_id, is_table=True)
+    credential = get_credential(server)
+    catalog = ErmrestCatalog('https', server, catalog_id, credentials=credential)
+    main(catalog, mode, replace)
 

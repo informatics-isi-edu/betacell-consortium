@@ -3,22 +3,11 @@ from attrdict import AttrDict
 from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
 from deriva.core.ermrest_config import tag as chaise_tags
-from deriva.utils.catalog.manage import update_catalog
+from deriva.utils.catalog.manage.update_catalog import CatalogUpdater, parse_args
 
 table_name = 'XRay_Tomography_Data'
 
 schema_name = 'Beta_Cell'
-
-groups = AttrDict(
-    {
-        'admins': 'https://auth.globus.org/80df6c56-a0e8-11e8-b9dc-0ada61684422',
-        'modelers': 'https://auth.globus.org/a45e5ba2-709f-11e8-a40d-0e847f194132',
-        'curators': 'https://auth.globus.org/da80b96c-edab-11e8-80e2-0a7c1eab007a',
-        'writers': 'https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764',
-        'readers': 'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a',
-        'isrd': 'https://auth.globus.org/3938e0d0-ed35-11e5-8641-22000ab4b42b'
-    }
-)
 
 column_annotations = {
     'RCB': {
@@ -98,27 +87,11 @@ column_acls = {}
 column_acl_bindings = {}
 
 column_defs = [
-    em.Column.define('RID', em.builtin_types['ermrest_rid'], nullok=False,
-                     ),
-    em.Column.define('RCT', em.builtin_types['ermrest_rct'], nullok=False,
-                     ),
-    em.Column.define('RMT', em.builtin_types['ermrest_rmt'], nullok=False,
-                     ),
     em.Column.define(
-        'RCB', em.builtin_types['ermrest_rcb'], annotations=column_annotations['RCB'],
-    ),
-    em.Column.define('RMB', em.builtin_types['ermrest_rmb'],
-                     ),
-    em.Column.define(
-        'Dataset',
-        em.builtin_types['text'],
-        nullok=False,
-        comment=column_comment['Dataset'],
+        'Dataset', em.builtin_types['text'], nullok=False, comment=column_comment['Dataset'],
     ),
     em.Column.define(
-        'Description',
-        em.builtin_types['markdown'],
-        comment=column_comment['Description'],
+        'Description', em.builtin_types['markdown'], comment=column_comment['Description'],
     ),
     em.Column.define(
         'File_Type',
@@ -127,17 +100,12 @@ column_defs = [
         comment=column_comment['File_Type'],
     ),
     em.Column.define(
-        'Submitted_On',
-        em.builtin_types['timestamptz'],
-        comment=column_comment['Submitted_On'],
+        'Submitted_On', em.builtin_types['timestamptz'], comment=column_comment['Submitted_On'],
     ),
+    em.Column.define('File_Id', em.builtin_types['int4'], comment=column_comment['File_Id'],
+                     ),
     em.Column.define(
-        'File_Id', em.builtin_types['int4'], comment=column_comment['File_Id'],
-    ),
-    em.Column.define(
-        'Biosample',
-        em.builtin_types['ermrest_rid'],
-        comment=column_comment['Biosample'],
+        'Biosample', em.builtin_types['ermrest_rid'], comment=column_comment['Biosample'],
     ),
     em.Column.define('md5', em.builtin_types['text'], nullok=False,
                      ),
@@ -148,10 +116,7 @@ column_defs = [
         annotations=column_annotations['length'],
     ),
     em.Column.define(
-        'url',
-        em.builtin_types['text'],
-        nullok=False,
-        annotations=column_annotations['url'],
+        'url', em.builtin_types['text'], nullok=False, annotations=column_annotations['url'],
     ),
     em.Column.define(
         'filename',
@@ -159,9 +124,8 @@ column_defs = [
         nullok=False,
         annotations=column_annotations['filename'],
     ),
-    em.Column.define(
-        'Owner', em.builtin_types['text'], annotations=column_annotations['Owner'],
-    ),
+    em.Column.define('Owner', em.builtin_types['text'], annotations=column_annotations['Owner'],
+                     ),
 ]
 
 visible_columns = {
@@ -172,11 +136,9 @@ visible_columns = {
                 'entity': True
             },
             {
-                'source': [
-                    {
-                        'outbound': ['Beta_Cell', 'XRay_Tomography_Data_Dataset_FKey']
-                    }, 'RID'
-                ],
+                'source': [{
+                    'outbound': ['Beta_Cell', 'XRay_Tomography_Data_Dataset_FKey']
+                }, 'RID'],
                 'markdown_name': 'Dataset'
             },
             {
@@ -204,16 +166,10 @@ visible_columns = {
                         'outbound': ['Beta_Cell', 'Specimen_Protocol_FKey']
                     }, {
                         'inbound': ['Beta_Cell', 'Protocol_Step_Protocol_FKey']
-                    },
-                    {
-                        'inbound': [
-                            'Beta_Cell', 'Protocol_Step_Additive_Term_Protocol_Step_FKey'
-                        ]
-                    },
-                    {
-                        'outbound': [
-                            'Beta_Cell', 'Protocol_Step_Additive_Term_Additive_Term_FKey'
-                        ]
+                    }, {
+                        'inbound': ['Beta_Cell', 'Protocol_Step_Additive_Term_Protocol_Step_FKey']
+                    }, {
+                        'outbound': ['Beta_Cell', 'Protocol_Step_Additive_Term_Additive_Term_FKey']
                     }, 'RID'
                 ],
                 'aggregate': 'array',
@@ -234,11 +190,8 @@ visible_columns = {
                         'outbound': ['Beta_Cell', 'Specimen_Protocol_FKey']
                     }, {
                         'inbound': ['Beta_Cell', 'Protocol_Step_Protocol_FKey']
-                    },
-                    {
-                        'inbound': [
-                            'Beta_Cell', 'Protocol_Step_Additive_Term_Protocol_Step_FKey'
-                        ]
+                    }, {
+                        'inbound': ['Beta_Cell', 'Protocol_Step_Additive_Term_Protocol_Step_FKey']
                     }, 'Additive_Concentration'
                 ],
                 'aggregate': 'array'
@@ -260,19 +213,16 @@ visible_columns = {
                     }, 'Duration'
                 ],
                 'aggregate': 'array'
-            },
-            {
+            }, {
                 'source': 'filename',
                 'open': False,
                 'markdown_name': 'File Name',
                 'entity': True
             },
             {
-                'source': [
-                    {
-                        'outbound': ['Beta_Cell', 'XRay_Tomography_Data_Anatomy_FKey']
-                    }, 'id'
-                ],
+                'source': [{
+                    'outbound': ['Beta_Cell', 'XRay_Tomography_Data_Anatomy_FKey']
+                }, 'id'],
                 'open': True,
                 'markdown_name': 'Anatomy',
                 'entity': True
@@ -298,43 +248,34 @@ visible_columns = {
     'entry': [
         'RID', 'RCB',
         {
-            'source': [
-                {
-                    'outbound': ['Beta_Cell', 'XRay_Tomography_Data_Owner_Fkey']
-                }, 'id'
-            ]
+            'source': [{
+                'outbound': ['Beta_Cell', 'XRay_Tomography_Data_Owner_Fkey']
+            }, 'id']
         }, ['Beta_Cell', 'XRay_Tomography_Data_Dataset_FKey'],
         ['Beta_Cell', 'XRay_Tomography_Data_Biosample_FKey'], 'Description', 'url',
         ['Beta_Cell', 'XRay_Tomography_Data_File_Type_FKey'], 'filename',
-        ['Beta_Cell', 'XRay_Tomography_Data_File_Type_FKey'], 'length', 'md5',
-        'submitted_on'
+        ['Beta_Cell', 'XRay_Tomography_Data_File_Type_FKey'], 'length', 'md5', 'submitted_on'
     ],
     '*': [
         ['Beta_Cell', 'XRay_Tomography_Data_Key'], 'RCB',
         {
-            'source': [
-                {
-                    'outbound': ['Beta_Cell', 'XRay_Tomography_Data_Owner_Fkey']
-                }, 'id'
-            ]
+            'source': [{
+                'outbound': ['Beta_Cell', 'XRay_Tomography_Data_Owner_Fkey']
+            }, 'id']
         },
         {
-            'source': [
-                {
-                    'outbound': ['Beta_Cell', 'XRay_Tomography_Data_Dataset_FKey']
-                }, 'RID'
-            ],
+            'source': [{
+                'outbound': ['Beta_Cell', 'XRay_Tomography_Data_Dataset_FKey']
+            }, 'RID'],
             'markdown_name': 'Dataset'
         },
         {
-            'source': [
-                {
-                    'outbound': ['Beta_Cell', 'XRay_Tomography_Data_Biosample_FKey']
-                }, 'RID'
-            ],
+            'source': [{
+                'outbound': ['Beta_Cell', 'XRay_Tomography_Data_Biosample_FKey']
+            }, 'RID'],
             'markdown_name': 'Biosample'
-        }, 'filename', 'Description',
-        ['Beta_Cell', 'XRay_Tomography_Data_File_Type_FKey'], 'length', 'submitted_on'
+        }, 'filename', 'Description', ['Beta_Cell', 'XRay_Tomography_Data_File_Type_FKey'],
+        'length', 'submitted_on'
     ]
 }
 
@@ -357,52 +298,94 @@ table_annotations = {
 }
 table_comment = 'Table to hold X-Ray Tomography MRC files.'
 table_acls = {}
-table_acl_bindings = {}
+table_acl_bindings = {
+    'self_service_creator': {
+        'scope_acl': ['*'],
+        'projection': ['RCB'],
+        'types': ['update', 'delete'],
+        'projection_type': 'acl'
+    },
+    'self_service_owner': {
+        'scope_acl': ['*'],
+        'projection': ['Owner'],
+        'types': ['update', 'delete'],
+        'projection_type': 'acl'
+    }
+}
 
 key_defs = [
     em.Key.define(
-        ['RID', 'Dataset'],
+        ['Dataset', 'RID'],
         constraint_names=[('Beta_Cell', 'XRay_Tomography_Data_Dataset_RID_Key')],
         comment='RID and dataset must be distinct.',
     ),
-    em.Key.define(
-        ['RID'], constraint_names=[('Beta_Cell', 'XRay_Tomography_Data_RIDkey1')],
-    ),
+    em.Key.define(['RID'], constraint_names=[('Beta_Cell', 'XRay_Tomography_Data_RIDkey1')],
+                  ),
 ]
 
 fkey_defs = [
+    em.ForeignKey.define(
+        ['Biosample'],
+        'Beta_Cell',
+        'Biosample', ['RID'],
+        constraint_names=[('Beta_Cell', 'XRay_Tomography_Data_Biosample_FKey')],
+        annotations={chaise_tags.foreign_key: {
+            'domain_filter_pattern': 'Dataset={{{_Dataset}}}'
+        }},
+        acls={
+            'insert': ['*'],
+            'update': ['*']
+        },
+    ),
     em.ForeignKey.define(
         ['Dataset'],
         'Beta_Cell',
         'Dataset', ['RID'],
         constraint_names=[('Beta_Cell', 'XRay_Tomography_Data_Dataset_FKey')],
         annotations={
-            'tag:misd.isi.edu,2015:display': {},
-            'tag:isrd.isi.edu,2016:foreign-key': {
+            chaise_tags.display: {},
+            chaise_tags.foreign_key: {
                 'domain_filter_pattern': 'RID={{{$fkeys.Beta_Cell.XRay_Tomography_Data_Biosample_FKey.values._Dataset}}}'
             }
+        },
+        acls={
+            'insert': ['*'],
+            'update': ['*']
         },
         on_update='CASCADE',
         on_delete='RESTRICT',
         comment='Must be a valid reference to a dataset.',
     ),
     em.ForeignKey.define(
-        ['Biosample'],
-        'Beta_Cell',
-        'Biosample', ['RID'],
-        constraint_names=[('Beta_Cell', 'XRay_Tomography_Data_Biosample_FKey')],
-        annotations={
-            'tag:isrd.isi.edu,2016:foreign-key': {
-                'domain_filter_pattern': 'Dataset={{{_Dataset}}}'
-            }
-        },
-    ),
-    em.ForeignKey.define(
         ['Dataset', 'Biosample'],
         'Beta_Cell',
         'Biosample', ['Dataset', 'RID'],
         constraint_names=[('Beta_Cell', 'XRay_Tomography_Dataset_RID_FKey')],
+        acls={
+            'insert': ['*'],
+            'update': ['*']
+        },
         comment='Ensure that the dataset for the file is the same as for the biosample',
+    ),
+    em.ForeignKey.define(
+        ['Owner'],
+        'public',
+        'ermrest_client', ['id'],
+        constraint_names=[('Beta_Cell', 'XRay_Tomography_Data_Owner_Fkey')],
+        acls={
+            'insert': ['*'],
+            'update': ['*']
+        },
+    ),
+    em.ForeignKey.define(
+        ['RCB'],
+        'public',
+        'ermrest_client', ['id'],
+        constraint_names=[('Beta_Cell', 'XRay_Tomography_Data_RCB_Fkey')],
+        acls={
+            'insert': ['*'],
+            'update': ['*']
+        },
     ),
 ]
 
@@ -419,26 +402,16 @@ table_def = em.Table.define(
 )
 
 
-def main(
-    skip_args=False,
-    mode='annotations',
-    replace=False,
-    server='pbcconsortium.isrd.isi.edu',
-    catalog_id=1
-):
-
-    if not skip_args:
-        mode, replace, server, catalog_id = update_catalog.parse_args(
-            server, catalog_id, is_table=True
-        )
-    update_catalog.update_table(
-        mode, replace, server, catalog_id, schema_name, table_name, table_def,
-        column_defs, key_defs, fkey_defs, table_annotations, table_acls,
-        table_acl_bindings, table_comment, column_annotations, column_acls,
-        column_acl_bindings, column_comment
-    )
+def main(catalog, mode, replace=False):
+    updater = CatalogUpdater(catalog)
+    updater.update_table(mode, schema_name, table_def, replace=replace)
 
 
 if __name__ == "__main__":
-    main()
+    server = 'pbcconsortium.isrd.isi.edu'
+    catalog_id = 1
+    mode, replace, server, catalog_id = parse_args(server, catalog_id, is_table=True)
+    credential = get_credential(server)
+    catalog = ErmrestCatalog('https', server, catalog_id, credentials=credential)
+    main(catalog, mode, replace)
 

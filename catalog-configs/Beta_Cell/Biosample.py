@@ -3,22 +3,11 @@ from attrdict import AttrDict
 from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
 from deriva.core.ermrest_config import tag as chaise_tags
-from deriva.utils.catalog.manage import update_catalog
+from deriva.utils.catalog.manage.update_catalog import CatalogUpdater, parse_args
 
 table_name = 'Biosample'
 
 schema_name = 'Beta_Cell'
-
-groups = AttrDict(
-    {
-        'admins': 'https://auth.globus.org/80df6c56-a0e8-11e8-b9dc-0ada61684422',
-        'modelers': 'https://auth.globus.org/a45e5ba2-709f-11e8-a40d-0e847f194132',
-        'curators': 'https://auth.globus.org/da80b96c-edab-11e8-80e2-0a7c1eab007a',
-        'writers': 'https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764',
-        'readers': 'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a',
-        'isrd': 'https://auth.globus.org/3938e0d0-ed35-11e5-8641-22000ab4b42b'
-    }
-)
 
 column_annotations = {
     'RCB': {
@@ -60,17 +49,6 @@ column_acls = {}
 column_acl_bindings = {}
 
 column_defs = [
-    em.Column.define('RID', em.builtin_types['ermrest_rid'], nullok=False,
-                     ),
-    em.Column.define('RCT', em.builtin_types['ermrest_rct'], nullok=False,
-                     ),
-    em.Column.define('RMT', em.builtin_types['ermrest_rmt'], nullok=False,
-                     ),
-    em.Column.define(
-        'RCB', em.builtin_types['ermrest_rcb'], annotations=column_annotations['RCB'],
-    ),
-    em.Column.define('RMB', em.builtin_types['ermrest_rmb'],
-                     ),
     em.Column.define('Dataset', em.builtin_types['text'], nullok=False,
                      ),
     em.Column.define('Summary', em.builtin_types['text'],
@@ -78,34 +56,23 @@ column_defs = [
     em.Column.define('Collection_Date', em.builtin_types['date'],
                      ),
     em.Column.define(
-        'Sample_Position',
-        em.builtin_types['int2'],
-        comment=column_comment['Sample_Position'],
+        'Sample_Position', em.builtin_types['int2'], comment=column_comment['Sample_Position'],
+    ),
+    em.Column.define('Specimen', em.builtin_types['text'], comment=column_comment['Specimen'],
+                     ),
+    em.Column.define(
+        'Specimen_Type', em.builtin_types['text'], comment=column_comment['Specimen_Type'],
     ),
     em.Column.define(
-        'Specimen', em.builtin_types['text'], comment=column_comment['Specimen'],
+        'Experiment', em.builtin_types['ermrest_rid'], comment=column_comment['Experiment'],
     ),
+    em.Column.define('Protocol', em.builtin_types['text'], comment=column_comment['Protocol'],
+                     ),
     em.Column.define(
-        'Specimen_Type',
-        em.builtin_types['text'],
-        comment=column_comment['Specimen_Type'],
+        'Container_Id', em.builtin_types['int2'], comment=column_comment['Container_Id'],
     ),
-    em.Column.define(
-        'Experiment',
-        em.builtin_types['ermrest_rid'],
-        comment=column_comment['Experiment'],
-    ),
-    em.Column.define(
-        'Protocol', em.builtin_types['text'], comment=column_comment['Protocol'],
-    ),
-    em.Column.define(
-        'Container_Id',
-        em.builtin_types['int2'],
-        comment=column_comment['Container_Id'],
-    ),
-    em.Column.define(
-        'Owner', em.builtin_types['text'], annotations=column_annotations['Owner'],
-    ),
+    em.Column.define('Owner', em.builtin_types['text'], annotations=column_annotations['Owner'],
+                     ),
 ]
 
 display = {}
@@ -140,11 +107,8 @@ visible_columns = {
                         'outbound': ['Beta_Cell', 'Biosample_Protocol_FKey']
                     }, {
                         'inbound': ['Beta_Cell', 'Protocol_Step_Protocol_FKey']
-                    },
-                    {
-                        'outbound': [
-                            'Beta_Cell', 'Protocol_Step_Cellular_Location_Term_FKey'
-                        ]
+                    }, {
+                        'outbound': ['Beta_Cell', 'Protocol_Step_Cellular_Location_Term_FKey']
                     }, 'name'
                 ],
                 'markdown_name': 'Cellular Location',
@@ -159,16 +123,10 @@ visible_columns = {
                         'outbound': ['Beta_Cell', 'Specimen_Protocol_FKey']
                     }, {
                         'inbound': ['Beta_Cell', 'Protocol_Step_Protocol_FKey']
-                    },
-                    {
-                        'inbound': [
-                            'Beta_Cell', 'Protocol_Step_Additive_Term_Protocol_Step_FKey'
-                        ]
-                    },
-                    {
-                        'outbound': [
-                            'Beta_Cell', 'Protocol_Step_Additive_Term_Additive_Term_FKey'
-                        ]
+                    }, {
+                        'inbound': ['Beta_Cell', 'Protocol_Step_Additive_Term_Protocol_Step_FKey']
+                    }, {
+                        'outbound': ['Beta_Cell', 'Protocol_Step_Additive_Term_Additive_Term_FKey']
                     }, 'RID'
                 ],
                 'aggregate': 'array',
@@ -187,11 +145,8 @@ visible_columns = {
                         'outbound': ['Beta_Cell', 'Specimen_Protocol_FKey']
                     }, {
                         'inbound': ['Beta_Cell', 'Protocol_Step_Protocol_FKey']
-                    },
-                    {
-                        'inbound': [
-                            'Beta_Cell', 'Protocol_Step_Additive_Term_Protocol_Step_FKey'
-                        ]
+                    }, {
+                        'inbound': ['Beta_Cell', 'Protocol_Step_Additive_Term_Protocol_Step_FKey']
                     }, 'Additive_Concentration'
                 ],
                 'aggregate': 'array'
@@ -216,8 +171,7 @@ visible_columns = {
                 'source': [{
                     'inbound': ['isa', 'mesh_data_biosample_fkey']
                 }, 'url']
-            },
-            {
+            }, {
                 'source': [
                     {
                         'inbound': ['Beta_Cell', 'XRay_Tomography_Data_Biosample_FKey']
@@ -227,18 +181,13 @@ visible_columns = {
             {
                 'source': [
                     {
-                        'inbound': [
-                            'Beta_Cell', 'Processed_Tomography_Data_Biosample_FKey'
-                        ]
+                        'inbound': ['Beta_Cell', 'Processed_Tomography_Data_Biosample_FKey']
                     }, 'RID'
                 ]
-            },
-            {
-                'source': [
-                    {
-                        'inbound': ['Beta_Cell', 'Mass_Spec_Data_Biosample_FKey']
-                    }, 'RID'
-                ]
+            }, {
+                'source': [{
+                    'inbound': ['Beta_Cell', 'Mass_Spec_Data_Biosample_FKey']
+                }, 'RID']
             }, {
                 'ux_mode': 'choices',
                 'source': 'Container_Id',
@@ -263,15 +212,12 @@ visible_columns = {
                 'outbound': ['Beta_Cell', 'Biosample_Experiment_FKey']
             }, 'RID'],
             'markdown_name': 'Experiment'
-        }, ['Beta_Cell', 'Biosample_Protocol_FKey'],
-        ['Beta_Cell', 'Biosample_Specimen_FKey'],
+        }, ['Beta_Cell', 'Biosample_Protocol_FKey'], ['Beta_Cell', 'Biosample_Specimen_FKey'],
         ['Beta_Cell', 'Biosample_Specimen_Type_FKey'], 'Container_Id',
         {
-            'source': [
-                {
-                    'outbound': ['Beta_Cell', 'Biosample_Protocol_FKey']
-                }, 'Description'
-            ]
+            'source': [{
+                'outbound': ['Beta_Cell', 'Biosample_Protocol_FKey']
+            }, 'Description']
         }, 'Sample_Position', 'collection_date'
     ],
     '*': [
@@ -281,8 +227,7 @@ visible_columns = {
                 'outbound': ['Beta_Cell', 'Biosample_Dataset_FKey']
             }, 'RID'],
             'markdown_name': 'Dataset'
-        }, 'Summary',
-        {
+        }, 'Summary', {
             'source': [{
                 'outbound': ['Beta_Cell', 'Biosample_Specimen_FKey']
             }, 'RID']
@@ -314,16 +259,10 @@ visible_columns = {
                     'outbound': ['Beta_Cell', 'Specimen_Protocol_FKey']
                 }, {
                     'inbound': ['Beta_Cell', 'Protocol_Step_Protocol_FKey']
-                },
-                {
-                    'inbound': [
-                        'Beta_Cell', 'Protocol_Step_Additive_Term_Protocol_Step_FKey'
-                    ]
-                },
-                {
-                    'outbound': [
-                        'Beta_Cell', 'Protocol_Step_Additive_Term_Additive_Term_FKey'
-                    ]
+                }, {
+                    'inbound': ['Beta_Cell', 'Protocol_Step_Additive_Term_Protocol_Step_FKey']
+                }, {
+                    'outbound': ['Beta_Cell', 'Protocol_Step_Additive_Term_Additive_Term_FKey']
                 }, 'RID'
             ],
             'aggregate': 'array',
@@ -339,11 +278,8 @@ visible_columns = {
                     'outbound': ['Beta_Cell', 'Specimen_Protocol_FKey']
                 }, {
                     'inbound': ['Beta_Cell', 'Protocol_Step_Protocol_FKey']
-                },
-                {
-                    'inbound': [
-                        'Beta_Cell', 'Protocol_Step_Additive_Term_Protocol_Step_FKey'
-                    ]
+                }, {
+                    'inbound': ['Beta_Cell', 'Protocol_Step_Additive_Term_Protocol_Step_FKey']
                 }, 'Additive_Concentration'
             ],
             'aggregate': 'array',
@@ -373,26 +309,22 @@ visible_columns = {
                 }, {
                     'inbound': ['Beta_Cell', 'Protocol_Step_Protocol_FKey']
                 }, {
-                    'outbound': [
-                        'Beta_Cell', 'Protocol_Step_Cellular_Location_Term_FKey'
-                    ]
+                    'outbound': ['Beta_Cell', 'Protocol_Step_Cellular_Location_Term_FKey']
                 }, 'RID'
             ],
             'markdown_name': 'Cellular Location',
             'entity': True
-        }, ['Beta_Cell', 'Biosample_Specimen_Type_FKey'], 'Container_Id',
-        'Sample_Position', 'Collection_Date'
+        }, ['Beta_Cell', 'Biosample_Specimen_Type_FKey'], 'Container_Id', 'Sample_Position',
+        'Collection_Date'
     ]
 }
 
 visible_foreign_keys = {
     '*': [
         {
-            'source': [
-                {
-                    'inbound': ['Beta_Cell', 'XRay_Tomography_Data_Biosample_FKey']
-                }, 'RID'
-            ]
+            'source': [{
+                'inbound': ['Beta_Cell', 'XRay_Tomography_Data_Biosample_FKey']
+            }, 'RID']
         },
         {
             'source': [
@@ -401,11 +333,9 @@ visible_foreign_keys = {
                 }, 'RID'
             ]
         }, {
-            'source': [
-                {
-                    'inbound': ['Beta_Cell', 'Mass_Spec_Data_Biosample_FKey']
-                }, 'RID'
-            ]
+            'source': [{
+                'inbound': ['Beta_Cell', 'Mass_Spec_Data_Biosample_FKey']
+            }, 'RID']
         }, ['viz', 'model_biosample_fkey']
     ]
 }
@@ -533,58 +463,59 @@ table_annotations = {
 }
 table_comment = None
 table_acls = {}
-table_acl_bindings = {}
+table_acl_bindings = {
+    'self_service_creator': {
+        'scope_acl': ['*'],
+        'projection': ['RCB'],
+        'types': ['update', 'delete'],
+        'projection_type': 'acl'
+    },
+    'self_service_owner': {
+        'scope_acl': ['*'],
+        'projection': ['Owner'],
+        'types': ['update', 'delete'],
+        'projection_type': 'acl'
+    }
+}
 
 key_defs = [
     em.Key.define(
         ['RID', 'Dataset'],
         constraint_names=[('Beta_Cell', 'Biosample_Dataset_RID_Key')],
-        annotations={'tag:misd.isi.edu,2015:display': {}},
+        annotations={chaise_tags.display: {}},
     ),
     em.Key.define(
         ['RID'],
         constraint_names=[('Beta_Cell', 'Biosample_Key')],
-        annotations={'tag:misd.isi.edu,2015:display': {}},
+        annotations={chaise_tags.display: {}},
     ),
 ]
 
 fkey_defs = [
-    em.ForeignKey.define(
-        ['Dataset'],
-        'Beta_Cell',
-        'Dataset', ['RID'],
-        constraint_names=[('Beta_Cell', 'Biosample_Dataset_FKey')],
-        annotations={
-            'tag:misd.isi.edu,2015:display': {},
-            'tag:isrd.isi.edu,2016:foreign-key': {
-                'domain_filter_pattern': 'RID={{{$fkeys.Beta_Cell.Biosample_Experiment_FKey.values._Dataset}}}'
-            }
-        },
-        on_update='CASCADE',
-        on_delete='RESTRICT',
-    ),
-    em.ForeignKey.define(
-        ['Dataset', 'Experiment'],
-        'Beta_Cell',
-        'Experiment', ['Dataset', 'RID'],
-        constraint_names=[('Beta_Cell', 'Biosample_Experiment_Dataset_FKey')],
-    ),
-    em.ForeignKey.define(
-        ['Protocol'],
-        'Beta_Cell',
-        'Protocol', ['RID'],
-        constraint_names=[('Beta_Cell', 'Biosample_Protocol_FKey')],
-    ),
     em.ForeignKey.define(
         ['Experiment'],
         'Beta_Cell',
         'Experiment', ['RID'],
         constraint_names=[('Beta_Cell', 'Biosample_Experiment_FKey')],
         annotations={
-            'tag:misd.isi.edu,2015:display': {},
-            'tag:isrd.isi.edu,2016:foreign-key': {
+            chaise_tags.display: {},
+            chaise_tags.foreign_key: {
                 'domain_filter_pattern': 'Dataset={{{_Dataset}}}'
             }
+        },
+        acls={
+            'insert': ['*'],
+            'update': ['*']
+        },
+    ),
+    em.ForeignKey.define(
+        ['Owner'],
+        'public',
+        'ermrest_client', ['id'],
+        constraint_names=[('Beta_Cell', 'Biosample_Owner_Fkey')],
+        acls={
+            'insert': ['*'],
+            'update': ['*']
         },
     ),
     em.ForeignKey.define(
@@ -592,6 +523,69 @@ fkey_defs = [
         'Beta_Cell',
         'Specimen', ['RID'],
         constraint_names=[('Beta_Cell', 'Biosample_Specimen_FKey')],
+        acls={
+            'insert': ['*'],
+            'update': ['*']
+        },
+    ),
+    em.ForeignKey.define(
+        ['Protocol'],
+        'Beta_Cell',
+        'Protocol', ['RID'],
+        constraint_names=[('Beta_Cell', 'Biosample_Protocol_FKey')],
+        acls={
+            'insert': ['*'],
+            'update': ['*']
+        },
+    ),
+    em.ForeignKey.define(
+        ['Dataset'],
+        'Beta_Cell',
+        'Dataset', ['RID'],
+        constraint_names=[('Beta_Cell', 'Biosample_Dataset_FKey')],
+        annotations={
+            chaise_tags.display: {},
+            chaise_tags.foreign_key: {
+                'domain_filter_pattern': 'RID={{{$fkeys.Beta_Cell.Biosample_Experiment_FKey.values._Dataset}}}'
+            }
+        },
+        acls={
+            'insert': ['*'],
+            'update': ['*']
+        },
+        on_update='CASCADE',
+        on_delete='RESTRICT',
+    ),
+    em.ForeignKey.define(
+        ['Experiment', 'Dataset'],
+        'Beta_Cell',
+        'Experiment', ['RID', 'Dataset'],
+        constraint_names=[('Beta_Cell', 'Biosample_Experiment_Dataset_FKey')],
+        acls={
+            'insert': ['*'],
+            'update': ['*']
+        },
+    ),
+    em.ForeignKey.define(
+        ['RCB'],
+        'public',
+        'ermrest_client', ['id'],
+        constraint_names=[('Beta_Cell', 'Biosample_RCB_Fkey')],
+        acls={
+            'insert': ['*'],
+            'update': ['*']
+        },
+    ),
+    em.ForeignKey.define(
+        ['Specimen_Type'],
+        'vocab',
+        'specimen_type_terms', ['id'],
+        constraint_names=[('Beta_Cell', 'Biosample_Specimen_Type_FKey')],
+        acls={
+            'insert': ['*'],
+            'update': ['*']
+        },
+        comment='Must be a valid reference to a specimen type.',
     ),
 ]
 
@@ -608,26 +602,16 @@ table_def = em.Table.define(
 )
 
 
-def main(
-    skip_args=False,
-    mode='annotations',
-    replace=False,
-    server='pbcconsortium.isrd.isi.edu',
-    catalog_id=1
-):
-
-    if not skip_args:
-        mode, replace, server, catalog_id = update_catalog.parse_args(
-            server, catalog_id, is_table=True
-        )
-    update_catalog.update_table(
-        mode, replace, server, catalog_id, schema_name, table_name, table_def,
-        column_defs, key_defs, fkey_defs, table_annotations, table_acls,
-        table_acl_bindings, table_comment, column_annotations, column_acls,
-        column_acl_bindings, column_comment
-    )
+def main(catalog, mode, replace=False):
+    updater = CatalogUpdater(catalog)
+    updater.update_table(mode, schema_name, table_def, replace=replace)
 
 
 if __name__ == "__main__":
-    main()
+    server = 'pbcconsortium.isrd.isi.edu'
+    catalog_id = 1
+    mode, replace, server, catalog_id = parse_args(server, catalog_id, is_table=True)
+    credential = get_credential(server)
+    catalog = ErmrestCatalog('https', server, catalog_id, credentials=credential)
+    main(catalog, mode, replace)
 

@@ -3,22 +3,11 @@ from attrdict import AttrDict
 from deriva.core import ErmrestCatalog, get_credential, DerivaPathError
 import deriva.core.ermrest_model as em
 from deriva.core.ermrest_config import tag as chaise_tags
-from deriva.utils.catalog.manage import update_catalog
+from deriva.utils.catalog.manage.update_catalog import CatalogUpdater, parse_args
 
 table_name = 'imaging_data'
 
 schema_name = 'isa'
-
-groups = AttrDict(
-    {
-        'admins': 'https://auth.globus.org/80df6c56-a0e8-11e8-b9dc-0ada61684422',
-        'modelers': 'https://auth.globus.org/a45e5ba2-709f-11e8-a40d-0e847f194132',
-        'curators': 'https://auth.globus.org/da80b96c-edab-11e8-80e2-0a7c1eab007a',
-        'writers': 'https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764',
-        'readers': 'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a',
-        'isrd': 'https://auth.globus.org/3938e0d0-ed35-11e5-8641-22000ab4b42b'
-    }
-)
 
 column_annotations = {
     'RID': {},
@@ -69,12 +58,6 @@ column_acls = {}
 column_acl_bindings = {}
 
 column_defs = [
-    em.Column.define(
-        'RID',
-        em.builtin_types['ermrest_rid'],
-        nullok=False,
-        comment=column_comment['RID'],
-    ),
     em.Column.define('dataset', em.builtin_types['text'], nullok=False,
                      ),
     em.Column.define('anatomy', em.builtin_types['text'],
@@ -82,10 +65,7 @@ column_defs = [
     em.Column.define('description', em.builtin_types['markdown'],
                      ),
     em.Column.define(
-        'url',
-        em.builtin_types['text'],
-        nullok=False,
-        annotations=column_annotations['url'],
+        'url', em.builtin_types['text'], nullok=False, annotations=column_annotations['url'],
     ),
     em.Column.define(
         'filename',
@@ -109,24 +89,6 @@ column_defs = [
     ),
     em.Column.define('md5', em.builtin_types['text'], nullok=False,
                      ),
-    em.Column.define(
-        'RCB', em.builtin_types['ermrest_rcb'], comment=column_comment['RCB'],
-    ),
-    em.Column.define(
-        'RMB', em.builtin_types['ermrest_rmb'], comment=column_comment['RMB'],
-    ),
-    em.Column.define(
-        'RCT',
-        em.builtin_types['ermrest_rct'],
-        nullok=False,
-        comment=column_comment['RCT'],
-    ),
-    em.Column.define(
-        'RMT',
-        em.builtin_types['ermrest_rmt'],
-        nullok=False,
-        comment=column_comment['RMT'],
-    ),
     em.Column.define('file_id', em.builtin_types['int4'],
                      ),
     em.Column.define('replicate', em.builtin_types['text'],
@@ -167,11 +129,9 @@ visible_columns = {
                 'entity': True
             },
             {
-                'source': [
-                    {
-                        'outbound': ['isa', 'imaging_data_equipment_model_fkey']
-                    }, 'id'
-                ],
+                'source': [{
+                    'outbound': ['isa', 'imaging_data_equipment_model_fkey']
+                }, 'id'],
                 'open': True,
                 'markdown_name': 'Equipment Model',
                 'entity': True
@@ -193,30 +153,25 @@ visible_columns = {
         ]
     },
     'entry': [
-        'RID', ['isa', 'imaging_data_replicate_fkey'],
-        ['isa', 'imaging_data_anatomy_fkey'], ['isa', 'imaging_data_device_fkey'],
+        'RID', ['isa', 'imaging_data_replicate_fkey'], ['isa', 'imaging_data_anatomy_fkey'],
+        ['isa', 'imaging_data_device_fkey'],
         ['isa', 'imaging_data_equipment_model_fkey'], 'description', 'url', 'filename',
         ['isa', 'imaging_data_file_type_fkey'], 'byte_count', 'md5', 'submitted_on'
     ],
     'detailed': [
         ['isa', 'imaging_data_pkey'], ['isa', 'imaging_data_dataset_fkey'],
-        ['isa', 'imaging_data_replicate_fkey'], ['isa',
-                                                 'imaging_data_device_fkey'], 'filename',
+        ['isa', 'imaging_data_replicate_fkey'], ['isa', 'imaging_data_device_fkey'], 'filename',
         ['isa', 'imaging_data_file_type_fkey'], 'byte_count', 'md5', 'submitted_on'
     ],
     'compact': [
-        ['isa', 'imaging_data_pkey'], 'replicate_fkey', 'url', 'file_type', 'byte_count',
-        'md5', 'submitted_on'
+        ['isa', 'imaging_data_pkey'], 'replicate_fkey', 'url', 'file_type', 'byte_count', 'md5',
+        'submitted_on'
     ]
 }
 
 visible_foreign_keys = {
-    'detailed': [
-        ['isa', 'thumbnail_thumbnail_of_fkey'], ['isa', 'mesh_data_derived_from_fkey']
-    ],
-    'entry': [
-        ['isa', 'thumbnail_thumbnail_of_fkey'], ['isa', 'mesh_data_derived_from_fkey']
-    ]
+    'detailed': [['isa', 'thumbnail_thumbnail_of_fkey'], ['isa', 'mesh_data_derived_from_fkey']],
+    'entry': [['isa', 'thumbnail_thumbnail_of_fkey'], ['isa', 'mesh_data_derived_from_fkey']]
 }
 
 table_display = {'row_name': {'row_markdown_pattern': '{{{filename}}}'}}
@@ -236,9 +191,29 @@ table_comment = None
 table_acls = {}
 table_acl_bindings = {}
 
-key_defs = []
+key_defs = [
+    em.Key.define(['url'], constraint_names=[('isa', 'imaging_data_url_key')],
+                  ),
+    em.Key.define(['dataset', 'RID'], constraint_names=[('isa', 'imaging_data_dataset_RID_key')],
+                  ),
+    em.Key.define(['RID'], constraint_names=[('isa', 'imaging_data_pkey')],
+                  ),
+]
 
-fkey_defs = []
+fkey_defs = [
+    em.ForeignKey.define(
+        ['dataset'],
+        'Beta_Cell',
+        'Dataset', ['RID'],
+        constraint_names=[('isa', 'imaging_data_dataset_fkey')],
+        acls={
+            'insert': ['*'],
+            'update': ['*']
+        },
+        on_update='CASCADE',
+        on_delete='RESTRICT',
+    ),
+]
 
 table_def = em.Table.define(
     table_name,
@@ -253,26 +228,16 @@ table_def = em.Table.define(
 )
 
 
-def main(
-    skip_args=False,
-    mode='annotations',
-    replace=False,
-    server='pbcconsortium.isrd.isi.edu',
-    catalog_id=1
-):
-
-    if not skip_args:
-        mode, replace, server, catalog_id = update_catalog.parse_args(
-            server, catalog_id, is_table=True
-        )
-    update_catalog.update_table(
-        mode, replace, server, catalog_id, schema_name, table_name, table_def,
-        column_defs, key_defs, fkey_defs, table_annotations, table_acls,
-        table_acl_bindings, table_comment, column_annotations, column_acls,
-        column_acl_bindings, column_comment
-    )
+def main(catalog, mode, replace=False):
+    updater = CatalogUpdater(catalog)
+    updater.update_table(mode, schema_name, table_def, replace=replace)
 
 
 if __name__ == "__main__":
-    main()
+    server = 'pbcconsortium.isrd.isi.edu'
+    catalog_id = 1
+    mode, replace, server, catalog_id = parse_args(server, catalog_id, is_table=True)
+    credential = get_credential(server)
+    catalog = ErmrestCatalog('https', server, catalog_id, credentials=credential)
+    main(catalog, mode, replace)
 
