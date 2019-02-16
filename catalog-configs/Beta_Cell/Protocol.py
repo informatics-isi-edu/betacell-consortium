@@ -5,6 +5,15 @@ import deriva.core.ermrest_model as em
 from deriva.core.ermrest_config import tag as chaise_tags
 from deriva.utils.catalog.manage.update_catalog import CatalogUpdater, parse_args
 
+groups = {
+    'pbcconsortium-reader': 'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a',
+    'pbcconsortium-curator': 'https://auth.globus.org/da80b96c-edab-11e8-80e2-0a7c1eab007a',
+    'pbcconsortium-writer': 'https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764',
+    'pbcconsortium-admin': 'https://auth.globus.org/80df6c56-a0e8-11e8-b9dc-0ada61684422',
+    'isrd-staff': 'https://auth.globus.org/176baec4-ed26-11e5-8e88-22000ab4b42b',
+    'isrd-testers': 'https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d'
+}
+
 table_name = 'Protocol'
 
 schema_name = 'Beta_Cell'
@@ -52,6 +61,48 @@ column_defs = [
 ]
 
 visible_columns = {
+    '*': [
+        'RID', 'RCB', {
+            'source': [{
+                'outbound': ['Beta_Cell', 'Protocol_Owner_Fkey']
+            }, 'id']
+        }, ['Beta_Cell', 'Protocol_Protocol_Type_FKey'],
+        {
+            'entity': True,
+            'source': [
+                {
+                    'inbound': ['Beta_Cell', 'Protocol_Step_Protocol_FKey']
+                }, {
+                    'inbound': ['Beta_Cell', 'Protocol_Step_Additive_Term_Protocol_Step_FKey']
+                }, {
+                    'outbound': ['Beta_Cell', 'Protocol_Step_Additive_Term_Additive_Term_FKey']
+                }, 'RID'
+            ],
+            'comment': 'Additive used in protocol step',
+            'aggregate': 'array',
+            'markdown_name': 'Additive'
+        },
+        {
+            'entity': True,
+            'source': [
+                {
+                    'inbound': ['Beta_Cell', 'Protocol_Step_Protocol_FKey']
+                }, {
+                    'inbound': ['Beta_Cell', 'Protocol_Step_Additive_Term_Protocol_Step_FKey']
+                }, 'Additive_Concentration'
+            ],
+            'comment': 'Additive used in protocol step',
+            'aggregate': 'array',
+            'markdown_name': 'Concentration'
+        },
+        {
+            'source': [{
+                'inbound': ['Beta_Cell', 'Protocol_Step_Protocol_FKey']
+            }, 'Duration'],
+            'ux_mode': 'choices',
+            'aggregate': 'array'
+        }, 'Description'
+    ],
     'filter': {
         'and': [
             {
@@ -62,7 +113,7 @@ visible_columns = {
                 }, 'RID']
             },
             {
-                'comment': 'Additive used in protocol step',
+                'entity': True,
                 'source': [
                     {
                         'inbound': ['Beta_Cell', 'Protocol_Step_Protocol_FKey']
@@ -72,15 +123,12 @@ visible_columns = {
                         'outbound': ['Beta_Cell', 'Protocol_Step_Additive_Term_Additive_Term_FKey']
                     }, 'RID'
                 ],
+                'comment': 'Additive used in protocol step',
                 'aggregate': 'array',
-                'markdown_name': 'Additive',
-                'entity': True
+                'markdown_name': 'Additive'
             },
             {
-                'comment': 'Additive used in protocol step',
-                'markdown_name': 'Concentration',
                 'entity': True,
-                'ux_mode': 'choices',
                 'source': [
                     {
                         'inbound': ['Beta_Cell', 'Protocol_Step_Protocol_FKey']
@@ -88,60 +136,21 @@ visible_columns = {
                         'inbound': ['Beta_Cell', 'Protocol_Step_Additive_Term_Protocol_Step_FKey']
                     }, 'Additive_Concentration'
                 ],
-                'aggregate': 'array'
+                'comment': 'Additive used in protocol step',
+                'ux_mode': 'choices',
+                'aggregate': 'array',
+                'markdown_name': 'Concentration'
             },
             {
-                'ux_mode': 'choices',
                 'source': [{
                     'inbound': ['Beta_Cell', 'Protocol_Step_Protocol_FKey']
                 }, 'Duration'],
+                'ux_mode': 'choices',
                 'aggregate': 'array',
                 'markdown_name': 'Duration'
             }, 'Description'
         ]
-    },
-    '*': [
-        'RID', 'RCB', {
-            'source': [{
-                'outbound': ['Beta_Cell', 'Protocol_Owner_Fkey']
-            }, 'id']
-        }, ['Beta_Cell', 'Protocol_Protocol_Type_FKey'],
-        {
-            'comment': 'Additive used in protocol step',
-            'source': [
-                {
-                    'inbound': ['Beta_Cell', 'Protocol_Step_Protocol_FKey']
-                }, {
-                    'inbound': ['Beta_Cell', 'Protocol_Step_Additive_Term_Protocol_Step_FKey']
-                }, {
-                    'outbound': ['Beta_Cell', 'Protocol_Step_Additive_Term_Additive_Term_FKey']
-                }, 'RID'
-            ],
-            'aggregate': 'array',
-            'markdown_name': 'Additive',
-            'entity': True
-        },
-        {
-            'comment': 'Additive used in protocol step',
-            'source': [
-                {
-                    'inbound': ['Beta_Cell', 'Protocol_Step_Protocol_FKey']
-                }, {
-                    'inbound': ['Beta_Cell', 'Protocol_Step_Additive_Term_Protocol_Step_FKey']
-                }, 'Additive_Concentration'
-            ],
-            'aggregate': 'array',
-            'markdown_name': 'Concentration',
-            'entity': True
-        },
-        {
-            'ux_mode': 'choices',
-            'source': [{
-                'inbound': ['Beta_Cell', 'Protocol_Step_Protocol_FKey']
-            }, 'Duration'],
-            'aggregate': 'array'
-        }, 'Description'
-    ]
+    }
 }
 
 visible_foreign_keys = {
@@ -156,22 +165,25 @@ table_display = {'row_name': {'row_markdown_pattern': '{{#RID}}Protocol:{{Descri
 
 table_annotations = {
     chaise_tags.table_display: table_display,
-    chaise_tags.visible_foreign_keys: visible_foreign_keys,
     chaise_tags.visible_columns: visible_columns,
+    chaise_tags.visible_foreign_keys: visible_foreign_keys,
 }
+
 table_comment = 'Table containing names of Beta Cell protocols'
+
 table_acls = {}
+
 table_acl_bindings = {
-    'self_service_creator': {
-        'scope_acl': ['*'],
-        'projection': ['RCB'],
-        'types': ['update', 'delete'],
-        'projection_type': 'acl'
-    },
     'self_service_owner': {
+        'types': ['update', 'delete'],
         'scope_acl': ['*'],
         'projection': ['Owner'],
+        'projection_type': 'acl'
+    },
+    'self_service_creator': {
         'types': ['update', 'delete'],
+        'scope_acl': ['*'],
+        'projection': ['RCB'],
         'projection_type': 'acl'
     }
 }
@@ -179,26 +191,6 @@ table_acl_bindings = {
 key_defs = [em.Key.define(['RID'], constraint_names=[('Beta_Cell', 'Protocol_RIDkey1')], ), ]
 
 fkey_defs = [
-    em.ForeignKey.define(
-        ['RCB'],
-        'public',
-        'ermrest_client', ['id'],
-        constraint_names=[('Beta_Cell', 'Protocol_RCB_Fkey')],
-        acls={
-            'insert': ['*'],
-            'update': ['*']
-        },
-    ),
-    em.ForeignKey.define(
-        ['Owner'],
-        'public',
-        'ermrest_client', ['id'],
-        constraint_names=[('Beta_Cell', 'Protocol_Owner_Fkey')],
-        acls={
-            'insert': ['*'],
-            'update': ['*']
-        },
-    ),
     em.ForeignKey.define(
         ['Type'],
         'Beta_Cell',
@@ -209,6 +201,18 @@ fkey_defs = [
             'update': ['*']
         },
         comment='Must be a protocol type.',
+    ),
+    em.ForeignKey.define(
+        ['RCB'],
+        'public',
+        'ERMrest_Client', ['ID'],
+        constraint_names=[('Beta_Cell', 'Protocol_RCB_Fkey')],
+    ),
+    em.ForeignKey.define(
+        ['Owner'],
+        'public',
+        'ERMrest_Client', ['ID'],
+        constraint_names=[('Beta_Cell', 'Protocol_Owner_Fkey')],
     ),
 ]
 
@@ -231,10 +235,10 @@ def main(catalog, mode, replace=False):
 
 
 if __name__ == "__main__":
-    server = 'pbcconsortium.isrd.isi.edu'
+    host = 'pbcconsortium.isrd.isi.edu'
     catalog_id = 1
-    mode, replace, server, catalog_id = parse_args(server, catalog_id, is_table=True)
-    credential = get_credential(server)
-    catalog = ErmrestCatalog('https', server, catalog_id, credentials=credential)
+    mode, replace, host, catalog_id = parse_args(host, catalog_id, is_table=True)
+    credential = get_credential(host)
+    catalog = ErmrestCatalog('https', host, catalog_id, credentials=credential)
     main(catalog, mode, replace)
 

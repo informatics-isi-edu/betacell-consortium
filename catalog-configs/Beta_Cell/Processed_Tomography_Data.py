@@ -5,6 +5,15 @@ import deriva.core.ermrest_model as em
 from deriva.core.ermrest_config import tag as chaise_tags
 from deriva.utils.catalog.manage.update_catalog import CatalogUpdater, parse_args
 
+groups = {
+    'pbcconsortium-reader': 'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a',
+    'pbcconsortium-curator': 'https://auth.globus.org/da80b96c-edab-11e8-80e2-0a7c1eab007a',
+    'pbcconsortium-writer': 'https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764',
+    'pbcconsortium-admin': 'https://auth.globus.org/80df6c56-a0e8-11e8-b9dc-0ada61684422',
+    'isrd-staff': 'https://auth.globus.org/176baec4-ed26-11e5-8e88-22000ab4b42b',
+    'isrd-testers': 'https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d'
+}
+
 table_name = 'Processed_Tomography_Data'
 
 schema_name = 'Beta_Cell'
@@ -47,10 +56,10 @@ column_annotations = {
     },
     'url': {
         chaise_tags.asset: {
-            'filename_column': 'filename',
-            'byte_count_column': 'length',
+            'md5': 'md5',
             'url_pattern': '/hatrac/commons/data/{{{_Dataset}}}/{{{_Biosample}}}/{{{filename}}}',
-            'md5': 'md5'
+            'filename_column': 'filename',
+            'byte_count_column': 'length'
         },
         chaise_tags.column_display: {
             'compact': {
@@ -119,11 +128,30 @@ column_defs = [
 ]
 
 visible_columns = {
+    'entry': [
+        'RID',
+        {
+            'source': [{
+                'outbound': ['Beta_Cell', 'Processed_Tomography_Data_Owner_Fkey']
+            }, 'id']
+        },
+        {
+            'source': [
+                {
+                    'outbound': ['Beta_Cell', 'Processed_Tomography_Data_Dataset_FKey']
+                }, 'RID'
+            ],
+            'markdown_name': 'Dataset'
+        }, ['Beta_Cell', 'Processed_Tomography_Data_Biosample_FKey'],
+        ['Beta_Cell', 'Processed_Tomography_Data_Process_FKey'],
+        ['Beta_Cell', 'Processed_Tomography_Data_Output_Type_FKey'],
+        ['Beta_Cell', 'Processed_Tomography_Data_File_Type_FKey'], 'url'
+    ],
     'filter': {
         'and': [
             {
-                'source': 'RID',
-                'entity': True
+                'entity': True,
+                'source': 'RID'
             },
             {
                 'source': [
@@ -148,7 +176,7 @@ visible_columns = {
                 'markdown_name': 'Cell Line'
             },
             {
-                'comment': 'Additives used to treat the cell line for the experiment',
+                'entity': True,
                 'source': [
                     {
                         'outbound': ['Beta_Cell', 'Processed_Tomography_Data_Biosample_FKey']
@@ -164,15 +192,12 @@ visible_columns = {
                         'outbound': ['Beta_Cell', 'Protocol_Step_Additive_Term_Additive_Term_FKey']
                     }, 'RID'
                 ],
+                'comment': 'Additives used to treat the cell line for the experiment',
                 'aggregate': 'array',
-                'markdown_name': 'Additive',
-                'entity': True
+                'markdown_name': 'Additive'
             },
             {
-                'comment': 'Concentration of additive applied to cell line in mM',
-                'markdown_name': 'Concentration',
                 'entity': True,
-                'ux_mode': 'choices',
                 'source': [
                     {
                         'outbound': ['Beta_Cell', 'Processed_Tomography_Data_Biosample_FKey']
@@ -186,13 +211,13 @@ visible_columns = {
                         'inbound': ['Beta_Cell', 'Protocol_Step_Additive_Term_Protocol_Step_FKey']
                     }, 'Additive_Concentration'
                 ],
-                'aggregate': 'array'
+                'comment': 'Concentration of additive applied to cell line in mM',
+                'ux_mode': 'choices',
+                'aggregate': 'array',
+                'markdown_name': 'Concentration'
             },
             {
-                'comment': 'Duration in minutes of additive applied to cell line in ',
-                'markdown_name': 'Duration',
                 'entity': True,
-                'ux_mode': 'choices',
                 'source': [
                     {
                         'outbound': ['Beta_Cell', 'Processed_Tomography_Data_Biosample_FKey']
@@ -204,53 +229,41 @@ visible_columns = {
                         'inbound': ['Beta_Cell', 'Protocol_Step_Protocol_FKey']
                     }, 'Duration'
                 ],
-                'aggregate': 'array'
+                'comment': 'Duration in minutes of additive applied to cell line in ',
+                'ux_mode': 'choices',
+                'aggregate': 'array',
+                'markdown_name': 'Duration'
             }, {
-                'source': 'filename',
                 'open': False,
-                'markdown_name': 'File Name',
-                'entity': True
+                'entity': True,
+                'source': 'filename',
+                'markdown_name': 'File Name'
             },
             {
+                'open': True,
+                'entity': True,
                 'source': [
                     {
                         'outbound': ['Beta_Cell', 'Processed_Tomography_Data_Anatomy_FKey']
                     }, 'id'
                 ],
-                'open': True,
-                'markdown_name': 'Anatomy',
-                'entity': True
+                'markdown_name': 'Anatomy'
             },
             {
+                'open': True,
+                'entity': True,
                 'source': [
                     {
                         'outbound': ['Beta_Cell', 'Processed_Tomography_Data_File_Type_FKey']
                     }, 'id'
                 ],
-                'open': True,
-                'markdown_name': 'File Type',
-                'entity': True
+                'markdown_name': 'File Type'
             }
         ]
     },
-    'entry': [
-        'RID',
-        {
-            'source': [{
-                'outbound': ['Beta_Cell', 'Processed_Tomography_Data_Owner_Fkey']
-            }, 'id']
-        },
-        {
-            'source': [
-                {
-                    'outbound': ['Beta_Cell', 'Processed_Tomography_Data_Dataset_FKey']
-                }, 'RID'
-            ],
-            'markdown_name': 'Dataset'
-        }, ['Beta_Cell', 'Processed_Tomography_Data_Biosample_FKey'],
-        ['Beta_Cell', 'Processed_Tomography_Data_Process_FKey'],
-        ['Beta_Cell', 'Processed_Tomography_Data_Output_Type_FKey'],
-        ['Beta_Cell', 'Processed_Tomography_Data_File_Type_FKey'], 'url'
+    'compact': [
+        ['Beta_Cell', 'Processed_Tomography_Data_Key'], 'RCB', 'Owner', 'Biosample', 'url',
+        'File_Type', ['Beta_Cell', 'Processed_Tomography_Data_Process_FKey'], 'length'
     ],
     'detailed': [
         ['Beta_Cell', 'Processed_Tomography_Data_Key'], 'RCB', 'Owner',
@@ -259,10 +272,6 @@ visible_columns = {
         ['Beta_Cell', 'Processed_Tomography_Data_Process_FKey'],
         ['Beta_Cell', 'Processed_Tomography_Data_Output_Type_FKey'],
         ['Beta_Cell', 'Processed_Tomography_Data_File_Type_FKey'], 'length', 'md5'
-    ],
-    'compact': [
-        ['Beta_Cell', 'Processed_Tomography_Data_Key'], 'RCB', 'Owner', 'Biosample', 'url',
-        'File_Type', ['Beta_Cell', 'Processed_Tomography_Data_Process_FKey'], 'length'
     ]
 }
 
@@ -271,28 +280,31 @@ visible_foreign_keys = {}
 table_display = {'row_name': {'row_markdown_pattern': '{{{filename}}}'}}
 
 table_annotations = {
-    chaise_tags.table_display: table_display,
-    chaise_tags.visible_foreign_keys: visible_foreign_keys,
     'table_display': {
         'row_name': {
             'row_markdown_pattern': '{{{filename}}}'
         }
     },
+    chaise_tags.table_display: table_display,
     chaise_tags.visible_columns: visible_columns,
+    chaise_tags.visible_foreign_keys: visible_foreign_keys,
 }
+
 table_comment = 'None'
+
 table_acls = {}
+
 table_acl_bindings = {
-    'self_service_creator': {
-        'scope_acl': ['*'],
-        'projection': ['RCB'],
-        'types': ['update', 'delete'],
-        'projection_type': 'acl'
-    },
     'self_service_owner': {
+        'types': ['update', 'delete'],
         'scope_acl': ['*'],
         'projection': ['Owner'],
+        'projection_type': 'acl'
+    },
+    'self_service_creator': {
         'types': ['update', 'delete'],
+        'scope_acl': ['*'],
+        'projection': ['RCB'],
         'projection_type': 'acl'
     }
 }
@@ -304,36 +316,13 @@ key_defs = [
 
 fkey_defs = [
     em.ForeignKey.define(
-        ['File_Type'],
-        'vocab',
-        'file_type_terms', ['id'],
-        constraint_names=[('Beta_Cell', 'Processed_Tomography_Data_File_Type_FKey')],
-        acls={
-            'insert': ['*'],
-            'update': ['*']
-        },
-    ),
-    em.ForeignKey.define(
-        ['Owner'],
-        'public',
-        'ermrest_client', ['id'],
-        constraint_names=[('Beta_Cell', 'Processed_Tomography_Data_Owner_Fkey')],
-        acls={
-            'insert': ['*'],
-            'update': ['*']
-        },
-    ),
-    em.ForeignKey.define(
-        ['Dataset'],
+        ['Biosample'],
         'Beta_Cell',
-        'Dataset', ['RID'],
-        constraint_names=[('Beta_Cell', 'Processed_Tomography_Data_Dataset_FKey')],
-        annotations={
-            chaise_tags.display: {},
-            chaise_tags.foreign_key: {
-                'domain_filter_pattern': 'RID={{{$fkeys.Beta_Cell.Processed_Tomography_Data_Biosample_FKey.values._Dataset}}}'
-            }
-        },
+        'Biosample', ['RID'],
+        constraint_names=[('Beta_Cell', 'Processed_Tomography_Data_Biosample_FKey')],
+        annotations={chaise_tags.foreign_key: {
+            'domain_filter_pattern': 'Dataset={{{_Dataset}}}'
+        }},
         acls={
             'insert': ['*'],
             'update': ['*']
@@ -363,29 +352,44 @@ fkey_defs = [
         comment='Ensure that the dataset for the file is the same as for the biosample',
     ),
     em.ForeignKey.define(
-        ['RCB'],
-        'public',
-        'ermrest_client', ['id'],
-        constraint_names=[('Beta_Cell', 'Processed_Tomography_Data_RCB_Fkey')],
+        ['File_Type'],
+        'vocab',
+        'file_type_terms', ['id'],
+        constraint_names=[('Beta_Cell', 'Processed_Tomography_Data_File_Type_FKey')],
         acls={
             'insert': ['*'],
             'update': ['*']
         },
     ),
     em.ForeignKey.define(
-        ['Biosample'],
+        ['Dataset'],
         'Beta_Cell',
-        'Biosample', ['RID'],
-        constraint_names=[('Beta_Cell', 'Processed_Tomography_Data_Biosample_FKey')],
-        annotations={chaise_tags.foreign_key: {
-            'domain_filter_pattern': 'Dataset={{{_Dataset}}}'
-        }},
+        'Dataset', ['RID'],
+        constraint_names=[('Beta_Cell', 'Processed_Tomography_Data_Dataset_FKey')],
+        annotations={
+            chaise_tags.display: {},
+            chaise_tags.foreign_key: {
+                'domain_filter_pattern': 'RID={{{$fkeys.Beta_Cell.Processed_Tomography_Data_Biosample_FKey.values._Dataset}}}'
+            }
+        },
         acls={
             'insert': ['*'],
             'update': ['*']
         },
         on_update='CASCADE',
         on_delete='RESTRICT',
+    ),
+    em.ForeignKey.define(
+        ['Owner'],
+        'public',
+        'ERMrest_Client', ['ID'],
+        constraint_names=[('Beta_Cell', 'Processed_Tomography_Data_Owner_Fkey')],
+    ),
+    em.ForeignKey.define(
+        ['RCB'],
+        'public',
+        'ERMrest_Client', ['ID'],
+        constraint_names=[('Beta_Cell', 'Processed_Tomography_Data_RCB_Fkey')],
     ),
 ]
 
@@ -408,10 +412,10 @@ def main(catalog, mode, replace=False):
 
 
 if __name__ == "__main__":
-    server = 'pbcconsortium.isrd.isi.edu'
+    host = 'pbcconsortium.isrd.isi.edu'
     catalog_id = 1
-    mode, replace, server, catalog_id = parse_args(server, catalog_id, is_table=True)
-    credential = get_credential(server)
-    catalog = ErmrestCatalog('https', server, catalog_id, credentials=credential)
+    mode, replace, host, catalog_id = parse_args(host, catalog_id, is_table=True)
+    credential = get_credential(host)
+    catalog = ErmrestCatalog('https', host, catalog_id, credentials=credential)
     main(catalog, mode, replace)
 

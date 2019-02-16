@@ -5,6 +5,15 @@ import deriva.core.ermrest_model as em
 from deriva.core.ermrest_config import tag as chaise_tags
 from deriva.utils.catalog.manage.update_catalog import CatalogUpdater, parse_args
 
+groups = {
+    'pbcconsortium-reader': 'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a',
+    'pbcconsortium-curator': 'https://auth.globus.org/da80b96c-edab-11e8-80e2-0a7c1eab007a',
+    'pbcconsortium-writer': 'https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764',
+    'pbcconsortium-admin': 'https://auth.globus.org/80df6c56-a0e8-11e8-b9dc-0ada61684422',
+    'isrd-staff': 'https://auth.globus.org/176baec4-ed26-11e5-8e88-22000ab4b42b',
+    'isrd-testers': 'https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d'
+}
+
 table_name = 'Dataset'
 
 schema_name = 'Beta_Cell'
@@ -47,23 +56,32 @@ column_defs = [
 ]
 
 visible_columns = {
+    'entry': [
+        'Title', 'RCB', {
+            'source': [{
+                'outbound': ['Beta_Cell', 'Dataset_Owner_Fkey']
+            }, 'id']
+        }, ['Beta_Cell', 'Dataset_Project_FKey'], 'Description'
+    ],
     'filter': {
         'and': [
             {
                 'source': ['RID']
             },
             {
+                'open': False,
+                'entity': True,
                 'source': [
                     {
                         'inbound': ['Beta_Cell', 'Dataset_Experiment_Type_Dataset_id_FKey']
                     }, {
                         'outbound': ['Beta_Cell', 'Dataset_Experiment_Type_Experiment_type_FKey']
                     }, 'dbxref'
-                ],
-                'open': False,
-                'entity': True
+                ]
             },
             {
+                'open': False,
+                'entity': True,
                 'source': [
                     {
                         'outbound': ['Beta_Cell', 'Dataset_project_fkey']
@@ -73,40 +91,35 @@ visible_columns = {
                         'outbound': ['isa', 'project_investigator_person_fkey']
                     }, 'RID'
                 ],
-                'open': False,
-                'markdown_name': 'Project Investigator',
-                'entity': True
+                'markdown_name': 'Project Investigator'
             }, {
-                'source': 'Title',
                 'open': False,
-                'entity': False
+                'entity': False,
+                'source': 'Title'
             },
             {
+                'open': False,
+                'entity': True,
                 'source': [{
                     'outbound': ['Beta_Cell', 'Dataset_project_fkey']
-                }, 'id'],
-                'open': False,
-                'entity': True
+                }, 'id']
             }, {
-                'source': 'release_date',
                 'open': False,
-                'entity': False
+                'entity': False,
+                'source': 'release_date'
             },
             {
+                'open': False,
+                'entity': True,
                 'source': [{
                     'outbound': ['Beta_Cell', 'Dataset_status_fkey']
-                }, 'name'],
-                'open': False,
-                'entity': True
+                }, 'name']
             }
         ]
     },
-    'entry': [
-        'Title', 'RCB', {
-            'source': [{
-                'outbound': ['Beta_Cell', 'Dataset_Owner_Fkey']
-            }, 'id']
-        }, ['Beta_Cell', 'Dataset_Project_FKey'], 'Description'
+    'compact': [
+        ['Beta_Cell', 'Dataset_RID_Key'], 'RCB', 'Owner', 'Title',
+        ['Beta_Cell', 'Dataset_Project_FKey'], 'Description'
     ],
     'detailed': [
         ['Beta_Cell', 'Dataset_RID_Key'], 'RCB', 'Owner', 'Description',
@@ -114,10 +127,6 @@ visible_columns = {
         ['Beta_Cell', 'Dataset_Experiment_type_Dataset__id_fkey'],
         ['Beta_Cell', 'Dataset_data_type_dataset_id_fkey'],
         ['Beta_Cell', 'Dataset_anatomy_Dataset_id_fkey']
-    ],
-    'compact': [
-        ['Beta_Cell', 'Dataset_RID_Key'], 'RCB', 'Owner', 'Title',
-        ['Beta_Cell', 'Dataset_Project_FKey'], 'Description'
     ]
 }
 
@@ -142,22 +151,25 @@ table_display = {
 
 table_annotations = {
     chaise_tags.table_display: table_display,
-    chaise_tags.visible_foreign_keys: visible_foreign_keys,
     chaise_tags.visible_columns: visible_columns,
+    chaise_tags.visible_foreign_keys: visible_foreign_keys,
 }
+
 table_comment = None
+
 table_acls = {}
+
 table_acl_bindings = {
-    'self_service_creator': {
-        'scope_acl': ['*'],
-        'projection': ['RCB'],
-        'types': ['update', 'delete'],
-        'projection_type': 'acl'
-    },
     'self_service_owner': {
+        'types': ['update', 'delete'],
         'scope_acl': ['*'],
         'projection': ['Owner'],
+        'projection_type': 'acl'
+    },
+    'self_service_creator': {
         'types': ['update', 'delete'],
+        'scope_acl': ['*'],
+        'projection': ['RCB'],
         'projection_type': 'acl'
     }
 }
@@ -165,16 +177,6 @@ table_acl_bindings = {
 key_defs = [em.Key.define(['RID'], constraint_names=[('Beta_Cell', 'Dataset_RID_key')], ), ]
 
 fkey_defs = [
-    em.ForeignKey.define(
-        ['Owner'],
-        'public',
-        'ermrest_client', ['id'],
-        constraint_names=[('Beta_Cell', 'Dataset_Owner_Fkey')],
-        acls={
-            'insert': ['*'],
-            'update': ['*']
-        },
-    ),
     em.ForeignKey.define(
         ['Project'],
         'isa',
@@ -188,14 +190,16 @@ fkey_defs = [
         on_delete='RESTRICT',
     ),
     em.ForeignKey.define(
+        ['Owner'],
+        'public',
+        'ERMrest_Client', ['ID'],
+        constraint_names=[('Beta_Cell', 'Dataset_Owner_Fkey')],
+    ),
+    em.ForeignKey.define(
         ['RCB'],
         'public',
-        'ermrest_client', ['id'],
+        'ERMrest_Client', ['ID'],
         constraint_names=[('Beta_Cell', 'Dataset_RCB_Fkey')],
-        acls={
-            'insert': ['*'],
-            'update': ['*']
-        },
     ),
 ]
 
@@ -218,10 +222,10 @@ def main(catalog, mode, replace=False):
 
 
 if __name__ == "__main__":
-    server = 'pbcconsortium.isrd.isi.edu'
+    host = 'pbcconsortium.isrd.isi.edu'
     catalog_id = 1
-    mode, replace, server, catalog_id = parse_args(server, catalog_id, is_table=True)
-    credential = get_credential(server)
-    catalog = ErmrestCatalog('https', server, catalog_id, credentials=credential)
+    mode, replace, host, catalog_id = parse_args(host, catalog_id, is_table=True)
+    credential = get_credential(host)
+    catalog = ErmrestCatalog('https', host, catalog_id, credentials=credential)
     main(catalog, mode, replace)
 

@@ -14,28 +14,17 @@ groups = {
     'isrd-testers': 'https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d'
 }
 
-schema_name = 'common'
+schema_name = 'WWW'
 
-table_names = ['person', ]
+table_names = ['Page_Asset', 'Page', ]
 
 annotations = {chaise_tags.display: {'name_style': {'underline_space': True}}}
 
-acls = {
-    'delete': [
-        groups['pbcconsortium-writer'], groups['isrd-staff'], groups['pbcconsortium-reader']
-    ],
-    'insert': [
-        groups['pbcconsortium-writer'], groups['isrd-staff'], groups['pbcconsortium-reader'],
-        groups['isrd-testers']
-    ],
-    'update': [
-        groups['pbcconsortium-writer'], groups['isrd-staff'], groups['pbcconsortium-reader']
-    ]
-}
+acls = {}
 
-comment = None
+comment = 'Schema for tables that will be displayed as web content'
 
-schema_def = em.Schema.define('common', comment=comment, acls=acls, annotations=annotations, )
+schema_def = em.Schema.define('WWW', comment=comment, acls=acls, annotations=annotations, )
 
 
 def main(catalog, mode, replace=False):

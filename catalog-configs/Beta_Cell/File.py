@@ -5,6 +5,15 @@ import deriva.core.ermrest_model as em
 from deriva.core.ermrest_config import tag as chaise_tags
 from deriva.utils.catalog.manage.update_catalog import CatalogUpdater, parse_args
 
+groups = {
+    'pbcconsortium-reader': 'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a',
+    'pbcconsortium-curator': 'https://auth.globus.org/da80b96c-edab-11e8-80e2-0a7c1eab007a',
+    'pbcconsortium-writer': 'https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764',
+    'pbcconsortium-admin': 'https://auth.globus.org/80df6c56-a0e8-11e8-b9dc-0ada61684422',
+    'isrd-staff': 'https://auth.globus.org/176baec4-ed26-11e5-8e88-22000ab4b42b',
+    'isrd-testers': 'https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d'
+}
+
 table_name = 'File'
 
 schema_name = 'Beta_Cell'
@@ -22,10 +31,10 @@ column_annotations = {
     },
     'URL': {
         chaise_tags.asset: {
-            'filename_column': 'filename',
-            'byte_count_column': 'byte_count',
+            'md5': 'md5',
             'url_pattern': '/hatrac/commons/data/{{{Dataset}}}/{{#encode}}{{{Filename}}}{{/encode}}',
-            'md5': 'md5'
+            'filename_column': 'filename',
+            'byte_count_column': 'byte_count'
         },
         chaise_tags.column_display: {
             'compact': {
@@ -87,18 +96,6 @@ column_defs = [
 display = {'name': 'Supplementary Files'}
 
 visible_columns = {
-    'filter': {
-        'and': [
-            {
-                'source': [{
-                    'outbound': ['isa', 'file_dataset_fkey']
-                }, 'accession'],
-                'open': False,
-                'markdown_name': 'Dataset',
-                'entity': True
-            }
-        ]
-    },
     'entry': [
         {
             'source': [{
@@ -107,11 +104,23 @@ visible_columns = {
         }, 'url', 'byte_count', 'md5', ['isa', 'file_thumbnail_fkey'], ['isa', 'file_dataset_fkey'],
         'submitted_on', 'description'
     ],
+    'filter': {
+        'and': [
+            {
+                'open': False,
+                'entity': True,
+                'source': [{
+                    'outbound': ['isa', 'file_dataset_fkey']
+                }, 'accession'],
+                'markdown_name': 'Dataset'
+            }
+        ]
+    },
+    'compact': [['isa', 'file_RID_key'], 'url', 'byte_count', 'md5', 'description'],
     'detailed': [
         'RCB', 'Owner', 'filename', 'byte_count', 'md5', ['isa', 'file_thumbnail_fkey'],
         ['isa', 'file_dataset_fkey'], 'submitted_on', 'description'
-    ],
-    'compact': [['isa', 'file_RID_key'], 'url', 'byte_count', 'md5', 'description']
+    ]
 }
 
 visible_foreign_keys = {}
@@ -121,33 +130,36 @@ table_display = {'row_name': {'row_markdown_pattern': '{{{filename}}}'}}
 table_alternatives = {'compact': ['isa', 'file_compact'], 'compact/brief': ['isa', 'file_compact']}
 
 table_annotations = {
-    chaise_tags.table_display: table_display,
     chaise_tags.display: display,
-    chaise_tags.visible_foreign_keys: visible_foreign_keys,
+    chaise_tags.table_display: table_display,
     chaise_tags.visible_columns: visible_columns,
     chaise_tags.table_alternatives: table_alternatives,
+    chaise_tags.visible_foreign_keys: visible_foreign_keys,
 }
+
 table_comment = None
+
 table_acls = {}
+
 table_acl_bindings = {
-    'self_service_creator': {
-        'scope_acl': ['*'],
-        'projection': ['RCB'],
-        'types': ['update', 'delete'],
-        'projection_type': 'acl'
-    },
     'self_service_owner': {
+        'types': ['update', 'delete'],
         'scope_acl': ['*'],
         'projection': ['Owner'],
+        'projection_type': 'acl'
+    },
+    'self_service_creator': {
         'types': ['update', 'delete'],
+        'scope_acl': ['*'],
+        'projection': ['RCB'],
         'projection_type': 'acl'
     }
 }
 
 key_defs = [
-    em.Key.define(['RID'], constraint_names=[('Beta_Cell', 'File_RID_key')],
-                  ),
     em.Key.define(['URL'], constraint_names=[('Beta_Cell', 'File_url_key')],
+                  ),
+    em.Key.define(['RID'], constraint_names=[('Beta_Cell', 'File_RID_key')],
                   ),
 ]
 
@@ -165,24 +177,16 @@ fkey_defs = [
         on_delete='SET NULL',
     ),
     em.ForeignKey.define(
-        ['RCB'],
-        'public',
-        'ermrest_client', ['id'],
-        constraint_names=[('Beta_Cell', 'File_RCB_Fkey')],
-        acls={
-            'insert': ['*'],
-            'update': ['*']
-        },
-    ),
-    em.ForeignKey.define(
         ['Owner'],
         'public',
-        'ermrest_client', ['id'],
+        'ERMrest_Client', ['ID'],
         constraint_names=[('Beta_Cell', 'File_Owner_Fkey')],
-        acls={
-            'insert': ['*'],
-            'update': ['*']
-        },
+    ),
+    em.ForeignKey.define(
+        ['RCB'],
+        'public',
+        'ERMrest_Client', ['ID'],
+        constraint_names=[('Beta_Cell', 'File_RCB_Fkey')],
     ),
 ]
 
@@ -205,10 +209,10 @@ def main(catalog, mode, replace=False):
 
 
 if __name__ == "__main__":
-    server = 'pbcconsortium.isrd.isi.edu'
+    host = 'pbcconsortium.isrd.isi.edu'
     catalog_id = 1
-    mode, replace, server, catalog_id = parse_args(server, catalog_id, is_table=True)
-    credential = get_credential(server)
-    catalog = ErmrestCatalog('https', server, catalog_id, credentials=credential)
+    mode, replace, host, catalog_id = parse_args(host, catalog_id, is_table=True)
+    credential = get_credential(host)
+    catalog = ErmrestCatalog('https', host, catalog_id, credentials=credential)
     main(catalog, mode, replace)
 

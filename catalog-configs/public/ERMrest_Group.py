@@ -14,67 +14,66 @@ groups = {
     'isrd-testers': 'https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d'
 }
 
-table_name = 'PDB_Terms'
+table_name = 'ERMrest_Group'
 
-schema_name = 'Vocab'
+schema_name = 'public'
 
-column_annotations = {'ID': {}, 'URI': {}, 'Name': {}, 'Description': {}, 'Synonyms': {}}
+column_annotations = {}
 
-column_comment = {
-    'ID': 'The preferred Compact URI (CURIE) for this term.',
-    'URI': 'The preferred URI for this term.',
-    'Name': 'The preferred human-readable name for this term.',
-    'Description': 'A longer human-readable description of this term.',
-    'Synonyms': 'Alternate human-readable names for this term.'
-}
+column_comment = {}
 
 column_acls = {}
 
 column_acl_bindings = {}
 
 column_defs = [
-    em.Column.define(
-        'ID',
-        em.builtin_types['ermrest_curie'],
-        nullok=False,
-        default='PBCCONSORTIUM:{RID}',
-        comment=column_comment['ID'],
-    ),
-    em.Column.define(
-        'URI',
-        em.builtin_types['ermrest_uri'],
-        nullok=False,
-        default='/id/{RID}',
-        comment=column_comment['URI'],
-    ),
-    em.Column.define(
-        'Name', em.builtin_types['text'], nullok=False, comment=column_comment['Name'],
-    ),
-    em.Column.define(
-        'Description',
-        em.builtin_types['markdown'],
-        nullok=False,
-        comment=column_comment['Description'],
-    ),
-    em.Column.define('Synonyms', em.builtin_types['text[]'], comment=column_comment['Synonyms'],
+    em.Column.define('ID', em.builtin_types['text'], nullok=False,
+                     ),
+    em.Column.define('URL', em.builtin_types['text'],
+                     ),
+    em.Column.define('Display_Name', em.builtin_types['text'],
+                     ),
+    em.Column.define('Description', em.builtin_types['text'],
                      ),
 ]
 
-table_annotations = {}
+display = {'name': 'Globus Group'}
 
-table_comment = 'Terms from PDB Repository'
+visible_columns = {'*': ['Display_Name', 'Description', 'URL', 'ID']}
 
-table_acls = {}
+table_display = {'row_name': {'row_markdown_pattern': '{{{Display_Name}}}'}}
+
+table_annotations = {
+    chaise_tags.display: display,
+    chaise_tags.table_display: table_display,
+    chaise_tags.visible_columns: visible_columns,
+}
+
+table_comment = None
+
+table_acls = {
+    'delete': [],
+    'insert': [],
+    'select': [
+        groups['pbcconsortium-writer'], groups['pbcconsortium-curator'],
+        groups['pbcconsortium-admin']
+    ],
+    'update': [],
+    'enumerate': []
+}
 
 table_acl_bindings = {}
 
 key_defs = [
-    em.Key.define(['RID'], constraint_names=[('Vocab', 'PDB_Terms_RIDkey1')],
+    em.Key.define(['RID'], constraint_names=[('public', 'ERMrest_Group_pkey')],
                   ),
-    em.Key.define(['URI'], constraint_names=[('Vocab', 'PDB_Terms_URIkey1')],
+    em.Key.define(['ID'], constraint_names=[('public', 'ERMrest_Group_ID_key')],
                   ),
-    em.Key.define(['ID'], constraint_names=[('Vocab', 'PDB_Terms_IDkey1')],
-                  ),
+    em.Key.define(
+        ['Display_Name', 'ID', 'Description', 'URL'],
+        constraint_names=[('public', 'Group_Compound_key')],
+        comment='Compound key to ensure that columns sync up into Visible_Groups on update.',
+    ),
 ]
 
 fkey_defs = []

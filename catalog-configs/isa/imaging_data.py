@@ -5,6 +5,15 @@ import deriva.core.ermrest_model as em
 from deriva.core.ermrest_config import tag as chaise_tags
 from deriva.utils.catalog.manage.update_catalog import CatalogUpdater, parse_args
 
+groups = {
+    'pbcconsortium-reader': 'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a',
+    'pbcconsortium-curator': 'https://auth.globus.org/da80b96c-edab-11e8-80e2-0a7c1eab007a',
+    'pbcconsortium-writer': 'https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764',
+    'pbcconsortium-admin': 'https://auth.globus.org/80df6c56-a0e8-11e8-b9dc-0ada61684422',
+    'isrd-staff': 'https://auth.globus.org/176baec4-ed26-11e5-8e88-22000ab4b42b',
+    'isrd-testers': 'https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d'
+}
+
 table_name = 'imaging_data'
 
 schema_name = 'isa'
@@ -13,10 +22,10 @@ column_annotations = {
     'RID': {},
     'url': {
         chaise_tags.asset: {
-            'filename_column': 'filename',
-            'byte_count_column': 'byte_count',
+            'md5': 'md5',
             'url_pattern': '/hatrac/commons/data/{{{_dataset}}}/{{{_replicate}}}/{{{filename}}}',
-            'md5': 'md5'
+            'filename_column': 'filename',
+            'byte_count_column': 'byte_count'
         }
     },
     'filename': {
@@ -96,82 +105,82 @@ column_defs = [
 ]
 
 visible_columns = {
-    'filter': {
-        'and': [
-            {
-                'source': 'filename',
-                'open': False,
-                'markdown_name': 'File Name',
-                'entity': True
-            },
-            {
-                'source': [{
-                    'outbound': ['isa', 'imaging_data_replicate_fkey']
-                }, 'RID'],
-                'open': True,
-                'markdown_name': 'Replicate',
-                'entity': True
-            },
-            {
-                'source': [{
-                    'outbound': ['isa', 'imaging_data_anatomy_fkey']
-                }, 'id'],
-                'open': True,
-                'markdown_name': 'Anatomy',
-                'entity': True
-            },
-            {
-                'source': [{
-                    'outbound': ['isa', 'imaging_data_device_fkey']
-                }, 'id'],
-                'open': True,
-                'markdown_name': 'Imaging Device',
-                'entity': True
-            },
-            {
-                'source': [{
-                    'outbound': ['isa', 'imaging_data_equipment_model_fkey']
-                }, 'id'],
-                'open': True,
-                'markdown_name': 'Equipment Model',
-                'entity': True
-            },
-            {
-                'source': [{
-                    'outbound': ['isa', 'imaging_data_file_type_fkey']
-                }, 'id'],
-                'open': True,
-                'markdown_name': 'File Type',
-                'entity': True
-            },
-            {
-                'source': 'submitted_on',
-                'open': False,
-                'markdown_name': 'Submitted On',
-                'entity': True
-            }
-        ]
-    },
     'entry': [
         'RID', ['isa', 'imaging_data_replicate_fkey'], ['isa', 'imaging_data_anatomy_fkey'],
         ['isa', 'imaging_data_device_fkey'],
         ['isa', 'imaging_data_equipment_model_fkey'], 'description', 'url', 'filename',
         ['isa', 'imaging_data_file_type_fkey'], 'byte_count', 'md5', 'submitted_on'
     ],
+    'filter': {
+        'and': [
+            {
+                'open': False,
+                'entity': True,
+                'source': 'filename',
+                'markdown_name': 'File Name'
+            },
+            {
+                'open': True,
+                'entity': True,
+                'source': [{
+                    'outbound': ['isa', 'imaging_data_replicate_fkey']
+                }, 'RID'],
+                'markdown_name': 'Replicate'
+            },
+            {
+                'open': True,
+                'entity': True,
+                'source': [{
+                    'outbound': ['isa', 'imaging_data_anatomy_fkey']
+                }, 'id'],
+                'markdown_name': 'Anatomy'
+            },
+            {
+                'open': True,
+                'entity': True,
+                'source': [{
+                    'outbound': ['isa', 'imaging_data_device_fkey']
+                }, 'id'],
+                'markdown_name': 'Imaging Device'
+            },
+            {
+                'open': True,
+                'entity': True,
+                'source': [{
+                    'outbound': ['isa', 'imaging_data_equipment_model_fkey']
+                }, 'id'],
+                'markdown_name': 'Equipment Model'
+            },
+            {
+                'open': True,
+                'entity': True,
+                'source': [{
+                    'outbound': ['isa', 'imaging_data_file_type_fkey']
+                }, 'id'],
+                'markdown_name': 'File Type'
+            },
+            {
+                'open': False,
+                'entity': True,
+                'source': 'submitted_on',
+                'markdown_name': 'Submitted On'
+            }
+        ]
+    },
+    'compact': [
+        ['isa', 'imaging_data_pkey'], 'replicate_fkey', 'url', 'file_type', 'byte_count', 'md5',
+        'submitted_on'
+    ],
     'detailed': [
         ['isa', 'imaging_data_pkey'], ['isa', 'imaging_data_dataset_fkey'],
         ['isa', 'imaging_data_replicate_fkey'], ['isa', 'imaging_data_device_fkey'], 'filename',
         ['isa', 'imaging_data_file_type_fkey'], 'byte_count', 'md5', 'submitted_on'
-    ],
-    'compact': [
-        ['isa', 'imaging_data_pkey'], 'replicate_fkey', 'url', 'file_type', 'byte_count', 'md5',
-        'submitted_on'
     ]
 }
 
 visible_foreign_keys = {
-    'detailed': [['isa', 'thumbnail_thumbnail_of_fkey'], ['isa', 'mesh_data_derived_from_fkey']],
-    'entry': [['isa', 'thumbnail_thumbnail_of_fkey'], ['isa', 'mesh_data_derived_from_fkey']]
+    'entry': [['isa', 'thumbnail_thumbnail_of_fkey'], ['isa', 'mesh_data_derived_from_fkey']],
+    'detailed': [['isa', 'thumbnail_thumbnail_of_fkey'], ['isa', 'mesh_data_derived_from_fkey']]
 }
 
 table_display = {'row_name': {'row_markdown_pattern': '{{{filename}}}'}}
@@ -183,20 +192,23 @@ table_alternatives = {
 
 table_annotations = {
     chaise_tags.table_display: table_display,
-    chaise_tags.visible_foreign_keys: visible_foreign_keys,
     chaise_tags.visible_columns: visible_columns,
     chaise_tags.table_alternatives: table_alternatives,
+    chaise_tags.visible_foreign_keys: visible_foreign_keys,
 }
+
 table_comment = None
+
 table_acls = {}
+
 table_acl_bindings = {}
 
 key_defs = [
+    em.Key.define(['RID'], constraint_names=[('isa', 'imaging_data_pkey')],
+                  ),
     em.Key.define(['url'], constraint_names=[('isa', 'imaging_data_url_key')],
                   ),
-    em.Key.define(['dataset', 'RID'], constraint_names=[('isa', 'imaging_data_dataset_RID_key')],
-                  ),
-    em.Key.define(['RID'], constraint_names=[('isa', 'imaging_data_pkey')],
+    em.Key.define(['RID', 'dataset'], constraint_names=[('isa', 'imaging_data_dataset_RID_key')],
                   ),
 ]
 
@@ -234,10 +246,10 @@ def main(catalog, mode, replace=False):
 
 
 if __name__ == "__main__":
-    server = 'pbcconsortium.isrd.isi.edu'
+    host = 'pbcconsortium.isrd.isi.edu'
     catalog_id = 1
-    mode, replace, server, catalog_id = parse_args(server, catalog_id, is_table=True)
-    credential = get_credential(server)
-    catalog = ErmrestCatalog('https', server, catalog_id, credentials=credential)
+    mode, replace, host, catalog_id = parse_args(host, catalog_id, is_table=True)
+    credential = get_credential(host)
+    catalog = ErmrestCatalog('https', host, catalog_id, credentials=credential)
     main(catalog, mode, replace)
 

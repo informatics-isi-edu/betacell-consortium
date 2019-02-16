@@ -5,6 +5,15 @@ import deriva.core.ermrest_model as em
 from deriva.core.ermrest_config import tag as chaise_tags
 from deriva.utils.catalog.manage.update_catalog import CatalogUpdater, parse_args
 
+groups = {
+    'pbcconsortium-reader': 'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a',
+    'pbcconsortium-curator': 'https://auth.globus.org/da80b96c-edab-11e8-80e2-0a7c1eab007a',
+    'pbcconsortium-writer': 'https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764',
+    'pbcconsortium-admin': 'https://auth.globus.org/80df6c56-a0e8-11e8-b9dc-0ada61684422',
+    'isrd-staff': 'https://auth.globus.org/176baec4-ed26-11e5-8e88-22000ab4b42b',
+    'isrd-testers': 'https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d'
+}
+
 table_name = 'Specimen'
 
 schema_name = 'Beta_Cell'
@@ -66,92 +75,11 @@ column_defs = [
 ]
 
 visible_columns = {
-    'filter': {
-        'and': [
-            {
-                'source': [
-                    {
-                        'outbound': ['Beta_Cell', 'Specimen_Cell_Line_FKey']
-                    }, {
-                        'outbound': ['Beta_Cell', 'Cell_Line_Cell_Line_Terms_FKey']
-                    }, 'name'
-                ],
-                'open': True,
-                'markdown_name': 'Cell Line',
-                'entity': True
-            },
-            {
-                'source': [
-                    {
-                        'outbound': ['Beta_Cell', 'Specimen_Cellular_Location_Terms_FKey']
-                    }, 'name'
-                ],
-                'markdown_name': 'Cellular Location'
-            },
-            {
-                'comment': 'Additive used to treat the cell line for the experiment',
-                'source': [
-                    {
-                        'outbound': ['Beta_Cell', 'Specimen_Protocol_FKey']
-                    }, {
-                        'inbound': ['Beta_Cell', 'Protocol_Step_Protocol_FKey']
-                    }, {
-                        'inbound': ['Beta_Cell', 'Protocol_Step_Additive_Term_Protocol_Step_FKey']
-                    }, {
-                        'outbound': ['Beta_Cell', 'Protocol_Step_Additive_Term_Additive_Term_FKey']
-                    }, 'RID'
-                ],
-                'aggregate': 'array',
-                'markdown_name': 'Additive',
-                'entity': True
-            },
-            {
-                'comment': 'Concentration of additive applied to cell line in mM',
-                'markdown_name': 'Concentration',
-                'entity': True,
-                'ux_mode': 'choices',
-                'source': [
-                    {
-                        'outbound': ['Beta_Cell', 'Specimen_Protocol_FKey']
-                    }, {
-                        'inbound': ['Beta_Cell', 'Protocol_Step_Protocol_FKey']
-                    }, {
-                        'inbound': ['Beta_Cell', 'Protocol_Step_Additive_Term_Protocol_Step_FKey']
-                    }, 'Additive_Concentration'
-                ],
-                'aggregate': 'array'
-            },
-            {
-                'comment': 'Duration in minutes',
-                'markdown_name': 'Duration',
-                'entity': True,
-                'ux_mode': 'choices',
-                'source': [
-                    {
-                        'outbound': ['Beta_Cell', 'Specimen_Protocol_FKey']
-                    }, {
-                        'inbound': ['Beta_Cell', 'Protocol_Step_Protocol_FKey']
-                    }, 'Duration'
-                ],
-                'aggregate': 'array'
-            }, {
-                'source': [{
-                    'inbound': ['Beta_Cell', 'Biosample_Specimen_FKey']
-                }, 'RID']
-            }, 'Description', 'Collection_Date'
-        ]
-    },
-    'entry': [
-        'RCB', {
-            'source': [{
-                'outbound': ['Beta_Cell', 'Specimen_Owner_Fkey']
-            }, 'id']
-        }, ['Beta_Cell', 'Specimen_Cell_Line_FKey'], ['Beta_Cell', 'Specimen_Protocol_FKey'],
-        ['Beta_Cell', 'Specimen_Cellular_Location_Terms_FKey'], 'Description', 'Collection_Date'
-    ],
     '*': [
         'RID', 'RCB', 'Owner', 'Protocol',
         {
+            'open': True,
+            'entity': True,
             'source': [
                 {
                     'outbound': ['Beta_Cell', 'Specimen_Cell_Line_FKey']
@@ -159,9 +87,7 @@ visible_columns = {
                     'outbound': ['Beta_Cell', 'Cell_Line_Cell_Line_Terms_FKey']
                 }, 'name'
             ],
-            'open': True,
-            'markdown_name': 'Cell Line',
-            'entity': True
+            'markdown_name': 'Cell Line'
         },
         {
             'source': [
@@ -172,7 +98,7 @@ visible_columns = {
             'markdown_name': 'Cellular Location'
         },
         {
-            'comment': 'Additive used to treat the cell line for the experiment',
+            'entity': True,
             'source': [
                 {
                     'outbound': ['Beta_Cell', 'Specimen_Protocol_FKey']
@@ -184,15 +110,12 @@ visible_columns = {
                     'outbound': ['Beta_Cell', 'Protocol_Step_Additive_Term_Additive_Term_FKey']
                 }, 'RID'
             ],
+            'comment': 'Additive used to treat the cell line for the experiment',
             'aggregate': 'array',
-            'markdown_name': 'Additive',
-            'entity': True
+            'markdown_name': 'Additive'
         },
         {
-            'comment': 'Concentration of additive applied to cell line in mM',
-            'markdown_name': 'Concentration',
             'entity': True,
-            'ux_mode': 'choices',
             'source': [
                 {
                     'outbound': ['Beta_Cell', 'Specimen_Protocol_FKey']
@@ -202,13 +125,13 @@ visible_columns = {
                     'inbound': ['Beta_Cell', 'Protocol_Step_Additive_Term_Protocol_Step_FKey']
                 }, 'Additive_Concentration'
             ],
-            'aggregate': 'array'
+            'comment': 'Concentration of additive applied to cell line in mM',
+            'ux_mode': 'choices',
+            'aggregate': 'array',
+            'markdown_name': 'Concentration'
         },
         {
-            'comment': 'Duration in minutes',
-            'markdown_name': 'Duration',
             'entity': True,
-            'ux_mode': 'choices',
             'source': [
                 {
                     'outbound': ['Beta_Cell', 'Specimen_Protocol_FKey']
@@ -216,9 +139,95 @@ visible_columns = {
                     'inbound': ['Beta_Cell', 'Protocol_Step_Protocol_FKey']
                 }, 'Duration'
             ],
-            'aggregate': 'array'
+            'comment': 'Duration in minutes',
+            'ux_mode': 'choices',
+            'aggregate': 'array',
+            'markdown_name': 'Duration'
         }, 'Description', 'Collection_Date'
-    ]
+    ],
+    'entry': [
+        'RCB', {
+            'source': [{
+                'outbound': ['Beta_Cell', 'Specimen_Owner_Fkey']
+            }, 'id']
+        }, ['Beta_Cell', 'Specimen_Cell_Line_FKey'], ['Beta_Cell', 'Specimen_Protocol_FKey'],
+        ['Beta_Cell', 'Specimen_Cellular_Location_Terms_FKey'], 'Description', 'Collection_Date'
+    ],
+    'filter': {
+        'and': [
+            {
+                'open': True,
+                'entity': True,
+                'source': [
+                    {
+                        'outbound': ['Beta_Cell', 'Specimen_Cell_Line_FKey']
+                    }, {
+                        'outbound': ['Beta_Cell', 'Cell_Line_Cell_Line_Terms_FKey']
+                    }, 'name'
+                ],
+                'markdown_name': 'Cell Line'
+            },
+            {
+                'source': [
+                    {
+                        'outbound': ['Beta_Cell', 'Specimen_Cellular_Location_Terms_FKey']
+                    }, 'name'
+                ],
+                'markdown_name': 'Cellular Location'
+            },
+            {
+                'entity': True,
+                'source': [
+                    {
+                        'outbound': ['Beta_Cell', 'Specimen_Protocol_FKey']
+                    }, {
+                        'inbound': ['Beta_Cell', 'Protocol_Step_Protocol_FKey']
+                    }, {
+                        'inbound': ['Beta_Cell', 'Protocol_Step_Additive_Term_Protocol_Step_FKey']
+                    }, {
+                        'outbound': ['Beta_Cell', 'Protocol_Step_Additive_Term_Additive_Term_FKey']
+                    }, 'RID'
+                ],
+                'comment': 'Additive used to treat the cell line for the experiment',
+                'aggregate': 'array',
+                'markdown_name': 'Additive'
+            },
+            {
+                'entity': True,
+                'source': [
+                    {
+                        'outbound': ['Beta_Cell', 'Specimen_Protocol_FKey']
+                    }, {
+                        'inbound': ['Beta_Cell', 'Protocol_Step_Protocol_FKey']
+                    }, {
+                        'inbound': ['Beta_Cell', 'Protocol_Step_Additive_Term_Protocol_Step_FKey']
+                    }, 'Additive_Concentration'
+                ],
+                'comment': 'Concentration of additive applied to cell line in mM',
+                'ux_mode': 'choices',
+                'aggregate': 'array',
+                'markdown_name': 'Concentration'
+            },
+            {
+                'entity': True,
+                'source': [
+                    {
+                        'outbound': ['Beta_Cell', 'Specimen_Protocol_FKey']
+                    }, {
+                        'inbound': ['Beta_Cell', 'Protocol_Step_Protocol_FKey']
+                    }, 'Duration'
+                ],
+                'comment': 'Duration in minutes',
+                'ux_mode': 'choices',
+                'aggregate': 'array',
+                'markdown_name': 'Duration'
+            }, {
+                'source': [{
+                    'inbound': ['Beta_Cell', 'Biosample_Specimen_FKey']
+                }, 'RID']
+            }, 'Description', 'Collection_Date'
+        ]
+    }
 }
 
 visible_foreign_keys = {
@@ -242,24 +251,27 @@ visible_foreign_keys = {
 table_display = {}
 
 table_annotations = {
-    chaise_tags.table_display: table_display,
-    chaise_tags.visible_foreign_keys: visible_foreign_keys,
     'table_display': {},
+    chaise_tags.table_display: table_display,
     chaise_tags.visible_columns: visible_columns,
+    chaise_tags.visible_foreign_keys: visible_foreign_keys,
 }
+
 table_comment = 'Table of biological speciments from which biosamples will be created.'
+
 table_acls = {}
+
 table_acl_bindings = {
-    'self_service_creator': {
-        'scope_acl': ['*'],
-        'projection': ['RCB'],
-        'types': ['update', 'delete'],
-        'projection_type': 'acl'
-    },
     'self_service_owner': {
+        'types': ['update', 'delete'],
         'scope_acl': ['*'],
         'projection': ['Owner'],
+        'projection_type': 'acl'
+    },
+    'self_service_creator': {
         'types': ['update', 'delete'],
+        'scope_acl': ['*'],
+        'projection': ['RCB'],
         'projection_type': 'acl'
     }
 }
@@ -270,12 +282,8 @@ fkey_defs = [
     em.ForeignKey.define(
         ['Owner'],
         'public',
-        'ermrest_client', ['id'],
+        'ERMrest_Client', ['ID'],
         constraint_names=[('Beta_Cell', 'Specimen_Owner_Fkey')],
-        acls={
-            'insert': ['*'],
-            'update': ['*']
-        },
     ),
     em.ForeignKey.define(
         ['Cell_Line'],
@@ -289,16 +297,6 @@ fkey_defs = [
         comment='Must be a valid reference to a cell line.',
     ),
     em.ForeignKey.define(
-        ['RCB'],
-        'public',
-        'ermrest_client', ['id'],
-        constraint_names=[('Beta_Cell', 'Specimen_RCB_Fkey')],
-        acls={
-            'insert': ['*'],
-            'update': ['*']
-        },
-    ),
-    em.ForeignKey.define(
         ['Protocol'],
         'Beta_Cell',
         'Protocol', ['RID'],
@@ -309,6 +307,12 @@ fkey_defs = [
         },
         on_update='CASCADE',
         on_delete='RESTRICT',
+    ),
+    em.ForeignKey.define(
+        ['RCB'],
+        'public',
+        'ERMrest_Client', ['ID'],
+        constraint_names=[('Beta_Cell', 'Specimen_RCB_Fkey')],
     ),
 ]
 
@@ -331,10 +335,10 @@ def main(catalog, mode, replace=False):
 
 
 if __name__ == "__main__":
-    server = 'pbcconsortium.isrd.isi.edu'
+    host = 'pbcconsortium.isrd.isi.edu'
     catalog_id = 1
-    mode, replace, server, catalog_id = parse_args(server, catalog_id, is_table=True)
-    credential = get_credential(server)
-    catalog = ErmrestCatalog('https', server, catalog_id, credentials=credential)
+    mode, replace, host, catalog_id = parse_args(host, catalog_id, is_table=True)
+    credential = get_credential(host)
+    catalog = ErmrestCatalog('https', host, catalog_id, credentials=credential)
     main(catalog, mode, replace)
 

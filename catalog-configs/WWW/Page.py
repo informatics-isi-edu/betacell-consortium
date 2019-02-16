@@ -14,37 +14,40 @@ groups = {
     'isrd-testers': 'https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d'
 }
 
-table_name = 'Protocol_Step_Additive_Term'
+table_name = 'Page'
 
-schema_name = 'Beta_Cell'
+schema_name = 'WWW'
 
 column_annotations = {
-    'RCB': {
+    'RCT': {
         chaise_tags.display: {
-            'markdown_name': 'Creator'
-        },
-        chaise_tags.column_display: {
-            '*': {
-                'markdown_pattern': '{{{$fkeys.Beta_Cell.Protocol_Step_Additive_Term_RBC_Fkey.values._display_name}}}'
-            }
+            'name': 'Creation Time'
         }
     },
-    'Protocol_Step': {},
-    'Additive_Term': {},
-    'Additive_Concentration': {},
-    'Owner': {
-        chaise_tags.column_display: {
-            '*': {
-                'markdown_pattern': '{{{$fkeys.Beta_Cell.Protocol_Step_Additive_Term_Owner_Fkey.values._display_name}}}'
-            }
+    'RMT': {
+        chaise_tags.display: {
+            'name': 'Modified Time'
         }
-    }
+    },
+    'RCB': {
+        chaise_tags.display: {
+            'name': 'Created By'
+        }
+    },
+    'RMB': {
+        chaise_tags.display: {
+            'name': 'Modified By'
+        }
+    },
+    'Title': {},
+    'Content': {},
+    'Owner': {}
 }
 
 column_comment = {
-    'Protocol_Step': 'Protocol_Step foreign key.',
-    'Additive_Term': 'Additive_Term foreign key.',
-    'Additive_Concentration': 'Concentration of additive used in protocol step in mM.'
+    'Title': 'Unique title for the page',
+    'Content': 'Content of the page in markdown',
+    'Owner': 'Group that can update the record.'
 }
 
 column_acls = {}
@@ -53,36 +56,46 @@ column_acl_bindings = {}
 
 column_defs = [
     em.Column.define(
-        'Protocol_Step',
-        em.builtin_types['text'],
-        nullok=False,
-        comment=column_comment['Protocol_Step'],
+        'Title', em.builtin_types['text'], nullok=False, comment=column_comment['Title'],
     ),
-    em.Column.define(
-        'Additive_Term',
-        em.builtin_types['text'],
-        nullok=False,
-        comment=column_comment['Additive_Term'],
-    ),
-    em.Column.define(
-        'Additive_Concentration',
-        em.builtin_types['float4'],
-        comment=column_comment['Additive_Concentration'],
-    ),
-    em.Column.define('Owner', em.builtin_types['text'], annotations=column_annotations['Owner'],
+    em.Column.define('Content', em.builtin_types['markdown'], comment=column_comment['Content'],
+                     ),
+    em.Column.define('Owner', em.builtin_types['text'], comment=column_comment['Owner'],
                      ),
 ]
 
 visible_columns = {
     '*': [
-        'RID', ['Beta_Cell', 'Protocol_Step_Additive_Term_Protocol_Step_FKey'],
-        ['Beta_Cell', 'Protocol_Step_Additive_Term_Additive_Term_FKey'], 'Additive_Concentration'
-    ]
+        {
+            'source': 'RID'
+        }, {
+            'source': 'RCT'
+        }, {
+            'source': 'RMT'
+        }, {
+            'source': [{
+                'outbound': ['WWW', 'Page_RCB_fkey']
+            }, 'ID']
+        }, {
+            'source': [{
+                'outbound': ['WWW', 'Page_RMB_fkey']
+            }, 'ID']
+        }, {
+            'source': [{
+                'outbound': ['WWW', 'Page_Catalog_Group_fkey']
+            }, 'ID']
+        }, {
+            'source': 'Title'
+        }, {
+            'source': 'Content'
+        }
+    ],
+    'detailed': ['Content']
 }
 
-visible_foreign_keys = {}
+visible_foreign_keys = {'detailed': {}}
 
-table_display = {}
+table_display = {'detailed': {'collapse_toc_panel': True, 'hide_column_headers': True}}
 
 table_annotations = {
     chaise_tags.table_display: table_display,
@@ -95,7 +108,7 @@ table_comment = None
 table_acls = {}
 
 table_acl_bindings = {
-    'self_service_owner': {
+    'self_service_group': {
         'types': ['update', 'delete'],
         'scope_acl': ['*'],
         'projection': ['Owner'],
@@ -110,49 +123,50 @@ table_acl_bindings = {
 }
 
 key_defs = [
-    em.Key.define(
-        ['Additive_Term', 'Protocol_Step'],
-        constraint_names=[('Beta_Cell', 'Protocol_Step_Additive_Term_Key')],
-        comment='protocol and compound must be distinct.',
-    ),
-    em.Key.define(
-        ['RID'], constraint_names=[('Beta_Cell', 'Protocol_Step_Additive_Term_RIDkey1')],
-    ),
+    em.Key.define(['RID'], constraint_names=[('WWW', 'Page_RIDkey1')],
+                  ),
+    em.Key.define(['Title'], constraint_names=[('WWW', 'Page_Title_key')],
+                  ),
 ]
 
 fkey_defs = [
     em.ForeignKey.define(
-        ['Protocol_Step'],
-        'Beta_Cell',
-        'Protocol_Step', ['RID'],
-        constraint_names=[('Beta_Cell', 'Protocol_Step_Additive_Term_Protocol_Step_FKey')],
+        ['Owner'],
+        'public',
+        'Catalog_Group', ['ID'],
+        constraint_names=[('WWW', 'Page_Catalog_Group_fkey')],
         acls={
-            'insert': ['*'],
-            'update': ['*']
+            'insert': [groups['pbcconsortium-curator']],
+            'update': [groups['pbcconsortium-curator']]
         },
-    ),
-    em.ForeignKey.define(
-        ['Additive_Term'],
-        'Vocab',
-        'Additive_Terms', ['id'],
-        constraint_names=[('Beta_Cell', 'Protocol_Step_Additive_Term_Additive_Term_FKey')],
-        acls={
-            'insert': ['*'],
-            'update': ['*']
+        acl_bindings={
+            'set_owner': {
+                'types': ['update', 'insert'],
+                'scope_acl': ['*'],
+                'projection': ['ID'],
+                'projection_type': 'acl'
+            }
         },
-        comment='Must be a valid reference to an additive.',
     ),
     em.ForeignKey.define(
         ['RCB'],
         'public',
         'ERMrest_Client', ['ID'],
-        constraint_names=[('Beta_Cell', 'Protocol_Step_Additive_Term_RCB_Fkey')],
+        constraint_names=[('WWW', 'Page_RCB_fkey')],
+        acls={
+            'insert': ['*'],
+            'update': ['*']
+        },
     ),
     em.ForeignKey.define(
-        ['Owner'],
+        ['RMB'],
         'public',
         'ERMrest_Client', ['ID'],
-        constraint_names=[('Beta_Cell', 'Protocol_Step_Additive_Term_Owner_Fkey')],
+        constraint_names=[('WWW', 'Page_RMB_fkey')],
+        acls={
+            'insert': ['*'],
+            'update': ['*']
+        },
     ),
 ]
 

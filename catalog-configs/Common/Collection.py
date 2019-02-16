@@ -5,6 +5,15 @@ import deriva.core.ermrest_model as em
 from deriva.core.ermrest_config import tag as chaise_tags
 from deriva.utils.catalog.manage.update_catalog import CatalogUpdater, parse_args
 
+groups = {
+    'pbcconsortium-reader': 'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a',
+    'pbcconsortium-curator': 'https://auth.globus.org/da80b96c-edab-11e8-80e2-0a7c1eab007a',
+    'pbcconsortium-writer': 'https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764',
+    'pbcconsortium-admin': 'https://auth.globus.org/80df6c56-a0e8-11e8-b9dc-0ada61684422',
+    'isrd-staff': 'https://auth.globus.org/176baec4-ed26-11e5-8e88-22000ab4b42b',
+    'isrd-testers': 'https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d'
+}
+
 table_name = 'Collection'
 
 schema_name = 'Common'
@@ -26,20 +35,20 @@ column_annotations = {
         chaise_tags.column_display: {
             '*': {
                 'pre_format': {
+                    'format': '%t',
                     'bool_true_value': 'Yes',
-                    'bool_false_value': 'No',
-                    'format': '%t'
+                    'bool_false_value': 'No'
                 }
             }
         }
     },
     'Persistend_ID': {
+        chaise_tags.generated: 'null',
         chaise_tags.column_display: {
             '*': {
                 'markdown_pattern': '[{{{Persistent_ID}}}]({{{Persistent_ID}}})'
             }
-        },
-        chaise_tags.generated: 'null'
+        }
     },
     'Owner': {
         chaise_tags.column_display: {
@@ -87,6 +96,13 @@ column_defs = [
 ]
 
 visible_columns = {
+    '*': [
+        'RID', 'RCB', {
+            'source': [{
+                'outbound': ['Beta_Cell', 'Collection_Owner_Fkey']
+            }, 'id']
+        }, 'Title', 'Description', 'RCT', 'RMT'
+    ],
     'filter': {
         'and': [
             'RID', 'Title',
@@ -114,14 +130,7 @@ visible_columns = {
                 ]
             }
         ]
-    },
-    '*': [
-        'RID', 'RCB', {
-            'source': [{
-                'outbound': ['Beta_Cell', 'Collection_Owner_Fkey']
-            }, 'id']
-        }, 'Title', 'Description', 'RCT', 'RMT'
-    ]
+    }
 }
 
 visible_foreign_keys = None
@@ -131,114 +140,103 @@ table_display = {}
 export = {
     'templates': [
         {
-            'displayname': 'BDBag (Holey)',
+            'type': 'BAG',
             'outputs': [
                 {
                     'source': {
                         'api': 'entity'
                     },
                     'destination': {
-                        'type': 'csv',
-                        'name': 'Collection'
+                        'name': 'Collection',
+                        'type': 'csv'
                     }
                 },
                 {
                     'source': {
-                        'path': '(RID)=(Collection_Biosample:Collection)/BS:=(Biosample)=(Biosample:RID)/CollectionRID:=M:RID,Dataset:=BS:Dataset,BiosampleRID:=RID,Container_Id,Sample_Position',
-                        'api': 'attributegroup'
+                        'api': 'attributegroup',
+                        'path': '(RID)=(Collection_Biosample:Collection)/BS:=(Biosample)=(Biosample:RID)/CollectionRID:=M:RID,Dataset:=BS:Dataset,BiosampleRID:=RID,Container_Id,Sample_Position'
                     },
                     'destination': {
-                        'type': 'csv',
-                        'name': 'Biosample'
+                        'name': 'Biosample',
+                        'type': 'csv'
                     }
                 },
                 {
                     'source': {
-                        'path': '(RID)=(Collection_Biosample:Collection)/BS:=(Biosample)=(Biosample:RID)/XR:=(RID)=(Processed_Tomography_Data:Biosample)/Collection:=M:RID,Dataset:=BS:Dataset,Experiment:=BS:Experiment,Biosample:=BS:RID,url,filename,length',
-                        'api': 'attributegroup'
+                        'api': 'attributegroup',
+                        'path': '(RID)=(Collection_Biosample:Collection)/BS:=(Biosample)=(Biosample:RID)/XR:=(RID)=(Processed_Tomography_Data:Biosample)/Collection:=M:RID,Dataset:=BS:Dataset,Experiment:=BS:Experiment,Biosample:=BS:RID,url,filename,length'
                     },
                     'destination': {
-                        'type': 'csv',
-                        'name': 'Processed_Tomography_Data'
+                        'name': 'Processed_Tomography_Data',
+                        'type': 'csv'
                     }
                 },
                 {
                     'source': {
-                        'path': '(RID)=(Collection_Biosample:Collection)/BS:=(Biosample)=(Biosample:RID)/(RID)=(Processed_Tomography_Data:Biosample)/Collection:=M:RID,Dataset:=BS:Dataset,Experiment:=BS:Experiment,Biosample:=BS:RID,url,md5,length',
-                        'api': 'attributegroup'
+                        'api': 'attributegroup',
+                        'path': '(RID)=(Collection_Biosample:Collection)/BS:=(Biosample)=(Biosample:RID)/(RID)=(Processed_Tomography_Data:Biosample)/Collection:=M:RID,Dataset:=BS:Dataset,Experiment:=BS:Experiment,Biosample:=BS:RID,url,md5,length'
                     },
                     'destination': {
-                        'type': 'fetch',
-                        'name': 'DS-{Dataset}/EXP-{Experiment}/BS-{Biosample}/Processed_Tomography_Data'
+                        'name': 'DS-{Dataset}/EXP-{Experiment}/BS-{Biosample}/Processed_Tomography_Data',
+                        'type': 'fetch'
                     }
                 },
                 {
                     'source': {
-                        'path': '(RID)=(Collection_Biosample:Collection)/BS:=(Biosample)=(Biosample:RID)/XR:=(RID)=(Processed_Tomography_Data:Biosample)/Collection:=M:RID,Dataset:=BS:Dataset,Experiment:=BS:Experiment,Biosample:=BS:RID,url,filename,length',
-                        'api': 'attributegroup'
+                        'api': 'attributegroup',
+                        'path': '(RID)=(Collection_Biosample:Collection)/BS:=(Biosample)=(Biosample:RID)/XR:=(RID)=(Processed_Tomography_Data:Biosample)/Collection:=M:RID,Dataset:=BS:Dataset,Experiment:=BS:Experiment,Biosample:=BS:RID,url,filename,length'
                     },
                     'destination': {
-                        'type': 'csv',
-                        'name': 'XRay_Tomography_Data'
+                        'name': 'XRay_Tomography_Data',
+                        'type': 'csv'
                     }
                 },
                 {
                     'source': {
-                        'path': '(RID)=(Collection_Biosample:Collection)/BS:=(Biosample)=(Biosample:RID)/XR:=(RID)=(XRay_Tomography_Data:Biosample)/Collection:=M:RID,Dataset:=BS:Dataset,Experiment:=BS:Experiment,Biosample:=BS:RID,url,md5,length',
-                        'api': 'attributegroup'
+                        'api': 'attributegroup',
+                        'path': '(RID)=(Collection_Biosample:Collection)/BS:=(Biosample)=(Biosample:RID)/XR:=(RID)=(XRay_Tomography_Data:Biosample)/Collection:=M:RID,Dataset:=BS:Dataset,Experiment:=BS:Experiment,Biosample:=BS:RID,url,md5,length'
                     },
                     'destination': {
-                        'type': 'fetch',
-                        'name': 'DS-{Dataset}/EXP-{Experiment}/BS-{Biosample}/XRay_Tomography_Data'
+                        'name': 'DS-{Dataset}/EXP-{Experiment}/BS-{Biosample}/XRay_Tomography_Data',
+                        'type': 'fetch'
                     }
                 }
             ],
-            'postprocessors': [
-                {
-                    'processor': 'cloud_upload',
-                    'processor_params': {
-                        'target_url': 's3://pbcconsortium/test',
-                        'acl': 'public-read'
-                    }
-                }, {
-                    'processor': 'identifier',
-                    'processor_params': {
-                        'test': 'False'
-                    }
-                }
-            ],
-            'type': 'BAG'
+            'displayname': 'BDBag (Holey)'
         }
     ]
 }
 
 table_annotations = {
-    chaise_tags.table_display: table_display,
-    chaise_tags.visible_foreign_keys: visible_foreign_keys,
     chaise_tags.export: export,
+    chaise_tags.table_display: table_display,
     chaise_tags.visible_columns: visible_columns,
+    chaise_tags.visible_foreign_keys: visible_foreign_keys,
 }
+
 table_comment = 'a collection of data'
+
 table_acls = {}
+
 table_acl_bindings = {
-    'self_service_creator': {
-        'scope_acl': ['*'],
-        'projection': ['RCB'],
-        'types': ['update', 'delete'],
-        'projection_type': 'acl'
-    },
     'self_service_owner': {
+        'types': ['update', 'delete'],
         'scope_acl': ['*'],
         'projection': ['Owner'],
+        'projection_type': 'acl'
+    },
+    'self_service_creator': {
         'types': ['update', 'delete'],
+        'scope_acl': ['*'],
+        'projection': ['RCB'],
         'projection_type': 'acl'
     }
 }
 
 key_defs = [
-    em.Key.define(['Title'], constraint_names=[('Common', 'Collection_Title_key')],
-                  ),
     em.Key.define(['RID'], constraint_names=[('Common', 'Collection_RID_key')],
+                  ),
+    em.Key.define(['Title'], constraint_names=[('Common', 'Collection_Title_key')],
                   ),
 ]
 
@@ -246,22 +244,14 @@ fkey_defs = [
     em.ForeignKey.define(
         ['RCB'],
         'public',
-        'ermrest_client', ['id'],
+        'ERMrest_Client', ['ID'],
         constraint_names=[('Common', 'Collection_RCB_Fkey')],
-        acls={
-            'insert': ['*'],
-            'update': ['*']
-        },
     ),
     em.ForeignKey.define(
         ['Owner'],
         'public',
-        'ermrest_client', ['id'],
+        'ERMrest_Client', ['ID'],
         constraint_names=[('Common', 'Collection_Owner_Fkey')],
-        acls={
-            'insert': ['*'],
-            'update': ['*']
-        },
     ),
 ]
 
@@ -284,10 +274,10 @@ def main(catalog, mode, replace=False):
 
 
 if __name__ == "__main__":
-    server = 'pbcconsortium.isrd.isi.edu'
+    host = 'pbcconsortium.isrd.isi.edu'
     catalog_id = 1
-    mode, replace, server, catalog_id = parse_args(server, catalog_id, is_table=True)
-    credential = get_credential(server)
-    catalog = ErmrestCatalog('https', server, catalog_id, credentials=credential)
+    mode, replace, host, catalog_id = parse_args(host, catalog_id, is_table=True)
+    credential = get_credential(host)
+    catalog = ErmrestCatalog('https', host, catalog_id, credentials=credential)
     main(catalog, mode, replace)
 

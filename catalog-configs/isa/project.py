@@ -5,6 +5,15 @@ import deriva.core.ermrest_model as em
 from deriva.core.ermrest_config import tag as chaise_tags
 from deriva.utils.catalog.manage.update_catalog import CatalogUpdater, parse_args
 
+groups = {
+    'pbcconsortium-reader': 'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a',
+    'pbcconsortium-curator': 'https://auth.globus.org/da80b96c-edab-11e8-80e2-0a7c1eab007a',
+    'pbcconsortium-writer': 'https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764',
+    'pbcconsortium-admin': 'https://auth.globus.org/80df6c56-a0e8-11e8-b9dc-0ada61684422',
+    'isrd-staff': 'https://auth.globus.org/176baec4-ed26-11e5-8e88-22000ab4b42b',
+    'isrd-testers': 'https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d'
+}
+
 table_name = 'project'
 
 schema_name = 'isa'
@@ -53,30 +62,22 @@ column_comment = {
 column_acls = {
     'groups': {
         'select': [
-            'https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764',
-            'https://auth.globus.org/176baec4-ed26-11e5-8e88-22000ab4b42b',
-            'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a',
-            'https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d'
+            groups['pbcconsortium-writer'], groups['isrd-staff'], groups['pbcconsortium-reader'],
+            groups['isrd-testers']
         ],
         'enumerate': [
-            'https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764',
-            'https://auth.globus.org/176baec4-ed26-11e5-8e88-22000ab4b42b',
-            'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a',
-            'https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d'
+            groups['pbcconsortium-writer'], groups['isrd-staff'], groups['pbcconsortium-reader'],
+            groups['isrd-testers']
         ]
     },
     'group_membership_url': {
         'select': [
-            'https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764',
-            'https://auth.globus.org/176baec4-ed26-11e5-8e88-22000ab4b42b',
-            'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a',
-            'https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d'
+            groups['pbcconsortium-writer'], groups['isrd-staff'], groups['pbcconsortium-reader'],
+            groups['isrd-testers']
         ],
         'enumerate': [
-            'https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764',
-            'https://auth.globus.org/176baec4-ed26-11e5-8e88-22000ab4b42b',
-            'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a',
-            'https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d'
+            groups['pbcconsortium-writer'], groups['isrd-staff'], groups['pbcconsortium-reader'],
+            groups['isrd-testers']
         ]
     }
 }
@@ -129,41 +130,41 @@ column_defs = [
 ]
 
 visible_columns = {
+    'entry': [
+        'name', 'funding', 'url', 'abstract', 'pis', ['isa', 'project_groups_fkey'],
+        'group_membership_url'
+    ],
     'filter': {
         'and': [
             {
+                'open': True,
+                'entity': True,
                 'source': [
                     {
                         'inbound': ['isa', 'project_investigator_project_id_fkey']
                     }, 'username'
                 ],
-                'open': True,
-                'markdown_name': 'Investigator',
-                'entity': True
+                'markdown_name': 'Investigator'
             }, {
-                'source': 'funding',
                 'open': False,
-                'entity': False
+                'entity': False,
+                'source': 'funding'
             },
             {
+                'open': False,
+                'entity': True,
                 'source': [{
                     'inbound': ['isa', 'project_publication_project_id_fkey']
                 }, 'pmid'],
-                'open': False,
-                'markdown_name': 'Publication',
-                'entity': True
+                'markdown_name': 'Publication'
             }
         ]
     },
-    'entry': [
-        'name', 'funding', 'url', 'abstract', 'pis', ['isa', 'project_groups_fkey'],
-        'group_membership_url'
-    ],
+    'compact': ['name', 'abstract'],
     'detailed': [
         'name', 'funding', 'url', 'abstract', 'group_membership_url',
         ['isa', 'project_publication_project_id_fkey']
-    ],
-    'compact': ['name', 'abstract']
+    ]
 }
 
 visible_foreign_keys = {
@@ -187,22 +188,23 @@ table_display = {
 
 table_annotations = {
     chaise_tags.table_display: table_display,
-    chaise_tags.visible_foreign_keys: visible_foreign_keys,
     chaise_tags.visible_columns: visible_columns,
+    chaise_tags.visible_foreign_keys: visible_foreign_keys,
 }
+
 table_comment = 'domain'
+
 table_acls = {}
+
 table_acl_bindings = {
     'project_edit_guard': {
+        'types': ['update', 'delete'],
         'scope_acl': [
-            'https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764',
-            'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a',
-            'https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d'
+            groups['pbcconsortium-writer'], groups['pbcconsortium-reader'], groups['isrd-testers']
         ],
         'projection': [{
             'outbound': ['isa', 'project_groups_fkey']
         }, 'groups'],
-        'types': ['update', 'delete'],
         'projection_type': 'acl'
     }
 }
@@ -210,9 +212,9 @@ table_acl_bindings = {
 key_defs = [
     em.Key.define(['id'], constraint_names=[('isa', 'project_pkey')],
                   ),
-    em.Key.define(['RID'], constraint_names=[('isa', 'project_RID_key')],
-                  ),
     em.Key.define(['name'], constraint_names=[('isa', 'project_name_key')],
+                  ),
+    em.Key.define(['RID'], constraint_names=[('isa', 'project_RID_key')],
                   ),
 ]
 
@@ -244,10 +246,10 @@ def main(catalog, mode, replace=False):
 
 
 if __name__ == "__main__":
-    server = 'pbcconsortium.isrd.isi.edu'
+    host = 'pbcconsortium.isrd.isi.edu'
     catalog_id = 1
-    mode, replace, server, catalog_id = parse_args(server, catalog_id, is_table=True)
-    credential = get_credential(server)
-    catalog = ErmrestCatalog('https', server, catalog_id, credentials=credential)
+    mode, replace, host, catalog_id = parse_args(host, catalog_id, is_table=True)
+    credential = get_credential(host)
+    catalog = ErmrestCatalog('https', host, catalog_id, credentials=credential)
     main(catalog, mode, replace)
 

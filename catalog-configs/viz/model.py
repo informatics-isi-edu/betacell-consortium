@@ -5,6 +5,15 @@ import deriva.core.ermrest_model as em
 from deriva.core.ermrest_config import tag as chaise_tags
 from deriva.utils.catalog.manage.update_catalog import CatalogUpdater, parse_args
 
+groups = {
+    'pbcconsortium-reader': 'https://auth.globus.org/aa5a2f6e-53e8-11e8-b60b-0a7c735d220a',
+    'pbcconsortium-curator': 'https://auth.globus.org/da80b96c-edab-11e8-80e2-0a7c1eab007a',
+    'pbcconsortium-writer': 'https://auth.globus.org/6a96ec62-7032-11e8-9132-0a043b872764',
+    'pbcconsortium-admin': 'https://auth.globus.org/80df6c56-a0e8-11e8-b9dc-0ada61684422',
+    'isrd-staff': 'https://auth.globus.org/176baec4-ed26-11e5-8e88-22000ab4b42b',
+    'isrd-testers': 'https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d'
+}
+
 table_name = 'model'
 
 schema_name = 'viz'
@@ -84,7 +93,7 @@ visible_columns = {
                 'markdown_name': 'Cell Line'
             },
             {
-                'comment': 'Compound used to treat the cell line for the experiment',
+                'entity': True,
                 'source': [
                     {
                         'outbound': ['viz', 'model_biosample_fkey']
@@ -96,12 +105,12 @@ visible_columns = {
                         'outbound': ['isa', 'specimen_compound_compound_fkey']
                     }, 'RID'
                 ],
+                'comment': 'Compound used to treat the cell line for the experiment',
                 'aggregate': 'array',
-                'markdown_name': 'Compound',
-                'entity': True
+                'markdown_name': 'Compound'
             },
             {
-                'comment': 'Concentration of compound applied to cell line in mM',
+                'entity': True,
                 'source': [
                     {
                         'outbound': ['viz', 'model_biosample_fkey']
@@ -111,12 +120,12 @@ visible_columns = {
                         'inbound': ['isa', 'specimen_compound_specimen_fkey']
                     }, 'compound_concentration'
                 ],
+                'comment': 'Concentration of compound applied to cell line in mM',
                 'aggregate': 'array',
-                'markdown_name': 'Concentration',
-                'entity': True
+                'markdown_name': 'Concentration'
             },
             {
-                'comment': 'Measured in minutes',
+                'entity': True,
                 'source': [
                     {
                         'outbound': ['viz', 'model_biosample_fkey']
@@ -124,7 +133,7 @@ visible_columns = {
                         'outbound': ['Beta_Cell', 'biosample_specimen_fkey']
                     }, 'timepoint'
                 ],
-                'entity': True
+                'comment': 'Measured in minutes'
             }
         ]
     },
@@ -145,7 +154,7 @@ visible_columns = {
             'markdown_name': 'Cell Line'
         },
         {
-            'comment': 'Compound used to treat the cell line for the experiment',
+            'entity': True,
             'source': [
                 {
                     'outbound': ['viz', 'model_biosample_fkey']
@@ -157,12 +166,12 @@ visible_columns = {
                     'outbound': ['isa', 'specimen_compound_compound_fkey']
                 }, 'RID'
             ],
+            'comment': 'Compound used to treat the cell line for the experiment',
             'aggregate': 'array',
-            'markdown_name': 'Compound',
-            'entity': True
+            'markdown_name': 'Compound'
         },
         {
-            'comment': 'Concentration of compound applied to cell line in mM',
+            'entity': True,
             'source': [
                 {
                     'outbound': ['viz', 'model_biosample_fkey']
@@ -172,12 +181,12 @@ visible_columns = {
                     'inbound': ['isa', 'specimen_compound_specimen_fkey']
                 }, 'compound_concentration'
             ],
+            'comment': 'Concentration of compound applied to cell line in mM',
             'aggregate': 'array',
-            'markdown_name': 'Concentration',
-            'entity': True
+            'markdown_name': 'Concentration'
         },
         {
-            'comment': 'Measured in minutes',
+            'entity': True,
             'source': [
                 {
                     'outbound': ['viz', 'model_biosample_fkey']
@@ -185,7 +194,7 @@ visible_columns = {
                     'outbound': ['Beta_Cell', 'biosample_specimen_fkey']
                 }, 'timepoint'
             ],
-            'entity': True
+            'comment': 'Measured in minutes'
         }
     ],
     'detailed': [
@@ -193,6 +202,7 @@ visible_columns = {
         'bg_color_b', 'bounding_box_color_r', 'bounding_box_color_g', 'bounding_box_color_b',
         'show_bounding_box', 'rotate', 'volume',
         {
+            'entity': True,
             'source': [
                 {
                     'outbound': ['viz', 'model_biosample_fkey']
@@ -204,11 +214,10 @@ visible_columns = {
                     'outbound': ['isa', 'cell_line_cell_line_terms_fkey']
                 }, 'name'
             ],
-            'markdown_name': 'Cell Line',
-            'entity': True
+            'markdown_name': 'Cell Line'
         },
         {
-            'aggregate': 'array',
+            'entity': True,
             'source': [
                 {
                     'outbound': ['viz', 'model_biosample_fkey']
@@ -220,11 +229,11 @@ visible_columns = {
                     'outbound': ['isa', 'protocol_treatment_treatment_fkey']
                 }, 'RID'
             ],
-            'markdown_name': 'Compound',
-            'entity': True
+            'aggregate': 'array',
+            'markdown_name': 'Compound'
         },
         {
-            'aggregate': 'array',
+            'entity': True,
             'source': [
                 {
                     'outbound': ['viz', 'model_biosample_fkey']
@@ -234,8 +243,8 @@ visible_columns = {
                     'inbound': ['isa', 'protocol_treatment_protocol_fkey']
                 }, 'treatment_concentration'
             ],
-            'markdown_name': 'Concentration',
-            'entity': True
+            'aggregate': 'array',
+            'markdown_name': 'Concentration'
         }, ['viz', 'model_derived_from_fkey']
     ]
 }
@@ -250,37 +259,37 @@ visible_foreign_keys = {
 
 table_display = {
     'compact': {
-        'row_markdown_pattern': ':::iframe [{{{label}}}](8/mesh-viewer/view.html?model=/ermrest/catalog/1/entity/viz:model_json/RID={{{_RID}}}){width=1024 height=76 .iframe} \n:::'
+        'row_markdown_pattern': ':::iframe [{{{label}}}](https://pbcconsortium.isrd.isi.edu/mesh-viewer/view.html#model_url=https://pbcconsortium.isrd.isi.edu/ermrest/catalog/1/attribute/viz:model/RID={{{_RID}}}/*&mesh_url=https://pbcconsortium.isrd.isi.edu/ermrest/catalog/1/attribute/viz:model/RID={{{_RID}}}/model_mesh:=viz:model_mesh_data/mesh:=mesh_data/$mesh/RID,url,filename,label,description,color_r:=model_mesh:color_r,color_g:=model_mesh:color_g,color_b:=model_mesh:color_b,opacity:=model_mesh:opacity){width=1024 height=768 .iframe} \n:::'
     }
 }
 
 export = {
     'templates': [
         {
+            'name': 'default',
             'outputs': [
                 {
                     'source': {
-                        'table': 'viz:model',
-                        'api': 'entity'
+                        'api': 'entity',
+                        'table': 'viz:model'
                     },
                     'destination': {
-                        'type': 'csv',
-                        'name': 'surface-model'
+                        'name': 'surface-model',
+                        'type': 'csv'
                     }
                 },
                 {
                     'source': {
-                        'path': 'isa:mesh_data/url',
                         'api': 'attribute',
+                        'path': 'isa:mesh_data/url',
                         'table': 'viz:model_mesh_data'
                     },
                     'destination': {
-                        'type': 'download',
-                        'name': 'OBJS'
+                        'name': 'OBJS',
+                        'type': 'download'
                     }
                 }
             ],
-            'name': 'default',
             'format_name': 'BDBag',
             'format_type': 'BAG'
         }
@@ -289,24 +298,22 @@ export = {
 
 table_annotations = {
     chaise_tags.export: export,
-    chaise_tags.table_display: table_display,
     chaise_tags.display: display,
-    chaise_tags.visible_foreign_keys: visible_foreign_keys,
-    'table_display': {
-        'compact': {
-            'row_markdown_pattern': ':::iframe [{{{label}}}](/mesh-viewer/view.html?model=/ermrest/catalog/1/entity/viz:model_json/RID={{{_RID}}}){width=1024 height=768 .iframe} \n:::'
-        }
-    },
+    chaise_tags.table_display: table_display,
     chaise_tags.visible_columns: visible_columns,
+    chaise_tags.visible_foreign_keys: visible_foreign_keys,
 }
+
 table_comment = None
+
 table_acls = {}
+
 table_acl_bindings = {}
 
 key_defs = [
-    em.Key.define(['RID'], constraint_names=[('viz', 'model_RID_key')],
-                  ),
     em.Key.define(['id'], constraint_names=[('viz', 'model_pkey')],
+                  ),
+    em.Key.define(['RID'], constraint_names=[('viz', 'model_RID_key')],
                   ),
 ]
 
@@ -344,10 +351,10 @@ def main(catalog, mode, replace=False):
 
 
 if __name__ == "__main__":
-    server = 'pbcconsortium.isrd.isi.edu'
+    host = 'pbcconsortium.isrd.isi.edu'
     catalog_id = 1
-    mode, replace, server, catalog_id = parse_args(server, catalog_id, is_table=True)
-    credential = get_credential(server)
-    catalog = ErmrestCatalog('https', server, catalog_id, credentials=credential)
+    mode, replace, host, catalog_id = parse_args(host, catalog_id, is_table=True)
+    credential = get_credential(host)
+    catalog = ErmrestCatalog('https', host, catalog_id, credentials=credential)
     main(catalog, mode, replace)
 
